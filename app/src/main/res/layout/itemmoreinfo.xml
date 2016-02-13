@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:weightSum="1"
+        android:layout_alignParentRight="true"
+        android:background="#ffffff">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="#ffffff"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:text="帮助打扫卫…"
+                android:layout_height="wrap_content"
+                android:textSize="35px"
+                android:layout_width="130dp"
+                android:id="@+id/ItemTitle"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/positive"
+                android:paddingLeft="10dp" />
+
+            <TextView
+                android:text="你好,你好,你好你,你好你,你好你,你好…"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/ItemText"
+                android:textSize="28px"
+                android:layout_toRightOf="@+id/ItemTitle"
+                android:paddingLeft="15dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:lines="2"
+                android:layout_toLeftOf="@+id/mark"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="+10.0"
+                android:id="@+id/mark"
+                android:textSize="35px"
+                android:textColor="#5b5d69"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:id="@+id/positive"
+                android:src="@drawable/green"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>
