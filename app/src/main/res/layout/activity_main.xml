@@ -318,7 +318,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/add"
-        android:background="#262a3b"
+        android:background="@drawable/layout_press"
         android:gravity="center_vertical|center_horizontal">
 
         <ImageView
@@ -411,11 +411,11 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:background="#262a3b"
                 android:layout_below="@+id/choose"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:id="@+id/relativeLayout6">
+                android:id="@+id/relativeLayout6"
+                android:background="#262a3b">
 
                 <TextView
                     android:layout_width="wrap_content"
