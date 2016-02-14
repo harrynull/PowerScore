@@ -422,7 +422,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="王安海"
-                    android:id="@+id/textView9"
+                    android:id="@+id/_name"
                     android:textSize="60px"
                     android:textColor="#ffffff"
                     android:layout_centerVertical="true"
@@ -433,11 +433,11 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="九(3)班"
-                    android:id="@+id/textView11"
+                    android:id="@+id/_class"
                     android:textSize="35px"
                     android:textColor="#ffffff"
-                    android:layout_alignBottom="@+id/textView9"
-                    android:layout_toRightOf="@+id/textView9"
+                    android:layout_alignBottom="@+id/_name"
+                    android:layout_toRightOf="@+id/_name"
                     android:paddingLeft="10dp" />
 
             </RelativeLayout>
