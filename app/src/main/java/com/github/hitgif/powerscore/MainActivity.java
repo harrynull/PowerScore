@@ -5,11 +5,6 @@
 3.按人名筛选（可与其他筛选条件叠加）
  */
 
-
-
-
-
-
 package com.github.hitgif.powerscore;
 
 import android.app.Activity;
@@ -64,6 +59,8 @@ public class MainActivity extends Activity {
     private String showyear;
     private String showmonth;
     private String showday;
+
+    private int scoreFilter=-1;
 
     private ListView lv;
     private ImageView dr;
@@ -163,7 +160,6 @@ public class MainActivity extends Activity {
                                                                 .setPositiveButton("撤销", new OnClickListener() {
                                                                     @Override
                                                                     public void onClick(View v) {
-
                                                                         for (int i = 0; i != MainActivity.strs.length; i++) {
                                                                             if (names.indexOf(MainActivity.strs[i]) != -1) {
                                                                                 MainActivity.scores.set(i, MainActivity.scores.get(i) - change);
@@ -279,8 +275,7 @@ public class MainActivity extends Activity {
                                         pmon = 1;
                                         ((TextView) findViewById(R.id.pm)).setText("  + ");
                                         ((TextView) findViewById(R.id.pm)).setTextSize(30);
-
-                                        //此处筛选加分
+                                        scoreFilter=1;
                                     }
                                 })
                         .addSheetItem("减分", ActionSheetDialog.SheetItemColor.Blue,
@@ -290,6 +285,7 @@ public class MainActivity extends Activity {
                                         pmon = 2;
                                         ((TextView) findViewById(R.id.pm)).setText(" — ");
                                         ((TextView) findViewById(R.id.pm)).setTextSize(30);
+                                        scoreFilter=0;
                                     }
                                 })
                         .addSheetItem("不限", ActionSheetDialog.SheetItemColor.Blue,
@@ -299,6 +295,7 @@ public class MainActivity extends Activity {
                                         pmon = 0;
                                         ((TextView) findViewById(R.id.pm)).setText("不限");
                                         ((TextView) findViewById(R.id.pm)).setTextSize(20);
+                                        scoreFilter=-1;
                                     }
                                 })
                                 //可添加多个SheetItem
@@ -380,6 +377,8 @@ public class MainActivity extends Activity {
 
         for (int i = histories.size()-1; i >= 0; i--) {
             if(d.compareTo("不限")!=0&&(histories.get(i).date.getTime()/1000-86400>timeStemp||histories.get(i).date.getTime()/1000<=timeStemp)) continue;
+            if(scoreFilter==0&&histories.get(i).score>0) continue; //筛选扣分但是是加分记录，忽略
+            if(scoreFilter==1&&histories.get(i).score<0) continue; //筛选加分但是是扣分记录，忽略
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemTitle", (histories.get(i).reason.length()>6?histories.get(i).reason.substring(0,6)+"…":histories.get(i).reason));
             map.put("ItemText", (histories.get(i).names.length()>10?histories.get(i).names.substring(0,18)+"…":histories.get(i).names));
@@ -397,6 +396,9 @@ public class MainActivity extends Activity {
         for (i = histories.size()-1; i >=0 ; i--) {
             if(d.compareTo("不限")!=0&&(histories.get(i).date.getTime()/1000-86400>timeStemp||histories.get(i).date.getTime()/1000<=timeStemp))
                 continue;
+            
+            if(scoreFilter==0&&histories.get(i).score>0) continue; //筛选扣分但是是加分记录，忽略
+            if(scoreFilter==1&&histories.get(i).score<0) continue; //筛选加分但是是扣分记录，忽略
 
             if (count < position) {
                 count++;
