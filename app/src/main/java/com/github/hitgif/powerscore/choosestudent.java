@@ -28,6 +28,7 @@ public class choosestudent extends Activity {
     ExpandableListView listView;
     EListAdapter adapter;
     public String result = "";
+    public String Null = "NULL";
     private int onlyone = 0;
 
     @Override
@@ -57,6 +58,10 @@ public class choosestudent extends Activity {
 
         ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent iB=new Intent();
+                iB.putExtra("res", Null);
+                iB.setClass(choosestudent.this, MainActivity.class);
+                choosestudent.this.setResult(1, iB);
                 choosestudent.this.finish();
             }
         });
@@ -85,7 +90,6 @@ public class choosestudent extends Activity {
                     //  result=result+String.valueOf(i);
                 }
                 if (onlyone == 1) {
-                    Log.d("233", result);
                     Intent i=new Intent();
                     i.putExtra("res", result);
                     i.setClass(choosestudent.this, MainActivity.class);

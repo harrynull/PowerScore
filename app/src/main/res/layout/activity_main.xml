@@ -317,7 +317,7 @@
         android:layout_height="47dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout"
+        android:id="@+id/add"
         android:background="#262a3b"
         android:gravity="center_vertical|center_horizontal">
 
@@ -341,7 +341,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout2"
-        android:layout_above="@+id/linearLayout"
+        android:layout_above="@+id/add"
         android:id="@+id/genlayout"
         android:visibility="gone">
         <TextView
@@ -372,7 +372,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/linearLayout"
+        android:layout_above="@+id/add"
         android:id="@+id/perlayout"
         android:visibility="visible">
 

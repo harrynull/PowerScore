@@ -310,6 +310,11 @@ public class MainActivity extends Activity {
             }
 
         });
+        ((LinearLayout)findViewById(R.id.add)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivityForResult(new Intent(MainActivity.this, add.class), 1);
+            }
+        });
 
 //筛选日期
         ((Button)findViewById(R.id.pick)).setOnClickListener(new View.OnClickListener() {
@@ -610,10 +615,14 @@ public class MainActivity extends Activity {
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String result =data.getExtras().getString("res"); //得到新Activity关闭后返回的数据
-        String[] strarray=result.split("[|]");
-        _name = strarray[1];
-        _class = strarray[0];
-        ((TextView) findViewById(R.id._name)).setText(_name);
-        ((TextView) findViewById(R.id._class)).setText(_class);
+        if (result.matches("NULL")){
+
+        }else {
+            String[] strarray = result.split("[|]");
+            _name = strarray[1];
+            _class = strarray[0];
+            ((TextView) findViewById(R.id._name)).setText(_name);
+            ((TextView) findViewById(R.id._class)).setText(_class);
+        }
     }
 }
