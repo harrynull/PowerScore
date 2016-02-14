@@ -3,6 +3,7 @@
 1.记录按日分栏 参考网址：http://www.codeceo.com/article/android-listview-group.html
 2.按加/减分筛选（可与其他筛选条件叠加）
 3.按人名筛选（可与其他筛选条件叠加）
+4.返回值后获取分数
  */
 
 
@@ -64,6 +65,8 @@ public class MainActivity extends Activity {
     private String showyear;
     private String showmonth;
     private String showday;
+    private String _class;
+    private String _name;
 
     private ListView lv;
     private ImageView dr;
@@ -75,6 +78,7 @@ public class MainActivity extends Activity {
     Button gen;
     Button per;
     Button ls;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,10 +129,13 @@ public class MainActivity extends Activity {
         });
         choose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), choosestudent.class);
-                startActivity(myIntent);
+                startActivityForResult(new Intent(MainActivity.this, choosestudent.class), 1);
             }
+
         });
+
+
+
         lv = (ListView) findViewById(R.id.listView3);
         dr = (ImageView) findViewById(R.id.drop);
         MyAdapter mAdapter = new MyAdapter(this);//得到一个MyAdapter对象
@@ -176,7 +183,7 @@ public class MainActivity extends Activity {
                                                                     @Override
                                                                     public void onClick(View v) {
                                                                     }
-                                                                    }).show();
+                                                                }).show();
                                                         histories.remove(histories.get(getPos(position)));
                                                         MyAdapter mAdapter = new MyAdapter(MainActivity.this);//得到一个MyAdapter对象
                                                         lv.setAdapter(mAdapter);
@@ -598,5 +605,13 @@ public class MainActivity extends Activity {
 
     private void showToast(int msg){
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String result =data.getExtras().getString("res"); //得到新Activity关闭后返回的数据
+        String[] strarray=result.split("[|]");
+        _name = strarray[1];
+        _class = strarray[0];
+        ((TextView) findViewById(R.id._name)).setText(_name);
+        ((TextView) findViewById(R.id._class)).setText(_class);
     }
 }

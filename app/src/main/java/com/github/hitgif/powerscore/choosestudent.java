@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -85,6 +86,11 @@ public class choosestudent extends Activity {
                 }
                 if (onlyone == 1) {
                     Log.d("233", result);
+                    Intent i=new Intent();
+                    i.putExtra("res", result);
+                    i.setClass(choosestudent.this, MainActivity.class);
+                    choosestudent.this.setResult(1, i);
+                    choosestudent.this.finish();
                 } else {
                     new AlertDialogios(choosestudent.this).builder()
                             .setTitle("提示")
@@ -96,7 +102,7 @@ public class choosestudent extends Activity {
                             }).show();
                 }
             }
-               // choosestudent.this.finish();
+            // choosestudent.this.finish();
 
         });
     }
