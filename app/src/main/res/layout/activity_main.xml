@@ -86,7 +86,7 @@
                 android:textSize="23px"
                 android:textColor="#ffffff"
                 android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/drop" />
+                android:layout_alignRight="@+id/droppp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/drop"
+                android:id="@+id/droppp"
                 android:src="@drawable/drop"
                 android:layout_alignTop="@+id/textView7"
                 android:layout_toRightOf="@+id/textView7"

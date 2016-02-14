@@ -13,7 +13,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class MainActivity extends Activity {
 
@@ -134,7 +131,7 @@ public class MainActivity extends Activity {
 
 
         lv = (ListView) findViewById(R.id.listView3);
-        dr = (ImageView) findViewById(R.id.drop);
+        dr = (ImageView) findViewById(R.id.droppp);
         MyAdapter mAdapter = new MyAdapter(this);//得到一个MyAdapter对象
         lv.setAdapter(mAdapter);
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -244,14 +241,14 @@ public class MainActivity extends Activity {
                 ((TextView) findViewById(R.id.day)).setTextColor(Color.parseColor("#9b9b9b"));
                 ((TextView) findViewById(R.id.textView5)).setTextColor(Color.parseColor("#9b9b9b"));
                 ((TextView) findViewById(R.id.textView7)).setTextColor(Color.parseColor("#9b9b9b"));
-                ((ImageView) findViewById(R.id.drop)).setImageResource(R.drawable.dropdown);
+                ((ImageView) findViewById(R.id.droppp)).setImageResource(R.drawable.dropdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.year)).setTextColor(Color.parseColor("#ffffff"));
                     ((TextView) findViewById(R.id.month)).setTextColor(Color.parseColor("#ffffff"));
                     ((TextView) findViewById(R.id.day)).setTextColor(Color.parseColor("#ffffff"));
                     ((TextView) findViewById(R.id.textView5)).setTextColor(Color.parseColor("#ffffff"));
                     ((TextView) findViewById(R.id.textView7)).setTextColor(Color.parseColor("#ffffff"));
-                    ((ImageView) findViewById(R.id.drop)).setImageResource(R.drawable.drop);
+                    ((ImageView) findViewById(R.id.droppp)).setImageResource(R.drawable.drop);
                 }
                 return false;
             }

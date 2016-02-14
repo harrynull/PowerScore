@@ -1,18 +1,18 @@
 package com.github.hitgif.powerscore;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 
 /**
@@ -32,10 +32,14 @@ public class add extends Activity{
     private Button b9;
     private Button b0;
     private TextView score;
+    private ImageView drop;
     private ImageButton bplus;
     private ImageButton bminus;
     private ImageButton backspace;
+    private RelativeLayout ind;
+    private LinearLayout inputscore;
     private boolean isplus = true;
+    private boolean isdrop = false;
     private boolean caninput = true;
     private boolean onlyzero = true;
     private boolean caninputpoint = true;
@@ -56,9 +60,12 @@ public class add extends Activity{
         b9 = (Button)findViewById(R.id.b9);
         b0 = (Button)findViewById(R.id.b0);
         score = (TextView)findViewById(R.id.score);
+        drop = (ImageView)findViewById(R.id.droppp);
         bplus = (ImageButton) findViewById(R.id.bplus);
         bminus = (ImageButton) findViewById(R.id.bminus);
         backspace = (ImageButton) findViewById(R.id.backspace);
+        inputscore = (LinearLayout) findViewById(R.id.inputscore);
+        ind = (RelativeLayout)findViewById(R.id.relativeLayout15);
         ViewTreeObserver vto3 = backspace.getViewTreeObserver();
         ViewTreeObserver vto2 = b9.getViewTreeObserver();
         ViewTreeObserver vto = bd.getViewTreeObserver();
@@ -106,6 +113,27 @@ public class add extends Activity{
 
 
         ///////////////////////////////////////////////////////小键盘begin
+
+                                                                drop.setOnClickListener(new View.OnClickListener() {
+                                                                       public void onClick(View v) {
+                                                                           if (isdrop){
+                                                                               inputscore.setVisibility(View.VISIBLE);
+                                                                               isdrop = false;
+                                                                               drop.setImageResource(R.drawable.drop);
+                                                                               RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 65);
+                                                                               param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,0);
+                                                                               param.addRule(RelativeLayout.ABOVE,R.id.inputscore);
+                                                                               ind.setLayoutParams(param);
+                                                                           }else {
+                                                                               inputscore.setVisibility(View.GONE);
+                                                                               isdrop = true;
+                                                                               drop.setImageResource(R.drawable.dropup);
+                                                                               RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 65);
+                                                                               param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
+                                                                               ind.setLayoutParams(param);
+                                                                           }
+                                                                       }
+                                                                });
 
                                                                 b1.setOnClickListener(new View.OnClickListener() {
                                                                     public void onClick(View v) {
