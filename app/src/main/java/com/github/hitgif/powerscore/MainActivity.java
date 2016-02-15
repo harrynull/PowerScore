@@ -34,6 +34,8 @@ import android.widget.DatePicker;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import org.apache.commons.logging.Log;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -309,7 +311,7 @@ public class MainActivity extends Activity {
         });
         ((LinearLayout)findViewById(R.id.add)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivityForResult(new Intent(MainActivity.this, add.class), 1);
+                startActivityForResult(new Intent(MainActivity.this, add.class), 2);
             }
         });
 
@@ -611,15 +613,30 @@ public class MainActivity extends Activity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String result =data.getExtras().getString("res"); //得到新Activity关闭后返回的数据
-        if (result.matches("NULL")){
+        switch(resultCode) {
+            case 1:
+                String result = data.getExtras().getString("res"); //得到新Activity关闭后返回的数据
+                if (result.matches("NULL")) {
 
-        }else {
-            String[] strarray = result.split("[|]");
-            _name = strarray[1];
-            _class = strarray[0];
-            ((TextView) findViewById(R.id._name)).setText(_name);
-            ((TextView) findViewById(R.id._class)).setText(_class);
+                } else {
+                    String[] strarray = result.split("[|]");
+                    _name = strarray[1];
+                    _class = strarray[0];
+                    ((TextView) findViewById(R.id._name)).setText(_name);
+                    ((TextView) findViewById(R.id._class)).setText(_class);
+
+                }
+                break;
+            case 2:
+                String his = data.getExtras().getString("his");
+                  //得到新Activity关闭后返回的数据
+                if (his.matches("NULL")) {
+
+                } else {
+                    //更新记录
+                }
+                break;
         }
+
     }
 }

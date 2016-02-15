@@ -36,7 +36,7 @@
                 android:src="@drawable/back"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:id="@+id/backim" />
+                android:id="@+id/backimc" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 android:id="@+id/textView15"
                 android:textColor="#ffffff"
                 android:textSize="35px"
-                android:layout_toRightOf="@+id/backim"
+                android:layout_toRightOf="@+id/backimc"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
                 android:gravity="center_vertical" />
@@ -65,19 +65,38 @@
             android:layout_gravity="center_horizontal"
             android:background="#ffffff"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/relativeLayout12" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:paddingBottom="10dp">
+            android:background="#262a3b"
+            android:paddingBottom="10dp"
+            android:id="@+id/relativeLayout12">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText"
-                android:layout_gravity="center_horizontal" />
+                android:id="@+id/input"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="25dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#808080"
+                android:hint="此处键入理由" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在下方列表中单击可选择常用理由"
+                android:id="@+id/textView18"
+                android:gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:paddingTop="10dp"
+                android:layout_below="@+id/input" />
+
         </RelativeLayout>
     </RelativeLayout>
 

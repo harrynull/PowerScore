@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:paddingLeft="10dp"
-            android:id="@+id/back">
+            android:id="@+id/backc">
 
             <ImageView
                 android:layout_width="25dp"
@@ -36,17 +36,17 @@
                 android:src="@drawable/back"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:id="@+id/backim" />
+                android:id="@+id/backimc" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="返回"
-                android:id="@+id/textView15"
+                android:id="@+id/textView15c"
                 android:textColor="#ffffff"
                 android:textSize="35px"
-                android:layout_toRightOf="@+id/backim"
+                android:layout_toRightOf="@+id/backimc"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
                 android:gravity="center_vertical" />

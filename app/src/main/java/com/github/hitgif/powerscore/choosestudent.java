@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +31,19 @@ public class choosestudent extends Activity {
     public String result = "";
     public String Null = "NULL";
     private int onlyone = 0;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Intent iB = new Intent();
+            iB.putExtra("res", "NULL");
+            iB.setClass(choosestudent.this, MainActivity.class);
+            choosestudent.this.setResult(1, iB);
+            choosestudent.this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,20 +56,20 @@ public class choosestudent extends Activity {
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(adapter);
 
-        ((RelativeLayout) findViewById(R.id.back)).setOnTouchListener(new View.OnTouchListener() {
+        ((RelativeLayout) findViewById(R.id.backc)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#9b9b9b"));
-                ((ImageView) findViewById(R.id.backim)).setImageResource(R.drawable.backdown);
+                ((TextView) findViewById(R.id.textView15c)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.backdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#ffffff"));
-                    ((ImageView) findViewById(R.id.backim)).setImageResource(R.drawable.back);
+                    ((TextView) findViewById(R.id.textView15c)).setTextColor(Color.parseColor("#ffffff"));
+                    ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.back);
                 }
                 return false;
             }
         });
 
-        ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
+        ((RelativeLayout)findViewById(R.id.backc)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent iB=new Intent();
                 iB.putExtra("res", Null);

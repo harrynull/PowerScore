@@ -40,7 +40,7 @@
                     android:src="@drawable/back"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:id="@+id/backim" />
+                    android:id="@+id/backimc" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                     android:id="@+id/textView15"
                     android:textColor="#ffffff"
                     android:textSize="35px"
-                    android:layout_toRightOf="@+id/backim"
+                    android:layout_toRightOf="@+id/backimc"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentTop="true"
                     android:gravity="center_vertical" />

@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -43,6 +45,7 @@ public class add extends Activity{
     private Button b0;
     private String showmonth;
     private String showday;
+    private String reason_giveback;
     private TextView score;
     private ImageView drop;
     private ImageButton bplus;
@@ -55,7 +58,19 @@ public class add extends Activity{
     private boolean caninput = true;
     private boolean onlyzero = true;
     private boolean caninputpoint = true;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Intent iB = new Intent();
+            iB.putExtra("his", "NULL");
+            iB.setClass(add.this, add.class);
+            add.this.setResult(4, iB);
+            add.this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -125,22 +140,31 @@ public class add extends Activity{
 
         ((RelativeLayout)findViewById(R.id.chooseresson)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                startActivityForResult(new Intent(add.this, setreason.class), 2);
             }
         });
         ((RelativeLayout)findViewById(R.id.choosemem)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivityForResult(new Intent(add.this, multiplychoosestudent.class), 1);
+                startActivityForResult(new Intent(add.this, multiplychoosestudent.class), 3);
             }
         });
 
-
+        ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent iB = new Intent();
+                iB.putExtra("his", "NULL");
+                iB.setClass(add.this, add.class);
+                add.this.setResult(2, iB);
+                add.this.finish();
+                   }
+            });
         ///////////////////////////////////////////////////////小键盘begin
 
                                                                 drop.setOnClickListener(new View.OnClickListener() {
                                                                     public void onClick(View v) {
                                                                         if (isdrop) {
                                                                             inputscore.setVisibility(View.VISIBLE);
-                                                                            ((ImageView)findViewById(R.id.imageView21)).setVisibility(View.VISIBLE);
+                                                                            ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.VISIBLE);
                                                                             isdrop = false;
                                                                             drop.setImageResource(R.drawable.dropn);
                                                                             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
@@ -149,7 +173,7 @@ public class add extends Activity{
                                                                             ind.setLayoutParams(param);
                                                                         } else {
                                                                             inputscore.setVisibility(View.GONE);
-                                                                            ((ImageView)findViewById(R.id.imageView21)).setVisibility(View.GONE);
+                                                                            ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.GONE);
                                                                             isdrop = true;
                                                                             drop.setImageResource(R.drawable.dropup);
                                                                             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
@@ -398,11 +422,37 @@ public class add extends Activity{
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String result =data.getExtras().getString("res"); //得到新Activity关闭后返回的数据
-        if (result.matches("NULL")){
+        switch(resultCode){
+            case 3:
+                String result =data.getExtras().getString("mem"); //得到新Activity关闭后返回的数据
+                if (result.matches("NULL")){
 
-        }else {
-            //处理返回值
+                }else {
+                    //处理返回值
+                }
+                break;
+            case 2:
+                String reason =data.getExtras().getString("reason"); //得到新Activity关闭后返回的数据
+                if (reason.matches("NULL")){
+
+                }else {
+                    if (reason.matches("&&nothing")){
+                        ((ImageView) findViewById(R.id.imageView19)).setBackgroundColor(Color.parseColor("#e1e1e1"));
+                        ((ImageView) findViewById(R.id.imageView22)).setBackgroundColor(Color.parseColor("#e1e1e1"));
+                        ((ImageView) findViewById(R.id.imageView23)).setBackgroundColor(Color.parseColor("#e1e1e1"));
+                        ((ImageView) findViewById(R.id.imageView24)).setBackgroundColor(Color.parseColor("#e1e1e1"));
+                        ((TextView) findViewById(R.id.textView21)).setTextColor(Color.parseColor("#000000"));
+                    }else {
+                        reason_giveback = reason;
+                        ((ImageView) findViewById(R.id.imageView19)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                        ((ImageView) findViewById(R.id.imageView22)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                        ((ImageView) findViewById(R.id.imageView23)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                        ((ImageView) findViewById(R.id.imageView24)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                        ((TextView) findViewById(R.id.textView21)).setTextColor(Color.parseColor("#21b5ff"));
+                    }
+                }
+                break;
         }
+
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,9 +30,22 @@ public class multiplychoosestudent extends Activity {
     ExpandableListView listView;
     EListAdapter adapter;
     public String result = "";
-    public String Null = "NULL";
     private int nothing = 0;
+    private String Null = "NULL";
 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Intent iB = new Intent();
+            iB.putExtra("reason", "NULL");
+            iB.setClass(multiplychoosestudent.this, add.class);
+            multiplychoosestudent.this.setResult(2, iB);
+            multiplychoosestudent.this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +62,10 @@ public class multiplychoosestudent extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#9b9b9b"));
-                ((ImageView) findViewById(R.id.backim)).setImageResource(R.drawable.backdown);
+                ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.backdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#ffffff"));
-                    ((ImageView) findViewById(R.id.backim)).setImageResource(R.drawable.back);
+                    ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.back);
                 }
                 return false;
             }
@@ -59,13 +73,14 @@ public class multiplychoosestudent extends Activity {
 
         ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent iB=new Intent();
-                iB.putExtra("res", Null);
-                iB.setClass(multiplychoosestudent.this, MainActivity.class);
-                multiplychoosestudent.this.setResult(1, iB);
+                Intent iB = new Intent();
+                iB.putExtra("reason", Null);
+                iB.setClass(multiplychoosestudent.this, add.class);
+                multiplychoosestudent.this.setResult(2, iB);
                 multiplychoosestudent.this.finish();
             }
         });
+
         ((Button) findViewById(R.id.ok)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -96,9 +111,9 @@ public class multiplychoosestudent extends Activity {
                 if (nothing != 0) {
                     //返回并传值
                     Intent i=new Intent();
-                    i.putExtra("res", results);
-                    i.setClass(multiplychoosestudent.this, MainActivity.class);
-                    multiplychoosestudent.this.setResult(1, i);
+                    i.putExtra("mem", results);
+                    i.setClass(multiplychoosestudent.this, add.class);
+                    multiplychoosestudent.this.setResult(3, i);
                     multiplychoosestudent.this.finish();
                 } else {
                     new AlertDialogios(multiplychoosestudent.this).builder()
