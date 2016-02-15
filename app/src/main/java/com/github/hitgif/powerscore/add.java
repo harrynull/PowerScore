@@ -160,263 +160,127 @@ public class add extends Activity{
             });
         ///////////////////////////////////////////////////////小键盘begin
 
-                                                                drop.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (isdrop) {
-                                                                            inputscore.setVisibility(View.VISIBLE);
-                                                                            ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.VISIBLE);
-                                                                            isdrop = false;
-                                                                            drop.setImageResource(R.drawable.dropn);
-                                                                            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
-                                                                            param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-                                                                            param.addRule(RelativeLayout.ABOVE, R.id.inputscore);
-                                                                            ind.setLayoutParams(param);
-                                                                        } else {
-                                                                            inputscore.setVisibility(View.GONE);
-                                                                            ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.GONE);
-                                                                            isdrop = true;
-                                                                            drop.setImageResource(R.drawable.dropup);
-                                                                            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
-                                                                            param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
-                                                                            ind.setLayoutParams(param);
-                                                                        }
-                                                                    }
-                                                                });
+        drop.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (isdrop) {
+                    inputscore.setVisibility(View.VISIBLE);
+                    ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.VISIBLE);
+                    isdrop = false;
+                    drop.setImageResource(R.drawable.dropn);
+                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
+                    param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+                    param.addRule(RelativeLayout.ABOVE, R.id.inputscore);
+                    ind.setLayoutParams(param);
+                } else {
+                    inputscore.setVisibility(View.GONE);
+                    ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.GONE);
+                    isdrop = true;
+                    drop.setImageResource(R.drawable.dropup);
+                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
+                    param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
+                    ind.setLayoutParams(param);
+                }
+            }
+        });
 
-                                                                b1.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("1");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "1");
-                                                                            }
+        b1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("1");
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("2");
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("3");
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("4");
+            }
+        });
+        b5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                keyboardCallback("5");
+            }
 
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                                onlyzero = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b2.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("2");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "2");
-                                                                            }
+        });
+        b6.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("6");
+            }
+        });
+        b7.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("7");
+            }
+        });
+        b8.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("8");
+            }
+        });
+        b9.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                keyboardCallback("9");
+            }
+        });
+        b0.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (caninput){
+                    if (onlyzero){
+                        score.setText("0");
+                        onlyzero = true;
+                        caninputpoint = true;
+                    }else {
+                        score.setText(score.getText() + "0");
+                    }
 
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b3.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("3");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "3");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b4.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("4");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "4");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b4.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("4");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "4");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b5.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("5");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "5");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b6.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("6");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "6");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b7.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("7");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "7");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b8.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("8");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "8");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b9.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("9");
-                                                                                onlyzero = false;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "9");
-                                                                            }
-
-                                                                        }
-                                                                        if (score.getText().toString().contains(".")) {
-                                                                            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                caninput = false;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                                b0.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput){
-                                                                            if (onlyzero){
-                                                                                score.setText("0");
-                                                                                onlyzero = true;
-                                                                                caninputpoint = true;
-                                                                            }else {
-                                                                                score.setText(score.getText() + "0");
-                                                                            }
-
-                                                                            if (score.getText().toString().contains(".")) {
-                                                                                if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
-                                                                                    caninput = false;
-                                                                                }
-                                                                            }
+                    if (score.getText().toString().contains(".")) {
+                        if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
+                            caninput = false;
+                        }
+                    }
 
 
-                                                                        }
-                                                                    }
-                                                                });
-                                                                bd.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (caninput&&caninputpoint){
-                                                                                score.setText(score.getText() + ".");
-                                                                                onlyzero = false;
-                                                                                caninputpoint = false;
-                                                                            }
+                }
+            }
+        });
+        bd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (caninput&&caninputpoint){
+                    score.setText(score.getText() + ".");
+                    onlyzero = false;
+                    caninputpoint = false;
+                }
 
-                                                                    }
-                                                                });
-                                                                backspace.setOnClickListener(new View.OnClickListener() {
-                                                                    public void onClick(View v) {
-                                                                        if (score.getText().length() == 1) {
-                                                                            score.setText("0");
-                                                                            onlyzero = true;
-                                                                            caninputpoint = true;
-                                                                        }else {
-                                                                            String s = score.getText().toString();
-                                                                            s = s.substring(0,score.getText().length() - 1);
-                                                                            score.setText(s);
-                                                                            caninput = true;
-                                                                            if (!s.contains(".")){
-                                                                                caninputpoint = true;
-                                                                            }
-                                                                            if (s.matches("0")){
-                                                                                onlyzero = true;
-                                                                            }
-                                                                        }
+            }
+        });
+        backspace.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (score.getText().length() == 1) {
+                    score.setText("0");
+                    onlyzero = true;
+                    caninputpoint = true;
+                }else {
+                    String s = score.getText().toString();
+                    s = s.substring(0,score.getText().length() - 1);
+                    score.setText(s);
+                    caninput = true;
+                    if (!s.contains(".")){
+                        caninputpoint = true;
+                    }
+                    if (s.matches("0")){
+                        onlyzero = true;
+                    }
+                }
 
-                                                                    }
-                                                                });
-
+            }
+        });
         ///////////////////////////////////////////////////////小键盘end
 
     }
@@ -453,6 +317,23 @@ public class add extends Activity{
                 }
                 break;
         }
+    }
 
+    private void keyboardCallback(String num){
+        if (caninput){
+            if (onlyzero){
+                score.setText(num);
+                onlyzero = false;
+            }else {
+                score.setText(score.getText() + num);
+            }
+
+        }
+        if (score.getText().toString().contains(".")) {
+            if (score.getText().length() - 1 - score.getText().toString().indexOf(".") > 0) {
+                caninput = false;
+                onlyzero = false;
+            }
+        }
     }
 }
