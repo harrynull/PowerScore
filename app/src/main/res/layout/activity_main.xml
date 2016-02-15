@@ -33,8 +33,7 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:textColor="#ffffff"
-            android:textSize="35px" />
+            android:textColor="#ffffff" />
 
         <ImageView
             android:id="@+id/more"
@@ -75,15 +74,13 @@
                 android:id="@+id/textView2"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:textColor="#9b9b9b"
-                android:textSize="23px" />
+                android:textColor="#9b9b9b" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/year"
-                android:textSize="23px"
                 android:textColor="#ffffff"
                 android:layout_alignParentTop="true"
                 android:layout_alignRight="@+id/droppp" />
@@ -94,7 +91,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/month"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:text="不限"
@@ -106,7 +102,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/textView5"
-                android:textSize="30px"
                 android:textColor="#ffffff"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/month"
@@ -118,17 +113,16 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/day"
                 android:textColor="#ffffff"
-                android:textSize="30dp"
+                android:gravity="center_vertical"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/textView5"
-                android:gravity="right" />
+                android:layout_alignTop="@+id/month" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/textView7"
-                android:textSize="30px"
                 android:textColor="#ffffff"
                 android:paddingBottom="5dp"
                 android:layout_alignParentBottom="true"
@@ -151,7 +145,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@+id/year"
-                android:background="#00000000" />
+                android:background="#00000000"
+                android:visibility="visible" />
 
         </RelativeLayout>
 
@@ -172,8 +167,7 @@
                 android:id="@+id/textView3"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:textColor="#9b9b9b"
-                android:textSize="23px" />
+                android:textColor="#9b9b9b" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -181,7 +175,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/pm"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
                 android:textIsSelectable="false"
                 android:text="不限"
                 android:layout_alignParentBottom="true"
@@ -255,8 +248,7 @@
                 android:id="@+id/textView"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:textColor="#9b9b9b"
-                android:textSize="23px" />
+                android:textColor="#9b9b9b" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -264,11 +256,13 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/numofitem"
                 android:textColor="#ffffff"
-                android:textSize="30dp"
-                android:layout_alignParentBottom="true"
                 android:paddingRight="5dp"
                 android:textIsSelectable="false"
-                android:text="0" />
+                android:text="0"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical" />
 
         </RelativeLayout>
 
@@ -277,9 +271,9 @@
             android:layout_height="wrap_content"
             android:text="New Button"
             android:id="@+id/ls"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:layout_alignBottom="@+id/relativeLayout4"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 
@@ -333,7 +327,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="记一条"
             android:id="@+id/textView8"
-            android:textSize="35px"
             android:textColor="#ffffff" />
     </LinearLayout>
 
@@ -379,7 +372,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="47dp"
+            android:layout_height="40dp"
             android:id="@+id/choose"
             android:background="#ffffff"
             android:gravity="center_vertical|center_horizontal"
@@ -398,8 +391,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="选择学生"
                 android:id="@+id/textView6"
-                android:textSize="35px"
                 android:textColor="#262a3b" />
+
         </LinearLayout>
 
         <RelativeLayout
@@ -410,8 +403,7 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_below="@+id/choose"
+                android:layout_height="40dp"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:id="@+id/relativeLayout6"
@@ -421,24 +413,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="王安海"
-                    android:id="@+id/_name"
-                    android:textSize="60px"
+                    android:text="九(3)班"
+                    android:id="@+id/_class"
                     android:textColor="#ffffff"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true" />
+                    android:paddingLeft="10dp"
+                    android:layout_toRightOf="@+id/_name"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_vertical" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="九(3)班"
-                    android:id="@+id/_class"
-                    android:textSize="35px"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="王安海"
+                    android:id="@+id/_name"
                     android:textColor="#ffffff"
-                    android:layout_alignBottom="@+id/_name"
-                    android:layout_toRightOf="@+id/_name"
-                    android:paddingLeft="10dp" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center_vertical" />
 
             </RelativeLayout>
 
@@ -451,17 +445,6 @@
                 android:layout_alignBottom="@+id/relativeLayout6"
                 android:background="#262a3b">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="160.5"
-                    android:id="@+id/textView12"
-                    android:textSize="60px"
-                    android:textColor="#ffffff"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -469,6 +452,16 @@
                     android:src="@drawable/jg"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="160.5"
+                    android:id="@+id/textView19"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#ffffff" />
             </RelativeLayout>
         </RelativeLayout>
 

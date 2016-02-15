@@ -289,17 +289,24 @@ public class add extends Activity{
         switch(resultCode){
             case 3:
                 ArrayList<String> result=data.getExtras().getStringArrayList("mem"); //得到新Activity关闭后返回的数据
+                ArrayList<String> _class=new ArrayList<String>();
+                Boolean flag = false;
                 if (result!=null){
                     //处理返回值
                     String s="";
                     for (String s1 : result) {
-                        s+=s1+"  ";
+                        String[] s2 = s1.split("[|]");
+                        String s3 = s2[1];
+                        String s4 = s2[0];
+                        s += s3+", ";
                     }
+                    s = s.substring(0 , s.length()-2);
+
                     ((TextView) findViewById(R.id.textView11)).setText(s);
                 }
                 break;
             case 2:
-                String reason=data.getExtras().getString("reason"); //得到新Activity关闭后返回的数据
+                String reason = data.getExtras().getString("reason"); //得到新Activity关闭后返回的数据
                 if (!reason.matches("NULL")){
                     if (reason.matches("&&nothing")){
                         ((ImageView) findViewById(R.id.imageView19)).setBackgroundColor(Color.parseColor("#e1e1e1"));

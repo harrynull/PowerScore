@@ -23,7 +23,6 @@
             <TextView
                 android:text="帮助打扫卫…"
                 android:layout_height="wrap_content"
-                android:textSize="35px"
                 android:layout_width="130dp"
                 android:id="@+id/ItemTitle"
                 android:layout_centerVertical="true"
@@ -35,26 +34,13 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/ItemText"
-                android:textSize="28px"
-                android:layout_toRightOf="@+id/ItemTitle"
                 android:paddingLeft="15dp"
+                android:lines="2"
+                android:gravity="center_vertical"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:lines="2"
-                android:layout_toLeftOf="@+id/mark"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="+10.0"
-                android:id="@+id/mark"
-                android:textSize="35px"
-                android:textColor="#5b5d69"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:paddingLeft="10dp" />
+                android:layout_toRightOf="@+id/ItemTitle"
+                android:layout_toLeftOf="@+id/mark" />
 
             <ImageView
                 android:layout_width="15dp"
@@ -63,6 +49,16 @@
                 android:src="@drawable/green"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="+10"
+                android:id="@+id/mark"
+                android:textColor="#5b5d69"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true" />
         </RelativeLayout>
 
     </LinearLayout>

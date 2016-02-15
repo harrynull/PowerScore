@@ -279,7 +279,7 @@ public class MainActivity extends Activity {
                                     public void onClick(int which) {
                                         pmon = 1;
                                         ((TextView) findViewById(R.id.pm)).setText("  + ");
-                                        ((TextView) findViewById(R.id.pm)).setTextSize(30);
+                                       // ((TextView) findViewById(R.id.pm)).setTextSize(30);
                                         scoreFilter=1;
                                     }
                                 })
@@ -289,7 +289,7 @@ public class MainActivity extends Activity {
                                     public void onClick(int which) {
                                         pmon = 2;
                                         ((TextView) findViewById(R.id.pm)).setText(" — ");
-                                        ((TextView) findViewById(R.id.pm)).setTextSize(30);
+                                      //  ((TextView) findViewById(R.id.pm)).setTextSize(30);
                                         scoreFilter=0;
                                     }
                                 })
@@ -299,7 +299,7 @@ public class MainActivity extends Activity {
                                     public void onClick(int which) {
                                         pmon = 0;
                                         ((TextView) findViewById(R.id.pm)).setText("不限");
-                                        ((TextView) findViewById(R.id.pm)).setTextSize(20);
+                                      //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                                         scoreFilter=-1;
                                     }
                                 })
@@ -336,7 +336,7 @@ public class MainActivity extends Activity {
                             ((TextView) findViewById(R.id.day)).setText(showday);
                             ((TextView) findViewById(R.id.textView5)).setText("月");
                             ((TextView) findViewById(R.id.textView7)).setText("日");
-                            ((TextView) findViewById(R.id.month)).setTextSize(30);
+                          //  ((TextView) findViewById(R.id.month)).setTextSize(30);
                             d=new StringBuilder().append(year).append('-')
                                     .append(month + 1)
                                     .append('-')
@@ -365,7 +365,7 @@ public class MainActivity extends Activity {
                         ((TextView) findViewById(R.id.day)).setText("");
                         ((TextView) findViewById(R.id.textView5)).setText("");
                         ((TextView) findViewById(R.id.textView7)).setText("");
-                        ((TextView) findViewById(R.id.month)).setTextSize(20);
+                       // ((TextView) findViewById(R.id.month)).setTextSize(20);
                         superflag = false;
                         timeStemp = 0;
                         lv.setAdapter(new MyAdapter(MainActivity.this));
