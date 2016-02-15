@@ -23,6 +23,7 @@ import android.widget.VideoView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -207,7 +208,6 @@ public class add extends Activity{
             public void onClick(View v){
                 keyboardCallback("5");
             }
-
         });
         b6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -288,18 +288,19 @@ public class add extends Activity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(resultCode){
             case 3:
-                String result =data.getExtras().getString("mem"); //得到新Activity关闭后返回的数据
-                if (result.matches("NULL")){
-
-                }else {
+                ArrayList<String> result=data.getExtras().getStringArrayList("mem"); //得到新Activity关闭后返回的数据
+                if (result!=null){
                     //处理返回值
+                    String s="";
+                    for (String s1 : result) {
+                        s+=s1+"  ";
+                    }
+                    ((TextView) findViewById(R.id.textView11)).setText(s);
                 }
                 break;
             case 2:
-                String reason =data.getExtras().getString("reason"); //得到新Activity关闭后返回的数据
-                if (reason.matches("NULL")){
-
-                }else {
+                String reason=data.getExtras().getString("reason"); //得到新Activity关闭后返回的数据
+                if (!reason.matches("NULL")){
                     if (reason.matches("&&nothing")){
                         ((ImageView) findViewById(R.id.imageView19)).setBackgroundColor(Color.parseColor("#e1e1e1"));
                         ((ImageView) findViewById(R.id.imageView22)).setBackgroundColor(Color.parseColor("#e1e1e1"));

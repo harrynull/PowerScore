@@ -25,7 +25,6 @@ import java.util.ArrayList;
 public class multiplychoosestudent extends Activity {
 
     ArrayList<Group> groups;
-    ArrayList<String> results;
     ExpandableListView listView;
     EListAdapter adapter;
     public String result = "";
@@ -92,21 +91,20 @@ public class multiplychoosestudent extends Activity {
         });
         ((Button)findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ArrayList<String> results = new ArrayList<String>();
                 nothing = 0;
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
-
                             //这里设置返回值
                             result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getFullname();
                             results.add(nothing,result);
                             nothing++;
                         }
                     }
-
-
                     //  result=result+String.valueOf(i);
                 }
+
                 if (nothing != 0) {
                     //返回并传值
                     Intent i=new Intent();
