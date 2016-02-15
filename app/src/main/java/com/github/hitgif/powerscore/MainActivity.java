@@ -1,9 +1,8 @@
 /*
 以下功能待完成：
 1.记录按日分栏 参考网址：http://www.codeceo.com/article/android-listview-group.html
-2.按加/减分筛选（可与其他筛选条件叠加）
-3.按人名筛选（可与其他筛选条件叠加）
-4.返回值后获取分数
+2.按人名筛选（可与其他筛选条件叠加）
+3.返回值后获取分数
  */
 
 package com.github.hitgif.powerscore;
@@ -315,7 +314,7 @@ public class MainActivity extends Activity {
             }
         });
 
-//筛选日期
+        //筛选日期
         ((Button)findViewById(R.id.pick)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -461,7 +460,7 @@ public class MainActivity extends Activity {
             } else {
                 holder = (ViewHolder) convertView.getTag();//取出ViewHolder对象
             }
-/*
+            /*
             holder.bt.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {

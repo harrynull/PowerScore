@@ -22,7 +22,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
 public class multiplychoosestudent extends Activity {
 
     ArrayList<Group> groups;
