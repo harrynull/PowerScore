@@ -36,7 +36,7 @@ public class multiplychoosestudent extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.choosestudent);
+        setContentView(R.layout.multiplychoosestudent);
         groups = new ArrayList<Group>();
         getJSONObject();
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
@@ -82,6 +82,8 @@ public class multiplychoosestudent extends Activity {
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
+
+                            //这里设置返回值
                             result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getFullname();
                             results.add(nothing,result);
                             nothing++;
@@ -92,6 +94,7 @@ public class multiplychoosestudent extends Activity {
                     //  result=result+String.valueOf(i);
                 }
                 if (nothing != 0) {
+                    //返回并传值
                     Intent i=new Intent();
                     i.putExtra("res", results);
                     i.setClass(multiplychoosestudent.this, MainActivity.class);

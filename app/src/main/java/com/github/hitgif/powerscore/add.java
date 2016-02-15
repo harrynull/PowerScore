@@ -1,18 +1,28 @@
 package com.github.hitgif.powerscore;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -31,6 +41,8 @@ public class add extends Activity{
     private Button b8;
     private Button b9;
     private Button b0;
+    private String showmonth;
+    private String showday;
     private TextView score;
     private ImageView drop;
     private ImageButton bplus;
@@ -111,28 +123,38 @@ public class add extends Activity{
 
 
 
+        ((RelativeLayout)findViewById(R.id.chooseresson)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            }
+        });
+        ((RelativeLayout)findViewById(R.id.choosemem)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivityForResult(new Intent(add.this, multiplychoosestudent.class), 1);
+            }
+        });
+
 
         ///////////////////////////////////////////////////////小键盘begin
 
                                                                 drop.setOnClickListener(new View.OnClickListener() {
-                                                                       public void onClick(View v) {
-                                                                           if (isdrop){
-                                                                               inputscore.setVisibility(View.VISIBLE);
-                                                                               isdrop = false;
-                                                                               drop.setImageResource(R.drawable.drop);
-                                                                               RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 65);
-                                                                               param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,0);
-                                                                               param.addRule(RelativeLayout.ABOVE,R.id.inputscore);
-                                                                               ind.setLayoutParams(param);
-                                                                           }else {
-                                                                               inputscore.setVisibility(View.GONE);
-                                                                               isdrop = true;
-                                                                               drop.setImageResource(R.drawable.dropup);
-                                                                               RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 65);
-                                                                               param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
-                                                                               ind.setLayoutParams(param);
-                                                                           }
-                                                                       }
+                                                                    public void onClick(View v) {
+                                                                        if (isdrop) {
+                                                                            inputscore.setVisibility(View.VISIBLE);
+                                                                            isdrop = false;
+                                                                            drop.setImageResource(R.drawable.drop);
+                                                                            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
+                                                                            param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+                                                                            param.addRule(RelativeLayout.ABOVE, R.id.inputscore);
+                                                                            ind.setLayoutParams(param);
+                                                                        } else {
+                                                                            inputscore.setVisibility(View.GONE);
+                                                                            isdrop = true;
+                                                                            drop.setImageResource(R.drawable.dropup);
+                                                                            RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
+                                                                            param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
+                                                                            ind.setLayoutParams(param);
+                                                                        }
+                                                                    }
                                                                 });
 
                                                                 b1.setOnClickListener(new View.OnClickListener() {
@@ -371,5 +393,14 @@ public class add extends Activity{
 
         ///////////////////////////////////////////////////////小键盘end
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String result =data.getExtras().getString("res"); //得到新Activity关闭后返回的数据
+        if (result.matches("NULL")){
+
+        }else {
+            //处理返回值
+        }
     }
 }

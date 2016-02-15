@@ -433,176 +433,9 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/scrollView"
-            android:layout_below="@+id/relativeLayout10"
-            android:layout_alignParentLeft="true"
-            android:layout_above="@+id/relativeLayout15"
-            android:focusable="false"
-            android:focusableInTouchMode="false">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/relativeLayout10"
-                android:layout_above="@+id/relativeLayout15">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout10"
-                    android:layout_alignParentLeft="true"
-                    android:paddingLeft="15dp"
-                    android:id="@+id/relativeLayout12"
-                    android:paddingRight="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="对象"
-                        android:id="@+id/textView11"
-                        android:textSize="35px"
-                        android:textStyle="bold"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="10dp"
-                        android:id="@+id/choosemember"
-                        android:layout_alignTop="@+id/editText2"
-                        android:layout_alignParentRight="true">
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/into"
-                            android:id="@+id/imageView18"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_toRightOf="@+id/textView17" />
-
-                        <TextView
-                            android:layout_width="38dp"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="选择"
-                            android:id="@+id/textView17"
-                            android:textColor="#6e6e6e"
-                            android:textSize="35px"
-                            android:gravity="center_vertical"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true" />
-                    </RelativeLayout>
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText2"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:enabled="false"
-                        android:layout_below="@+id/textView11"
-                        android:layout_alignLeft="@+id/textView11"
-                        android:layout_toLeftOf="@+id/choosemember" />
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:scaleType="fitXY"
-                    android:id="@+id/imageView17"
-                    android:layout_below="@+id/relativeLayout12"
-                    android:layout_alignParentLeft="true"
-                    android:background="#6e6e6e"
-                    android:visibility="visible" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout12"
-                    android:layout_alignParentLeft="true"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="15dp"
-                    android:id="@+id/relativeLayout13"
-                    android:paddingBottom="10dp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="理由"
-                        android:id="@+id/textView18"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:textSize="35px"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText"
-                        android:layout_below="@+id/textView18"
-                        android:layout_alignLeft="@+id/textView18"
-                        android:layout_toLeftOf="@+id/relativeLayout14" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="10dp"
-                        android:id="@+id/relativeLayout14"
-                        android:layout_alignTop="@+id/editText"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignBottom="@+id/editText">
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/into"
-                            android:id="@+id/imageView20"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_toRightOf="@+id/textView19" />
-
-                        <TextView
-                            android:layout_width="38dp"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="选择"
-                            android:id="@+id/textView19"
-                            android:textColor="#6e6e6e"
-                            android:textSize="35px"
-                            android:gravity="center_vertical"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentLeft="true" />
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5px"
-                    android:scaleType="fitXY"
-                    android:id="@+id/imageView19"
-                    android:background="#6e6e6e"
-                    android:visibility="visible"
-                    android:layout_below="@+id/relativeLayout13"
-                    android:layout_centerHorizontal="true" />
-            </LinearLayout>
-        </ScrollView>
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="65px"
+            android:layout_height="85px"
             android:background="#262a3b"
             android:id="@+id/relativeLayout15"
             android:layout_above="@+id/inputscore"
@@ -631,15 +464,232 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/droppp"
                 android:src="@drawable/drop"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:paddingRight="15dp"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true"
+                android:paddingLeft="15dp" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:background="#ffffff"
+            android:layout_below="@+id/relativeLayout10"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/relativeLayout15"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/linearLayout"
+                android:paddingBottom="15dp"
+                android:background="@drawable/choose_press">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:id="@+id/choosedate"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false">
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView25"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView26"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@+id/imageView25" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView27"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView28"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="02-15"
+                        android:id="@+id/showdate"
+                        android:layout_centerInParent="true"
+                        android:textSize="30px" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/textView17"
+                    android:layout_weight="0.09" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/choose_press"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/chooseresson">
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView22"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView19"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@+id/imageView22" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView23"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/imageView24"
+                        android:background="#e1e1e1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="理由"
+                        android:id="@+id/textView21"
+                        android:textSize="30px"
+                        android:layout_centerInParent="true" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/choose_press"
+                android:layout_below="@+id/linearLayout"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/choosemem"
+                android:focusable="false"
+                android:focusableInTouchMode="false">
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView29"
+                    android:background="#e1e1e1"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView30"
+                    android:background="#e1e1e1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/imageView29" />
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView31"
+                    android:background="#e1e1e1"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView32"
+                    android:background="#e1e1e1"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="成员"
+                    android:id="@+id/textView22"
+                    android:textSize="30px"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,"
+                    android:id="@+id/textView11"
+                    android:textSize="30px"
+                    android:paddingTop="10dp"
+                    android:layout_below="@+id/textView22"
+                    android:layout_alignParentLeft="true"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

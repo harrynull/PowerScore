@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e1e1e1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#262a3b"
+            android:paddingRight="10dp"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="完成"
+                android:id="@+id/ok"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:background="#00000000"
+                android:textColor="#ffffff" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="10dp"
+                android:id="@+id/back">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/back"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/backim" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="返回"
+                    android:id="@+id/textView15"
+                    android:textColor="#ffffff"
+                    android:textSize="35px"
+                    android:layout_toRightOf="@+id/backim"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_vertical" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout13"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#262a3b"
+            android:paddingRight="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="组"
+                android:id="@+id/group"
+                android:background="#00000000"
+                android:textColor="#ffffff"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:singleLine="false" />
+
+        </RelativeLayout>
+
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="381dp"
+            android:id="@+id/expandableListView"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:background="#ffffff"
+            android:layout_below="@+id/relativeLayout8"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/relativeLayout13" />
+    </RelativeLayout>
+</LinearLayout>
