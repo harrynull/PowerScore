@@ -467,7 +467,7 @@
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/droppp"
-                android:src="@drawable/drop"
+                android:src="@drawable/dropn"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:paddingRight="15dp"

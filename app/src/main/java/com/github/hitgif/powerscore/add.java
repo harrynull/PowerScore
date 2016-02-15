@@ -140,14 +140,16 @@ public class add extends Activity{
                                                                     public void onClick(View v) {
                                                                         if (isdrop) {
                                                                             inputscore.setVisibility(View.VISIBLE);
+                                                                            ((ImageView)findViewById(R.id.imageView21)).setVisibility(View.VISIBLE);
                                                                             isdrop = false;
-                                                                            drop.setImageResource(R.drawable.drop);
+                                                                            drop.setImageResource(R.drawable.dropn);
                                                                             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
                                                                             param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
                                                                             param.addRule(RelativeLayout.ABOVE, R.id.inputscore);
                                                                             ind.setLayoutParams(param);
                                                                         } else {
                                                                             inputscore.setVisibility(View.GONE);
+                                                                            ((ImageView)findViewById(R.id.imageView21)).setVisibility(View.GONE);
                                                                             isdrop = true;
                                                                             drop.setImageResource(R.drawable.dropup);
                                                                             RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
