@@ -434,7 +434,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="85px"
+            android:layout_height="40dp"
             android:background="#262a3b"
             android:id="@+id/relativeLayout15"
             android:layout_above="@+id/inputscore"
@@ -463,7 +463,7 @@
 
             <ImageView
                 android:layout_width="45dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:id="@+id/droppp"
                 android:src="@drawable/dropn"
                 android:layout_alignParentTop="true"
@@ -476,14 +476,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="10dp"
-            android:paddingLeft="20dp"
             android:background="#ffffff"
             android:layout_below="@+id/relativeLayout10"
             android:layout_alignParentLeft="true"
             android:layout_above="@+id/relativeLayout15"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp">
+            android:padding="10dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -509,7 +506,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView25"
-                        android:background="#e1e1e1"
+                        android:background="#21b5ff"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true" />
 
@@ -518,7 +515,7 @@
                         android:layout_height="1dp"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView26"
-                        android:background="#e1e1e1"
+                        android:background="#21b5ff"
                         android:layout_alignParentBottom="true"
                         android:layout_toRightOf="@+id/imageView25" />
 
@@ -527,7 +524,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView27"
-                        android:background="#e1e1e1"
+                        android:background="#21b5ff"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true" />
 
@@ -536,7 +533,7 @@
                         android:layout_height="1dp"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView28"
-                        android:background="#e1e1e1"
+                        android:background="#21b5ff"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true" />
 
@@ -544,10 +541,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/shoedate"
+                        android:id="@+id/showdate"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
-                        android:textColor="#000000" />
+                        android:textColor="#21b5ff" />
 
                 </RelativeLayout>
 
@@ -557,6 +554,12 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/textView17"
                     android:layout_weight="0.09" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/textView12" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -683,7 +686,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignRight="@+id/imageView31"
                     android:layout_alignParentLeft="true"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:textColor="#21b5ff" />
             </RelativeLayout>
         </RelativeLayout>
 

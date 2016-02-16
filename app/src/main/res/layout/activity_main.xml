@@ -198,9 +198,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/drop2"
                 android:src="@drawable/drop"
+                android:paddingBottom="7dp"
+                android:layout_alignParentBottom="true"
                 android:layout_alignTop="@+id/textView10"
-                android:layout_toRightOf="@+id/textView10"
-                android:paddingBottom="7dp" />
+                android:layout_toRightOf="@+id/textView10" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -374,7 +375,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:id="@+id/choose"
-            android:background="#ffffff"
+            android:background="@drawable/layout_press_light"
             android:gravity="center_vertical|center_horizontal"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true">

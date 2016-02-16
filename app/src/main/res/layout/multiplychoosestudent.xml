@@ -49,7 +49,6 @@
                     android:text="返回"
                     android:id="@+id/textView15"
                     android:textColor="#ffffff"
-                    android:textSize="35px"
                     android:layout_toRightOf="@+id/backimc"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentTop="true"
