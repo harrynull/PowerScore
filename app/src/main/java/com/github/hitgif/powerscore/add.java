@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -46,7 +47,7 @@ public class add extends Activity{
     private Button b0;
     private String showmonth;
     private String showday;
-    private String reason_giveback;
+    private String reason_giveback = "";
     private TextView score;
     private ImageView drop;
     private ImageButton bplus;
@@ -94,6 +95,10 @@ public class add extends Activity{
         backspace = (ImageButton) findViewById(R.id.backspace);
         inputscore = (LinearLayout) findViewById(R.id.inputscore);
         ind = (RelativeLayout)findViewById(R.id.relativeLayout15);
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yy-MM-dd");
+        String date=sdf.format(new java.util.Date());
+        ((TextView)findViewById(R.id.showdate)).setText(date);
         ViewTreeObserver vto3 = backspace.getViewTreeObserver();
         ViewTreeObserver vto2 = b9.getViewTreeObserver();
         ViewTreeObserver vto = bd.getViewTreeObserver();
@@ -168,7 +173,7 @@ public class add extends Activity{
                     ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.VISIBLE);
                     isdrop = false;
                     drop.setImageResource(R.drawable.dropn);
-                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
+                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ((TextView)findViewById(R.id.textView12)).getHeight());
                     param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
                     param.addRule(RelativeLayout.ABOVE, R.id.inputscore);
                     ind.setLayoutParams(param);
@@ -177,7 +182,7 @@ public class add extends Activity{
                     ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.GONE);
                     isdrop = true;
                     drop.setImageResource(R.drawable.dropup);
-                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 85);
+                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ((TextView)findViewById(R.id.textView12)).getHeight());
                     param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
                     ind.setLayoutParams(param);
                 }
@@ -281,6 +286,18 @@ public class add extends Activity{
 
             }
         });
+        ((RelativeLayout) findViewById(R.id.back)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((TextView) findViewById(R.id.textView9)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((ImageView) findViewById(R.id.imageView6)).setImageResource(R.drawable.backdown);
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((TextView) findViewById(R.id.textView9)).setTextColor(Color.parseColor("#ffffff"));
+                    ((ImageView) findViewById(R.id.imageView6)).setImageResource(R.drawable.back);
+                }
+                return false;
+            }
+        });
         ///////////////////////////////////////////////////////小键盘end
 
     }
@@ -303,6 +320,11 @@ public class add extends Activity{
                     s = s.substring(0 , s.length()-2);
 
                     ((TextView) findViewById(R.id.textView11)).setText(s);
+                    ((ImageView) findViewById(R.id.imageView29)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                    ((ImageView) findViewById(R.id.imageView30)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                    ((ImageView) findViewById(R.id.imageView31)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                    ((ImageView) findViewById(R.id.imageView32)).setBackgroundColor(Color.parseColor("#21b5ff"));
+                    ((TextView) findViewById(R.id.textView16)).setTextColor(Color.parseColor("#21b5ff"));
                 }
                 break;
             case 2:
