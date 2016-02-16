@@ -8,8 +8,8 @@
     <color name="actionsheet_blue">#037BFF</color>
     <color name="actionsheet_red">#FD4A2E</color>
     <color name="actionsheet_gray">#8F8F8F</color>
-    <color name="main">#262a3b</color>
-    <color name="layout_down">#141720</color>
+    <color name="main">#393a3f</color>
+    <color name="layout_down">#26262a</color>
     <color name="layout_downg">#e1e1e1</color>
 
 </resources>

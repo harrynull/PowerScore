@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
 
     private long timeStemp=0;
     private boolean superflag = true;
+    private boolean isflit = false;
     private int pmon = 0;
 
     private String d="不限";
@@ -67,7 +68,7 @@ public class MainActivity extends Activity {
     private ImageView dr;
     private RelativeLayout genlayout;
     private RelativeLayout perlayout;
-    private LinearLayout choose;
+    private ImageView choose;
     private ArrayList<History> histories=MainActivity.historys;
 
     Button gen;
@@ -85,18 +86,19 @@ public class MainActivity extends Activity {
         per = (Button) findViewById(R.id.per);
         genlayout = (RelativeLayout) findViewById(R.id.genlayout);
         perlayout = (RelativeLayout) findViewById(R.id.perlayout);
-        choose = (LinearLayout) findViewById(R.id.choose);
+        choose = (ImageView) findViewById(R.id.choose);
         genlayout.setVisibility(View.VISIBLE);
         perlayout.setVisibility(View.GONE);
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 gen.setBackgroundColor(Color.parseColor("#ffffff"));
-                gen.setTextColor(Color.parseColor("#262a3b"));
-                per.setBackgroundColor(Color.parseColor("#262a3b"));
+                gen.setTextColor(Color.parseColor("#393a3f"));
+                per.setBackgroundColor(Color.parseColor("#393a3f"));
                 per.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(true);
                 genlayout.setVisibility(View.VISIBLE);
                 perlayout.setVisibility(View.GONE);
+                ((ImageView)findViewById(R.id.flit)).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
             }
         });
@@ -114,12 +116,35 @@ public class MainActivity extends Activity {
         per.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 per.setBackgroundColor(Color.parseColor("#ffffff"));
-                per.setTextColor(Color.parseColor("#262a3b"));
-                gen.setBackgroundColor(Color.parseColor("#262a3b"));
+                per.setTextColor(Color.parseColor("#393a3f"));
+                gen.setBackgroundColor(Color.parseColor("#393a3f"));
                 gen.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(false);
                 perlayout.setVisibility(View.VISIBLE);
                 genlayout.setVisibility(View.GONE);
+
+                ((RelativeLayout)findViewById(R.id.fliter)).setVisibility(View.GONE);
+                ((ImageView)findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
+                ((ImageView)findViewById(R.id.flit)).setVisibility(View.GONE);
+
+                d = "不限";
+                ((TextView) findViewById(R.id.month)).setText(d);
+                ((TextView) findViewById(R.id.year)).setText("");
+                ((TextView) findViewById(R.id.day)).setText("");
+                ((TextView) findViewById(R.id.textView5)).setText("");
+                ((TextView) findViewById(R.id.textView7)).setText("");
+                // ((TextView) findViewById(R.id.month)).setTextSize(20);
+                //superflag = false;
+                timeStemp = 0;
+                lv.setAdapter(new MyAdapter(MainActivity.this));
+
+                pmon = 0;
+                ((TextView) findViewById(R.id.pm)).setText("不限");
+                //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
+                scoreFilter=-1;
+
+                isflit = false;
+
             }
         });
         choose.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +154,37 @@ public class MainActivity extends Activity {
 
         });
 
+        ((ImageView)findViewById(R.id.flit)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isflit){
 
+
+                    d = "不限";
+                    ((TextView) findViewById(R.id.month)).setText(d);
+                    ((TextView) findViewById(R.id.year)).setText("");
+                    ((TextView) findViewById(R.id.day)).setText("");
+                    ((TextView) findViewById(R.id.textView5)).setText("");
+                    ((TextView) findViewById(R.id.textView7)).setText("");
+                    // ((TextView) findViewById(R.id.month)).setTextSize(20);
+                    //superflag = false;
+                    //timeStemp = 0;
+                    //lv.setAdapter(new MyAdapter(MainActivity.this));
+
+                    //pmon = 0;
+                    ((TextView) findViewById(R.id.pm)).setText("不限");
+                    //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
+                    scoreFilter=-1;
+                    ((RelativeLayout)findViewById(R.id.fliter)).setVisibility(View.GONE);
+                    ((ImageView)findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
+                    isflit = false;
+                }else {
+                    ((RelativeLayout)findViewById(R.id.fliter)).setVisibility(View.VISIBLE);
+                    ((ImageView)findViewById(R.id.flit)).setImageResource(R.drawable.nonflit);
+                    isflit = true;
+                }
+            }
+        });
 
         lv = (ListView) findViewById(R.id.listView3);
         dr = (ImageView) findViewById(R.id.droppp);
