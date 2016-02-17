@@ -72,7 +72,8 @@ public class MainActivity extends Activity {
     private ImageView dr;
     private RelativeLayout genlayout;
     private RelativeLayout perlayout;
-    private ImageView choose;
+    private RelativeLayout choose;
+    private ImageView add;
     private ArrayList<History> histories=MainActivity.historys;
 
     Button gen;
@@ -90,7 +91,8 @@ public class MainActivity extends Activity {
         per = (Button) findViewById(R.id.per);
         genlayout = (RelativeLayout) findViewById(R.id.genlayout);
         perlayout = (RelativeLayout) findViewById(R.id.perlayout);
-        choose = (ImageView) findViewById(R.id.choose);
+        choose = (RelativeLayout) findViewById(R.id.choose);
+        add = (ImageView) findViewById(R.id.add);
         final  ImageView sync = (ImageView)findViewById(R.id.sync);
         final  Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
         LinearInterpolator lin = new LinearInterpolator();
@@ -116,8 +118,8 @@ public class MainActivity extends Activity {
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 gen.setBackgroundColor(Color.parseColor("#ffffff"));
-                gen.setTextColor(Color.parseColor("#393a3f"));
-                per.setBackgroundColor(Color.parseColor("#393a3f"));
+                gen.setTextColor(Color.parseColor("#14a2d4"));
+                per.setBackgroundColor(Color.parseColor("#14a2d4"));
                 per.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(true);
                 genlayout.setVisibility(View.VISIBLE);
@@ -141,8 +143,8 @@ public class MainActivity extends Activity {
         per.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 per.setBackgroundColor(Color.parseColor("#ffffff"));
-                per.setTextColor(Color.parseColor("#393a3f"));
-                gen.setBackgroundColor(Color.parseColor("#393a3f"));
+                per.setTextColor(Color.parseColor("#14a2d4"));
+                gen.setBackgroundColor(Color.parseColor("#14a2d4"));
                 gen.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(false);
                 perlayout.setVisibility(View.VISIBLE);
@@ -388,7 +390,7 @@ public class MainActivity extends Activity {
             }
 
         });
-        ((LinearLayout)findViewById(R.id.add)).setOnClickListener(new View.OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivityForResult(new Intent(MainActivity.this, add.class), 2);
             }

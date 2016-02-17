@@ -50,8 +50,8 @@ public class add extends Activity{
     private String reason_giveback = "";
     private TextView score;
     private ImageView drop;
-    private ImageButton bplus;
-    private ImageButton bminus;
+    private ImageView bplus;
+    private ImageView bminus;
     private ImageButton backspace;
     private RelativeLayout ind;
     private LinearLayout inputscore;
@@ -90,8 +90,8 @@ public class add extends Activity{
         b0 = (Button)findViewById(R.id.b0);
         score = (TextView)findViewById(R.id.score);
         drop = (ImageView)findViewById(R.id.droppp);
-        bplus = (ImageButton) findViewById(R.id.bplus);
-        bminus = (ImageButton) findViewById(R.id.bminus);
+        bplus = (ImageView) findViewById(R.id.bplus);
+        bminus = (ImageView) findViewById(R.id.bminus);
         backspace = (ImageButton) findViewById(R.id.backspace);
         inputscore = (LinearLayout) findViewById(R.id.inputscore);
         ind = (RelativeLayout)findViewById(R.id.relativeLayout15);
@@ -127,8 +127,8 @@ public class add extends Activity{
 
         bplus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                bplus.setImageResource(R.mipmap.plus_white);
-                bminus.setImageResource(R.mipmap.minus_blue);
+                bplus.setImageResource(R.drawable.plus_white);
+                bminus.setImageResource(R.drawable.minus_blue);
                 isplus = true;
             }
         });
@@ -136,8 +136,8 @@ public class add extends Activity{
 
         bminus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                bplus.setImageResource(R.mipmap.plus_blue);
-                bminus.setImageResource(R.mipmap.minus_white);
+                bplus.setImageResource(R.drawable.plus_blue);
+                bminus.setImageResource(R.drawable.minus_white);
                 isplus = false;
             }
         });
@@ -320,11 +320,11 @@ public class add extends Activity{
                     s = s.substring(0 , s.length()-2);
 
                     ((TextView) findViewById(R.id.textView11)).setText(s);
-                    ((ImageView) findViewById(R.id.imageView29)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                    ((ImageView) findViewById(R.id.imageView30)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                    ((ImageView) findViewById(R.id.imageView31)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                    ((ImageView) findViewById(R.id.imageView32)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                    ((TextView) findViewById(R.id.textView16)).setTextColor(Color.parseColor("#21b5ff"));
+                    ((ImageView) findViewById(R.id.imageView29)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                    ((ImageView) findViewById(R.id.imageView30)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                    ((ImageView) findViewById(R.id.imageView31)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                    ((ImageView) findViewById(R.id.imageView32)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                    ((TextView) findViewById(R.id.textView16)).setTextColor(Color.parseColor("#14a2d4"));
                 }
                 break;
             case 2:
@@ -338,11 +338,11 @@ public class add extends Activity{
                         ((TextView) findViewById(R.id.textView21)).setTextColor(Color.parseColor("#000000"));
                     }else {
                         reason_giveback = reason;
-                        ((ImageView) findViewById(R.id.imageView19)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                        ((ImageView) findViewById(R.id.imageView22)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                        ((ImageView) findViewById(R.id.imageView23)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                        ((ImageView) findViewById(R.id.imageView24)).setBackgroundColor(Color.parseColor("#21b5ff"));
-                        ((TextView) findViewById(R.id.textView21)).setTextColor(Color.parseColor("#21b5ff"));
+                        ((ImageView) findViewById(R.id.imageView19)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                        ((ImageView) findViewById(R.id.imageView22)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                        ((ImageView) findViewById(R.id.imageView23)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                        ((ImageView) findViewById(R.id.imageView24)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                        ((TextView) findViewById(R.id.textView21)).setTextColor(Color.parseColor("#14a2d4"));
                     }
                 }
                 break;

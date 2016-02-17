@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.github.hitgif.powerscore.MainActivity"
-    android:background="#e1e1e1">
+    android:background="#ffffff">
 
     <RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#393a3f">
+        android:background="#14a2d4">
 
 
         <ImageView
@@ -18,44 +18,40 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/fliter"
-            android:paddingTop="12.5dp"
-            android:paddingBottom="12.5dp"
             android:background="@drawable/layout_press"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/sync" />
+            android:layout_toLeftOf="@+id/sync"
+            android:padding="12dp" />
 
         <ImageView
             android:id="@+id/sync"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/sync"
-            android:paddingTop="11dp"
-            android:paddingBottom="11dp"
             android:background="@drawable/layout_press"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/setting" />
+            android:layout_alignParentRight="true"
+            android:padding="11dp" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/user"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:background="@drawable/layout_press"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true" />
-
-        <ImageView
-            android:id="@+id/setting"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/setting"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:background="@drawable/layout_press"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentLeft="true"
+            android:padding="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/ls"
+            android:textColor="#000000"
+            android:visibility="gone"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/flit" />
 
 
     </RelativeLayout>
@@ -63,7 +59,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#393a3f"
+        android:background="#14a2d4"
         android:paddingLeft="10dp"
         android:layout_below="@+id/relativeLayout3"
         android:layout_alignLeft="@+id/relativeLayout3"
@@ -93,7 +89,7 @@
                     android:id="@+id/textView2"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:textColor="#9b9b9b" />
+                    android:textColor="#e1e1e1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -195,7 +191,7 @@
                     android:id="@+id/textView3"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:textColor="#9b9b9b" />
+                    android:textColor="#e1e1e1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -268,7 +264,7 @@
                     android:id="@+id/textView"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:textColor="#9b9b9b" />
+                    android:textColor="#e1e1e1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -294,9 +290,9 @@
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_below="@+id/relativeLayout5"
-        android:layout_alignLeft="@+id/relativeLayout5"
-        android:id="@+id/linearLayout2">
+        android:id="@+id/linearLayout2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true">
 
         <Button
             android:layout_width="wrap_content"
@@ -308,56 +304,22 @@
             android:id="@+id/gen" />
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#393a3f"
+            android:background="#14a2d4"
             android:textSize="30px"
             android:text="个人"
             android:textColor="#ffffff"
             android:id="@+id/per" />
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/add"
-        android:background="@drawable/layout_press"
-        android:gravity="center_vertical|center_horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/ls"
-            android:textColor="#000000"
-            android:layout_alignBottom="@+id/relativeLayout4"
-            android:layout_alignParentRight="true" />
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/imageView5"
-            android:src="@drawable/note" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="记一条"
-            android:id="@+id/textView8"
-            android:textColor="#ffffff" />
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_above="@+id/add"
         android:id="@+id/genlayout"
-        android:visibility="gone">
+        android:visibility="invisible"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_below="@+id/relativeLayout5">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
@@ -384,41 +346,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/add"
         android:id="@+id/perlayout"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_above="@+id/linearLayout2">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="80dp"
             android:id="@+id/relativeLayout7"
-            android:background="#ffffff">
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/imageView17">
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/choose"
+                android:background="@drawable/layout_press">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="王安海"
-                        android:id="@+id/_name"
-                        android:textColor="#393a3f"
-                        android:gravity="center_vertical"
-                        android:textSize="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true" />
+                    android:id="@+id/relativeLayout16"
+                    android:paddingRight="10dp"
+                    android:paddingTop="3dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -426,59 +384,120 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="九(3)班"
                         android:id="@+id/_class"
-                        android:textColor="#393a3f"
-                        android:paddingLeft="10dp"
+                        android:textColor="#ffffff"
                         android:gravity="center_vertical"
                         android:textSize="15dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/_name"
-                        android:layout_alignBottom="@+id/_name"
-                        android:paddingBottom="3dp" />
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="3dp"
+                        android:layout_below="@+id/_name"
+                        android:layout_alignLeft="@+id/_name" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="王安海"
+                        android:id="@+id/_name"
+                        android:textColor="#ffffff"
+                        android:gravity="center_vertical"
+                        android:textSize="32dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true" />
 
                 </RelativeLayout>
-            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:id="@+id/choose"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/per"
-                android:paddingBottom="3dp"
-                android:background="@drawable/layout_press_light" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/relativeLayout6"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="7dp"
+                    android:visibility="visible"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/relativeLayout16">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/choose"
-                android:visibility="visible"
-                android:layout_toRightOf="@+id/imageView17">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="当前总分"
+                        android:id="@+id/textView4"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="#e1e1e1" />
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/textView6"
+                        android:textColor="#ffffff"
+                        android:paddingRight="5dp"
+                        android:textIsSelectable="false"
+                        android:text="160.5"
+                        android:layout_below="@+id/textView4"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentBottom="true" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/relativeLayout14"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="7dp"
+                    android:layout_alignTop="@+id/relativeLayout6"
+                    android:layout_toRightOf="@+id/imageView5"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="7天内变化"
+                        android:id="@+id/textView8"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="#e1e1e1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/textView19"
+                        android:textColor="#ffffff"
+                        android:paddingRight="5dp"
+                        android:textIsSelectable="false"
+                        android:text="+10.6"
+                        android:layout_below="@+id/textView8"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_vertical" />
+                </RelativeLayout>
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="160.5"
-                    android:id="@+id/textView19"
-                    android:textColor="#393a3f"
-                    android:textSize="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:id="@+id/imageView5"
+                    android:src="@drawable/jg"
+                    android:paddingBottom="5dp"
+                    android:layout_alignBottom="@+id/relativeLayout14"
+                    android:layout_toRightOf="@+id/relativeLayout6"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView17"
+                    android:src="@drawable/into"
+                    android:layout_alignTop="@+id/relativeLayout14"
+                    android:layout_alignParentRight="true"
+                    android:visibility="visible" />
 
             </RelativeLayout>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/imageView17"
-                android:visibility="visible"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/jgg"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp" />
 
         </RelativeLayout>
 
@@ -489,7 +508,7 @@
             android:visibility="visible"
             android:layout_below="@+id/relativeLayout7"
             android:layout_alignParentLeft="true"
-            android:background="#393a3f" />
+            android:background="#e1e1e1" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -508,9 +527,24 @@
             android:layout_height="wrap_content"
             android:id="@+id/listView"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/imageView3" />
+            android:layout_below="@+id/imageView3"
+            android:background="#ffffff"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
 
     </RelativeLayout>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/add"
+        android:layout_weight="3"
+        android:src="@drawable/add"
+        android:layout_alignBottom="@+id/listView"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
 

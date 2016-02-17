@@ -13,7 +13,7 @@
             android:layout_height="50dp"
             android:paddingRight="10dp"
             android:layout_gravity="center_horizontal"
-            android:background="#393a3f">
+            android:background="#14a2d4">
 
             <Button
                 android:layout_width="wrap_content"
@@ -62,14 +62,14 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:id="@+id/inputscore"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:background="#ebeff2">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_above="@+id/relativeLayout9"
                 android:layout_centerHorizontal="true"
-                android:background="#393a3f"
                 android:id="@+id/relativeLayout11">
 
                 <ImageView
@@ -109,7 +109,7 @@
                     android:text="0"
                     android:id="@+id/score"
                     android:gravity="center_vertical|right"
-                    android:textColor="#ffffff"
+                    android:textColor="#3b454b"
                     android:textSize="30dp"
                     android:paddingRight="15dp"
                     android:layout_alignParentTop="true"
@@ -121,7 +121,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="#393a3f"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:id="@+id/relativeLayout9">
@@ -143,10 +142,9 @@
                     android:id="@+id/linearLayout3"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:visibility="visible"
-                    android:background="#393a3f">
+                    android:visibility="visible">
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -155,9 +153,11 @@
                         android:text="+"
                         android:textColor="#ffffff"
                         android:id="@+id/bplus"
-                        android:src="@mipmap/plus_white" />
+                        android:src="@drawable/plus_white"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp" />
 
-                    <ImageButton
+                    <ImageView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -165,7 +165,9 @@
                         android:text="-"
                         android:textSize="100px"
                         android:id="@+id/bminus"
-                        android:src="@mipmap/minus_blue" />
+                        android:src="@drawable/minus_blue"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,7 +192,7 @@
                                     android:layout_weight="1"
                                     android:background="@drawable/button_press"
                                     android:textSize="30dp"
-                                    android:textColor="#ffffff"
+                                    android:textColor="#3b454b"
                                     android:text="1"
                                     android:id="@+id/b1" />
 
@@ -207,7 +209,7 @@
                                     android:layout_weight="1"
                                     android:background="@drawable/button_press"
                                     android:textSize="30dp"
-                                    android:textColor="#ffffff"
+                                    android:textColor="#3b454b"
                                     android:text="2"
                                     android:id="@+id/b2" />
 
@@ -224,7 +226,7 @@
                                     android:layout_weight="1"
                                     android:background="@drawable/button_press"
                                     android:text="3"
-                                    android:textColor="#ffffff"
+                                    android:textColor="#3b454b"
                                     android:textSize="30dp"
                                     android:id="@+id/b3" />
 
@@ -258,7 +260,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/button_press"
                             android:text="4"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:textSize="30dp"
                             android:id="@+id/b4" />
 
@@ -275,7 +277,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/button_press"
                             android:textSize="30dp"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:text="5"
                             android:id="@+id/b5" />
 
@@ -292,7 +294,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/button_press"
                             android:text="6"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:textSize="30dp"
                             android:id="@+id/b6" />
 
@@ -325,7 +327,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/button_press"
                             android:text="7"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:textSize="30dp"
                             android:id="@+id/b7" />
 
@@ -342,7 +344,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/button_press"
                             android:textSize="30dp"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:text="8"
                             android:id="@+id/b8" />
 
@@ -359,7 +361,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/button_press"
                             android:text="9"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:textSize="30dp"
                             android:id="@+id/b9" />
 
@@ -393,7 +395,7 @@
                             android:layout_weight="1.06"
                             android:background="@drawable/button_press"
                             android:text="0"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:textSize="30dp"
                             android:id="@+id/b0" />
 
@@ -409,7 +411,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/button_press"
                             android:textSize="30dp"
-                            android:textColor="#ffffff"
+                            android:textColor="#3b454b"
                             android:text="."
                             android:id="@+id/button4" />
 
@@ -436,7 +438,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#393a3f"
+            android:background="#ebeff2"
             android:id="@+id/relativeLayout15"
             android:layout_above="@+id/inputscore"
             android:layout_alignParentLeft="false"
@@ -458,7 +460,7 @@
                 android:id="@+id/textView20"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:textColor="#ffffff"
+                android:textColor="#3b454b"
                 android:paddingLeft="15dp"
                 android:textStyle="bold" />
 
@@ -471,7 +473,8 @@
                 android:layout_alignParentRight="true"
                 android:paddingRight="15dp"
                 android:layout_alignParentBottom="true"
-                android:paddingLeft="15dp" />
+                android:paddingLeft="15dp"
+                android:background="@drawable/button_press" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -507,7 +510,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView25"
-                        android:background="#21b5ff"
+                        android:background="#14a2d4"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true" />
 
@@ -516,7 +519,7 @@
                         android:layout_height="1dp"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView26"
-                        android:background="#21b5ff"
+                        android:background="#14a2d4"
                         android:layout_alignParentBottom="true"
                         android:layout_toRightOf="@+id/imageView25" />
 
@@ -525,7 +528,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView27"
-                        android:background="#21b5ff"
+                        android:background="#14a2d4"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true" />
 
@@ -534,7 +537,7 @@
                         android:layout_height="1dp"
                         android:scaleType="fitXY"
                         android:id="@+id/imageView28"
-                        android:background="#21b5ff"
+                        android:background="#14a2d4"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true" />
 
@@ -545,7 +548,7 @@
                         android:id="@+id/showdate"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
-                        android:textColor="#21b5ff" />
+                        android:textColor="#14a2d4" />
 
                 </RelativeLayout>
 
@@ -688,7 +691,7 @@
                     android:layout_alignRight="@+id/imageView31"
                     android:layout_alignParentLeft="true"
                     android:padding="10dp"
-                    android:textColor="#21b5ff" />
+                    android:textColor="#14a2d4" />
             </RelativeLayout>
         </RelativeLayout>
 

@@ -8,7 +8,7 @@
         android:id="@+id/relativeLayout8"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#393a3f"
+        android:background="#14a2d4"
         android:paddingRight="10dp"
         android:layout_gravity="center_horizontal">
 
