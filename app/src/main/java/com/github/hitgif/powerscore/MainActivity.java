@@ -20,6 +20,9 @@ import android.view.Window;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,6 +56,7 @@ public class MainActivity extends Activity {
     private long timeStemp=0;
     private boolean superflag = true;
     private boolean isflit = false;
+    private boolean issync = false;
     private int pmon = 0;
 
     private String d="不限";
@@ -87,8 +91,28 @@ public class MainActivity extends Activity {
         genlayout = (RelativeLayout) findViewById(R.id.genlayout);
         perlayout = (RelativeLayout) findViewById(R.id.perlayout);
         choose = (ImageView) findViewById(R.id.choose);
+        final  ImageView sync = (ImageView)findViewById(R.id.sync);
+        final  Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
+        LinearInterpolator lin = new LinearInterpolator();
+        operatingAnim.setInterpolator(lin);
         genlayout.setVisibility(View.VISIBLE);
         perlayout.setVisibility(View.GONE);
+        sync.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (operatingAnim != null) {
+                    if(!issync){
+                        //开始转
+                        sync.startAnimation(operatingAnim);
+                        issync = true;
+                    }else {
+                        //停止转
+                        sync.clearAnimation();
+                        issync = false;
+                    }
+                }
+            }
+        });
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 gen.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -102,6 +126,7 @@ public class MainActivity extends Activity {
                 ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
             }
         });
+
 
         ls = (Button) findViewById(R.id.ls);
         ls.setOnClickListener(new View.OnClickListener() {

@@ -10,41 +10,52 @@
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#393a3f"
-        android:paddingLeft="10dp">
+        android:background="#393a3f">
 
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/user"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:id="@+id/user"
-             />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="学分记录簿"
-            android:id="@+id/textView4"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#ffffff" />
 
         <ImageView
             android:id="@+id/flit"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/fliter"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:paddingTop="12.5dp"
             android:paddingBottom="12.5dp"
-            android:background="@drawable/layout_press" />
+            android:background="@drawable/layout_press"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/sync" />
+
+        <ImageView
+            android:id="@+id/sync"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/sync"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp"
+            android:background="@drawable/layout_press"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/setting" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/user"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/layout_press"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" />
+
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/setting"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/layout_press"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
 
 
     </RelativeLayout>
