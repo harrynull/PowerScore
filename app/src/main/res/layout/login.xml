@@ -39,10 +39,9 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:hint="用户名"
-        android:inputType="numberDecimal"
+
         android:maxLength="11"
         android:paddingLeft="10dip"
-        android:paddingRight="40.0dip"
         android:singleLine="true"
         android:textColor="#3b454b" />
     <EditText
@@ -56,10 +55,9 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:hint="密码"
-        android:inputType="numberDecimal"
+
         android:maxLength="11"
         android:paddingLeft="10dip"
-        android:paddingRight="40.0dip"
         android:singleLine="true"
         android:textColor="#3b454b"
         android:layout_below="@+id/account_editor"
