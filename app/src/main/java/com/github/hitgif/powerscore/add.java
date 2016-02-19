@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -325,6 +326,8 @@ public class add extends Activity{
                     ((ImageView) findViewById(R.id.imageView31)).setBackgroundColor(Color.parseColor("#14a2d4"));
                     ((ImageView) findViewById(R.id.imageView32)).setBackgroundColor(Color.parseColor("#14a2d4"));
                     ((TextView) findViewById(R.id.textView16)).setTextColor(Color.parseColor("#14a2d4"));
+                    ((TextView) findViewById(R.id.textView11)).setGravity(Gravity.LEFT);
+                    ((TextView) findViewById(R.id.textView11)).setGravity(Gravity.TOP);
                 }
                 break;
             case 2:

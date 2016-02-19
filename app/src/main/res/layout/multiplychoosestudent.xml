@@ -12,7 +12,7 @@
             android:id="@+id/relativeLayout8"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#14a2d4"
+            android:background="#206d9b"
             android:paddingRight="10dp"
             android:layout_gravity="center_horizontal">
 
@@ -61,7 +61,7 @@
             android:id="@+id/relativeLayout13"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#14a2d4"
+            android:background="#206d9b"
             android:paddingRight="10dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true">

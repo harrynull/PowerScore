@@ -10,7 +10,7 @@
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#14a2d4">
+        android:background="#206d9b">
 
 
         <ImageView
@@ -18,7 +18,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/fliter"
-            android:background="@drawable/layout_press"
+            android:background="@color/main"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/sync"
             android:padding="12dp" />
@@ -49,7 +49,7 @@
             android:text="New Button"
             android:id="@+id/ls"
             android:textColor="#000000"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/flit" />
 
@@ -306,7 +306,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#14a2d4"
+            android:background="#206d9b"
             android:textSize="30px"
             android:text="个人"
             android:textColor="#ffffff"
@@ -376,7 +376,8 @@
                     android:layout_height="match_parent"
                     android:id="@+id/relativeLayout16"
                     android:paddingRight="10dp"
-                    android:paddingTop="3dp">
+                    android:paddingTop="3dp"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -415,7 +416,8 @@
                     android:paddingTop="7dp"
                     android:visibility="visible"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/relativeLayout16">
+                    android:layout_toRightOf="@+id/imageView18"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -436,10 +438,11 @@
                         android:paddingRight="5dp"
                         android:textIsSelectable="false"
                         android:text="160.5"
-                        android:layout_below="@+id/textView4"
                         android:layout_alignParentLeft="true"
                         android:gravity="center_vertical"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_below="@+id/textView4"
+                        android:paddingTop="10dp" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -451,7 +454,8 @@
                     android:paddingTop="7dp"
                     android:layout_alignTop="@+id/relativeLayout6"
                     android:layout_toRightOf="@+id/imageView5"
-                    android:visibility="visible">
+                    android:visibility="visible"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -474,19 +478,32 @@
                         android:text="+10.6"
                         android:layout_below="@+id/textView8"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center_vertical" />
+                        android:gravity="center_vertical"
+                        android:paddingTop="10dp" />
                 </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView18"
+                    android:src="@drawable/jg"
+                    android:paddingBottom="10dp"
+                    android:visibility="visible"
+                    android:paddingTop="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignBottom="@+id/relativeLayout14"
+                    android:layout_toRightOf="@+id/relativeLayout16" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView5"
                     android:src="@drawable/jg"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="10dp"
                     android:layout_alignBottom="@+id/relativeLayout14"
                     android:layout_toRightOf="@+id/relativeLayout6"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    android:paddingTop="10dp" />
 
                 <ImageView
                     android:layout_width="25dp"
@@ -535,16 +552,16 @@
     </RelativeLayout>
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:id="@+id/add"
         android:layout_weight="3"
         android:src="@drawable/add"
-        android:layout_alignBottom="@+id/listView"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="70dp"
         android:layout_marginRight="30dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/add_butt" />
 
 </RelativeLayout>
 

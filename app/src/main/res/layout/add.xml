@@ -13,7 +13,7 @@
             android:layout_height="50dp"
             android:paddingRight="10dp"
             android:layout_gravity="center_horizontal"
-            android:background="#14a2d4">
+            android:background="#206d9b">
 
             <Button
                 android:layout_width="wrap_content"
@@ -438,7 +438,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#ebeff2"
+            android:background="#206d9b"
             android:id="@+id/relativeLayout15"
             android:layout_above="@+id/inputscore"
             android:layout_alignParentLeft="false"
@@ -460,7 +460,7 @@
                 android:id="@+id/textView20"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:textColor="#3b454b"
+                android:textColor="#ffffff"
                 android:paddingLeft="15dp"
                 android:textStyle="bold" />
 
@@ -474,7 +474,7 @@
                 android:paddingRight="15dp"
                 android:layout_alignParentBottom="true"
                 android:paddingLeft="15dp"
-                android:background="@drawable/button_press" />
+                android:background="@drawable/layout_press" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -691,7 +691,9 @@
                     android:layout_alignRight="@+id/imageView31"
                     android:layout_alignParentLeft="true"
                     android:padding="10dp"
-                    android:textColor="#14a2d4" />
+                    android:textColor="#14a2d4"
+                    android:hint="未设置"
+                    android:gravity="center_vertical|center_horizontal" />
             </RelativeLayout>
         </RelativeLayout>
 

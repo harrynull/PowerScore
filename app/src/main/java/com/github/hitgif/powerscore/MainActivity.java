@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
     private boolean isflit = false;
     private boolean issync = false;
     private int pmon = 0;
+    private int lsi = 2333;
 
     private String d="不限";
     private String showyear;
@@ -103,11 +104,11 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (operatingAnim != null) {
-                    if(!issync){
+                    if (!issync) {
                         //开始转
                         sync.startAnimation(operatingAnim);
                         issync = true;
-                    }else {
+                    } else {
                         //停止转
                         sync.clearAnimation();
                         issync = false;
@@ -118,8 +119,8 @@ public class MainActivity extends Activity {
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 gen.setBackgroundColor(Color.parseColor("#ffffff"));
-                gen.setTextColor(Color.parseColor("#14a2d4"));
-                per.setBackgroundColor(Color.parseColor("#14a2d4"));
+                gen.setTextColor(Color.parseColor("#206d9b"));
+                per.setBackgroundColor(Color.parseColor("#206d9b"));
                 per.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(true);
                 genlayout.setVisibility(View.VISIBLE);
@@ -133,26 +134,27 @@ public class MainActivity extends Activity {
         ls = (Button) findViewById(R.id.ls);
         ls.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                historys.add(new History(+10, "王安海", "2333", new Date()));
+                historys.add(new History(+10, "王安海", String.valueOf(lsi), new Date()));
                 saveScores(MainActivity.this);
                 Save(MainActivity.this);
                 ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
+                lsi++;
             }
         });
 
         per.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 per.setBackgroundColor(Color.parseColor("#ffffff"));
-                per.setTextColor(Color.parseColor("#14a2d4"));
-                gen.setBackgroundColor(Color.parseColor("#14a2d4"));
+                per.setTextColor(Color.parseColor("#206d9b"));
+                gen.setBackgroundColor(Color.parseColor("#206d9b"));
                 gen.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(false);
                 perlayout.setVisibility(View.VISIBLE);
                 genlayout.setVisibility(View.GONE);
-
-                ((RelativeLayout)findViewById(R.id.fliter)).setVisibility(View.GONE);
-                ((ImageView)findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
-                ((ImageView)findViewById(R.id.flit)).setVisibility(View.GONE);
+                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#206d9b"));
+                ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.GONE);
+                ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
+                ((ImageView) findViewById(R.id.flit)).setVisibility(View.GONE);
 
                 d = "不限";
                 ((TextView) findViewById(R.id.month)).setText(d);
@@ -168,7 +170,7 @@ public class MainActivity extends Activity {
                 pmon = 0;
                 ((TextView) findViewById(R.id.pm)).setText("不限");
                 //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
-                scoreFilter=-1;
+                scoreFilter = -1;
 
                 isflit = false;
 
@@ -180,36 +182,48 @@ public class MainActivity extends Activity {
             }
 
         });
+        ((ImageView)findViewById(R.id.flit)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#14a2d4"));
 
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (isflit) {
+
+
+                        d = "不限";
+                        ((TextView) findViewById(R.id.month)).setText(d);
+                        ((TextView) findViewById(R.id.year)).setText("");
+                        ((TextView) findViewById(R.id.day)).setText("");
+                        ((TextView) findViewById(R.id.textView5)).setText("");
+                        ((TextView) findViewById(R.id.textView7)).setText("");
+                        // ((TextView) findViewById(R.id.month)).setTextSize(20);
+                        //superflag = false;
+                        //timeStemp = 0;
+                        //lv.setAdapter(new MyAdapter(MainActivity.this));
+
+                        //pmon = 0;
+                        ((TextView) findViewById(R.id.pm)).setText("不限");
+                        //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
+                        scoreFilter = -1;
+                        ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.GONE);
+                        ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
+                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#206d9b"));
+                        isflit = false;
+                    } else {
+                        ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.VISIBLE);
+                        ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.nonflit);
+                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                        isflit = true;
+                    }
+                }
+                return false;
+            }
+        });
         ((ImageView)findViewById(R.id.flit)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isflit){
 
-
-                    d = "不限";
-                    ((TextView) findViewById(R.id.month)).setText(d);
-                    ((TextView) findViewById(R.id.year)).setText("");
-                    ((TextView) findViewById(R.id.day)).setText("");
-                    ((TextView) findViewById(R.id.textView5)).setText("");
-                    ((TextView) findViewById(R.id.textView7)).setText("");
-                    // ((TextView) findViewById(R.id.month)).setTextSize(20);
-                    //superflag = false;
-                    //timeStemp = 0;
-                    //lv.setAdapter(new MyAdapter(MainActivity.this));
-
-                    //pmon = 0;
-                    ((TextView) findViewById(R.id.pm)).setText("不限");
-                    //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
-                    scoreFilter=-1;
-                    ((RelativeLayout)findViewById(R.id.fliter)).setVisibility(View.GONE);
-                    ((ImageView)findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
-                    isflit = false;
-                }else {
-                    ((RelativeLayout)findViewById(R.id.fliter)).setVisibility(View.VISIBLE);
-                    ((ImageView)findViewById(R.id.flit)).setImageResource(R.drawable.nonflit);
-                    isflit = true;
-                }
             }
         });
 
@@ -217,9 +231,9 @@ public class MainActivity extends Activity {
         dr = (ImageView) findViewById(R.id.droppp);
         MyAdapter mAdapter = new MyAdapter(this);//得到一个MyAdapter对象
         lv.setAdapter(mAdapter);
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+            public void onItemClick(AdapterView<?> arg0, View arg1,
                                            final int position, long id) {
                 History h = histories.get(getPos(position));
                 final String reason = (h.reason);
@@ -282,10 +296,10 @@ public class MainActivity extends Activity {
                                         History h = histories.get(getPos(position));
                                         new AlertDialogios(MainActivity.this).builder()
                                                 .setTitle("详细记录")
-                                                .setMsg("理由: "+h.reason + "\n" +
-                                                        "成员: "+h.names + "\n" +
-                                                        "分数: "+h.getScore() + "\n" +
-                                                        "时间: "+h.getDate())
+                                                .setMsg("理由: " + h.reason + "\n" +
+                                                        "成员: " + h.names + "\n" +
+                                                        "分数: " + h.getScore() + "\n" +
+                                                        "时间: " + h.getDate())
                                                 .setNegativeButton("返回", new OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
@@ -296,25 +310,10 @@ public class MainActivity extends Activity {
                                 })
                                 //可添加多个SheetItem
                         .show();
-                return false;
+                //return false;
             }
         });
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long id) {
-
-                                /*
-                                 * 点击列表项时触发onItemClick方法，四个参数含义分别为
-                                 * arg0：发生单击事件的AdapterView
-                                 * arg1：AdapterView中被点击的View
-                                 * position：当前点击的行在adapter的下标
-                                 * id：当前点击的行的id
-                                 */
-
-            }
-        });
 
         ((Button) findViewById(R.id.pick)).setOnTouchListener(new View.OnTouchListener() {
             @Override
