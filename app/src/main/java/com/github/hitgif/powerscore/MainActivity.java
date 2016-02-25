@@ -7,10 +7,12 @@
 
 package com.github.hitgif.powerscore;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import android.view.Window;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -86,6 +89,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.main);//通知栏所需颜色
+        }
         setContentView(R.layout.activity_main);
         ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
         gen = (Button) findViewById(R.id.gen);
@@ -119,8 +128,8 @@ public class MainActivity extends Activity {
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 gen.setBackgroundColor(Color.parseColor("#ffffff"));
-                gen.setTextColor(Color.parseColor("#206d9b"));
-                per.setBackgroundColor(Color.parseColor("#206d9b"));
+                gen.setTextColor(getResources().getColor(R.color.main));
+                per.setBackgroundColor(getResources().getColor(R.color.main));
                 per.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(true);
                 genlayout.setVisibility(View.VISIBLE);
@@ -145,13 +154,13 @@ public class MainActivity extends Activity {
         per.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 per.setBackgroundColor(Color.parseColor("#ffffff"));
-                per.setTextColor(Color.parseColor("#206d9b"));
-                gen.setBackgroundColor(Color.parseColor("#206d9b"));
+                per.setTextColor(getResources().getColor(R.color.main));
+                gen.setBackgroundColor(getResources().getColor(R.color.main));
                 gen.setTextColor(Color.parseColor("#ffffff"));
                 genlayout.setEnabled(false);
                 perlayout.setVisibility(View.VISIBLE);
                 genlayout.setVisibility(View.GONE);
-                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#206d9b"));
+                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.main));
                 ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.GONE);
                 ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
                 ((ImageView) findViewById(R.id.flit)).setVisibility(View.GONE);
@@ -178,14 +187,19 @@ public class MainActivity extends Activity {
         });
         choose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivityForResult(new Intent(MainActivity.this, choosestudent.class), 1);
+                startActivityForResult(new Intent(MainActivity.this, login.class), 1);
             }
 
+        });
+        ((ImageView)findViewById(R.id.personal)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, personal.class));
+            }
         });
         ((ImageView)findViewById(R.id.flit)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.press));
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (isflit) {
@@ -208,12 +222,12 @@ public class MainActivity extends Activity {
                         scoreFilter = -1;
                         ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.GONE);
                         ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
-                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#206d9b"));
+                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.main));
                         isflit = false;
                     } else {
                         ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.VISIBLE);
                         ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.nonflit);
-                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(Color.parseColor("#14a2d4"));
+                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.press));
                         isflit = true;
                     }
                 }
@@ -455,6 +469,19 @@ public class MainActivity extends Activity {
                 dpd.show();
             }
         });
+    }
+
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
     public void onResume(){

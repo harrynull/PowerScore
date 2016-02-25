@@ -8,7 +8,7 @@
         android:id="@+id/relativeLayout8"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#206d9b"
+        android:background="@color/main"
         android:paddingRight="10dp"
         android:layout_gravity="center_horizontal">
 
@@ -70,7 +70,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#206d9b"
+            android:background="@color/main"
             android:paddingBottom="10dp"
             android:id="@+id/relativeLayout12">
 

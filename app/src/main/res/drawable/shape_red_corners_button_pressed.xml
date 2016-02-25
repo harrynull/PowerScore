@@ -2,5 +2,5 @@
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="20.0px" />
-    <solid android:color="@color/button_blue_login_down" />
+    <solid android:color="@color/press" />
 </shape>
