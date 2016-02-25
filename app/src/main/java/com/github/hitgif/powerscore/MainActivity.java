@@ -87,28 +87,19 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.main);//通知栏所需颜色
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
         //初始化
         spReader= getSharedPreferences("data", Activity.MODE_PRIVATE);
         spEditor = spReader.edit();
         //布局初始化
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
         setContentView(R.layout.activity_main);
         //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
         gen = (Button) findViewById(R.id.gen);
