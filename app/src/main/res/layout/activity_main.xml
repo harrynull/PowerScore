@@ -318,7 +318,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/genlayout"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_above="@+id/linearLayout2"
         android:layout_below="@+id/relativeLayout5">
         <TextView
@@ -349,7 +349,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:id="@+id/perlayout"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@+id/relativeLayout3"
         android:layout_above="@+id/linearLayout2">
 

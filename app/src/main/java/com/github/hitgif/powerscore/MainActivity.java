@@ -187,7 +187,7 @@ public class MainActivity extends Activity {
         });
         choose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivityForResult(new Intent(MainActivity.this, login.class), 1);
+                startActivityForResult(new Intent(MainActivity.this, chooseclass.class), 1);
             }
 
         });
