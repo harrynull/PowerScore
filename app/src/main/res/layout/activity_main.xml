@@ -50,10 +50,14 @@
             android:text="New Button"
             android:id="@+id/ls"
             android:textColor="#000000"
+<<<<<<< HEAD
 
             android:visibility="gone"></Button>
 =======
 
+>>>>>>> origin/master
+=======
+            android:visibility="gone"
 >>>>>>> origin/master
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/flit" />
