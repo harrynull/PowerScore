@@ -24,11 +24,6 @@ import android.widget.FrameLayout.LayoutParams;
 
 import java.lang.reflect.Method;
 
-/**
- * Class to manage status and navigation bar tint effects when using KitKat
- * translucent system UI modes.
- *
- */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class SystemBarTintManager extends Activity{
 
@@ -336,11 +331,7 @@ public class SystemBarTintManager extends Activity{
         decorViewGroup.addView(mNavBarTintView);
     }
 
-    /**
-     * Class which describes system bar sizing and other characteristics for the current
-     * device configuration.
-     *
-     */
+
     public static class SystemBarConfig {
 
         private static final String STATUS_BAR_HEIGHT_RES_NAME = "status_bar_height";

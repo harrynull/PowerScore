@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +40,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +51,7 @@ import java.util.TreeMap;
 
 public class MainActivity extends Activity {
 
-    public static TreeMap<String, Class> classes = new TreeMap<String, Class>();
+    public static TreeMap<String, Classes> classes = new TreeMap<String, Classes>();
     SharedPreferences spReader;
     SharedPreferences.Editor spEditor;
 
@@ -266,8 +264,8 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     final int position, long id) {
                 //TODO: 改掉硬编码
-                final Class c=classes.get("1");
-                final ArrayList<History> histories=c.histories;
+                final Classes c = classes.get("1");
+                final ArrayList<History> histories = c.histories;
 
                 History h = histories.get(getPos(position));
                 final String reason = (h.reason);
@@ -309,7 +307,7 @@ public class MainActivity extends Activity {
                                                                     }
                                                                 }).show();
                                                         histories.remove(histories.get(getPos(position)));
-                                                        ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+                                                        ((BaseAdapter) lv.getAdapter()).notifyDataSetChanged();
                                                         MainActivity.Save(MainActivity.this);
                                                     }
                                                 })
@@ -368,6 +366,18 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
+        ((Button) findViewById(R.id.pickclass)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((TextView) findViewById(R.id.classnow)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((ImageView) findViewById(R.id.dropclass)).setImageResource(R.drawable.dropdown);
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((TextView) findViewById(R.id.classnow)).setTextColor(Color.parseColor("#ffffff"));
+                    ((ImageView) findViewById(R.id.dropclass)).setImageResource(R.drawable.drop);
+                }
+                return false;
+            }
+        });
         ((Button) findViewById(R.id.pickpm)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -393,8 +403,8 @@ public class MainActivity extends Activity {
                                     public void onClick(int which) {
                                         pmon = 1;
                                         ((TextView) findViewById(R.id.pm)).setText("  + ");
-                                       // ((TextView) findViewById(R.id.pm)).setTextSize(30);
-                                        scoreFilter=1;
+                                        // ((TextView) findViewById(R.id.pm)).setTextSize(30);
+                                        scoreFilter = 1;
                                     }
                                 })
                         .addSheetItem("减分", ActionSheetDialog.SheetItemColor.Blue,
@@ -415,6 +425,38 @@ public class MainActivity extends Activity {
                                         ((TextView) findViewById(R.id.pm)).setText("不限");
                                       //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                                         scoreFilter=-1;
+                                    }
+                                })
+                                //可添加多个SheetItem
+                        .show();
+            }
+
+        });
+        ((Button)findViewById(R.id.pickclass)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new ActionSheetDialog(MainActivity.this).builder()
+                        .setTitle("选择班级")
+                        .setCancelable(false)
+                        .setCanceledOnTouchOutside(false)
+                        .addSheetItem("九(1)班", ActionSheetDialog.SheetItemColor.Blue,
+                                new ActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+
+                                    }
+                                })
+                        .addSheetItem("九(2)班", ActionSheetDialog.SheetItemColor.Blue,
+                                new ActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+
+                                    }
+                                })
+                        .addSheetItem("九(3)班", ActionSheetDialog.SheetItemColor.Blue,
+                                new ActionSheetDialog.OnSheetItemClickListener() {
+                                    @Override
+                                    public void onClick(int which) {
+
                                     }
                                 })
                                 //可添加多个SheetItem
@@ -516,11 +558,11 @@ public class MainActivity extends Activity {
         spEditor.apply();
     }
 
-    private TreeMap<String, Class> getClassInfo(){
+    private TreeMap<String, Classes> getClassInfo(){
         //假装从网上获得了数据
-        TreeMap<String, Class> c=new TreeMap<String, Class>();
-        c.put("1", new Class("1班", "A B C"));
-        c.put("2", new Class("2班", "甲 乙 丙"));
+        TreeMap<String, Classes> c=new TreeMap<String, Classes>();
+        c.put("1", new Classes("1班", "A B C"));
+        c.put("2", new Classes("2班", "甲 乙 丙"));
         return c;
     }
 
