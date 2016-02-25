@@ -11,9 +11,11 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +31,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.BaseAdapter;
@@ -39,8 +40,6 @@ import android.widget.DatePicker;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import org.apache.commons.logging.Log;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -49,12 +48,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.TreeMap;
 
 public class MainActivity extends Activity {
 
-    public static ArrayList<History> historys=new ArrayList<History>();
-    public static ArrayList<Integer> scores = new ArrayList<Integer>();
-    public static String[] strs;
+    public static TreeMap<String, Class> classes = new TreeMap<String, Class>();
+    SharedPreferences spReader;
+    SharedPreferences.Editor spEditor;
 
     private long timeStemp=0;
     private boolean superflag = true;
@@ -72,14 +73,13 @@ public class MainActivity extends Activity {
 
     private int scoreFilter=-1;
 
+    //布局
     private ListView lv;
     private ImageView dr;
     private RelativeLayout genlayout;
     private RelativeLayout perlayout;
     private RelativeLayout choose;
     private ImageView add;
-    private ArrayList<History> histories=MainActivity.historys;
-
     Button gen;
     Button per;
     Button ls;
@@ -89,14 +89,21 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+<<<<<<< HEAD
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.main);//通知栏所需颜色
         }
+=======
+        //初始化
+        spReader= getSharedPreferences("data", Activity.MODE_PRIVATE);
+        spEditor = spReader.edit();
+        //布局初始化
+>>>>>>> origin/master
         setContentView(R.layout.activity_main);
-        ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
+        //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
         gen = (Button) findViewById(R.id.gen);
         per = (Button) findViewById(R.id.per);
         genlayout = (RelativeLayout) findViewById(R.id.genlayout);
@@ -135,7 +142,7 @@ public class MainActivity extends Activity {
                 genlayout.setVisibility(View.VISIBLE);
                 perlayout.setVisibility(View.GONE);
                 ((ImageView)findViewById(R.id.flit)).setVisibility(View.VISIBLE);
-                ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
+                //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
             }
         });
 
@@ -143,11 +150,13 @@ public class MainActivity extends Activity {
         ls = (Button) findViewById(R.id.ls);
         ls.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                historys.add(new History(+10, "王安海", String.valueOf(lsi), new Date()));
+                classes.get("1").histories.add(new History(+10, "王安海", String.valueOf(lsi), new Date()));
                 saveScores(MainActivity.this);
                 Save(MainActivity.this);
-                ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
+                //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
                 lsi++;
+                ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+
             }
         });
 
@@ -174,7 +183,7 @@ public class MainActivity extends Activity {
                 // ((TextView) findViewById(R.id.month)).setTextSize(20);
                 //superflag = false;
                 timeStemp = 0;
-                lv.setAdapter(new MyAdapter(MainActivity.this));
+                ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
 
                 pmon = 0;
                 ((TextView) findViewById(R.id.pm)).setText("不限");
@@ -203,8 +212,6 @@ public class MainActivity extends Activity {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (isflit) {
-
-
                         d = "不限";
                         ((TextView) findViewById(R.id.month)).setText(d);
                         ((TextView) findViewById(R.id.year)).setText("");
@@ -248,7 +255,11 @@ public class MainActivity extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
-                                           final int position, long id) {
+                                    final int position, long id) {
+                //TODO: 改掉硬编码
+                final Class c=classes.get("1");
+                final ArrayList<History> histories=c.histories;
+
                 History h = histories.get(getPos(position));
                 final String reason = (h.reason);
                 new ActionSheetDialog(MainActivity.this).builder()
@@ -275,9 +286,9 @@ public class MainActivity extends Activity {
                                                                 .setPositiveButton("撤销", new OnClickListener() {
                                                                     @Override
                                                                     public void onClick(View v) {
-                                                                        for (int i = 0; i != MainActivity.strs.length; i++) {
-                                                                            if (names.indexOf(MainActivity.strs[i]) != -1) {
-                                                                                MainActivity.scores.set(i, MainActivity.scores.get(i) - change);
+                                                                        for (int i = 0; i != c.members.length; i++) {
+                                                                            if (names.indexOf(c.members[i]) != -1) {
+                                                                                c.scores.set(i, c.scores.get(i) - change);
                                                                             }
                                                                         }
                                                                         MainActivity.saveScores(MainActivity.this);
@@ -289,8 +300,7 @@ public class MainActivity extends Activity {
                                                                     }
                                                                 }).show();
                                                         histories.remove(histories.get(getPos(position)));
-                                                        MyAdapter mAdapter = new MyAdapter(MainActivity.this);//得到一个MyAdapter对象
-                                                        lv.setAdapter(mAdapter);
+                                                        ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
                                                         MainActivity.Save(MainActivity.this);
                                                     }
                                                 })
@@ -417,7 +427,7 @@ public class MainActivity extends Activity {
                 DatePickerDialog dpd = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
+                        //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
                         if (superflag==true) {
                             showyear = new StringBuilder().append(year).append("年").toString();
                             showmonth =((month + 1) < 10) ?
@@ -445,7 +455,7 @@ public class MainActivity extends Activity {
                                 //e.printStackTrace();
                             }
                             timeStemp = date.getTime() / 1000;
-                            lv.setAdapter(new MyAdapter(MainActivity.this));
+                            ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
                             ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(lv.getCount()));
                         }
 
@@ -460,15 +470,49 @@ public class MainActivity extends Activity {
                         ((TextView) findViewById(R.id.day)).setText("");
                         ((TextView) findViewById(R.id.textView5)).setText("");
                         ((TextView) findViewById(R.id.textView7)).setText("");
-                       // ((TextView) findViewById(R.id.month)).setTextSize(20);
+                        //((TextView) findViewById(R.id.month)).setTextSize(20);
                         superflag = false;
                         timeStemp = 0;
-                        lv.setAdapter(new MyAdapter(MainActivity.this));
+                        ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
                     }
                 });
                 dpd.show();
             }
         });
+
+        //读取数据
+        String rawClasses = spReader.getString("classes","");
+        if(true||rawClasses.isEmpty()){
+            classes=getClassInfo();
+        }else{
+            String[] classesinfo=rawClasses.split(",");
+            for(int i=0;i<classesinfo.length;i+=2){
+                //TODO: 完善读取
+                //classes.put(classesinfo[i],classesinfo[i+1]);
+            }
+        }
+    }
+
+    public void onStop(){
+        super.onStop();
+        //保存数据
+        String classesData="";
+        Iterator it = classes.keySet().iterator();
+        while (it.hasNext()) {
+            String key=(String)it.next();
+            classesData+=key+classes.get(key)+",";
+            //TODO: 保存每个班的数据
+        }
+        spEditor.putString("classes", classesData);
+        spEditor.apply();
+    }
+
+    private TreeMap<String, Class> getClassInfo(){
+        //假装从网上获得了数据
+        TreeMap<String, Class> c=new TreeMap<String, Class>();
+        c.put("1", new Class("1班", "A B C"));
+        c.put("2", new Class("2班", "甲 乙 丙"));
+        return c;
     }
 
     @TargetApi(19)
@@ -492,39 +536,47 @@ public class MainActivity extends Activity {
 
     private ArrayList<HashMap<String, Object>> getData() {
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
-
-        for (int i = histories.size()-1; i >= 0; i--) {
-            if(d.compareTo("不限")!=0&&(histories.get(i).date.getTime()/1000-86400>timeStemp||histories.get(i).date.getTime()/1000<=timeStemp)) continue;
-            if(scoreFilter==0&&histories.get(i).score>0) continue; //筛选扣分但是是加分记录，忽略
-            if(scoreFilter==1&&histories.get(i).score<0) continue; //筛选加分但是是扣分记录，忽略
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("ItemTitle", (histories.get(i).reason.length()>6?histories.get(i).reason.substring(0,6)+"…":histories.get(i).reason));
-            map.put("ItemText", (histories.get(i).names.length()>10?histories.get(i).names.substring(0,18)+"…":histories.get(i).names));
-            map.put("mark", (histories.get(i).score>0?"+":"") + (histories.get(i).score/10.0));
-            map.put("positive", (histories.get(i).score>0?"green":"red"));
-            listItem.add(map);
+        Iterator it = classes.keySet().iterator();
+        while (it.hasNext()) {
+            final ArrayList<History> histories = classes.get(it.next()).histories;
+            for (int i = histories.size() - 1; i >= 0; i--) {
+                if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
+                    continue;
+                if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略
+                if (scoreFilter == 1 && histories.get(i).score < 0) continue; //筛选加分但是是扣分记录，忽略
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("ItemTitle", (histories.get(i).reason.length() > 6 ? histories.get(i).reason.substring(0, 6) + "…" : histories.get(i).reason));
+                map.put("ItemText", (histories.get(i).names.length() > 10 ? histories.get(i).names.substring(0, 18) + "…" : histories.get(i).names));
+                map.put("mark", (histories.get(i).score > 0 ? "+" : "") + (histories.get(i).score / 10.0));
+                map.put("positive", (histories.get(i).score > 0 ? "green" : "red"));
+                listItem.add(map);
+            }
         }
-
         return listItem;
 
     }
 
     private int getPos(int position){
-        int count = 0, i;
-        for (i = histories.size()-1; i >=0 ; i--) {
-            if(d.compareTo("不限")!=0&&(histories.get(i).date.getTime()/1000-86400>timeStemp||histories.get(i).date.getTime()/1000<=timeStemp))
-                continue;
-            
-            if(scoreFilter==0&&histories.get(i).score>0) continue; //筛选扣分但是是加分记录，忽略
-            if(scoreFilter==1&&histories.get(i).score<0) continue; //筛选加分但是是扣分记录，忽略
+        int count = 0, sum=-1;
+        Iterator it = classes.keySet().iterator();
+        while (it.hasNext()) {
+            final ArrayList<History> histories = classes.get(it.next()).histories;
+            for (int i = histories.size() - 1; i >= 0; i--) {
+                sum++;
+                if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
+                    continue;
 
-            if (count < position) {
-                count++;
-                continue;
+                if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略
+                if (scoreFilter == 1 && histories.get(i).score < 0) continue; //筛选加分但是是扣分记录，忽略
+
+                if (count < position) {
+                    count++;
+                    continue;
+                }
+                return sum;
             }
-            break;
         }
-        return i;
+        return -1;
     }
 
     class MyAdapter extends BaseAdapter {
@@ -607,8 +659,8 @@ public class MainActivity extends Activity {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
 
-                                                            for (int i = 0; i != MainActivity.strs.length; i++) {
-                                                                if (names.indexOf(MainActivity.strs[i]) != -1) {
+                                                            for (int i = 0; i != MainActivity.names.length; i++) {
+                                                                if (names.indexOf(MainActivity.names[i]) != -1) {
                                                                     MainActivity.scores.set(i, MainActivity.scores.get(i) - change);
                                                                 }
                                                             }
@@ -652,7 +704,7 @@ public class MainActivity extends Activity {
             public ImageView positive;
         }
     }
-    public static void saveScores(Context c){
+    public static void saveScores(Context c){/*
         FileOutputStream outputStream;
         try {
             outputStream = c.openFileOutput("scores.txt", Activity.MODE_PRIVATE);
@@ -663,10 +715,10 @@ public class MainActivity extends Activity {
             outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
     public static void Save(Context c){
-        FileOutputStream outputStream;
+        FileOutputStream outputStream;/*
         try {
             outputStream = c.openFileOutput("historys.txt", Activity.MODE_PRIVATE);
             for(int i=0;i!=historys.size();i++){
@@ -679,7 +731,7 @@ public class MainActivity extends Activity {
             outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
