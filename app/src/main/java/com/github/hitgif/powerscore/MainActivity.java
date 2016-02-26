@@ -263,7 +263,7 @@ public class MainActivity extends Activity {
                 new ActionSheetDialog(MainActivity.this).builder()
                         .setTitle(reason)
                         .setCancelable(false)
-                        .setCanceledOnTouchOutside(false)
+                        .setCanceledOnTouchOutside(true)
                         .addSheetItem("删除", ActionSheetDialog.SheetItemColor.Red,
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
@@ -387,7 +387,7 @@ public class MainActivity extends Activity {
                 new ActionSheetDialog(MainActivity.this).builder()
                         .setTitle("筛选加/减分")
                         .setCancelable(false)
-                        .setCanceledOnTouchOutside(false)
+                        .setCanceledOnTouchOutside(true)
                         .addSheetItem("加分", ActionSheetDialog.SheetItemColor.Blue,
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
@@ -428,7 +428,7 @@ public class MainActivity extends Activity {
                 new ActionSheetDialog(MainActivity.this).builder()
                         .setTitle("选择班级")
                         .setCancelable(false)
-                        .setCanceledOnTouchOutside(false)
+                        .setCanceledOnTouchOutside(true)
                         .addSheetItem("九(1)班", ActionSheetDialog.SheetItemColor.Blue,
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
