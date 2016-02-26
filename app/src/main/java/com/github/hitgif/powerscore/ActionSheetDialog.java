@@ -53,13 +53,7 @@ public class ActionSheetDialog {
 				.findViewById(R.id.lLayout_content);
 		txt_title = (TextView) view.findViewById(R.id.txt_title);
 		txt_cancel = (TextView) view.findViewById(R.id.txt_cancel);
-		out = (LinearLayout) view.findViewById(R.id.out);
-		out.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
+
 		txt_cancel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -72,7 +66,7 @@ public class ActionSheetDialog {
 		dialog.setContentView(view);
 		Window dialogWindow = dialog.getWindow();
 		dialogWindow.setGravity(Gravity.LEFT | Gravity.BOTTOM);
-		dialogWindow.setLayout(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+
 		WindowManager.LayoutParams lp = dialogWindow.getAttributes();
 		lp.x = 0;
 		lp.y = 0;

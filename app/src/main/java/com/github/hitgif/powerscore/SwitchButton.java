@@ -117,7 +117,6 @@ public class SwitchButton extends CompoundButton {
         mMinFlingVelocity = config.getScaledMinimumFlingVelocity();
         refreshDrawableState();
         setChecked(isChecked());
-        Log.d("222333","ON!!!");
     }
     
     /** 

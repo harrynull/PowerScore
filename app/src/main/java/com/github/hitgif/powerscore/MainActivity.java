@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import java.io.FileOutputStream;
+import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,6 +80,7 @@ public class MainActivity extends Activity {
     private RelativeLayout perlayout;
     private RelativeLayout choose;
     private ImageView add;
+    private int sbar = 0;
     Button gen;
     Button per;
     Button ls;
@@ -87,7 +90,21 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Class<?> c = null;
+        Object obj = null;
+        Field field = null;
+        int x = 0;
+        try {
+            c = Class.forName("com.android.internal.R$dimen");
+            obj = c.newInstance();
+            field = c.getField("status_bar_height");
+            x = Integer.parseInt(field.get(obj).toString());
+            sbar = getResources().getDimensionPixelSize(x);
 
+        } catch(Exception e1) {
+
+            e1.printStackTrace();
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -200,7 +217,8 @@ public class MainActivity extends Activity {
         });
         ((ImageView)findViewById(R.id.personal)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, personal.class));
+                new personal(MainActivity.this).builder(sbar)
+                        .show();
             }
         });
         ((ImageView)findViewById(R.id.flit)).setOnTouchListener(new View.OnTouchListener() {

@@ -1,49 +1,98 @@
 package com.github.hitgif.powerscore;
 
+import com.github.hitgif.powerscore.R;
+
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
-import android.os.Bundle;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Point;
+import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout.LayoutParams;
+
+import java.lang.reflect.Field;
+
+public class personal extends Activity{
+    private Context context;
+    private Dialog dialog;
+    private Display display;
+    private ImageView back;
+    private int sbarf;
 
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.view.Menu;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ToggleButton;
 
-/**
- * Created by 123 on 02/21/2016.
- */
-public class personal extends Activity {
-    private ToggleButton mTogBtn;
-    private CheckSwitchButton mCheckSwithcButton;
-    private CheckSwitchButton mEnableCheckSwithcButton;
-    private SlideSwitchView mSlideSwitchView;
+    public personal(Context context) {
+        this.context = context;
+        WindowManager windowManager = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        display = windowManager.getDefaultDisplay();
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.personal);
-        initView();
+    }
+
+    public personal builder(int sbar) {
+        sbarf = sbar;
+        Point size = new Point();
+
+        View view = LayoutInflater.from(context).inflate(
+                R.layout.personal, null);
+        view.setMinimumWidth(display.getWidth());
+        back=(ImageView) view.findViewById(R.id.backp);
+        dialog = new Dialog(context, R.style.personalStyle);
+        dialog.setContentView(view);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.x = 0;
+        lp.y = 0;
+        dialogWindow.setAttributes(lp);
+        display.getSize(size);
+
+        dialogWindow.setLayout(display.getWidth() / 10 * 7, size.y-sbarf*2);
+
+        return this;
+    }
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+
+    public personal setCancelable(boolean cancel) {
+        dialog.setCancelable(cancel);
+        return this;
     }
 
 
-/**
- * @author RA
- * @blog http://blog.csdn.net/vipzjyno1
- */
+    public personal setCanceledOnTouchOutside(boolean cancel) {
+        dialog.setCanceledOnTouchOutside(cancel);
+        return this;
+    }
 
-
-
-private void initView() {
-
-
+    public void show() {
+        dialog.show();
+    }
 
 
 }
-
-}
-
-

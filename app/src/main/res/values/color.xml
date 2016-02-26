@@ -4,6 +4,8 @@
     <color name="trans">#00000000</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="light_gray">#eff1f2</color>
+    <color name="lightg_gray">#e5e5e5</color>
     <color name="alertdialog_line">#c6c6c6</color>
     <color name="actionsheet_blue">#037BFF</color>
     <color name="actionsheet_red">#FD4A2E</color>

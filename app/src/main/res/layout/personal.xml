@@ -3,32 +3,51 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout19"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingRight="10dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="210dp"
+        android:layout_alignParentStart="true"
         android:background="@color/main"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:id="@+id/relativeLayout18">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/setting_tx"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="realname"
+            android:id="@+id/realname"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:textSize="35dp"
+            android:paddingTop="5dp" />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/back"
-            android:id="@+id/imageView34"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
+            android:id="@+id/backp"
+            android:padding="12.5dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/back_press" />
+
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:layout_below="@+id/relativeLayout19">
+        android:background="@color/light_gray"
+        android:layout_below="@+id/relativeLayout18">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,40 +55,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_alignParentStart="true"
-                android:background="@color/main"
-                android:id="@+id/relativeLayout18">
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/imageView"
-                    android:src="@drawable/setting_tx"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="realname"
-                    android:id="@+id/realname"
-                    android:layout_below="@+id/imageView"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="#ffffff"
-                    android:textSize="35dp"
-                    android:paddingTop="5dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/ses"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/relativeLayout18"
-                android:paddingTop="10dp"
-                android:background="#f5f5f5">
+                android:layout_below="@+id/relativeLayout18">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -77,38 +65,31 @@
                     android:id="@+id/relativeLayout20"
                     android:visibility="visible">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="个人"
-                        android:id="@+id/textView25"
-                        android:paddingLeft="10dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="#3b454b"
-                        android:textSize="15dp" />
-
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView25"
                         android:layout_alignParentStart="true"
-                        android:background="#ffffff">
+                        android:background="#eff1f2">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"></LinearLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:background="@drawable/back_press">
 
                             <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
-                                android:layout_height="45dp"
-                                android:background="#ffffff"
+                                android:layout_height="50dp"
                                 android:id="@+id/linearLayout5"
                                 android:layout_below="@+id/imageView33"
                                 android:layout_alignStart="@+id/linearLayout4"
-                                android:paddingLeft="20dp"
+                                android:paddingLeft="10dp"
                                 android:gravity="center_vertical">
 
                                 <ImageView
@@ -127,19 +108,9 @@
                                     android:id="@+id/textView26"
                                     android:textColor="#3b454b"
                                     android:paddingLeft="10dp"
-                                    android:textSize="17dp" />
+                                    android:textSize="15dp" />
                             </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:id="@+id/imageView35"
-                                android:src="@drawable/intog"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:paddingBottom="8dp"
-                                android:paddingTop="3dp" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -149,30 +120,58 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/relativeLayout21"
                     android:layout_below="@+id/relativeLayout20"
-                    android:layout_alignParentStart="true"
-                    android:paddingTop="15dp"
-                    android:visibility="visible">
+                    android:id="@+id/RL"
+                    android:paddingTop="1dp">
 
-                    <TextView
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="全局"
-                        android:id="@+id/textView24"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/relativeLayout20"
+                        android:background="@drawable/back_press"
+                        android:id="@+id/linearLayout10"
                         android:paddingLeft="10dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="#3b454b"
-                        android:textSize="15dp" />
+                        android:gravity="center_vertical"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/imageView35"
+                            android:src="@drawable/overview"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp" />
+
+                        0<TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="学分总览"
+                            android:id="@+id/textView25"
+                            android:textColor="#3b454b"
+                            android:paddingLeft="10dp"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativeLayout21"
+                    android:layout_below="@+id/RL"
+                    android:layout_alignParentStart="true"
+                    android:paddingTop="1dp"
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView24"
-                        android:layout_alignParentStart="true"
-                        android:background="#ffffff" >
+                        android:layout_alignParentStart="true">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -181,12 +180,16 @@
                             <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
-                                android:layout_height="45dp"
+                                android:layout_height="50dp"
                                 android:layout_below="@+id/relativeLayout20"
-                                android:background="#ffffff"
+                                android:background="@drawable/back_press"
                                 android:id="@+id/linearLayout6"
-                                android:paddingLeft="20dp"
-                                android:gravity="center_vertical" >
+                                android:paddingLeft="10dp"
+                                android:gravity="center_vertical"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true">
 
                                 <ImageView
                                     android:layout_width="40dp"
@@ -204,44 +207,29 @@
                                     android:id="@+id/textView27"
                                     android:textColor="#3b454b"
                                     android:paddingLeft="10dp"
-                                    android:textSize="17dp" />
+                                    android:textSize="15dp" />
                             </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:id="@+id/imageView40"
-                                android:src="@drawable/intog"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:paddingBottom="8dp"
-                                android:paddingTop="3dp" />
                         </RelativeLayout>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:id="@+id/imageView38"
-                            android:background="#efefef"
-                            android:layout_below="@+id/linearLayout6"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginLeft="20dp" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:paddingTop="1dp">
 
                             <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
-                                android:layout_height="45dp"
-                                android:background="#ffffff"
+                                android:layout_height="50dp"
+                                android:background="@drawable/back_press"
                                 android:id="@+id/linearLayout7"
                                 android:layout_below="@+id/imageView38"
-                                android:layout_alignStart="@+id/linearLayout6"
-                                android:paddingLeft="20dp"
-                                android:gravity="center_vertical" >
+                                android:paddingLeft="10dp"
+                                android:gravity="center_vertical"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true">
 
                                 <ImageView
                                     android:layout_width="40dp"
@@ -259,19 +247,9 @@
                                     android:id="@+id/textView28"
                                     android:textColor="#3b454b"
                                     android:paddingLeft="10dp"
-                                    android:textSize="17dp" />
+                                    android:textSize="15dp" />
                             </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:id="@+id/imageView41"
-                                android:src="@drawable/intog"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:paddingBottom="8dp"
-                                android:paddingTop="3dp" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -281,42 +259,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/relativeLayout17"
-                    android:paddingTop="15dp"
+                    android:paddingTop="1dp"
                     android:layout_below="@+id/relativeLayout21"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="偏好"
-                        android:id="@+id/textView29"
-                        android:paddingLeft="10dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="#3b454b"
-                        android:textSize="15dp" />
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView29"
                         android:layout_alignParentStart="true"
-                        android:background="#ffffff" >
+                        android:background="@drawable/back_press" >
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/back_press">
 
                             <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
-                                android:layout_height="45dp"
+                                android:layout_height="50dp"
                                 android:layout_below="@+id/relativeLayout20"
-                                android:background="#ffffff"
                                 android:id="@+id/linearLayout8"
-                                android:paddingLeft="20dp"
+                                android:paddingLeft="10dp"
                                 android:gravity="center_vertical" >
 
                                 <ImageView
@@ -335,43 +301,64 @@
                                     android:id="@+id/textView30"
                                     android:textColor="#3b454b"
                                     android:paddingLeft="10dp"
-                                    android:textSize="17dp" />
+                                    android:textSize="15dp" />
                             </LinearLayout>
 
-                            <com.github.hitgif.powerscore.SwitchButton
-                                style="@style/Switch"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:clickable="true"
-                                android:layout_marginRight="14dp"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="14dp" />
                         </RelativeLayout>
 
                     </LinearLayout>
                 </RelativeLayout>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="退出登录"
-                    android:id="@+id/button2"
-                    android:background="#ffffff"
-                    android:textColor="#f32020"
-                    android:visibility="visible"
-                    android:layout_marginBottom="35dp"
-                    android:layout_alignParentBottom="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/relativeLayout17"
-                    android:layout_marginTop="30dp" />
-
             </RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:text="关于"
+            android:textSize="15dp"
+            android:id="@+id/buttong"
+            android:background="@drawable/white_button_press"
+            android:textColor="#3b454b"
+            android:visibility="visible"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/imageView34"
+            android:layout_toStartOf="@+id/imageView34" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:id="@+id/imageView34"
+            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/light_gray" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:text="退出"
+            android:textSize="15dp"
+            android:id="@+id/button2"
+            android:background="@drawable/white_button_press"
+            android:textColor="#f32020"
+            android:visibility="visible"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/imageView34"
+            android:layout_toEndOf="@+id/imageView34" />
+    </RelativeLayout>
 
 </RelativeLayout>
