@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,9 +29,11 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.BaseAdapter;
@@ -49,6 +52,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeMap;
 
 public class MainActivity extends Activity {
@@ -81,6 +85,10 @@ public class MainActivity extends Activity {
     private RelativeLayout choose;
     private ImageView add;
     private int sbar = 0;
+    private DrawerLayout drawerLayout;
+    private RelativeLayout leftLayout;
+    private RelativeLayout rightLayout;
+
     Button gen;
     Button per;
     Button ls;
@@ -110,6 +118,7 @@ public class MainActivity extends Activity {
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.main);//通知栏所需颜色
+
         }
 
         //初始化
@@ -117,13 +126,19 @@ public class MainActivity extends Activity {
         spEditor = spReader.edit();
         //布局初始化
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.drawer);
         //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
         gen = (Button) findViewById(R.id.gen);
         per = (Button) findViewById(R.id.per);
         genlayout = (RelativeLayout) findViewById(R.id.genlayout);
         perlayout = (RelativeLayout) findViewById(R.id.perlayout);
         choose = (RelativeLayout) findViewById(R.id.choose);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ViewGroup.LayoutParams lp = ((LinearLayout) findViewById(R.id.ds)).getLayoutParams();
+            lp.width = 1;
+            lp.height = sbar;
+            ((LinearLayout) findViewById(R.id.ds)).setLayoutParams(lp);
+        }
         add = (ImageView) findViewById(R.id.add);
         final  ImageView sync = (ImageView)findViewById(R.id.sync);
         final  Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
@@ -131,6 +146,9 @@ public class MainActivity extends Activity {
         operatingAnim.setInterpolator(lin);
         genlayout.setVisibility(View.VISIBLE);
         perlayout.setVisibility(View.GONE);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+        leftLayout=(RelativeLayout) findViewById(R.id.left);
+
         sync.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,8 +235,7 @@ public class MainActivity extends Activity {
         });
         ((ImageView)findViewById(R.id.personal)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new personal(MainActivity.this).builder(sbar)
-                        .show();
+                ((DrawerLayout)findViewById(R.id.drawerlayout)).openDrawer(leftLayout);
             }
         });
         ((ImageView)findViewById(R.id.flit)).setOnTouchListener(new View.OnTouchListener() {
@@ -858,4 +875,5 @@ public class MainActivity extends Activity {
         }
 
     }
+
 }
