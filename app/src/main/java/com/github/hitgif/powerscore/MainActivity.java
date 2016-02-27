@@ -42,6 +42,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -175,8 +176,6 @@ public class MainActivity extends Activity {
         ls.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 classes.get(classNow).histories.add(new History(+10, "王安海", String.valueOf(lsi), new Date()));
-                saveScores(MainActivity.this);
-                Save(MainActivity.this);
                 //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
                 lsi++;
                 updateList();
@@ -311,7 +310,6 @@ public class MainActivity extends Activity {
                                                                                 c.scores.set(i, c.scores.get(i) - change);
                                                                             }
                                                                         }
-                                                                        MainActivity.saveScores(MainActivity.this);
                                                                     }
                                                                 })
                                                                 .setNegativeButton("不撤销", new OnClickListener() {
@@ -321,7 +319,6 @@ public class MainActivity extends Activity {
                                                                 }).show();
                                                         histories.remove(histories.get(getPos(position)));
                                                         updateList();
-                                                        MainActivity.Save(MainActivity.this);
                                                     }
                                                 })
                                                 .setNegativeButton("取消", new OnClickListener() {
@@ -543,8 +540,26 @@ public class MainActivity extends Activity {
         //保存数据
         String classesData="";
         for (final String key : classes.keySet()) {
-            classesData += key + classes.get(key) + ",";
-            //TODO: 保存每个班的数据
+            Classes c=classes.get(key);
+            classesData += key + "," + c.name;
+
+            FileOutputStream outputStream;
+            try {
+                outputStream = openFileOutput(key + ".txt", Activity.MODE_PRIVATE);
+                for (int i = 0; i != c.scores.size(); i++) {
+                    outputStream.write((c.scores.get(i).toString() + (i==c.scores.size()-1?"":" ")).getBytes());
+                }
+                for(int i=0;i!=c.histories.size();i++){
+                    outputStream.write((c.histories.get(i).score+"|").getBytes());
+                    outputStream.write((c.histories.get(i).names +"|").getBytes());
+                    outputStream.write((c.histories.get(i).reason +"|").getBytes());
+                    outputStream.write((c.histories.get(i).date.toGMTString() + "|").getBytes());
+                }
+                outputStream.flush();
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         spEditor.putString("classes", classesData);
         spEditor.apply();
@@ -739,35 +754,6 @@ public class MainActivity extends Activity {
             public ImageView positive;
         }
     }
-    public static void saveScores(Context c){/*
-        FileOutputStream outputStream;
-        try {
-            outputStream = c.openFileOutput("scores.txt", Activity.MODE_PRIVATE);
-            for (int i = 0; i != scores.size(); i++) {
-                outputStream.write((scores.get(i).toString() + (i==scores.size()-1?"":" ")).getBytes());
-            }
-            outputStream.flush();
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-    public static void Save(Context c){
-        FileOutputStream outputStream;/*
-        try {
-            outputStream = c.openFileOutput("historys.txt", Activity.MODE_PRIVATE);
-            for(int i=0;i!=historys.size();i++){
-                outputStream.write((historys.get(i).score+"|").getBytes());
-                outputStream.write((historys.get(i).names +"|").getBytes());
-                outputStream.write((historys.get(i).reason +"|").getBytes());
-                outputStream.write((historys.get(i).date.toGMTString() + "|").getBytes());
-            }
-            outputStream.flush();
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -821,14 +807,11 @@ public class MainActivity extends Activity {
             case 2:
                 String his = data.getExtras().getString("his");
                   //得到新Activity关闭后返回的数据
-                if (his.matches("NULL")) {
-
-                } else {
+                if (!his.matches("NULL")) {
                     //更新记录
                 }
                 break;
         }
 
     }
-
 }
