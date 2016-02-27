@@ -13,6 +13,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +31,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -120,7 +122,7 @@ public class MainActivity extends Activity {
         spEditor = spReader.edit();
         //布局初始化
 
-        setContentView(R.layout.drawer);
+        setContentView(R.layout.activity_main);
         //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
         gen = (Button) findViewById(R.id.gen);
         per = (Button) findViewById(R.id.per);
@@ -267,7 +269,23 @@ public class MainActivity extends Activity {
 
             }
         });
+        ((ImageView)findViewById(R.id.baobiao)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //打开报表网页
 
+                      //  Uri uri = Uri.parse("http://scoremanagement.applinzi.com/view.php?username="+((EditText) findViewById(R.id.editText2)).getText().toString());
+                      //  Intent intent = new  Intent(Intent.ACTION_VIEW, uri);
+                      //  startActivity(intent);
+
+            }
+        });
+        ((LinearLayout)findViewById(R.id.reason)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, reason_setting.class));
+            }
+
+        });
         lv = (ListView) findViewById(R.id.listView3);
         dr = (ImageView) findViewById(R.id.droppp);
         MyAdapter mAdapter = new MyAdapter(this);//得到一个MyAdapter对象

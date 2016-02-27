@@ -17,7 +17,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            android:background="#ffffff"
+            android:background="@drawable/listview_item"
             android:paddingRight="15dp">
 
             <TextView
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/ItemText"
-                android:paddingLeft="15dp"
+                android:paddingLeft="5dp"
                 android:lines="2"
                 android:gravity="center_vertical"
                 android:layout_alignParentTop="true"
