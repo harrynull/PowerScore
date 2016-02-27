@@ -1,7 +1,5 @@
 package com.github.hitgif.powerscore;
 
-import com.github.hitgif.powerscore.R;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

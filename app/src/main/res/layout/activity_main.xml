@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="九(3)班"
+                android:text="请选择"
                 android:id="@+id/classnow"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
@@ -92,6 +92,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/dropclass"
+                android:layout_toLeftOf="@+id/dropclass"
                 android:layout_alignRight="@+id/dropclass" />
         </RelativeLayout>
 
@@ -425,7 +426,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="九(3)班"
+                        android:text="XX班"
                         android:id="@+id/_class"
                         android:textColor="#ffffff"
                         android:gravity="center_vertical"

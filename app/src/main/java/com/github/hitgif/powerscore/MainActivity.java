@@ -16,7 +16,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +28,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,7 +50,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.TreeMap;
 
 public class MainActivity extends Activity {
@@ -65,15 +62,15 @@ public class MainActivity extends Activity {
     private boolean superflag = true;
     private boolean isflit = false;
     private boolean issync = false;
-    private int pmon = 0;
     private int lsi = 2333;
 
+    private String classNow="-1";
     private String d="不限";
     private String showyear;
     private String showmonth;
     private String showday;
-    private String _class;
-    private String _name;
+    private String filterClass;
+    private String filterName;
 
     private int scoreFilter=-1;
 
@@ -89,28 +86,24 @@ public class MainActivity extends Activity {
     private RelativeLayout leftLayout;
     private RelativeLayout rightLayout;
 
+
     Button gen;
     Button per;
     Button ls;
 
+    private void updateList(){
+        ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0;
         try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            sbar = getResources().getDimensionPixelSize(x);
-
+            Class<?> c = Class.forName("com.android.internal.R$dimen");
+            sbar = getResources().getDimensionPixelSize(Integer.parseInt(c.getField("status_bar_height")
+                    .get(c.newInstance()).toString()));
         } catch(Exception e1) {
-
             e1.printStackTrace();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -134,10 +127,10 @@ public class MainActivity extends Activity {
         perlayout = (RelativeLayout) findViewById(R.id.perlayout);
         choose = (RelativeLayout) findViewById(R.id.choose);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ViewGroup.LayoutParams lp = ((LinearLayout) findViewById(R.id.ds)).getLayoutParams();
+            ViewGroup.LayoutParams lp = findViewById(R.id.ds).getLayoutParams();
             lp.width = 1;
             lp.height = sbar;
-            ((LinearLayout) findViewById(R.id.ds)).setLayoutParams(lp);
+            findViewById(R.id.ds).setLayoutParams(lp);
         }
         add = (ImageView) findViewById(R.id.add);
         final  ImageView sync = (ImageView)findViewById(R.id.sync);
@@ -152,16 +145,14 @@ public class MainActivity extends Activity {
         sync.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (operatingAnim != null) {
-                    if (!issync) {
-                        //开始转
-                        sync.startAnimation(operatingAnim);
-                        issync = true;
-                    } else {
-                        //停止转
-                        sync.clearAnimation();
-                        issync = false;
-                    }
+                if (!issync) {
+                    //开始转
+                    sync.startAnimation(operatingAnim);
+                    issync = true;
+                } else {
+                    //停止转
+                    sync.clearAnimation();
+                    issync = false;
                 }
             }
         });
@@ -174,7 +165,7 @@ public class MainActivity extends Activity {
                 genlayout.setEnabled(true);
                 genlayout.setVisibility(View.VISIBLE);
                 perlayout.setVisibility(View.GONE);
-                ((ImageView)findViewById(R.id.flit)).setVisibility(View.VISIBLE);
+                findViewById(R.id.flit).setVisibility(View.VISIBLE);
                 //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
             }
         });
@@ -183,12 +174,12 @@ public class MainActivity extends Activity {
         ls = (Button) findViewById(R.id.ls);
         ls.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                classes.get("1").histories.add(new History(+10, "王安海", String.valueOf(lsi), new Date()));
+                classes.get(classNow).histories.add(new History(+10, "王安海", String.valueOf(lsi), new Date()));
                 saveScores(MainActivity.this);
                 Save(MainActivity.this);
                 //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
                 lsi++;
-                ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+                updateList();
 
             }
         });
@@ -202,11 +193,10 @@ public class MainActivity extends Activity {
                 genlayout.setEnabled(false);
                 perlayout.setVisibility(View.VISIBLE);
                 genlayout.setVisibility(View.GONE);
-                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.main));
-                ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.GONE);
                 ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
-                ((ImageView) findViewById(R.id.flit)).setVisibility(View.GONE);
-
+                findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.main));
+                findViewById(R.id.fliter).setVisibility(View.GONE);
+                findViewById(R.id.flit).setVisibility(View.GONE);
                 d = "不限";
                 ((TextView) findViewById(R.id.month)).setText(d);
                 ((TextView) findViewById(R.id.year)).setText("");
@@ -216,9 +206,8 @@ public class MainActivity extends Activity {
                 // ((TextView) findViewById(R.id.month)).setTextSize(20);
                 //superflag = false;
                 timeStemp = 0;
-                ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+                updateList();
 
-                pmon = 0;
                 ((TextView) findViewById(R.id.pm)).setText("不限");
                 //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                 scoreFilter = -1;
@@ -233,15 +222,15 @@ public class MainActivity extends Activity {
             }
 
         });
-        ((ImageView)findViewById(R.id.personal)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.personal).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ((DrawerLayout)findViewById(R.id.drawerlayout)).openDrawer(leftLayout);
+                ((DrawerLayout) findViewById(R.id.drawerlayout)).openDrawer(leftLayout);
             }
         });
-        ((ImageView)findViewById(R.id.flit)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.flit).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.press));
+                findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.press));
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (isflit) {
@@ -256,25 +245,24 @@ public class MainActivity extends Activity {
                         //timeStemp = 0;
                         //lv.setAdapter(new MyAdapter(MainActivity.this));
 
-                        //pmon = 0;
                         ((TextView) findViewById(R.id.pm)).setText("不限");
                         //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                         scoreFilter = -1;
-                        ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.GONE);
+                        findViewById(R.id.fliter).setVisibility(View.GONE);
                         ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
-                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.main));
+                        findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.main));
                         isflit = false;
                     } else {
-                        ((RelativeLayout) findViewById(R.id.fliter)).setVisibility(View.VISIBLE);
+                        findViewById(R.id.fliter).setVisibility(View.VISIBLE);
                         ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.nonflit);
-                        ((ImageView) findViewById(R.id.flit)).setBackgroundColor(getResources().getColor(R.color.press));
+                        findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.press));
                         isflit = true;
                     }
                 }
                 return false;
             }
         });
-        ((ImageView)findViewById(R.id.flit)).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.flit).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -289,8 +277,7 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     final int position, long id) {
-                //TODO: 改掉硬编码
-                final Classes c = classes.get("1");
+                final Classes c = classes.get(classNow);
                 final ArrayList<History> histories = c.histories;
 
                 History h = histories.get(getPos(position));
@@ -320,7 +307,7 @@ public class MainActivity extends Activity {
                                                                     @Override
                                                                     public void onClick(View v) {
                                                                         for (int i = 0; i != c.members.length; i++) {
-                                                                            if (names.indexOf(c.members[i]) != -1) {
+                                                                            if (names.contains(c.members[i])) {
                                                                                 c.scores.set(i, c.scores.get(i) - change);
                                                                             }
                                                                         }
@@ -333,7 +320,7 @@ public class MainActivity extends Activity {
                                                                     }
                                                                 }).show();
                                                         histories.remove(histories.get(getPos(position)));
-                                                        ((BaseAdapter) lv.getAdapter()).notifyDataSetChanged();
+                                                        updateList();
                                                         MainActivity.Save(MainActivity.this);
                                                     }
                                                 })
@@ -349,7 +336,6 @@ public class MainActivity extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        TextView tv = new TextView(MainActivity.this);
                                         History h = histories.get(getPos(position));
                                         new AlertDialogios(MainActivity.this).builder()
                                                 .setTitle("详细记录")
@@ -372,7 +358,7 @@ public class MainActivity extends Activity {
         });
 
 
-        ((Button) findViewById(R.id.pick)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.pick).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((TextView) findViewById(R.id.year)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -392,7 +378,7 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
-        ((Button) findViewById(R.id.pickclass)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.pickclass).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((TextView) findViewById(R.id.classnow)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -404,7 +390,7 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
-        ((Button) findViewById(R.id.pickpm)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.pickpm).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -417,7 +403,7 @@ public class MainActivity extends Activity {
             }
         });
         //筛选加减分
-        ((Button)findViewById(R.id.pickpm)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.pickpm).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new ActionSheetDialog(MainActivity.this).builder()
                         .setTitle("筛选加/减分")
@@ -427,7 +413,6 @@ public class MainActivity extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        pmon = 1;
                                         ((TextView) findViewById(R.id.pm)).setText("  + ");
                                         // ((TextView) findViewById(R.id.pm)).setTextSize(30);
                                         scoreFilter = 1;
@@ -437,7 +422,6 @@ public class MainActivity extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        pmon = 2;
                                         ((TextView) findViewById(R.id.pm)).setText(" — ");
                                       //  ((TextView) findViewById(R.id.pm)).setTextSize(30);
                                         scoreFilter=0;
@@ -447,7 +431,6 @@ public class MainActivity extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        pmon = 0;
                                         ((TextView) findViewById(R.id.pm)).setText("不限");
                                       //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                                         scoreFilter=-1;
@@ -458,35 +441,26 @@ public class MainActivity extends Activity {
             }
 
         });
-        ((Button)findViewById(R.id.pickclass)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.pickclass).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new ActionSheetDialog(MainActivity.this).builder()
+                ActionSheetDialog ASD = new ActionSheetDialog(MainActivity.this).builder()
                         .setTitle("选择班级")
                         .setCancelable(false)
-                        .setCanceledOnTouchOutside(true)
-                        .addSheetItem("九(1)班", ActionSheetDialog.SheetItemColor.Blue,
-                                new ActionSheetDialog.OnSheetItemClickListener() {
-                                    @Override
-                                    public void onClick(int which) {
+                        .setCanceledOnTouchOutside(true);
+                for (final String key : classes.keySet()) {
+                    final String name = classes.get(key).name;
+                    ASD.addSheetItem(name, ActionSheetDialog.SheetItemColor.Blue,
+                            new ActionSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    ((TextView) findViewById(R.id.classnow)).setText(name);
+                                    classNow = key;
+                                    updateList();
+                                }
+                            });
+                }
 
-                                    }
-                                })
-                        .addSheetItem("九(2)班", ActionSheetDialog.SheetItemColor.Blue,
-                                new ActionSheetDialog.OnSheetItemClickListener() {
-                                    @Override
-                                    public void onClick(int which) {
-
-                                    }
-                                })
-                        .addSheetItem("九(3)班", ActionSheetDialog.SheetItemColor.Blue,
-                                new ActionSheetDialog.OnSheetItemClickListener() {
-                                    @Override
-                                    public void onClick(int which) {
-
-                                    }
-                                })
-                                //可添加多个SheetItem
-                        .show();
+                ASD.show();
             }
 
         });
@@ -497,7 +471,7 @@ public class MainActivity extends Activity {
         });
 
         //筛选日期
-        ((Button)findViewById(R.id.pick)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.pick).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 superflag =true;
@@ -505,25 +479,19 @@ public class MainActivity extends Activity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
-                        if (superflag==true) {
-                            showyear = new StringBuilder().append(year).append("年").toString();
+                        if (superflag) {
+                            showyear = String.valueOf(year) + "年";
                             showmonth =((month + 1) < 10) ?
-                                    new StringBuilder().append("0").append(month + 1).toString():
-                                    new StringBuilder().append(month + 1).toString();
-                            showday =(day < 10) ?
-                                    new StringBuilder().append("0").append(day).toString():
-                                    new StringBuilder().append(day).toString();
+                                    "0" + (month + 1) :
+                                    String.valueOf(month + 1);
+                            showday =(day < 10) ? "0" + day : String.valueOf(day);
                             ((TextView) findViewById(R.id.year)).setText(showyear);
                             ((TextView) findViewById(R.id.month)).setText(showmonth);
                             ((TextView) findViewById(R.id.day)).setText(showday);
                             ((TextView) findViewById(R.id.textView5)).setText("月");
                             ((TextView) findViewById(R.id.textView7)).setText("日");
                           //  ((TextView) findViewById(R.id.month)).setTextSize(30);
-                            d=new StringBuilder().append(year).append('-')
-                                    .append(month + 1)
-                                    .append('-')
-                                    .append(day)
-                                    .toString();
+                            d= String.valueOf(year) + '-' + (month + 1) + '-' + day;
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                             Date date = new Date();
                             try {
@@ -532,7 +500,7 @@ public class MainActivity extends Activity {
                                 //e.printStackTrace();
                             }
                             timeStemp = date.getTime() / 1000;
-                            ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+                            updateList();
                             ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(lv.getCount()));
                         }
 
@@ -550,7 +518,7 @@ public class MainActivity extends Activity {
                         //((TextView) findViewById(R.id.month)).setTextSize(20);
                         superflag = false;
                         timeStemp = 0;
-                        ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+                        updateList();
                     }
                 });
                 dpd.show();
@@ -574,10 +542,8 @@ public class MainActivity extends Activity {
         super.onStop();
         //保存数据
         String classesData="";
-        Iterator it = classes.keySet().iterator();
-        while (it.hasNext()) {
-            String key=(String)it.next();
-            classesData+=key+classes.get(key)+",";
+        for (final String key : classes.keySet()) {
+            classesData += key + classes.get(key) + ",";
             //TODO: 保存每个班的数据
         }
         spEditor.putString("classes", classesData);
@@ -613,45 +579,39 @@ public class MainActivity extends Activity {
 
     private ArrayList<HashMap<String, Object>> getData() {
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
-        Iterator it = classes.keySet().iterator();
-        while (it.hasNext()) {
-            final ArrayList<History> histories = classes.get(it.next()).histories;
-            for (int i = histories.size() - 1; i >= 0; i--) {
-                if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
-                    continue;
-                if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略
-                if (scoreFilter == 1 && histories.get(i).score < 0) continue; //筛选加分但是是扣分记录，忽略
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("ItemTitle", (histories.get(i).reason.length() > 6 ? histories.get(i).reason.substring(0, 6) + "…" : histories.get(i).reason));
-                map.put("ItemText", (histories.get(i).names.length() > 10 ? histories.get(i).names.substring(0, 18) + "…" : histories.get(i).names));
-                map.put("mark", (histories.get(i).score > 0 ? "+" : "") + (histories.get(i).score / 10.0));
-                map.put("positive", (histories.get(i).score > 0 ? "green" : "red"));
-                listItem.add(map);
-            }
+        if(classNow.equals("-1")) return listItem;
+        final ArrayList<History> histories = classes.get(classNow).histories;
+        for (int i = histories.size() - 1; i >= 0; i--) {
+            if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
+                continue;
+            if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略
+            if (scoreFilter == 1 && histories.get(i).score < 0) continue; //筛选加分但是是扣分记录，忽略
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("ItemTitle", (histories.get(i).reason.length() > 6 ? histories.get(i).reason.substring(0, 6) + "…" : histories.get(i).reason));
+            map.put("ItemText", (histories.get(i).names.length() > 10 ? histories.get(i).names.substring(0, 18) + "…" : histories.get(i).names));
+            map.put("mark", (histories.get(i).score > 0 ? "+" : "") + (histories.get(i).score / 10.0));
+            listItem.add(map);
         }
         return listItem;
-
     }
 
-    private int getPos(int position){
-        int count = 0, sum=-1;
-        Iterator it = classes.keySet().iterator();
-        while (it.hasNext()) {
-            final ArrayList<History> histories = classes.get(it.next()).histories;
-            for (int i = histories.size() - 1; i >= 0; i--) {
-                sum++;
-                if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
-                    continue;
+    private int getPos(int position) {
+        if(classNow.equals("-1")) return -1;
+        int count = 0, sum = -1;
+        final ArrayList<History> histories = classes.get(classNow).histories;
+        for (int i = histories.size() - 1; i >= 0; i--) {
+            sum++;
+            if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
+                continue;
 
-                if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略
-                if (scoreFilter == 1 && histories.get(i).score < 0) continue; //筛选加分但是是扣分记录，忽略
+            if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略
+            if (scoreFilter == 1 && histories.get(i).score < 0) continue; //筛选加分但是是扣分记录，忽略
 
-                if (count < position) {
-                    count++;
-                    continue;
-                }
-                return sum;
+            if (count < position) {
+                count++;
+                continue;
             }
+            return sum;
         }
         return -1;
     }
@@ -685,8 +645,7 @@ public class MainActivity extends Activity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             MainActivity.MyAdapter.ViewHolder holder;
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.itemmoreinfo,
-                        null);
+                convertView = mInflater.inflate(R.layout.itemmoreinfo, parent);
                 holder = new ViewHolder();
                     /*得到各个控件的对象*/
                 holder.title = (TextView) convertView.findViewById(R.id.ItemTitle);
@@ -764,8 +723,7 @@ public class MainActivity extends Activity {
             String s = (String) (getData().get(position).get("ItemText"));
             holder.text.setText(s);
             holder.mark.setText((String) (getData().get(position).get("mark")));
-            String posi = (String) (getData().get(position).get("positive"));
-            if(posi=="green") {
+            if(Integer.parseInt((String) (getData().get(position).get("mark")))>0) {
                 holder.positive.setImageResource(R.drawable.green);
             }else {
                 holder.positive.setImageResource(R.drawable.red);
@@ -852,15 +810,12 @@ public class MainActivity extends Activity {
         switch(resultCode) {
             case 1:
                 String result = data.getExtras().getString("res"); //得到新Activity关闭后返回的数据
-                if (result.matches("NULL")) {
-
-                } else {
-                    String[] strarray = result.split("[|]");
-                    _name = strarray[1];
-                    _class = strarray[0];
-                    ((TextView) findViewById(R.id._name)).setText(_name);
-                    ((TextView) findViewById(R.id._class)).setText(_class);
-
+                if (!result.matches("NULL")) {
+                    String[] strArray = result.split("[|]");
+                    filterName = strArray[1];
+                    filterClass = strArray[0];
+                    ((TextView) findViewById(R.id._name)).setText(filterName);
+                    ((TextView) findViewById(R.id._class)).setText(filterClass);
                 }
                 break;
             case 2:
