@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -163,8 +164,29 @@ public class add extends Activity{
                 isplus = false;
             }
         });
+        ((Button) findViewById(R.id.ok)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#9b9b9b"));
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#ffffff"));
+                }
+                return false;
+            }
+        });
 
+        ((Button) findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                //传值
+                Intent i=new Intent();
+                //i.putExtra("his", result);
+                i.setClass(add.this, MainActivity.class);
+                add.this.setResult(2, i);
+                add.this.finish();
+            }
+        });
 
         ((RelativeLayout)findViewById(R.id.chooseresson)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

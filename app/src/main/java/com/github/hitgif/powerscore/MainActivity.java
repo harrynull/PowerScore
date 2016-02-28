@@ -263,21 +263,8 @@ public class MainActivity extends Activity {
             }
         });
 
-        ((LinearLayout)findViewById(R.id.reason)).setOnClickListener(new View.OnClickListener() {
-=======
-                //  Uri uri = Uri.parse("http://scoremanagement.applinzi.com/view.php?username="+((EditText) findViewById(R.id.editText2)).getText().toString());
-                //  Intent intent = new  Intent(Intent.ACTION_VIEW, uri);
-                //  startActivity(intent);
-            }
-        });
-        findViewById(R.id.reason).setOnClickListener(new View.OnClickListener() {
->>>>>>> origin/master
-=======
-                //  Uri uri = Uri.parse("http://scoremanagement.applinzi.com/view.php?username="+((EditText) findViewById(R.id.editText2)).getText().toString());
-                //  Intent intent = new  Intent(Intent.ACTION_VIEW, uri);
-                //  startActivity(intent);
-            }
-        });
+
+
         findViewById(R.id.reason).setOnClickListener(new View.OnClickListener() {
 >>>>>>> origin/master
             public void onClick(View v) {

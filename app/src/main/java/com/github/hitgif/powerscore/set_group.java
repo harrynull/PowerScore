@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class set_group extends Activity {
 
-    ArrayList<Group> groups;
+    ArrayList<EListAdapter.Group> groups;
     ExpandableListView listView;
     EListAdapter adapter;
     public String result = "";
@@ -51,7 +51,7 @@ public class set_group extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.set_student_for_group);
-        groups = new ArrayList<Group>();
+        groups = new ArrayList<EListAdapter.Group>();
         getJSONObject();
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         group_name = (EditText) findViewById(R.id.group_name);
@@ -147,7 +147,7 @@ public class set_group extends Activity {
 
             for (int i = 0; i < groupList.length(); i++) {
                 JSONObject groupObj = (JSONObject) groupList.get(i);
-                Group group = new Group(groupObj.getString("id"), groupObj.getString("title"));
+                EListAdapter.Group group = new EListAdapter.Group(groupObj.getString("id"), groupObj.getString("title"));
                 JSONArray childrenList = groupObj.getJSONArray("CommunityUsersList");
 
                 for (int j = 0; j < childrenList.length(); j++) {
