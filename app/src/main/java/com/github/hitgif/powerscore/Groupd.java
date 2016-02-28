@@ -1,7 +1,10 @@
 package com.github.hitgif.powerscore;
 
-public class Group {
-    public Group(String gn,String gm){
+/**
+ * Created by 123 on 02/28/2016.
+ */
+public class Groupd {
+    public Groupd(String gn, String gm){
         groupName=gn;
         groupMembers=gm;
     }

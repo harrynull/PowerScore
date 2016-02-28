@@ -56,7 +56,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/lv_data"
+        android:id="@+id/listViewddd"
         android:layout_below="@+id/relativeLayout23"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/relativeLayout22" />
@@ -75,7 +75,7 @@
         <ImageView
             android:layout_width="65dp"
             android:layout_height="50dp"
-            android:id="@+id/addreason"
+            android:id="@+id/addgroup"
             android:src="@drawable/pluss"
             android:padding="15dp"
             android:layout_alignParentTop="true"

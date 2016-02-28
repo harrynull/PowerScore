@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#FF5555" >
+
+    <TextView
+        android:id="@+id/tv_show_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dip"
+        android:gravity="center_vertical|right"
+        android:padding="15dip"
+        android:text="向左滑动删除"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/ItemTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:text="ad"
+                android:textSize="20sp"
+                android:autoText="false"
+                android:background="@drawable/listview_item"
+                android:textColor="#3b454b"
+                android:paddingLeft="15dip"
+                android:paddingTop="5dip" />
+
+            <TextView
+                android:text="你好,你好,你好你,你好你,你好你,你好…"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:id="@+id/ItemText"
+                android:paddingLeft="15dp"
+
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/ItemTitle"
+                android:layout_toLeftOf="@+id/mark"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/listview_item"
+                android:textSize="12sp"
+                android:visibility="visible"
+                android:paddingBottom="5dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

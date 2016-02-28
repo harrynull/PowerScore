@@ -52,7 +52,7 @@
                     android:text="New Button"
                     android:id="@+id/ls"
                     android:textColor="#000000"
-                    android:visibility="gone"
+
                     android:layout_alignParentBottom="true"
                     android:layout_toLeftOf="@+id/fb"
                     android:layout_toStartOf="@+id/fb"></Button>
@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="九(3)班"
+                        android:text="请选择"
                         android:id="@+id/classnow"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
@@ -154,14 +154,14 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:id="@+id/upt"
                 android:layout_alignTop="@+id/relativeLayout5"
                 android:background="@color/main">
 
                 <Button
-                    android:layout_width="200px"
-                    android:layout_height="48dp"
+                    android:layout_width="90dp"
+                    android:layout_height="43dp"
                     android:layout_weight="1"
                     android:background="@color/main"
                     android:text="全局"
@@ -173,8 +173,8 @@
                     android:textColor="#ffffff" />
 
                 <Button
-                    android:layout_width="200px"
-                    android:layout_height="match_parent"
+                    android:layout_width="90dp"
+                    android:layout_height="43dp"
                     android:layout_weight="1"
                     android:background="@color/main"
                     android:textSize="15dp"
@@ -187,13 +187,13 @@
 
                 <RelativeLayout
                     android:orientation="horizontal"
-                    android:layout_width="400px"
+                    android:layout_width="180dp"
                     android:layout_height="3dp"
                     android:layout_alignParentBottom="true"
                     android:id="@+id/lpd">
 
                     <ImageView
-                        android:layout_width="200px"
+                        android:layout_width="90dp"
                         android:layout_height="3dp"
                         android:id="@+id/bar"
                         android:background="#ffffff"
@@ -203,15 +203,15 @@
 
                 <RelativeLayout
                     android:orientation="horizontal"
-                    android:layout_width="400px"
+                    android:layout_width="180dp"
                     android:layout_height="3dp"
                     android:layout_alignParentBottom="true"
                     android:id="@+id/lpd2"
-                    android:paddingLeft="200px"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:gravity="right">
 
                     <ImageView
-                        android:layout_width="200px"
+                        android:layout_width="90dp"
                         android:layout_height="3dp"
                         android:id="@+id/imageView41"
                         android:background="#ffffff"
@@ -225,7 +225,7 @@
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingRight="13dp"
                     android:background="@drawable/back_press"
                     android:id="@+id/flit">
 
@@ -298,78 +298,13 @@
                         android:layout_toRightOf="@+id/relativeLayout"
                         android:paddingBottom="5dp" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/relativeLayout2"
-                        android:layout_alignTop="@+id/imageView2"
-                        android:layout_toRightOf="@+id/imageView2"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="加/减分"
-                            android:id="@+id/textView3"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentLeft="true"
-                            android:textColor="#e1e1e1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:id="@+id/pm"
-                            android:textColor="#ffffff"
-                            android:textIsSelectable="false"
-                            android:text="不限"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_below="@+id/textView3"
-                            android:gravity="center_vertical" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:id="@+id/textView10"
-                            android:textSize="30px"
-                            android:textColor="#ffffff"
-                            android:paddingBottom="5dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_toRightOf="@+id/pm" />
-
-                        <ImageView
-                            android:layout_width="10dp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/drop2"
-                            android:src="@drawable/drop"
-                            android:paddingBottom="7dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignTop="@+id/textView10"
-                            android:layout_toRightOf="@+id/textView10" />
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/pickpm"
-                            android:layout_weight="1"
-                            android:background="#00000000"
-                            android:layout_centerVertical="true"
-                            android:layout_alignRight="@+id/drop2" />
-
-
-                    </RelativeLayout>
-
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView4"
                         android:src="@drawable/jg"
                         android:paddingBottom="5dp"
-                        android:layout_toRightOf="@+id/relativeLayout2" />
+                        android:layout_toRightOf="@+id/imageView2" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -490,7 +425,7 @@
 
     <RelativeLayout
         android:id="@+id/left"
-        android:layout_width="280dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:background="@android:color/white">
@@ -549,8 +484,8 @@
 
 
             <ImageView
-                android:layout_width="110px"
-                android:layout_height="44px"
+                android:layout_width="55dp"
+                android:layout_height="22dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="18dp"
                 android:layout_marginRight="15dp"
@@ -1024,11 +959,11 @@
                     <ImageView
                         android:layout_width="10dp"
                         android:layout_height="20dp"
-                        android:id="@+id/imageView44"
+                        android:id="@+id/drop2"
                         android:src="@drawable/drop"
                         android:paddingBottom="7dp"
-                        android:layout_alignBottom="@+id/button5"
-                        android:layout_toRightOf="@+id/textView37" />
+                        android:layout_alignBottom="@+id/pickpm"
+                        android:layout_toRightOf="@+id/pm" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -1044,19 +979,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/textView37"
+                        android:id="@+id/pm"
                         android:textColor="#ffffff"
                         android:textIsSelectable="false"
                         android:text="不限"
                         android:layout_alignParentLeft="true"
                         android:gravity="center_vertical"
                         android:layout_below="@+id/textView36"
-                        android:layout_alignBottom="@+id/button5" />
+                        android:layout_alignBottom="@+id/pickpm" />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button5"
+                        android:id="@+id/pickpm"
                         android:layout_weight="1"
                         android:background="#00000000"
                         android:layout_alignParentTop="true"

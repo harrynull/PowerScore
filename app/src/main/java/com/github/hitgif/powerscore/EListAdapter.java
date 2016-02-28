@@ -14,7 +14,50 @@ import android.widget.TextView;
 
 
 public class EListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnChildClickListener {
+ public static class Group {
+  private String id;
+  private String title;
+  private ArrayList<Child> children;
+  private boolean isChecked;
 
+  public Group(String id, String title) {
+   this.title = title;
+   children = new ArrayList<Child>();
+   this.isChecked = false;
+  }
+
+  public void setChecked(boolean isChecked) {
+   this.isChecked = isChecked;
+  }
+
+  public void toggle() {
+   this.isChecked = !this.isChecked;
+  }
+
+  public boolean getChecked() {
+   return this.isChecked;
+  }
+
+  public String getId() {
+   return id;
+  }
+
+  public String getTitle() {
+   return title;
+  }
+
+  public void addChildrenItem(Child child) {
+   children.add(child);
+  }
+
+  public int getChildrenCount() {
+   return children.size();
+  }
+
+  public Child getChildItem(int index) {
+   return children.get(index);
+  }
+ }
  private Context context;
  private ArrayList<Group> groups;
 
@@ -55,9 +98,9 @@ public class EListAdapter extends BaseExpandableListAdapter implements Expandabl
  return true;
  }
 
- /** 設定 Group 資料 */
+
  public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
- Group group = (Group) getGroup(groupPosition);
+  Group group = (Group) getGroup(groupPosition);
 
  if (convertView == null) {
  LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

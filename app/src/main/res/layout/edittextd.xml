@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/tableLayout1">
+        <TableRow android:id="@+id/tableRow1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="10dip">
+
+            <EditText android:layout_weight="1"
+                android:id="@+id/editText1" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:hint="组名"></EditText>
+        </TableRow>
+
+        <TableRow android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/tableRow2" android:clickable="true" android:padding="10dip"
+            android:paddingRight="10dp">
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView2"
+                android:paddingRight="10dp" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
+ 
