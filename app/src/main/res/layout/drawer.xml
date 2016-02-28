@@ -25,7 +25,7 @@
 
 
                 <ImageView
-                    android:id="@+id/flit"
+                    android:id="@+id/fb"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/fliter"

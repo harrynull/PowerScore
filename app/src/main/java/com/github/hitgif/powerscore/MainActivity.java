@@ -13,10 +13,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +31,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -45,14 +44,12 @@ import android.content.DialogInterface;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.TreeMap;
 
 public class MainActivity extends Activity {
@@ -134,16 +131,37 @@ public class MainActivity extends Activity {
             lp.width = 1;
             lp.height = sbar;
             findViewById(R.id.ds).setLayoutParams(lp);
+            findViewById(R.id.ds2).setLayoutParams(lp);
         }
         add = (ImageView) findViewById(R.id.add);
         final  ImageView sync = (ImageView)findViewById(R.id.sync);
         final  Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
+        final  Animation in_per = AnimationUtils.loadAnimation(this, R.anim.personal_in);
+        final  Animation out_gen = AnimationUtils.loadAnimation(this, R.anim.personal_out);
+        in_per.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                findViewById(R.id.lpd).setVisibility(View.GONE);
+                findViewById(R.id.lpd2).setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         LinearInterpolator lin = new LinearInterpolator();
         operatingAnim.setInterpolator(lin);
         genlayout.setVisibility(View.VISIBLE);
         perlayout.setVisibility(View.GONE);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         leftLayout=(RelativeLayout) findViewById(R.id.left);
+        rightLayout=(RelativeLayout) findViewById(R.id.right);
 
         sync.setOnClickListener(new OnClickListener() {
             @Override
@@ -161,14 +179,17 @@ public class MainActivity extends Activity {
         });
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                gen.setBackgroundColor(Color.parseColor("#ffffff"));
-                gen.setTextColor(getResources().getColor(R.color.main));
-                per.setBackgroundColor(getResources().getColor(R.color.main));
-                per.setTextColor(Color.parseColor("#ffffff"));
+                gen.setTextColor(Color.parseColor("#ffffff"));
+                per.setTextColor(Color.parseColor("#7fffffff"));
                 genlayout.setEnabled(true);
                 genlayout.setVisibility(View.VISIBLE);
                 perlayout.setVisibility(View.GONE);
-                findViewById(R.id.flit).setVisibility(View.VISIBLE);
+                findViewById(R.id.lpd).setVisibility(View.VISIBLE);
+                findViewById(R.id.lpd2).setVisibility(View.GONE);
+                findViewById(R.id.bar).startAnimation(out_gen);
+                findViewById(R.id.lpd).setPadding(0, 0, 0, 0);
+                findViewById(R.id.pnm).setVisibility(View.GONE);
+                findViewById(R.id.pcr).setVisibility(View.VISIBLE);
                 //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
             }
         });
@@ -187,86 +208,42 @@ public class MainActivity extends Activity {
 
         per.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                per.setBackgroundColor(Color.parseColor("#ffffff"));
-                per.setTextColor(getResources().getColor(R.color.main));
-                gen.setBackgroundColor(getResources().getColor(R.color.main));
-                gen.setTextColor(Color.parseColor("#ffffff"));
+                per.setTextColor(Color.parseColor("#ffffff"));
+                gen.setTextColor(Color.parseColor("#7fffffff"));
                 genlayout.setEnabled(false);
                 perlayout.setVisibility(View.VISIBLE);
                 genlayout.setVisibility(View.GONE);
-                ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
-                findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.main));
-                findViewById(R.id.fliter).setVisibility(View.GONE);
-                findViewById(R.id.flit).setVisibility(View.GONE);
                 d = "不限";
                 ((TextView) findViewById(R.id.month)).setText(d);
                 ((TextView) findViewById(R.id.year)).setText("");
                 ((TextView) findViewById(R.id.day)).setText("");
                 ((TextView) findViewById(R.id.textView5)).setText("");
                 ((TextView) findViewById(R.id.textView7)).setText("");
+                findViewById(R.id.bar).startAnimation(in_per);
+                findViewById(R.id.pcr).setVisibility(View.GONE);
+                findViewById(R.id.pnm).setVisibility(View.VISIBLE);
                 // ((TextView) findViewById(R.id.month)).setTextSize(20);
                 //superflag = false;
                 timeStemp = 0;
                 updateList();
-
                 ((TextView) findViewById(R.id.pm)).setText("不限");
                 //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                 scoreFilter = -1;
 
-                isflit = false;
 
             }
         });
-        choose.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivityForResult(new Intent(MainActivity.this, chooseclass.class), 1);
-            }
 
-        });
         findViewById(R.id.personal).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ((DrawerLayout) findViewById(R.id.drawerlayout)).openDrawer(leftLayout);
             }
         });
-        findViewById(R.id.flit).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.press));
 
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (isflit) {
-                        d = "不限";
-                        ((TextView) findViewById(R.id.month)).setText(d);
-                        ((TextView) findViewById(R.id.year)).setText("");
-                        ((TextView) findViewById(R.id.day)).setText("");
-                        ((TextView) findViewById(R.id.textView5)).setText("");
-                        ((TextView) findViewById(R.id.textView7)).setText("");
-                        // ((TextView) findViewById(R.id.month)).setTextSize(20);
-                        //superflag = false;
-                        //timeStemp = 0;
-                        //lv.setAdapter(new MyAdapter(MainActivity.this));
-
-                        ((TextView) findViewById(R.id.pm)).setText("不限");
-                        //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
-                        scoreFilter = -1;
-                        findViewById(R.id.fliter).setVisibility(View.GONE);
-                        ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.fliter);
-                        findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.main));
-                        isflit = false;
-                    } else {
-                        findViewById(R.id.fliter).setVisibility(View.VISIBLE);
-                        ((ImageView) findViewById(R.id.flit)).setImageResource(R.drawable.nonflit);
-                        findViewById(R.id.flit).setBackgroundColor(getResources().getColor(R.color.press));
-                        isflit = true;
-                    }
-                }
-                return false;
-            }
-        });
         findViewById(R.id.flit).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((DrawerLayout) findViewById(R.id.drawerlayout)).openDrawer(rightLayout);
             }
         });
         ((ImageView)findViewById(R.id.baobiao)).setOnClickListener(new OnClickListener() {
@@ -401,6 +378,19 @@ public class MainActivity extends Activity {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.classnow)).setTextColor(Color.parseColor("#ffffff"));
                     ((ImageView) findViewById(R.id.dropclass)).setImageResource(R.drawable.drop);
+                }
+                return false;
+            }
+        });
+        findViewById(R.id.pnmb).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((TextView) findViewById(R.id._name)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((ImageView) findViewById(R.id.nmdr)).setImageResource(R.drawable.dropdown);
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((TextView) findViewById(R.id._name)).setTextColor(Color.parseColor("#ffffff"));
+                    ((ImageView) findViewById(R.id.nmdr)).setImageResource(R.drawable.drop);
+                    startActivityForResult(new Intent(MainActivity.this, choosestudent.class), 1);
                 }
                 return false;
             }
@@ -819,7 +809,6 @@ public class MainActivity extends Activity {
                     filterName = strArray[1];
                     filterClass = strArray[0];
                     ((TextView) findViewById(R.id._name)).setText(filterName);
-                    ((TextView) findViewById(R.id._class)).setText(filterClass);
                 }
                 break;
             case 2:
@@ -831,5 +820,12 @@ public class MainActivity extends Activity {
                 break;
         }
 
+    }
+    public static void setMarginsd (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
     }
 }
