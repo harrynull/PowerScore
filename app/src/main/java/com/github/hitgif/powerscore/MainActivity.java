@@ -16,15 +16,15 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -42,7 +42,12 @@ import android.widget.DatePicker;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,6 +60,7 @@ import java.util.TreeMap;
 public class MainActivity extends Activity {
 
     public static TreeMap<String, Classes> classes = new TreeMap<String, Classes>();
+    private static ArrayList<Group> groups=new ArrayList<Group>();
     SharedPreferences spReader;
     SharedPreferences.Editor spEditor;
 
@@ -85,7 +91,6 @@ public class MainActivity extends Activity {
     private DrawerLayout drawerLayout;
     private RelativeLayout leftLayout;
     private RelativeLayout rightLayout;
-
 
     Button gen;
     Button per;
@@ -246,18 +251,16 @@ public class MainActivity extends Activity {
                 ((DrawerLayout) findViewById(R.id.drawerlayout)).openDrawer(rightLayout);
             }
         });
-        ((ImageView)findViewById(R.id.baobiao)).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.baobiao).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //打开报表网页
-
-                      //  Uri uri = Uri.parse("http://scoremanagement.applinzi.com/view.php?username="+((EditText) findViewById(R.id.editText2)).getText().toString());
-                      //  Intent intent = new  Intent(Intent.ACTION_VIEW, uri);
-                      //  startActivity(intent);
-
+                //  Uri uri = Uri.parse("http://scoremanagement.applinzi.com/view.php?username="+((EditText) findViewById(R.id.editText2)).getText().toString());
+                //  Intent intent = new  Intent(Intent.ACTION_VIEW, uri);
+                //  startActivity(intent);
             }
         });
-        ((LinearLayout)findViewById(R.id.reason)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.reason).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, reason_setting.class));
             }
@@ -428,8 +431,8 @@ public class MainActivity extends Activity {
                                     @Override
                                     public void onClick(int which) {
                                         ((TextView) findViewById(R.id.pm)).setText(" — ");
-                                      //  ((TextView) findViewById(R.id.pm)).setTextSize(30);
-                                        scoreFilter=0;
+                                        //  ((TextView) findViewById(R.id.pm)).setTextSize(30);
+                                        scoreFilter = 0;
                                     }
                                 })
                         .addSheetItem("不限", ActionSheetDialog.SheetItemColor.Blue,
@@ -437,8 +440,8 @@ public class MainActivity extends Activity {
                                     @Override
                                     public void onClick(int which) {
                                         ((TextView) findViewById(R.id.pm)).setText("不限");
-                                      //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
-                                        scoreFilter=-1;
+                                        //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
+                                        scoreFilter = -1;
                                     }
                                 })
                                 //可添加多个SheetItem
@@ -464,7 +467,6 @@ public class MainActivity extends Activity {
                                 }
                             });
                 }
-
                 ASD.show();
             }
 
@@ -479,24 +481,24 @@ public class MainActivity extends Activity {
         findViewById(R.id.pick).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                superflag =true;
+                superflag = true;
                 DatePickerDialog dpd = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
                         if (superflag) {
                             showyear = String.valueOf(year) + "年";
-                            showmonth =((month + 1) < 10) ?
+                            showmonth = ((month + 1) < 10) ?
                                     "0" + (month + 1) :
                                     String.valueOf(month + 1);
-                            showday =(day < 10) ? "0" + day : String.valueOf(day);
+                            showday = (day < 10) ? "0" + day : String.valueOf(day);
                             ((TextView) findViewById(R.id.year)).setText(showyear);
                             ((TextView) findViewById(R.id.month)).setText(showmonth);
                             ((TextView) findViewById(R.id.day)).setText(showday);
                             ((TextView) findViewById(R.id.textView5)).setText("月");
                             ((TextView) findViewById(R.id.textView7)).setText("日");
-                          //  ((TextView) findViewById(R.id.month)).setTextSize(30);
-                            d= String.valueOf(year) + '-' + (month + 1) + '-' + day;
+                            //  ((TextView) findViewById(R.id.month)).setTextSize(30);
+                            d = String.valueOf(year) + '-' + (month + 1) + '-' + day;
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                             Date date = new Date();
                             try {
@@ -530,16 +532,57 @@ public class MainActivity extends Activity {
             }
         });
 
+        //读取个人信息
+        //读取组列表
+        String content = spReader.getString("groups","");
+        String[] result=content.split("\\|");
+        groups.clear();
+        for(int i=0;i<result.length-1;i+=2){
+            groups.add(new Group(result[i],result[i+1]));
+        }
+
         //读取数据
         String rawClasses = spReader.getString("classes","");
-        if(true||rawClasses.isEmpty()){
+        if(rawClasses.isEmpty()){
             classes=getClassInfo();
         }else{
             String[] classesinfo=rawClasses.split(",");
-            for(int i=0;i<classesinfo.length;i+=2){
-                //TODO: 完善读取
-                //classes.put(classesinfo[i],classesinfo[i+1]);
+            for(int i=0;i<classesinfo.length;i+=2) {
+                Classes readNow = new Classes(classesinfo[i + 1]);
+
+                //读取成员列表
+                readNow.members = spReader.getString("members", "").split(" ");
+
+                //读取分数
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new FileReader(classesinfo[i] + ".dat"));
+
+                    String line = "";
+                    StringBuilder buffer = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        buffer.append(line);
+                    }
+                    String[] strScores = buffer.toString().split("\n");
+                    for (int j = 0; j < strScores.length - 1; j++) {
+                        readNow.scores.add(Integer.valueOf(strScores[j]));
+                    }
+                } catch (Exception ignored) {}
+
+                //读取历史记录
+
+
+
+                classes.put(classesinfo[i], readNow);
             }
+        }
+
+        //默认选择一个班
+        if(classes.size()!=0) {
+            Classes c = classes.get(classes.firstKey());
+            ((TextView) findViewById(R.id.classnow)).setText(c.name);
+            classNow = classes.firstKey();
+            updateList();
         }
     }
 
@@ -549,14 +592,19 @@ public class MainActivity extends Activity {
         String classesData="";
         for (final String key : classes.keySet()) {
             Classes c=classes.get(key);
-            classesData += key + "," + c.name;
+            classesData += key + "," + c.name + ",";
 
             FileOutputStream outputStream;
             try {
-                outputStream = openFileOutput(key + ".txt", Activity.MODE_PRIVATE);
+                outputStream = openFileOutput(key + ".dat", Activity.MODE_PRIVATE);
+                for (int i = 0; i != c.members.length; i++) {
+                    outputStream.write((c.members[i] + (i == c.members.length - 1 ? "" : " ")).getBytes());
+                }
+                outputStream.write("\n".getBytes());
                 for (int i = 0; i != c.scores.size(); i++) {
                     outputStream.write((c.scores.get(i).toString() + (i==c.scores.size()-1?"":" ")).getBytes());
                 }
+                outputStream.write("\n".getBytes());
                 for(int i=0;i!=c.histories.size();i++){
                     outputStream.write((c.histories.get(i).score+"|").getBytes());
                     outputStream.write((c.histories.get(i).names +"|").getBytes());
@@ -576,8 +624,12 @@ public class MainActivity extends Activity {
     private TreeMap<String, Classes> getClassInfo(){
         //假装从网上获得了数据
         TreeMap<String, Classes> c=new TreeMap<String, Classes>();
-        c.put("1", new Classes("1班", "A B C"));
-        c.put("2", new Classes("2班", "甲 乙 丙"));
+        Classes c1=new Classes("1班");
+        c1.members= "A B C".split(" ");
+        Classes c2=new Classes("2班");
+        c2.members= "甲 乙 丙".split(" ");
+        c.put("1", c1);
+        c.put("2", c2);
         return c;
     }
 
@@ -612,7 +664,8 @@ public class MainActivity extends Activity {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemTitle", (histories.get(i).reason.length() > 6 ? histories.get(i).reason.substring(0, 6) + "…" : histories.get(i).reason));
             map.put("ItemText", (histories.get(i).names.length() > 10 ? histories.get(i).names.substring(0, 18) + "…" : histories.get(i).names));
-            map.put("mark", (histories.get(i).score > 0 ? "+" : "") + (histories.get(i).score / 10.0));
+            map.put("strmark", (histories.get(i).score > 0 ? "+" : "") + (histories.get(i).score / 10.0));
+            map.put("mark", Integer.valueOf(histories.get(i).score));
             listItem.add(map);
         }
         return listItem;
@@ -668,7 +721,7 @@ public class MainActivity extends Activity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             MainActivity.MyAdapter.ViewHolder holder;
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.itemmoreinfo, parent);
+                convertView = mInflater.inflate(R.layout.itemmoreinfo, null);
                 holder = new ViewHolder();
                     /*得到各个控件的对象*/
                 holder.title = (TextView) convertView.findViewById(R.id.ItemTitle);
@@ -745,8 +798,8 @@ public class MainActivity extends Activity {
             holder.title.setText((String) (getData().get(position).get("ItemTitle")));
             String s = (String) (getData().get(position).get("ItemText"));
             holder.text.setText(s);
-            holder.mark.setText((String) (getData().get(position).get("mark")));
-            if(Integer.parseInt((String) (getData().get(position).get("mark")))>0) {
+            holder.mark.setText((String) (getData().get(position).get("strmark")));
+            if((Integer) (getData().get(position).get("mark"))>0) {
                 holder.positive.setImageResource(R.drawable.green);
             }else {
                 holder.positive.setImageResource(R.drawable.red);

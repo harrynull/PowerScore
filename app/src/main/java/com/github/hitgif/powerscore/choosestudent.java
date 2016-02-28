@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 public class choosestudent extends Activity {
 
-    ArrayList<Group> groups;
+    ArrayList<EListAdapter.Group> groups;
     ExpandableListView listView;
     EListAdapter adapter;
     public String result = "";
@@ -49,7 +49,7 @@ public class choosestudent extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choosestudent);
-        groups = new ArrayList<Group>();
+        groups = new ArrayList<EListAdapter.Group>();
         getJSONObject();
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         adapter = new EListAdapter(this, groups);
@@ -137,7 +137,7 @@ public class choosestudent extends Activity {
 
             for (int i = 0; i < groupList.length(); i++) {
                 JSONObject groupObj = (JSONObject) groupList.get(i);
-                Group group = new Group(groupObj.getString("id"), groupObj.getString("title"));
+                EListAdapter.Group group = new EListAdapter.Group(groupObj.getString("id"), groupObj.getString("title"));
                 JSONArray childrenList = groupObj.getJSONArray("CommunityUsersList");
 
                 for (int j = 0; j < childrenList.length(); j++) {

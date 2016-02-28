@@ -6,11 +6,10 @@ import java.util.ArrayList;
  * Created by Null on 2016/2/24.
  */
 public class Classes {
-    public Classes(String _name, String _members){
+    public Classes(String _name){
         histories = new ArrayList<History>();
         scores = new ArrayList<Integer>();
         name=_name;
-        members=_members.split(" ");
     }
 
     public String name;

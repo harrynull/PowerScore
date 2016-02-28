@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class multiplychoosestudent extends Activity {
 
-    ArrayList<Group> groups;
+    ArrayList<EListAdapter.Group> groups;
     ExpandableListView listView;
     EListAdapter adapter;
     public String result = "";
@@ -49,14 +49,14 @@ public class multiplychoosestudent extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.multiplychoosestudent);
-        groups = new ArrayList<Group>();
+        groups = new ArrayList<EListAdapter.Group>();
         getJSONObject();
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         adapter = new EListAdapter(this, groups);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(adapter);
 
-        ((RelativeLayout) findViewById(R.id.back)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -69,7 +69,7 @@ public class multiplychoosestudent extends Activity {
             }
         });
 
-        ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent iB = new Intent();
                 iB.putExtra("reason", Null);
@@ -79,7 +79,7 @@ public class multiplychoosestudent extends Activity {
             }
         });
 
-        ((Button) findViewById(R.id.ok)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.ok).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -141,7 +141,7 @@ public class multiplychoosestudent extends Activity {
 
             for (int i = 0; i < groupList.length(); i++) {
                 JSONObject groupObj = (JSONObject) groupList.get(i);
-                Group group = new Group(groupObj.getString("id"), groupObj.getString("title"));
+                EListAdapter.Group group = new EListAdapter.Group(groupObj.getString("id"), groupObj.getString("title"));
                 JSONArray childrenList = groupObj.getJSONArray("CommunityUsersList");
 
                 for (int j = 0; j < childrenList.length(); j++) {
