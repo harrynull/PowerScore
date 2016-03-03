@@ -21,6 +21,7 @@ public class EListAdapter extends BaseExpandableListAdapter implements Expandabl
   private boolean isChecked;
 
   public Group(String id, String title) {
+   this.id=id;
    this.title = title;
    children = new ArrayList<Child>();
    this.isChecked = false;
@@ -152,7 +153,7 @@ public class EListAdapter extends BaseExpandableListAdapter implements Expandabl
  }
 
  TextView tv = (TextView) convertView.findViewById(R.id.tvChild);
- tv.setText(child.getFullname());
+ tv.setText(child.getName());
 
  // 重新產生 CheckBox 時，將存起來的 isChecked 狀態重新設定
  CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.chbChild);

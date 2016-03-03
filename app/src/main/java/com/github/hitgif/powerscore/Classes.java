@@ -8,12 +8,14 @@ import java.util.ArrayList;
 public class Classes {
     public Classes(String _name){
         histories = new ArrayList<History>();
-        scores = new ArrayList<Integer>();
         name=_name;
     }
-
+    public void setMembers(String _members) {
+        members=_members.split(" ");
+        scores=new int[members.length];
+    }
     public String name;
     public String[] members;
     public ArrayList<History> histories = new ArrayList<History>();
-    public ArrayList<Integer> scores = new ArrayList<Integer>();
+    public int[] scores;
 }

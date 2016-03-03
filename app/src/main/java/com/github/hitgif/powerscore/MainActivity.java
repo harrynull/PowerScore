@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
     private String showday;
     private String filterClass;
     private String filterName;
-
+    private Boolean isgen = true;
     private int scoreFilter=-1;
 
     //布局
@@ -143,6 +143,7 @@ public class MainActivity extends Activity {
         final  Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
         final  Animation in_per = AnimationUtils.loadAnimation(this, R.anim.personal_in);
         final  Animation out_gen = AnimationUtils.loadAnimation(this, R.anim.personal_out);
+        per.setTextColor(Color.parseColor("#7fffffff"));
         in_per.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -160,6 +161,7 @@ public class MainActivity extends Activity {
 
             }
         });
+
         LinearInterpolator lin = new LinearInterpolator();
         operatingAnim.setInterpolator(lin);
         genlayout.setVisibility(View.VISIBLE);
@@ -184,6 +186,9 @@ public class MainActivity extends Activity {
         });
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (!isgen) {
+                    findViewById(R.id.bar).startAnimation(out_gen);
+                }
                 gen.setTextColor(Color.parseColor("#ffffff"));
                 per.setTextColor(Color.parseColor("#7fffffff"));
                 genlayout.setEnabled(true);
@@ -191,9 +196,9 @@ public class MainActivity extends Activity {
                 perlayout.setVisibility(View.GONE);
                 findViewById(R.id.lpd).setVisibility(View.VISIBLE);
                 findViewById(R.id.lpd2).setVisibility(View.GONE);
-                findViewById(R.id.bar).startAnimation(out_gen);
                 findViewById(R.id.pnm).setVisibility(View.GONE);
                 findViewById(R.id.pcr).setVisibility(View.VISIBLE);
+                isgen = true;
                 //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
             }
         });
@@ -233,7 +238,7 @@ public class MainActivity extends Activity {
                 ((TextView) findViewById(R.id.pm)).setText("不限");
                 //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                 scoreFilter = -1;
-
+                isgen = false;
 
             }
         });
@@ -254,7 +259,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //打开报表网页
-<<<<<<< HEAD
+
 
                 //  Uri uri = Uri.parse("http://scoremanagement.applinzi.com/view.php?username="+((EditText) findViewById(R.id.editText2)).getText().toString());
                 //  Intent intent = new  Intent(Intent.ACTION_VIEW, uri);
@@ -266,13 +271,13 @@ public class MainActivity extends Activity {
 
 
         findViewById(R.id.reason).setOnClickListener(new View.OnClickListener() {
->>>>>>> origin/master
+
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, reason_setting.class));
             }
 
         });
-        ((LinearLayout)findViewById(R.id.linearLayout7)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.linearLayout7).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, group_setting.class));
             }
@@ -317,7 +322,7 @@ public class MainActivity extends Activity {
                                                                     public void onClick(View v) {
                                                                         for (int i = 0; i != c.members.length; i++) {
                                                                             if (names.contains(c.members[i])) {
-                                                                                c.scores.set(i, c.scores.get(i) - change);
+                                                                                c.scores[i]-=change;
                                                                             }
                                                                         }
                                                                     }
@@ -344,17 +349,11 @@ public class MainActivity extends Activity {
                                     @Override
                                     public void onClick(int which) {
                                         History h = histories.get(getPos(position));
-                                        new AlertDialogios(MainActivity.this).builder()
-                                                .setTitle("详细记录")
-                                                .setMsg("理由: " + h.reason + "\n" +
-                                                        "成员: " + h.names + "\n" +
-                                                        "分数: " + h.getScore() + "\n" +
-                                                        "时间: " + h.getDate())
-                                                .setNegativeButton("返回", new OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                    }
-                                                }).show();
+                                        String info_of_record = h.reason+"|"+c.name+"|"+h.names+"|"+h.getScore()+"|"+h.getDate(true);
+                                        Intent i=new Intent();
+                                        i.putExtra("record", info_of_record);
+                                        i.setClass(MainActivity.this, moreinfo.class);
+                                        startActivity(i);
 
                                     }
                                 })
@@ -562,24 +561,32 @@ public class MainActivity extends Activity {
             for(int i=0;i<classesinfo.length;i+=2) {
                 Classes readNow = new Classes(classesinfo[i + 1]);
 
-                //读取成员列表
-                readNow.members = spReader.getString("members", "").split(" ");
-
-                //读取分数
-                BufferedReader br = null;
+                //读取数据
                 try {
-                    br = new BufferedReader(new FileReader(classesinfo[i] + ".dat"));
+                    FileInputStream inputStream = this.openFileInput(classesinfo[i] + ".dat");
+                    byte[] bytes = new byte[inputStream.available()];
+                    ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+                    while (inputStream.read(bytes) != -1) {
+                        arrayOutputStream.write(bytes, 0, bytes.length);
+                    }
+                    inputStream.close();
+                    arrayOutputStream.close();
+                    String buffer = new String(arrayOutputStream.toByteArray());
 
-                    String line = "";
-                    StringBuilder buffer = new StringBuilder();
-                    while ((line = br.readLine()) != null) {
-                        buffer.append(line);
+                    String[] strs = buffer.split("\n");
+                    readNow.setMembers(strs[0]);
+
+                    String[] strScores=strs[1].split(" ");
+                    for (int j = 0; j < readNow.members.length; j++) {
+                        readNow.scores[j]=Integer.valueOf(strScores[j]);
                     }
-                    String[] strScores = buffer.toString().split("\n");
-                    for (int j = 0; j < strScores.length - 1; j++) {
-                        readNow.scores.add(Integer.valueOf(strScores[j]));
+
+                    String[] histories=strs[2].split("\\|");
+                    for(int j=0;j<histories.length-1;j+=4){
+                        readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
+                                histories[j + 2], new Date(histories[j + 3])));
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {ignored.printStackTrace();}
 
                 //读取历史记录
 
@@ -609,13 +616,17 @@ public class MainActivity extends Activity {
             FileOutputStream outputStream;
             try {
                 outputStream = openFileOutput(key + ".dat", Activity.MODE_PRIVATE);
+                //if(c.members!=null) {  理论上不需要
                 for (int i = 0; i != c.members.length; i++) {
                     outputStream.write((c.members[i] + (i == c.members.length - 1 ? "" : " ")).getBytes());
                 }
+                //}
                 outputStream.write("\n".getBytes());
-                for (int i = 0; i != c.scores.size(); i++) {
-                    outputStream.write((c.scores.get(i).toString() + (i==c.scores.size()-1?"":" ")).getBytes());
+                //if(c.scores!=null) {
+                for (int i = 0; i != c.scores.length; i++) {
+                    outputStream.write((c.scores[i] + (i == c.scores.length - 1 ? "" : " ")).getBytes());
                 }
+                //}
                 outputStream.write("\n".getBytes());
                 for(int i=0;i!=c.histories.size();i++){
                     outputStream.write((c.histories.get(i).score+"|").getBytes());
@@ -637,9 +648,9 @@ public class MainActivity extends Activity {
         //假装从网上获得了数据
         TreeMap<String, Classes> c=new TreeMap<String, Classes>();
         Classes c1=new Classes("1班");
-        c1.members= "A B C".split(" ");
+        c1.setMembers("A B C");
         Classes c2=new Classes("2班");
-        c2.members= "甲 乙 丙".split(" ");
+        c2.setMembers("甲 乙 丙");
         c.put("1", c1);
         c.put("2", c2);
         return c;
@@ -669,15 +680,17 @@ public class MainActivity extends Activity {
         if(classNow.equals("-1")) return listItem;
         final ArrayList<History> histories = classes.get(classNow).histories;
         for (int i = histories.size() - 1; i >= 0; i--) {
-            if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
+            History h=histories.get(i);
+            if (d.compareTo("不限") != 0 && (h.date.getTime() / 1000 - 86400 > timeStemp || h.date.getTime() / 1000 <= timeStemp))
                 continue;
-            if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略
-            if (scoreFilter == 1 && histories.get(i).score < 0) continue; //筛选加分但是是扣分记录，忽略
+            if (scoreFilter == 0 && h.score > 0) continue; //筛选扣分但是是加分记录，忽略
+            if (scoreFilter == 1 && h.score < 0) continue; //筛选加分但是是扣分记录，忽略
             HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("ItemTitle", (histories.get(i).reason.length() > 6 ? histories.get(i).reason.substring(0, 6) + "…" : histories.get(i).reason));
-            map.put("ItemText", (histories.get(i).names.length() > 10 ? histories.get(i).names.substring(0, 18) + "…" : histories.get(i).names));
-            map.put("strmark", (histories.get(i).score > 0 ? "+" : "") + (histories.get(i).score / 10.0));
-            map.put("mark", Integer.valueOf(histories.get(i).score));
+            map.put("ItemTitle", h.shortReason);
+            map.put("ItemText", h.shortNames);
+            map.put("strmark", h.scoreWithSign);
+            map.put("mark", h.score);
+            map.put("date", h.getDate(false));
             listItem.add(map);
         }
         return listItem;
@@ -739,78 +752,18 @@ public class MainActivity extends Activity {
                 holder.title = (TextView) convertView.findViewById(R.id.ItemTitle);
                 holder.text = (TextView) convertView.findViewById(R.id.ItemText);
                 holder.mark = (TextView) convertView.findViewById(R.id.mark);
+                holder.date = (TextView) convertView.findViewById(R.id.date);
                 holder.positive = (ImageView) convertView.findViewById(R.id.positive);
                 convertView.setTag(holder);//绑定ViewHolder对象
             } else {
                 holder = (ViewHolder) convertView.getTag();//取出ViewHolder对象
             }
-            /*
-            holder.bt.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (v.getId() == R.id.ItemButton) {
-                        if (event.getAction() == MotionEvent.ACTION_UP) {
-                            TextView tv = new TextView(MainActivity.this);
-                            History h = histories.get(getPos(position));
-                            tv.setText(h.names + "\r\n" +
-                                    h.reason + "\r\n" +
-                                    h.getScore() + "\r\n" +
-                                    h.getDate());
-                            new AlertDialog.Builder(MainActivity.this).setTitle("详细记录").setView(null).setView(tv).setNegativeButton("返回", null).show();
-                        }
-                    }
-                    return false;
-                }
-
-            });
-            holder.btd.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (v.getId() == R.id.ItemButtond) {
-                        if (event.getAction() == MotionEvent.ACTION_UP) {
-                            new AlertDialog.Builder(MainActivity.this).setTitle("确认删除吗？")
-                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                    .setPositiveButton("删除", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            History h = histories.get(getPos(position));
-                                            final int change = h.score;
-                                            final String names = h.names;
-
-                                            new AlertDialog.Builder(MainActivity.this).setTitle("是否撤销所修改的分数")
-                                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                                    .setPositiveButton("撤销", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                            for (int i = 0; i != MainActivity.names.length; i++) {
-                                                                if (names.indexOf(MainActivity.names[i]) != -1) {
-                                                                    MainActivity.scores.set(i, MainActivity.scores.get(i) - change);
-                                                                }
-                                                            }
-                                                            MainActivity.saveScores(MainActivity.this);
-                                                        }
-                                                    })
-                                                    .setNegativeButton("不撤销", null).show();
-                                            histories.remove(histories.get(getPos(position)));
-                                            MyAdapter mAdapter = new MyAdapter(MainActivity.this);//得到一个MyAdapter对象
-                                            lv.setAdapter(mAdapter);
-                                            MainActivity.Save(MainActivity.this);
-                                        }
-                                    })
-                                    .setNegativeButton("取消", null).show();
-                        }
-
-                    }
-                    return false;
-                }
-
-            });
             /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
             holder.title.setText((String) (getData().get(position).get("ItemTitle")));
             String s = (String) (getData().get(position).get("ItemText"));
             holder.text.setText(s);
             holder.mark.setText((String) (getData().get(position).get("strmark")));
+            holder.date.setText((String) (getData().get(position).get("date")));
             if((Integer) (getData().get(position).get("mark"))>0) {
                 holder.positive.setImageResource(R.drawable.green);
             }else {
@@ -824,6 +777,7 @@ public class MainActivity extends Activity {
             public TextView title;
             public TextView text;
             public TextView mark;
+            public TextView date;
             public ImageView positive;
         }
     }
@@ -877,10 +831,38 @@ public class MainActivity extends Activity {
                 }
                 break;
             case 2:
-                String his = data.getExtras().getString("his");
-                  //得到新Activity关闭后返回的数据
-                if (!his.matches("NULL")) {
+                String[] results = data.getExtras().getStringArray("data");
+                  //接收add
+                if (!results[0].equals("NULL")&& !results[2].isEmpty()) {
                     //更新记录
+                    String[] namesByClasses=new String[classes.size()]; //分别储存每个班的人
+                    String[] allNames=results[1].split("\\|");
+                    for(int i=0;i!=namesByClasses.length;i++){
+                        namesByClasses[i]="";
+                    }
+                    for(int i=0;i<allNames.length;i+=2) {
+                        String[] members = classes.get(allNames[i]).members;
+                        for (int j = 0; j != members.length; j++) {
+                            if (allNames[i + 1].equals(members[j])) {
+                                int cid = 0;
+                                for (final String key : classes.keySet()) { //查找每个班
+                                    if(key.equals(allNames[i])) break;
+                                    cid++;
+                                }
+                                namesByClasses[cid] += allNames[i + 1] + ",";
+                            }
+                        }
+                    }
+                    int cid=0;
+                    int score=Integer.parseInt(results[2])*10;
+                    for (final String key : classes.keySet()) { //查找每个班
+                        if(!namesByClasses[cid].isEmpty()) {
+                            String names=namesByClasses[cid].substring(0, namesByClasses[cid].length()-1);
+                            classes.get(key).histories.add(new History(score, names, results[0], new Date()));
+                        }
+                        cid++;
+                    }
+                    updateList();
                 }
                 break;
         }

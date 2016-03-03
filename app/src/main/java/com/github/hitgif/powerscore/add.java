@@ -53,6 +53,7 @@ public class add extends Activity{
     private String showmonth;
     private String showday;
     private String reason_giveback = "";
+    private String members_giveback="";
     private TextView score;
     private ImageView drop;
     private ImageView bplus;
@@ -164,7 +165,7 @@ public class add extends Activity{
                 isplus = false;
             }
         });
-        ((Button) findViewById(R.id.ok)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.ok).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -175,13 +176,16 @@ public class add extends Activity{
             }
         });
 
-        ((Button) findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //传值
                 Intent i=new Intent();
-                //i.putExtra("his", result);
+                String[] result=new String[3];
+                result[0]=reason_giveback;
+                result[1]=members_giveback;
+                result[2]=score.getText().toString();
+                i.putExtra("data", result);
                 i.setClass(add.this, MainActivity.class);
                 add.this.setResult(2, i);
                 add.this.finish();
@@ -202,8 +206,12 @@ public class add extends Activity{
         ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent iB = new Intent();
-                iB.putExtra("his", "NULL");
-                iB.setClass(add.this, add.class);
+                String[] result=new String[3];
+                result[0]="NULL";
+                result[1]="NULL";
+                result[2]="NULL";
+                iB.putExtra("data", result);
+                iB.setClass(add.this, MainActivity.class);
                 add.this.setResult(2, iB);
                 add.this.finish();
                    }
@@ -360,6 +368,7 @@ public class add extends Activity{
                         String s3 = s2[1];
                         String s4 = s2[0];
                         s += s3+", ";
+                        members_giveback+=s1+"|";
                     }
                     s = s.substring(0 , s.length()-2);
 

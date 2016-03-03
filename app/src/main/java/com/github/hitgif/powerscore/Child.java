@@ -2,15 +2,11 @@ package com.github.hitgif.powerscore;
 
 
 public class Child {
-    private String userid;
-    private String fullname;
-    private String username;
+    private String name;
     private boolean isChecked;
 
-    public Child(String userid, String fullname, String username) {
-        this.userid = userid;
-        this.fullname = fullname;
-        this.username = username;
+    public Child(String name) {
+        this.name = name;
         this.isChecked = false;
     }
 
@@ -26,15 +22,7 @@ public class Child {
         return this.isChecked;
     }
 
-    public String getUserid() {
-        return userid;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 }

@@ -103,7 +103,7 @@ public class set_group extends Activity {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
                             //这里设置返回值
-                            result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getFullname();
+                            result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getName();
                             results.add(nothing,result);
                             nothing++;
                         }
@@ -152,8 +152,7 @@ public class set_group extends Activity {
 
                 for (int j = 0; j < childrenList.length(); j++) {
                     JSONObject childObj = (JSONObject) childrenList.get(j);
-                    Child child = new Child(childObj.getString("userid"), childObj.getString("fullname"),
-                            childObj.getString("username"));
+                    Child child = new Child(childObj.getString("name"));
                     group.addChildrenItem(child);
                 }
 

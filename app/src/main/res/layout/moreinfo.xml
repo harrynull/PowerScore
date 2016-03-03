@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/main"
+        android:id="@+id/relativeLayout29">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/back"
+            android:id="@+id/backmore"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingTop="12.5dp"
+            android:paddingBottom="12.5dp"
+            android:background="@drawable/layout_press" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="详细记录"
+            android:id="@+id/textView47"
+            android:textColor="#ffffff"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2"
+        android:layout_below="@+id/relativeLayout29">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relativeLayout29">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/relativeLayout30">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/imageView44"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/reason"
+                    android:padding="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="理由"
+                    android:id="@+id/textView34"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imageView44"
+                    android:layout_toEndOf="@+id/imageView44"
+                    android:paddingTop="11dp"
+                    android:textColor="@color/dqh"
+                    android:textSize="15dp"
+                    android:paddingBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="上午迟到"
+                    android:id="@+id/show_reason"
+                    android:layout_alignParentBottom="false"
+                    android:layout_toRightOf="@+id/imageView44"
+                    android:layout_toEndOf="@+id/imageView44"
+                    android:paddingBottom="13dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/textView34"
+                    android:paddingRight="10dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView46"
+                    android:background="@color/light_gray"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/show_reason" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout31"
+                android:layout_below="@+id/relativeLayout35"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/imageView47"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/group"
+                    android:padding="18dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView48"
+                    android:background="@color/light_gray"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/show_members" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="成员"
+                    android:id="@+id/textView37"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imageView47"
+                    android:layout_toEndOf="@+id/imageView47"
+                    android:paddingTop="11dp"
+                    android:textColor="@color/dqh"
+                    android:textSize="15dp"
+                    android:paddingBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,王安海,"
+                    android:id="@+id/show_members"
+                    android:layout_toRightOf="@+id/imageView47"
+                    android:layout_toEndOf="@+id/imageView47"
+                    android:paddingBottom="13dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/textView37"
+                    android:paddingRight="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout35"
+                android:layout_alignParentTop="false"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/relativeLayout30">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/imageView49"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/stop"
+                    android:padding="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="班级"
+                    android:id="@+id/textView33"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imageView49"
+                    android:layout_toEndOf="@+id/imageView49"
+                    android:paddingTop="11dp"
+                    android:textColor="@color/dqh"
+                    android:textSize="15dp"
+                    android:paddingBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="九(3)班"
+                    android:id="@+id/show_class"
+                    android:layout_alignParentBottom="false"
+                    android:layout_toRightOf="@+id/imageView49"
+                    android:layout_toEndOf="@+id/imageView49"
+                    android:paddingBottom="13dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/textView33" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView50"
+                    android:background="@color/light_gray"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/show_class" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout32"
+                android:layout_below="@+id/relativeLayout31"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/imageView51"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/mark"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView52"
+                    android:background="@color/light_gray"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/show_mark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="分数"
+                    android:id="@+id/textView41"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imageView51"
+                    android:layout_toEndOf="@+id/imageView51"
+                    android:paddingTop="11dp"
+                    android:textColor="@color/dqh"
+                    android:textSize="15dp"
+                    android:paddingBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="-2"
+                    android:id="@+id/show_mark"
+                    android:layout_toRightOf="@+id/imageView51"
+                    android:layout_toEndOf="@+id/imageView51"
+                    android:paddingBottom="13dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/textView41" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout33"
+                android:layout_below="@+id/relativeLayout32"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/imageView54"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/clock"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView55"
+                    android:background="@color/light_gray"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/show_fulltime" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="时间"
+                    android:id="@+id/textView43"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imageView54"
+                    android:layout_toEndOf="@+id/imageView54"
+                    android:paddingTop="11dp"
+                    android:textColor="@color/dqh"
+                    android:textSize="15dp"
+                    android:paddingBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="2016-03-01 20:56:48"
+                    android:id="@+id/show_fulltime"
+                    android:layout_toRightOf="@+id/imageView54"
+                    android:layout_toEndOf="@+id/imageView54"
+                    android:paddingBottom="13dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/textView43" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout34"
+                android:layout_below="@+id/relativeLayout33"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/imageView57"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/operater"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/imageView58"
+                    android:background="@color/light_gray"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/show_operator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="记录者"
+                    android:id="@+id/textView45"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/imageView57"
+                    android:layout_toEndOf="@+id/imageView57"
+                    android:paddingTop="11dp"
+                    android:textColor="@color/dqh"
+                    android:textSize="15dp"
+                    android:paddingBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="王安海"
+                    android:id="@+id/show_operator"
+                    android:layout_toRightOf="@+id/imageView57"
+                    android:layout_toEndOf="@+id/imageView57"
+                    android:paddingBottom="13dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/textView45" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

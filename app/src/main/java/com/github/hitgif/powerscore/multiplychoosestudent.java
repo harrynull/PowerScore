@@ -89,7 +89,7 @@ public class multiplychoosestudent extends Activity {
                 return false;
             }
         });
-        ((Button)findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ArrayList<String> results = new ArrayList<String>();
                 nothing = 0;
@@ -97,7 +97,7 @@ public class multiplychoosestudent extends Activity {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
                             //这里设置返回值
-                            result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getFullname();
+                            result = groups.get(i).getId() + "|" + groups.get(i).getChildItem(k).getName();
                             results.add(nothing,result);
                             nothing++;
                         }
@@ -130,31 +130,14 @@ public class multiplychoosestudent extends Activity {
 
     /** 解悉 JSON 字串 */
     private void getJSONObject() {
-        String jsonStr = "{'CommunityUsersResult':[{'CommunityUsersList':[{'fullname':'a111','userid':11,'username':'a1'}"
-                + ",{'fullname':'b222','userid':12,'username':'a1'}],'id':1,'title':'人事部'},{'CommunityUsersList':[{'fullname':"
-                + "'c333','userid':13,'username':'c3'},{'fullname':'d444','userid':14,'username':'d4'},{'fullname':'e555','userid':"
-                + "15,'username':'e5'}],'id':2,'title':'開發部'}]}";
-
-        try {
-            JSONObject CommunityUsersResultObj = new JSONObject(jsonStr);
-            JSONArray groupList = CommunityUsersResultObj.getJSONArray("CommunityUsersResult");
-
-            for (int i = 0; i < groupList.length(); i++) {
-                JSONObject groupObj = (JSONObject) groupList.get(i);
-                EListAdapter.Group group = new EListAdapter.Group(groupObj.getString("id"), groupObj.getString("title"));
-                JSONArray childrenList = groupObj.getJSONArray("CommunityUsersList");
-
-                for (int j = 0; j < childrenList.length(); j++) {
-                    JSONObject childObj = (JSONObject) childrenList.get(j);
-                    Child child = new Child(childObj.getString("userid"), childObj.getString("fullname"),
-                            childObj.getString("username"));
-                    group.addChildrenItem(child);
-                }
-
-                groups.add(group);
+        for (final String key : MainActivity.classes.keySet()) { //查找每个班
+            Classes c = MainActivity.classes.get(key);
+            EListAdapter.Group group = new EListAdapter.Group(key,c.name);
+            for (int j = 0; j < c.members.length; j++) {
+                Child child = new Child(c.members[j]);
+                group.addChildrenItem(child);
             }
-        } catch (JSONException e) {
-            Log.d("allenj", e.toString());
+            groups.add(group);
         }
     }
 

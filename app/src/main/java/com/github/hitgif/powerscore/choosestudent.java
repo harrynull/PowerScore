@@ -94,7 +94,7 @@ public class choosestudent extends Activity {
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
-                            result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getFullname();
+                            result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getName();
                             onlyone++;
                         }
                     }
@@ -142,8 +142,7 @@ public class choosestudent extends Activity {
 
                 for (int j = 0; j < childrenList.length(); j++) {
                     JSONObject childObj = (JSONObject) childrenList.get(j);
-                    Child child = new Child(childObj.getString("userid"), childObj.getString("fullname"),
-                            childObj.getString("username"));
+                    Child child = new Child(childObj.getString("username"));
                     group.addChildrenItem(child);
                 }
 
