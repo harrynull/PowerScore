@@ -400,12 +400,6 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp" />
 
-                <com.github.hitgif.powerscore.SlideSwitchView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/textView14"
-                    android:layout_centerHorizontal="true" />
-
             </RelativeLayout>
 
             <ImageView

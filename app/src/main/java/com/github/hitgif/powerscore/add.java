@@ -157,7 +157,6 @@ public class add extends Activity{
             }
         });
 
-
         bminus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 bplus.setImageResource(R.drawable.plus_blue);
@@ -184,7 +183,7 @@ public class add extends Activity{
                 String[] result=new String[3];
                 result[0]=reason_giveback;
                 result[1]=members_giveback;
-                result[2]=score.getText().toString();
+                result[2]=(!isplus?"-":"")+(score.getText().toString());
                 i.putExtra("data", result);
                 i.setClass(add.this, MainActivity.class);
                 add.this.setResult(2, i);

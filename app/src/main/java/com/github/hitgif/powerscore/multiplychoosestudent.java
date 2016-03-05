@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -13,18 +12,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class multiplychoosestudent extends Activity {
 
-    ArrayList<EListAdapter.Group> groups;
     ExpandableListView listView;
     EListAdapter adapter;
     public String result = "";
@@ -49,10 +42,9 @@ public class multiplychoosestudent extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.multiplychoosestudent);
-        groups = new ArrayList<EListAdapter.Group>();
-        getJSONObject();
+        EListAdapter.getDataArray();
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
-        adapter = new EListAdapter(this, groups);
+        adapter = new EListAdapter(this);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(adapter);
 
@@ -92,17 +84,16 @@ public class multiplychoosestudent extends Activity {
         findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ArrayList<String> results = new ArrayList<String>();
+                ArrayList<EListAdapter.Group> groups=adapter.getGroups();
                 nothing = 0;
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
-                            //这里设置返回值
                             result = groups.get(i).getId() + "|" + groups.get(i).getChildItem(k).getName();
                             results.add(nothing,result);
                             nothing++;
                         }
                     }
-                    //  result=result+String.valueOf(i);
                 }
 
                 if (nothing != 0) {
@@ -128,18 +119,6 @@ public class multiplychoosestudent extends Activity {
         });
     }
 
-    /** 解悉 JSON 字串 */
-    private void getJSONObject() {
-        for (final String key : MainActivity.classes.keySet()) { //查找每个班
-            Classes c = MainActivity.classes.get(key);
-            EListAdapter.Group group = new EListAdapter.Group(key,c.name);
-            for (int j = 0; j < c.members.length; j++) {
-                Child child = new Child(c.members[j]);
-                group.addChildrenItem(child);
-            }
-            groups.add(group);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -16,7 +16,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.BaseAdapter;
@@ -42,12 +40,9 @@ import android.widget.DatePicker;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,27 +59,27 @@ public class MainActivity extends Activity {
     SharedPreferences spReader;
     SharedPreferences.Editor spEditor;
 
-    private long timeStemp=0;
-    private boolean superflag = true;
-    private boolean isflit = false;
-    private boolean issync = false;
+    private long timeStamp =0;
+    private boolean superFlag = true;
+    private boolean isFlit = false;
+    private boolean isSync = false;
     private int lsi = 2333;
 
     private String classNow="-1";
     private String d="不限";
-    private String showyear;
-    private String showmonth;
-    private String showday;
+    private String showYear;
+    private String showMonth;
+    private String showDay;
     private String filterClass;
     private String filterName;
-    private Boolean isgen = true;
+    private Boolean isGen = true;
     private int scoreFilter=-1;
 
     //布局
     private ListView lv;
     private ImageView dr;
-    private RelativeLayout genlayout;
-    private RelativeLayout perlayout;
+    private RelativeLayout genLayout;
+    private RelativeLayout perLayout;
     private RelativeLayout choose;
     private ImageView add;
     private int sbar = 0;
@@ -128,8 +123,8 @@ public class MainActivity extends Activity {
         //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
         gen = (Button) findViewById(R.id.gen);
         per = (Button) findViewById(R.id.per);
-        genlayout = (RelativeLayout) findViewById(R.id.genlayout);
-        perlayout = (RelativeLayout) findViewById(R.id.perlayout);
+        genLayout = (RelativeLayout) findViewById(R.id.genlayout);
+        perLayout = (RelativeLayout) findViewById(R.id.perlayout);
         choose = (RelativeLayout) findViewById(R.id.choose);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ViewGroup.LayoutParams lp = findViewById(R.id.ds).getLayoutParams();
@@ -164,8 +159,8 @@ public class MainActivity extends Activity {
 
         LinearInterpolator lin = new LinearInterpolator();
         operatingAnim.setInterpolator(lin);
-        genlayout.setVisibility(View.VISIBLE);
-        perlayout.setVisibility(View.GONE);
+        genLayout.setVisibility(View.VISIBLE);
+        perLayout.setVisibility(View.GONE);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         leftLayout=(RelativeLayout) findViewById(R.id.left);
         rightLayout=(RelativeLayout) findViewById(R.id.right);
@@ -173,32 +168,32 @@ public class MainActivity extends Activity {
         sync.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!issync) {
+                if (!isSync) {
                     //开始转
                     sync.startAnimation(operatingAnim);
-                    issync = true;
+                    isSync = true;
                 } else {
                     //停止转
                     sync.clearAnimation();
-                    issync = false;
+                    isSync = false;
                 }
             }
         });
         gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (!isgen) {
+                if (!isGen) {
                     findViewById(R.id.bar).startAnimation(out_gen);
                 }
                 gen.setTextColor(Color.parseColor("#ffffff"));
                 per.setTextColor(Color.parseColor("#7fffffff"));
-                genlayout.setEnabled(true);
-                genlayout.setVisibility(View.VISIBLE);
-                perlayout.setVisibility(View.GONE);
+                genLayout.setEnabled(true);
+                genLayout.setVisibility(View.VISIBLE);
+                perLayout.setVisibility(View.GONE);
                 findViewById(R.id.lpd).setVisibility(View.VISIBLE);
                 findViewById(R.id.lpd2).setVisibility(View.GONE);
                 findViewById(R.id.pnm).setVisibility(View.GONE);
                 findViewById(R.id.pcr).setVisibility(View.VISIBLE);
-                isgen = true;
+                isGen = true;
                 //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
             }
         });
@@ -219,9 +214,9 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 per.setTextColor(Color.parseColor("#ffffff"));
                 gen.setTextColor(Color.parseColor("#7fffffff"));
-                genlayout.setEnabled(false);
-                perlayout.setVisibility(View.VISIBLE);
-                genlayout.setVisibility(View.GONE);
+                genLayout.setEnabled(false);
+                perLayout.setVisibility(View.VISIBLE);
+                genLayout.setVisibility(View.GONE);
                 d = "不限";
                 ((TextView) findViewById(R.id.month)).setText(d);
                 ((TextView) findViewById(R.id.year)).setText("");
@@ -232,13 +227,13 @@ public class MainActivity extends Activity {
                 findViewById(R.id.pcr).setVisibility(View.GONE);
                 findViewById(R.id.pnm).setVisibility(View.VISIBLE);
                 // ((TextView) findViewById(R.id.month)).setTextSize(20);
-                //superflag = false;
-                timeStemp = 0;
+                //superFlag = false;
+                timeStamp = 0;
                 updateList();
                 ((TextView) findViewById(R.id.pm)).setText("不限");
                 //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                 scoreFilter = -1;
-                isgen = false;
+                isGen = false;
 
             }
         });
@@ -435,6 +430,7 @@ public class MainActivity extends Activity {
                                         ((TextView) findViewById(R.id.pm)).setText("  + ");
                                         // ((TextView) findViewById(R.id.pm)).setTextSize(30);
                                         scoreFilter = 1;
+                                        updateList();
                                     }
                                 })
                         .addSheetItem("减分", ActionSheetDialog.SheetItemColor.Blue,
@@ -444,6 +440,7 @@ public class MainActivity extends Activity {
                                         ((TextView) findViewById(R.id.pm)).setText(" — ");
                                         //  ((TextView) findViewById(R.id.pm)).setTextSize(30);
                                         scoreFilter = 0;
+                                        updateList();
                                     }
                                 })
                         .addSheetItem("不限", ActionSheetDialog.SheetItemColor.Blue,
@@ -453,6 +450,7 @@ public class MainActivity extends Activity {
                                         ((TextView) findViewById(R.id.pm)).setText("不限");
                                         //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
                                         scoreFilter = -1;
+                                        updateList();
                                     }
                                 })
                                 //可添加多个SheetItem
@@ -492,20 +490,20 @@ public class MainActivity extends Activity {
         findViewById(R.id.pick).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                superflag = true;
+                superFlag = true;
                 DatePickerDialog dpd = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         //((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(histories.size()));
-                        if (superflag) {
-                            showyear = String.valueOf(year) + "年";
-                            showmonth = ((month + 1) < 10) ?
+                        if (superFlag) {
+                            showYear = String.valueOf(year) + "年";
+                            showMonth = ((month + 1) < 10) ?
                                     "0" + (month + 1) :
                                     String.valueOf(month + 1);
-                            showday = (day < 10) ? "0" + day : String.valueOf(day);
-                            ((TextView) findViewById(R.id.year)).setText(showyear);
-                            ((TextView) findViewById(R.id.month)).setText(showmonth);
-                            ((TextView) findViewById(R.id.day)).setText(showday);
+                            showDay = (day < 10) ? "0" + day : String.valueOf(day);
+                            ((TextView) findViewById(R.id.year)).setText(showYear);
+                            ((TextView) findViewById(R.id.month)).setText(showMonth);
+                            ((TextView) findViewById(R.id.day)).setText(showDay);
                             ((TextView) findViewById(R.id.textView5)).setText("月");
                             ((TextView) findViewById(R.id.textView7)).setText("日");
                             //  ((TextView) findViewById(R.id.month)).setTextSize(30);
@@ -517,7 +515,7 @@ public class MainActivity extends Activity {
                             } catch (ParseException e) {
                                 //e.printStackTrace();
                             }
-                            timeStemp = date.getTime() / 1000;
+                            timeStamp = date.getTime() / 1000;
                             updateList();
                             ((TextView) findViewById(R.id.numofitem)).setText(String.valueOf(lv.getCount()));
                         }
@@ -534,8 +532,8 @@ public class MainActivity extends Activity {
                         ((TextView) findViewById(R.id.textView5)).setText("");
                         ((TextView) findViewById(R.id.textView7)).setText("");
                         //((TextView) findViewById(R.id.month)).setTextSize(20);
-                        superflag = false;
-                        timeStemp = 0;
+                        superFlag = false;
+                        timeStamp = 0;
                         updateList();
                     }
                 });
@@ -681,7 +679,7 @@ public class MainActivity extends Activity {
         final ArrayList<History> histories = classes.get(classNow).histories;
         for (int i = histories.size() - 1; i >= 0; i--) {
             History h=histories.get(i);
-            if (d.compareTo("不限") != 0 && (h.date.getTime() / 1000 - 86400 > timeStemp || h.date.getTime() / 1000 <= timeStemp))
+            if (d.compareTo("不限") != 0 && (h.date.getTime() / 1000 - 86400 > timeStamp || h.date.getTime() / 1000 <= timeStamp))
                 continue;
             if (scoreFilter == 0 && h.score > 0) continue; //筛选扣分但是是加分记录，忽略
             if (scoreFilter == 1 && h.score < 0) continue; //筛选加分但是是扣分记录，忽略
@@ -702,7 +700,7 @@ public class MainActivity extends Activity {
         final ArrayList<History> histories = classes.get(classNow).histories;
         for (int i = histories.size() - 1; i >= 0; i--) {
             sum++;
-            if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStemp || histories.get(i).date.getTime() / 1000 <= timeStemp))
+            if (d.compareTo("不限") != 0 && (histories.get(i).date.getTime() / 1000 - 86400 > timeStamp || histories.get(i).date.getTime() / 1000 <= timeStamp))
                 continue;
 
             if (scoreFilter == 0 && histories.get(i).score > 0) continue; //筛选扣分但是是加分记录，忽略

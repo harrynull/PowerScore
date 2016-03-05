@@ -52,17 +52,16 @@ public class set_group extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.set_student_for_group);
         groups = new ArrayList<EListAdapter.Group>();
-        getJSONObject();
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         group_name = (EditText) findViewById(R.id.group_name);
-        adapter = new EListAdapter(this, groups);
+        adapter = new EListAdapter(this);
         listView.setAdapter(adapter);
 
         listView.setOnChildClickListener(adapter);
 
 
 
-        ((RelativeLayout) findViewById(R.id.back)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -132,35 +131,6 @@ public class set_group extends Activity {
             // choosestudent.this.finish();
 
         });
-    }
-
-    /** 解悉 JSON 字串 */
-    private void getJSONObject() {
-        String jsonStr = "{'CommunityUsersResult':[{'CommunityUsersList':[{'fullname':'a111','userid':11,'username':'a1'}"
-                + ",{'fullname':'b222','userid':12,'username':'a1'}],'id':1,'title':'人事部'},{'CommunityUsersList':[{'fullname':"
-                + "'c333','userid':13,'username':'c3'},{'fullname':'d444','userid':14,'username':'d4'},{'fullname':'e555','userid':"
-                + "15,'username':'e5'}],'id':2,'title':'開發部'}]}";
-
-        try {
-            JSONObject CommunityUsersResultObj = new JSONObject(jsonStr);
-            JSONArray groupList = CommunityUsersResultObj.getJSONArray("CommunityUsersResult");
-
-            for (int i = 0; i < groupList.length(); i++) {
-                JSONObject groupObj = (JSONObject) groupList.get(i);
-                EListAdapter.Group group = new EListAdapter.Group(groupObj.getString("id"), groupObj.getString("title"));
-                JSONArray childrenList = groupObj.getJSONArray("CommunityUsersList");
-
-                for (int j = 0; j < childrenList.length(); j++) {
-                    JSONObject childObj = (JSONObject) childrenList.get(j);
-                    Child child = new Child(childObj.getString("name"));
-                    group.addChildrenItem(child);
-                }
-
-                groups.add(group);
-            }
-        } catch (JSONException e) {
-            Log.d("allenj", e.toString());
-        }
     }
 
     @Override

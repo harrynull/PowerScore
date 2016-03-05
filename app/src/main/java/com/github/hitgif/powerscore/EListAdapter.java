@@ -1,208 +1,231 @@
 package com.github.hitgif.powerscore;
 
-import java.util.ArrayList;
-
 import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
+
 import android.view.View.OnClickListener;
+
 import android.view.ViewGroup;
+
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class EListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnChildClickListener {
- public static class Group {
-  private String id;
-  private String title;
-  private ArrayList<Child> children;
-  private boolean isChecked;
+    private Context context;
+    private ArrayList<Group> groups;
 
-  public Group(String id, String title) {
-   this.id=id;
-   this.title = title;
-   children = new ArrayList<Child>();
-   this.isChecked = false;
-  }
+    public EListAdapter(Context context) {
+        this.context = context;
+        this.groups = getDataArray();
+    }
 
-  public void setChecked(boolean isChecked) {
-   this.isChecked = isChecked;
-  }
+    public Object getChild(int groupPosition, int childPosition) {
+        return groups.get(groupPosition).getChildItem(childPosition);
+    }
 
-  public void toggle() {
-   this.isChecked = !this.isChecked;
-  }
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
 
-  public boolean getChecked() {
-   return this.isChecked;
-  }
+    public int getChildrenCount(int groupPosition) {
+        return groups.get(groupPosition).getChildrenCount();
+    }
 
-  public String getId() {
-   return id;
-  }
+    public Object getGroup(int groupPosition) {
+        return groups.get(groupPosition);
+    }
 
-  public String getTitle() {
-   return title;
-  }
+    public int getGroupCount() {
+        return groups.size();
+    }
 
-  public void addChildrenItem(Child child) {
-   children.add(child);
-  }
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
 
-  public int getChildrenCount() {
-   return children.size();
-  }
+    public boolean hasStableIds() {
+        return true;
+    }
 
-  public Child getChildItem(int index) {
-   return children.get(index);
-  }
- }
- private Context context;
- private ArrayList<Group> groups;
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
 
- public EListAdapter(Context context, ArrayList<Group> groups) {
- this.context = context;
- this.groups = groups;
- }
+    public View getGroupView(int groupPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
+        Group group = (Group) getGroup(groupPosition);
 
- public Object getChild(int groupPosition, int childPosition) {
- return groups.get(groupPosition).getChildItem(childPosition);
- }
+        if (convertView == null) {
+            LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.group_layout, null);
+        }
 
- public long getChildId(int groupPosition, int childPosition) {
- return childPosition;
- }
+        TextView tv = (TextView) convertView.findViewById(R.id.tvGroup);
+        tv.setText(group.getTitle());
 
- public int getChildrenCount(int groupPosition) {
- return groups.get(groupPosition).getChildrenCount();
- }
+        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.chbGroup);
+        checkBox.setChecked(group.getChecked());
 
- public Object getGroup(int groupPosition) {
- return groups.get(groupPosition);
- }
+        checkBox.setOnClickListener(new Group_CheckBox_Click(groupPosition));
 
- public int getGroupCount() {
- return groups.size();
- }
+        return convertView;
+    }
 
- public long getGroupId(int groupPosition) {
- return groupPosition;
- }
+    /** ?? Children ?? */
+    public View getChildView(int groupPosition, int childPosition,
+                             boolean isLastChild, View convertView, ViewGroup parent) {
+        Child child = groups.get(groupPosition).getChildItem(childPosition);
 
- public boolean hasStableIds() {
- return true;
- }
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.child_layout, null);
+        }
 
- public boolean isChildSelectable(int groupPosition, int childPosition) {
- return true;
- }
+        TextView tv = (TextView) convertView.findViewById(R.id.tvChild);
+        tv.setText(child.getName());
 
+        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.chbChild);
+        checkBox.setChecked(child.getChecked());
 
- public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-  Group group = (Group) getGroup(groupPosition);
+        checkBox.setOnClickListener(new Child_CheckBox_Click(groupPosition,
+                childPosition));
 
- if (convertView == null) {
- LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
- convertView = infalInflater.inflate(R.layout.group_layout, null);
- }
+        return convertView;
+    }
 
- TextView tv = (TextView) convertView.findViewById(R.id.tvGroup);
- tv.setText(group.getTitle());
+    public void handleClick(int childPosition, int groupPosition) {
+        groups.get(groupPosition).getChildItem(childPosition).toggle();
 
- // 重新產生 CheckBox 時，將存起來的 isChecked 狀態重新設定
- CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.chbGroup);
- checkBox.setChecked(group.getChecked());
+        int childrenCount = groups.get(groupPosition).getChildrenCount();
+        boolean childrenAllIsChecked = true;
 
- // 點擊 CheckBox 時，將狀態存起來
- checkBox.setOnClickListener(new Group_CheckBox_Click(groupPosition));
+        for (int i = 0; i < childrenCount; i++) {
+            if (!groups.get(groupPosition).getChildItem(i).getChecked()) {
+                childrenAllIsChecked = false;
+            }
+        }
 
- return convertView;
- }
+        groups.get(groupPosition).setChecked(childrenAllIsChecked);
 
- /** 勾選 Group CheckBox 時，存 Group CheckBox 的狀態，以及改變 Child CheckBox 的狀態 */
- class Group_CheckBox_Click implements OnClickListener {
- private int groupPosition;
+        notifyDataSetChanged();
+    }
 
- Group_CheckBox_Click(int groupPosition) {
- this.groupPosition = groupPosition;
- }
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v,
+                                int groupPosition, int childPosition, long id) {
+        handleClick(childPosition, groupPosition);
 
- public void onClick(View v) {
- groups.get(groupPosition).toggle();
+        return true;
+    }
 
- // 將 Children 的 isChecked 全面設成跟 Group 一樣
- int childrenCount = groups.get(groupPosition).getChildrenCount();
- boolean groupIsChecked = groups.get(groupPosition).getChecked();
- for (int i = 0; i < childrenCount; i++)
- groups.get(groupPosition).getChildItem(i).setChecked(groupIsChecked);
+    public ArrayList<Group> getGroups(){
+        return groups;
+    }
 
- // 注意，一定要通知 ExpandableListView 資料已經改變，ExpandableListView 會重新產生畫面
- notifyDataSetChanged();
- }
- }
+    public static ArrayList<Group> getDataArray() {
+        ArrayList<Group> g = new ArrayList<Group>();
 
- /** 設定 Children 資料 */
- public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
- Child child = groups.get(groupPosition).getChildItem(childPosition);
+        for (final String key : MainActivity.classes.keySet()) {
 
- if (convertView == null) {
- LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
- convertView = inflater.inflate(R.layout.child_layout, null);
- }
+            Classes c = MainActivity.classes.get(key);
+            EListAdapter.Group group = new EListAdapter.Group(key, c.name);
 
- TextView tv = (TextView) convertView.findViewById(R.id.tvChild);
- tv.setText(child.getName());
+            for (int j = 0; j < c.members.length; j++) {
+                Child child = new Child(c.members[j]);
+                group.addChildrenItem(child);
+            }
 
- // 重新產生 CheckBox 時，將存起來的 isChecked 狀態重新設定
- CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.chbChild);
- checkBox.setChecked(child.getChecked());
+            g.add(group);
+        }
 
- // 點擊 CheckBox 時，將狀態存起來
- checkBox.setOnClickListener(new Child_CheckBox_Click(groupPosition, childPosition));
+        return g;
+    }
 
- return convertView;
- }
+    public static class Group {
+        private String id;
+        private String title;
+        private ArrayList<Child> children;
+        private boolean isChecked;
 
- /** 勾選 Child CheckBox 時，存 Child CheckBox 的狀態 */
- class Child_CheckBox_Click implements OnClickListener {
- public int groupPosition;
- public int childPosition;
+        public Group(String id, String title) {
+            this.id = id;
+            this.title = title;
+            children = new ArrayList<Child>();
+            this.isChecked = false;
+        }
 
- Child_CheckBox_Click(int groupPosition, int childPosition) {
- this.groupPosition = groupPosition;
- this.childPosition = childPosition;
- }
+        public void setChecked(boolean isChecked) {
+            this.isChecked = isChecked;
+        }
 
- public void onClick(View v) {
- handleClick(childPosition, groupPosition);
- }
- }
+        public void toggle() {
+            this.isChecked = !this.isChecked;
+        }
 
- public void handleClick(int childPosition, int groupPosition) {
- groups.get(groupPosition).getChildItem(childPosition).toggle();
+        public boolean getChecked() {
+            return this.isChecked;
+        }
 
- // 檢查 Child CheckBox 是否有全部勾選，以控制 Group CheckBox
- int childrenCount = groups.get(groupPosition).getChildrenCount();
- boolean childrenAllIsChecked = true;
- for (int i = 0; i < childrenCount; i++) {
- if (!groups.get(groupPosition).getChildItem(i).getChecked())
- childrenAllIsChecked = false;
- }
+        public String getId() {
+            return id;
+        }
 
- groups.get(groupPosition).setChecked(childrenAllIsChecked);
+        public String getTitle() {
+            return title;
+        }
 
- // 注意，一定要通知 ExpandableListView 資料已經改變，ExpandableListView 會重新產生畫面
- notifyDataSetChanged();
- }
+        public void addChildrenItem(Child child) {
+            children.add(child);
+        }
 
- @Override
- public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
- handleClick(childPosition, groupPosition);
- return true;
- }
+        public int getChildrenCount() {
+            return children.size();
+        }
 
+        public Child getChildItem(int index) {
+            return children.get(index);
+        }
+    }
+
+    class Group_CheckBox_Click implements OnClickListener {
+        private int groupPosition;
+
+        Group_CheckBox_Click(int groupPosition) {
+            this.groupPosition = groupPosition;
+        }
+
+        public void onClick(View v) {
+            groups.get(groupPosition).toggle();
+
+            int childrenCount = groups.get(groupPosition).getChildrenCount();
+            boolean groupIsChecked = groups.get(groupPosition).getChecked();
+
+            for (int i = 0; i < childrenCount; i++)
+                groups.get(groupPosition).getChildItem(i)
+                        .setChecked(groupIsChecked);
+
+            notifyDataSetChanged();
+        }
+    }
+
+    class Child_CheckBox_Click implements OnClickListener {
+        public int groupPosition;
+        public int childPosition;
+
+        Child_CheckBox_Click(int groupPosition, int childPosition) {
+            this.groupPosition = groupPosition;
+            this.childPosition = childPosition;
+        }
+
+        public void onClick(View v) {
+            handleClick(childPosition, groupPosition);
+        }
+    }
 }
-
-
