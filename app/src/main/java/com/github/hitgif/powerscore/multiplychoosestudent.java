@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -23,9 +24,9 @@ public class multiplychoosestudent extends Activity {
     public String result = "";
     private int nothing = 0;
     private String Null = "NULL";
+    public static ArrayList<Group> groups=MainActivity.groups;
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
             Intent iB = new Intent();
@@ -81,16 +82,26 @@ public class multiplychoosestudent extends Activity {
                 return false;
             }
         });
+        findViewById(R.id.group).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((Button) findViewById(R.id.group)).setTextColor(Color.parseColor("#9b9b9b"));
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((Button) findViewById(R.id.group)).setTextColor(Color.parseColor("#ffffff"));
+                }
+                return false;
+            }
+        });
         findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ArrayList<String> results = new ArrayList<String>();
-                ArrayList<EListAdapter.Group> groups=adapter.getGroups();
+                ArrayList<EListAdapter.Group> groups = adapter.getGroups();
                 nothing = 0;
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
                             result = groups.get(i).getId() + "|" + groups.get(i).getChildItem(k).getName();
-                            results.add(nothing,result);
+                            results.add(nothing, result);
                             nothing++;
                         }
                     }
@@ -98,7 +109,7 @@ public class multiplychoosestudent extends Activity {
 
                 if (nothing != 0) {
                     //返回并传值
-                    Intent i=new Intent();
+                    Intent i = new Intent();
                     i.putExtra("mem", results);
                     i.setClass(multiplychoosestudent.this, add.class);
                     multiplychoosestudent.this.setResult(3, i);
@@ -115,6 +126,48 @@ public class multiplychoosestudent extends Activity {
                 }
             }
             // choosestudent.this.finish();
+
+        });
+        findViewById(R.id.group).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ActionSheetDialog ASD = new ActionSheetDialog(multiplychoosestudent.this).builder()
+                        .setTitle("选择组")
+                        .setCancelable(false)
+                        .setCanceledOnTouchOutside(true);
+                for (final Group group : groups) {
+                    ASD.addSheetItem(group.groupName, ActionSheetDialog.SheetItemColor.Blue,
+                            new ActionSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    String[] members = group.groupMembers.split("\\|");
+                                    ArrayList<EListAdapter.Group> listGroups = adapter.getGroups();
+                                    for (int i = 0; i < members.length; i += 2) {
+                                        for (int j = 0; j < listGroups.size(); j++) {
+                                            if (!listGroups.get(j).getTitle().equals(members[i]))
+                                                continue;
+                                            for (int k = 0; k < listGroups.get(j).getChildrenCount(); k++) {
+                                                if (listGroups.get(j).getChildItem(k).getName().equals(members[i + 1])) {
+                                                    listGroups.get(j).getChildItem(k).setChecked(true);
+                                                    boolean allChecked=true;
+                                                    for (int k2 = 0; k2 < listGroups.get(j).getChildrenCount(); k2++) {
+                                                        if(!listGroups.get(j).getChildItem(k2).getChecked()){
+                                                            allChecked=false;
+                                                            break;
+                                                        }
+                                                    }
+                                                    listGroups.get(j).setChecked(allChecked);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+                                }
+                            });
+                }
+                ASD.show();
+            }
+
 
         });
     }

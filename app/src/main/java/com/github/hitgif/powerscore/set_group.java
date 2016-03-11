@@ -24,43 +24,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class set_group extends Activity {
-
-    ArrayList<EListAdapter.Group> groups;
     ExpandableListView listView;
     EListAdapter adapter;
-    public String result = "";
-    private int nothing = 0;
     private String Null = "NULL";
     private EditText group_name;
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            Intent iB = new Intent();
-            iB.putExtra("reason", "NULL");
-            iB.setClass(set_group.this, add.class);
-            set_group.this.setResult(2, iB);
-            set_group.this.finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.set_student_for_group);
-        groups = new ArrayList<EListAdapter.Group>();
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         group_name = (EditText) findViewById(R.id.group_name);
         adapter = new EListAdapter(this);
         listView.setAdapter(adapter);
-
         listView.setOnChildClickListener(adapter);
-
-
-
         findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -74,7 +52,7 @@ public class set_group extends Activity {
             }
         });
 
-        ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent iB = new Intent();
                 iB.putExtra("reason", Null);
@@ -84,7 +62,7 @@ public class set_group extends Activity {
             }
         });
 
-        ((Button) findViewById(R.id.ok)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.ok).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#9b9b9b"));
@@ -94,38 +72,31 @@ public class set_group extends Activity {
                 return false;
             }
         });
-        ((Button)findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ArrayList<String> results = new ArrayList<String>();
-                nothing = 0;
+                String members = "";
+                ArrayList<EListAdapter.Group> groups=adapter.getGroups();
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
-                            //这里设置返回值
-                            result = groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getName();
-                            results.add(nothing,result);
-                            nothing++;
+                            members += groups.get(i).getTitle() + "|" + groups.get(i).getChildItem(k).getName()  + "|";
                         }
                     }
-                    //  result=result+String.valueOf(i);
                 }
-
-                if (nothing != 0) {
-                    //返回并传值
-                    Intent i=new Intent();
-                    i.putExtra("mem", results);
-                    i.setClass(set_group.this, add.class);
-                    set_group.this.setResult(3, i);
-                    set_group.this.finish();
-                } else {
+                String name=group_name.getText().toString();
+                if (name.isEmpty()) {
+                    new AlertDialogios(set_group.this).builder()
+                            .setTitle("提示")
+                            .setMsg("请填写组名 :)")
+                            .setNegativeButton("好", null).show();
+                } else if(members.isEmpty() ){
                     new AlertDialogios(set_group.this).builder()
                             .setTitle("提示")
                             .setMsg("请选择学生 :)")
-                            .setNegativeButton("好", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                }
-                            }).show();
+                            .setNegativeButton("好", null).show();
+                }else{
+                    MainActivity.groups.add(new Group(name,members));
+                    set_group.this.finish();
                 }
             }
             // choosestudent.this.finish();

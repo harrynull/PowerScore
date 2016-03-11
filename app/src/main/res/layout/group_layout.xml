@@ -11,11 +11,11 @@
         <TextView
             android:id="@+id/tvGroup"
             android:layout_width="280dp"
-            android:layout_height="45dip"
+            android:layout_height="42dp"
             android:gravity="center_vertical|left"
             android:paddingLeft="45dp"
             android:textSize="17dip"
-            android:textStyle="bold" >
+            android:textStyle="bold">
         </TextView>
 
         <CheckBox

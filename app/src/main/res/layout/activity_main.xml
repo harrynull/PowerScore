@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="请选择"
+                        android:text="未选择"
                         android:id="@+id/classnow"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
@@ -123,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="王安海"
+                        android:text="未选择"
                         android:id="@+id/_name"
                         android:layout_centerVertical="true"
                         android:layout_centerHorizontal="true"
@@ -310,30 +310,6 @@
                         android:layout_alignParentBottom="true"
                         android:layout_toRightOf="@+id/imageView4">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="当前记录(条)"
-                            android:id="@+id/textView"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentLeft="true"
-                            android:textColor="#e1e1e1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:id="@+id/numofitem"
-                            android:textColor="#ffffff"
-                            android:paddingRight="5dp"
-                            android:textIsSelectable="false"
-                            android:text="0"
-                            android:layout_below="@+id/textView"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentBottom="true"
-                            android:gravity="center_vertical" />
-
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -377,28 +353,6 @@
                 android:id="@+id/perlayout"
                 android:visibility="visible"
                 android:layout_below="@+id/upt">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="暂无记录 :("
-                    android:layout_weight="0"
-                    android:id="@+id/textView14"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textColor="#6e6e6e"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="visible"
-                    android:layout_alignParentTop="true" />
-
-                <ListView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/listView"
-                    android:layout_centerHorizontal="true"
-                    android:background="#ffffff"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
 
             </RelativeLayout>
 
@@ -448,7 +402,8 @@
 
                 android:layout_marginBottom="7dp"
                 android:layout_marginLeft="15dp"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                />
 
 
             <TextView
@@ -463,46 +418,15 @@
                 android:paddingLeft="18dp"
                 android:layout_below="@+id/imageView" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="XX班"
-                        android:id="@+id/_class"
-                        android:textColor="#ffffff"
-                        android:gravity="center_vertical"
-                        android:textSize="15dp"
-                        android:paddingBottom="3dp"
-                        android:paddingLeft="3dp"
-                        android:layout_below="@+id/_name"
-                        android:layout_alignLeft="@+id/_name" />
-
-
-
-
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="18dp"
                 android:layout_marginRight="15dp"
-
-                android:layout_alignParentBottom="false"
-                android:id="@+id/baobiao"
-                android:src="@drawable/baobiao_btn"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="3dp" />
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentRight="false"
-                android:layout_marginBottom="18dp"
-                android:layout_marginRight="15dp"
                 android:layout_alignParentBottom="false"
                 android:id="@+id/home"
                 android:src="@drawable/bome_btn"
-                android:layout_toLeftOf="@+id/baobiao"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="3dp" />
 
@@ -597,7 +521,7 @@
                             android:layout_height="50dp"
                             android:layout_below="@+id/relativeLayout20"
                             android:background="@drawable/back_press"
-                            android:id="@+id/linearLayout10"
+                            android:id="@+id/overView"
                             android:paddingLeft="10dp"
                             android:gravity="center_vertical"
                             android:layout_alignParentRight="true"
@@ -613,7 +537,7 @@
                                 android:paddingTop="8dp"
                                 android:paddingBottom="8dp" />
 
-                            0<TextView
+                            <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -736,12 +660,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
+                            android:id="@+id/setspl"
                             android:background="@drawable/back_press" >
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/back_press">
+                                android:layout_height="wrap_content">
 
                                 <LinearLayout
                                     android:orientation="horizontal"
@@ -770,7 +694,17 @@
                                         android:paddingLeft="10dp"
                                         android:textSize="15dp" />
 
+
                                 </LinearLayout>
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:id="@+id/onspl"
+                                    android:src="@drawable/btick"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true" />
 
                             </RelativeLayout>
 

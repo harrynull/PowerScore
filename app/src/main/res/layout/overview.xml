@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e1e1e1">
@@ -10,17 +10,9 @@
         android:layout_height="50dp"
         android:background="@color/main"
         android:paddingRight="10dp"
-        android:layout_gravity="center_horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="完成"
-            android:id="@+id/ok"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:background="#00000000"
-            android:textColor="#ffffff" />
+        android:layout_gravity="center_horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -51,12 +43,44 @@
                 android:gravity="center_vertical" />
         </RelativeLayout>
 
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:paddingRight="30dp"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:layout_alignTop="@+id/imageView53"
+            android:hint="搜索学生"
+            android:textColorHint="#acffffff" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/imageView53"
+            android:src="@drawable/search"
+            android:paddingTop="7dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
     <ExpandableListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:id="@+id/expandableListView"
         android:layout_gravity="center_horizontal"
-        android:background="#ffffff" />
-</LinearLayout>
+        android:background="#ffffff"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayout8"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

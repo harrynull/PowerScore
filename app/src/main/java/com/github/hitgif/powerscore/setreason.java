@@ -46,14 +46,12 @@ public class setreason extends Activity{
 
         input = (EditText)findViewById(R.id.input);
 
-        SharedPreferences sharedata2 = getSharedPreferences("data", 0);
-        String reasons = sharedata2.getString("reasons", "上课发言 打扫卫生 小组加分 上午迟到 中午迟到 上课讲话 晚修讲话 随意下位 没有值日");
+        String reasons = getSharedPreferences("data", 0).getString("reasons", "上课发言 打扫卫生 小组加分 上午迟到 中午迟到 上课讲话 晚修讲话 随意下位 没有值日");
         strsreason = reasons.split(" ");
         ListView lv = (ListView) findViewById(R.id.listView2);
         lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strsreason));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long id) {
@@ -61,7 +59,7 @@ public class setreason extends Activity{
 
             }
         });
-        ((Button)findViewById(R.id.ok)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!input.getText().toString().matches("")) {
                     //返回并传值
@@ -79,7 +77,7 @@ public class setreason extends Activity{
                 }
             }
         });
-        ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent iB = new Intent();
                 iB.putExtra("reason", "NULL");
@@ -88,7 +86,7 @@ public class setreason extends Activity{
                 setreason.this.finish();
             }
         });
-        ((RelativeLayout) findViewById(R.id.back)).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#9b9b9b"));

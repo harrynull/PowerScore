@@ -7,10 +7,11 @@ import java.util.Date;
  * Created by 王安海 on 12/23/2015.
  */
 public class History {
-    public History(int _score, String _names, String _reason, Date _date){
+    public History(int _score, String _names, String _reason, Date _date, String _oper){
         score=_score;
         names =_names;
         reason =_reason;
+        oper=_oper;
         //score_now=_score_now;
         date=_date;
         shortReason=reason.length() > 6 ? reason.substring(0, 6) + "…" : reason;
@@ -24,6 +25,7 @@ public class History {
     public final int score;
     public final String names;
     public final String reason;
+    public final String oper;
 
     public final String shortReason;
     public final String shortNames;

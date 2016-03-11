@@ -98,7 +98,6 @@
             android:layout_height="381dp"
             android:id="@+id/expandableListView"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="20dp"
             android:background="#ffffff"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"

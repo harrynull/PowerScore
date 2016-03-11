@@ -22,23 +22,20 @@ public class moreinfo extends Activity {
 
         Intent intent=getIntent();
         String record=intent.getStringExtra("record");
-        Log.d("23", record);
-        String[] allinfo=record.split("[|]");
-        for (int i=0;i<5;i++){
-            Log.d("23", allinfo[i]);
-        }
-        String reason_s = allinfo[0];
-        String class_s = allinfo[1];
-        String member_s = allinfo[2];
-        String score_s = allinfo[3];
-        String time_s = allinfo[4];
-        //String operator_s = allinfo[5];
+        String[] allInfo=record.split("[|]");
+        String reason_s = allInfo[0];
+        String class_s = allInfo[1];
+        String member_s = allInfo[2];
+        String score_s = allInfo[3];
+        String time_s = allInfo[4];
+        String operator_s = allInfo[5];
 
         ((TextView)findViewById(R.id.show_reason)).setText(reason_s);
         ((TextView)findViewById(R.id.show_class)).setText(class_s);
         ((TextView)findViewById(R.id.show_members)).setText(member_s);
         ((TextView)findViewById(R.id.show_mark)).setText(score_s);
         ((TextView)findViewById(R.id.show_fulltime)).setText(time_s);
+        ((TextView)findViewById(R.id.show_operator)).setText(operator_s);
 
         findViewById(R.id.backmore).setOnClickListener(new View.OnClickListener() {
             @Override

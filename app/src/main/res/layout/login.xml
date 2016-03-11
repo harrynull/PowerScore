@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#e6e6e6"
+    android:background="#f2f1f1"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:gravity="center_vertical"
@@ -17,7 +17,8 @@
         android:layout_above="@+id/account_editor"
         android:layout_alignLeft="@+id/account_editor"
         android:layout_marginTop="0.1dip"
-        android:layout_alignRight="@+id/account_editor" />
+        android:layout_alignRight="@+id/account_editor"
+        android:padding="@dimen/activity_horizontal_margin" />
 
     <Button
         android:text="登陆"
@@ -43,7 +44,8 @@
         android:hint="用户名"
         android:paddingLeft="10dip"
         android:singleLine="true"
-        android:textColor="#3b454b" />
+        android:textColor="#3b454b"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
     <EditText
         android:id="@+id/password_editor"
         android:layout_width="fill_parent"

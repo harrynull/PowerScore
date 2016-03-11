@@ -131,14 +131,15 @@ public class SlideSwitchView extends View{
 			mSwitchThumb = mSwitchThumbPressed;
 			mLastX = event.getX();
 			break;
+		/*
 		case MotionEvent.ACTION_MOVE:
 			mCurrentX = event.getX();
 			mMoveDeltX = (int) (mCurrentX - mLastX);
 			if(mMoveDeltX > 10){
-				//������10��������룬���Ը��õ�ʵ�ֵ��Ч��
+
 				mIsScrolled = true;
 			}
-			// ������ؿ������󻬶������߿��ع������һ�������ʱ���ǲ���Ҫ����ģ�
+
 			if ((mSwitchOn && mMoveDeltX < 0) || (!mSwitchOn && mMoveDeltX > 0)) {
 				mFlag = true;
 				mMoveDeltX = 0;
@@ -149,6 +150,7 @@ public class SlideSwitchView extends View{
 			}
 			invalidate();
 			break;
+			*/
 		case MotionEvent.ACTION_UP:
 			mSwitchThumb = mSwitchThumbNormal;
 			//���û�л��������Ϳ���һ�ε���¼�

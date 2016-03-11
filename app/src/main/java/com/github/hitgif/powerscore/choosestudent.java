@@ -21,11 +21,8 @@ public class choosestudent extends Activity {
 
     ExpandableListView listView;
     EListAdapter adapter;
-    public String result = "";
     public String Null = "NULL";
-    private int onlyOne = 0;
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
             Intent iB = new Intent();
@@ -63,7 +60,7 @@ public class choosestudent extends Activity {
         findViewById(R.id.backc).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent iB = new Intent();
-                iB.putExtra("res", Null);
+                iB.putExtra("result", Null);
                 iB.setClass(choosestudent.this, MainActivity.class);
                 choosestudent.this.setResult(1, iB);
                 choosestudent.this.finish();
@@ -81,21 +78,20 @@ public class choosestudent extends Activity {
         });
         findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ArrayList<String> results = new ArrayList<String>();
                 ArrayList<EListAdapter.Group> groups=adapter.getGroups();
-                onlyOne = 0;
+                String result="";
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
                             result = groups.get(i).getId() + "|" + groups.get(i).getChildItem(k).getName();
-                            results.add(onlyOne,result);
-                            onlyOne++;
+                            break;
                         }
                     }
+                    if(!result.isEmpty()) break;
                 }
-                if (onlyOne == 1) {
+                if (!result.isEmpty()) {
                     Intent i = new Intent();
-                    i.putExtra("res", results);
+                    i.putExtra("result", result);
                     i.setClass(choosestudent.this, MainActivity.class);
                     choosestudent.this.setResult(1, i);
                     choosestudent.this.finish();

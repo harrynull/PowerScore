@@ -53,14 +53,16 @@ public class splash extends Activity {
                 splash.this.finish();
             }
             else {
-                startActivity(new Intent(getApplication(),MainActivity.class));
+                if(!getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username","").isEmpty() || true)
+                    startActivity(new Intent(getApplication(), MainActivity.class));
+                else
+                    startActivity(new Intent(getApplication(), login.class));
+
                 splash.this.finish();
             }
             SharedPreferences.Editor editor = preferences.edit();
-            //存入数据
             editor.putInt("count", ++count);
-            //提交修改
-            editor.commit();
+            editor.apply();
 
         }
 
