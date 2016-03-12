@@ -234,11 +234,25 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                spEditor.putString("username", "");
-                spEditor.putString("password", "");
-                spEditor.apply();
-                startActivity(new Intent(getApplication(), login.class));
-                MainActivity.this.finish();
+                new AlertDialogios(MainActivity.this).builder()
+                        .setTitle("退出登录")
+                        .setMsg("确定要退出登录吗?")
+                        .setPositiveButton("退出登录", new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                spEditor.putString("username", "");
+                                spEditor.putString("password", "");
+                                spEditor.apply();
+                                startActivity(new Intent(getApplication(), login.class));
+                                MainActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton("取消", new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        }).show();
+
             }
         });
 

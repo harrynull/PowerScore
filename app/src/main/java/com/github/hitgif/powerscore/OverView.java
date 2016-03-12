@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -18,6 +20,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +41,24 @@ public class OverView extends Activity {
 
         groupArray = new ArrayList<String>();
         childArray = new ArrayList<List<String>>();
+        findViewById(R.id.backc).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((TextView) findViewById(R.id.textView15c)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.backdown);
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((TextView) findViewById(R.id.textView15c)).setTextColor(Color.parseColor("#ffffff"));
+                    ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.back);
+                }
+                return false;
+            }
+        });
 
+        findViewById(R.id.backc).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                OverView.this.finish();
+            }
+        });
         for (final String key : MainActivity.classes.keySet()) {
             Classes c = MainActivity.classes.get(key);
             groupArray.add(c.name);
@@ -131,12 +151,13 @@ public class OverView extends Activity {
         {
             String string = groupArray.get(groupPosition);
             AbsListView.LayoutParams layoutParams = new  AbsListView.LayoutParams(
-                    ViewGroup.LayoutParams.FILL_PARENT, 64 );
+                    ViewGroup.LayoutParams.FILL_PARENT, 84 );
             TextView text = new  TextView(activity);
             text.setLayoutParams(layoutParams);
             text.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            text.setPadding(15 , 0 , 0 , 0 );
+            text.setPadding(65 , 0 , 0 , 0 );
             text.setText(string);
+            text.setTextSize(17);
             return  text;
         }
         public  boolean  hasStableIds()
@@ -147,5 +168,6 @@ public class OverView extends Activity {
         {
             return  true ;
         }
+
     }
 }

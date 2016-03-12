@@ -16,17 +16,16 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="42dp"
             android:background="@drawable/listview_item"
-            android:paddingRight="15dp"
-            android:paddingLeft="50dp">
+            android:paddingRight="30dp"
+            android:paddingLeft="75dp">
 
             <TextView
                 android:text="左小明"
                 android:layout_height="wrap_content"
                 android:layout_width="118dp"
                 android:id="@+id/itemName"
-                android:paddingLeft="10dp"
                 android:layout_alignParentBottom="true"
                 android:textSize="18dp"
                 android:layout_alignParentTop="true"
