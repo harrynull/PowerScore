@@ -81,13 +81,15 @@ public class OverView extends Activity {
 
                 for (final String key : MainActivity.classes.keySet()) {
                     Classes c = MainActivity.classes.get(key);
-                    groupArray.add(c.name);
                     List<String> tempArray = new ArrayList<String>();
                     for (int j = 0; j < c.members.length; j++) {
                         if(!filter.isEmpty()&&!c.members[j].contains(filter)) continue;
                         tempArray.add(c.members[j]+"|"+c.scores[j]);
                     }
-                    childArray.add(tempArray);
+                    if(!tempArray.isEmpty()) {
+                        groupArray.add(c.name);
+                        childArray.add(tempArray);
+                    }
                 }
 
                 ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();

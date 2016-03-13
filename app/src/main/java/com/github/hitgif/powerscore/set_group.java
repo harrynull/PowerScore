@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -34,11 +35,43 @@ public class set_group extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.set_student_for_group);
+
+        final int editGroup=getIntent().getIntExtra("editgroup", -1);
+
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         group_name = (EditText) findViewById(R.id.group_name);
         adapter = new EListAdapter(this);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(adapter);
+
+        if(editGroup!=-1){
+            final Group group=MainActivity.groups.get(editGroup);
+            group_name.setText(group.groupName);
+            String[] members = group.groupMembers.split("\\|");
+            ArrayList<EListAdapter.Group> listGroups = adapter.getGroups();
+            for (int i = 0; i < members.length; i += 2) {
+                for (int j = 0; j < listGroups.size(); j++) {
+                    if (!listGroups.get(j).getTitle().equals(members[i]))
+                        continue;
+                    for (int k = 0; k < listGroups.get(j).getChildrenCount(); k++) {
+                        if (listGroups.get(j).getChildItem(k).getName().equals(members[i + 1])) {
+                            listGroups.get(j).getChildItem(k).setChecked(true);
+                            boolean allChecked=true;
+                            for (int k2 = 0; k2 < listGroups.get(j).getChildrenCount(); k2++) {
+                                if(!listGroups.get(j).getChildItem(k2).getChecked()){
+                                    allChecked=false;
+                                    break;
+                                }
+                            }
+                            listGroups.get(j).setChecked(allChecked);
+                            break;
+                        }
+                    }
+                }
+            }
+            ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+        }
+
         findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -95,7 +128,10 @@ public class set_group extends Activity {
                             .setMsg("请选择学生 :)")
                             .setNegativeButton("好", null).show();
                 }else{
-                    MainActivity.groups.add(new Group(name,members));
+                    if(editGroup==-1)
+                        MainActivity.groups.add(new Group(name,members));
+                    else
+                        MainActivity.groups.set(editGroup, new Group(name, members));
                     set_group.this.finish();
                 }
             }
