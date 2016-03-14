@@ -147,7 +147,6 @@ public class OverView extends Activity {
 
                 for (final String key : MainActivity.classes.keySet()) {
                     Classes c = MainActivity.classes.get(key);
-
                     List<String> tempArray = new ArrayList<String>();
                     for (int j = 0; j < c.members.length; j++) {
                         if (!filter.isEmpty() && !c.members[j].contains(filter)) continue;

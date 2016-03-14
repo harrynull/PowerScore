@@ -69,8 +69,8 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private String filterName="";
     private Boolean isGen = true;
     private int scoreFilter=-1;
-    private int lastItem;
     private int countLimit=20;
+    private boolean isLastRow;
 
     //布局
     private ListView lv;
@@ -686,33 +686,33 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
 
-        lastItem = firstVisibleItem + visibleItemCount;
+        if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
+            isLastRow = true;
+        }
 
     }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         //下拉到空闲是，且最后一个item的数等于数据的总数时，进行更新
-        if(lastItem == countLimit && scrollState == SCROLL_STATE_IDLE){
-            mHandler.sendEmptyMessage(0);
+        if(isLastRow && scrollState == SCROLL_STATE_IDLE){
+            new Handler(){
+                public void handleMessage(android.os.Message msg) {
+                    switch (msg.what) {
+                        case 0:
+                            loadMore();  //加载更多数据，这里可以使用异步加载
+                            updateList();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }.sendEmptyMessage(0);
         }
 
     }
-    //声明Handler
-    private Handler mHandler = new Handler(){
-        public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
-                case 0:
-                    loadMore();  //加载更多数据，这里可以使用异步加载
-                    updateList();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
     private void loadMore(){
-        countLimit = lv.getAdapter().getCount()+1;
+        countLimit = lv.getAdapter().getCount()+20;
         if(countLimit>classes.get(classNow).histories.size()) countLimit=classes.get(classNow).histories.size();
     }
 

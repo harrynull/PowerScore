@@ -56,7 +56,9 @@ public class group_setting extends Activity {
 
         findViewById(R.id.addgroup).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivityForResult(new Intent(getApplication(), set_group.class), 1);
+                Intent intent=new Intent(getApplication(), set_group.class);
+                intent.putExtra("editgroup", -1);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -91,7 +93,9 @@ public class group_setting extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        //修改组!!!!!!!!!!!!!!!!!!
+                                        Intent intent=new Intent(getApplication(), set_group.class);
+                                        intent.putExtra("editgroup", pos);
+                                        startActivityForResult(intent, 1);
                                     }
                                 })
                         .show();
