@@ -52,7 +52,7 @@ public class multiplychoosestudent extends Activity {
         findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#7fffffff"));
                 ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.backdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#ffffff"));
@@ -75,7 +75,7 @@ public class multiplychoosestudent extends Activity {
         findViewById(R.id.ok).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#7fffffff"));
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#ffffff"));
                 }
@@ -85,7 +85,7 @@ public class multiplychoosestudent extends Activity {
         findViewById(R.id.group).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((Button) findViewById(R.id.group)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((Button) findViewById(R.id.group)).setTextColor(Color.parseColor("#7fffffff"));
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((Button) findViewById(R.id.group)).setTextColor(Color.parseColor("#ffffff"));
                 }

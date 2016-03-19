@@ -66,6 +66,7 @@ public class add extends Activity{
     private boolean caninput = true;
     private boolean onlyzero = true;
     private boolean caninputpoint = true;
+    private boolean memchoosed = false;
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK
@@ -167,7 +168,7 @@ public class add extends Activity{
         findViewById(R.id.ok).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#7fffffff"));
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#ffffff"));
                 }
@@ -178,16 +179,62 @@ public class add extends Activity{
         findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //传值
-                Intent i=new Intent();
-                String[] result=new String[3];
-                result[0]=reason_giveback;
-                result[1]=members_giveback;
-                result[2]=(!isplus?"-":"")+(score.getText().toString());
-                i.putExtra("data", result);
-                i.setClass(add.this, MainActivity.class);
-                add.this.setResult(2, i);
-                add.this.finish();
+                if (memchoosed) {
+                    if (score.getText().toString().equals("0")||score.getText().toString().equals("0.")){
+                        new AlertDialogios(add.this).builder()
+                                .setTitle("提示")
+                                .setMsg("分数不能为零 :)")
+                                .setNegativeButton("好的", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                    }
+                                }).show();
+                    }else {
+                        if (reason_giveback.isEmpty()) {
+                            new AlertDialogios(add.this).builder()
+                                    .setTitle("提示")
+                                    .setMsg("没有设置理由，要继续吗?")
+                                    .setPositiveButton("确定", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            //传值
+                                            Intent i = new Intent();
+                                            String[] result = new String[3];
+                                            result[0] = "(未设置)";
+                                            result[1] = members_giveback;
+                                            result[2] = (!isplus ? "-" : "") + (score.getText().toString());
+                                            i.putExtra("data", result);
+                                            i.setClass(add.this, MainActivity.class);
+                                            add.this.setResult(2, i);
+                                            add.this.finish();
+                                        }
+                                    })
+
+                                    .setNegativeButton("取消", null).show();
+
+                        }else {
+                            Intent i = new Intent();
+                            String[] result = new String[3];
+                            result[0] = reason_giveback;
+                            result[1] = members_giveback;
+                            result[2] = (!isplus ? "-" : "") + (score.getText().toString());
+                            i.putExtra("data", result);
+                            i.setClass(add.this, MainActivity.class);
+                            add.this.setResult(2, i);
+                            add.this.finish();
+                        }
+
+                    }
+                }else {
+                    new AlertDialogios(add.this).builder()
+                            .setTitle("提示")
+                            .setMsg("请选择成员 :)")
+                            .setNegativeButton("好的", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            }).show();
+                }
             }
         });
 
@@ -221,7 +268,7 @@ public class add extends Activity{
             public void onClick(View v) {
                 if (isdrop) {
                     inputscore.setVisibility(View.VISIBLE);
-                    ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.VISIBLE);
+
                     isdrop = false;
                     drop.setImageResource(R.drawable.dropn);
                     RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ((TextView)findViewById(R.id.textView12)).getHeight());
@@ -230,7 +277,7 @@ public class add extends Activity{
                     ind.setLayoutParams(param);
                 } else {
                     inputscore.setVisibility(View.GONE);
-                    ((ImageView) findViewById(R.id.imageView21)).setVisibility(View.GONE);
+
                     isdrop = true;
                     drop.setImageResource(R.drawable.dropup);
                     RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ((TextView)findViewById(R.id.textView12)).getHeight());
@@ -340,7 +387,7 @@ public class add extends Activity{
         ((RelativeLayout) findViewById(R.id.back)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((TextView) findViewById(R.id.textView9)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((TextView) findViewById(R.id.textView9)).setTextColor(Color.parseColor("#7fffffff"));
                 ((ImageView) findViewById(R.id.imageView6)).setImageResource(R.drawable.backdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.textView9)).setTextColor(Color.parseColor("#ffffff"));
@@ -358,7 +405,7 @@ public class add extends Activity{
             case 3:
                 ArrayList<String> result=data.getExtras().getStringArrayList("mem"); //得到新Activity关闭后返回的数据
                 ArrayList<String> _class=new ArrayList<String>();
-                Boolean flag = false;
+
                 if (result!=null){
                     //处理返回值
                     String s="";
@@ -379,6 +426,7 @@ public class add extends Activity{
                     ((TextView) findViewById(R.id.textView16)).setTextColor(Color.parseColor("#14a2d4"));
                     ((TextView) findViewById(R.id.textView11)).setGravity(Gravity.LEFT);
                     ((TextView) findViewById(R.id.textView11)).setGravity(Gravity.TOP);
+                    memchoosed = true;
                 }
                 break;
             case 2:

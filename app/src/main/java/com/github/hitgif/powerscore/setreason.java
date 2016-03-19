@@ -89,7 +89,7 @@ public class setreason extends Activity{
         findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#7fffffff"));
                 ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.backdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.textView15)).setTextColor(Color.parseColor("#ffffff"));

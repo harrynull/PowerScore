@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -29,26 +30,72 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OverView extends Activity {
     private  List<String> groupArray;
     private  List<List<String>> childArray;
     private String filter="";
+    private int hahaha = 0;
     ExpandableListView lv;
+    public void doSearch(){
+        filter = ((EditText) (findViewById(R.id.editText))).getText().toString();
+
+        groupArray = new ArrayList<String>();
+        childArray = new ArrayList<List<String>>();
+
+        ArrayList<Integer> needExpand = new ArrayList<Integer>();
+
+        for (final String key : MainActivity.classes.keySet()) {
+            Classes c = MainActivity.classes.get(key);
+            List<String> tempArray = new ArrayList<String>();
+            for (int j = 0; j < c.members.length; j++) {
+                if (!filter.isEmpty() && !c.members[j].contains(filter)) continue;
+                tempArray.add(c.members[j] + "|" + c.scores[j]);
+            }
+            if (!tempArray.isEmpty()) {
+                groupArray.add(c.name);
+                childArray.add(tempArray);
+                needExpand.add(groupArray.size() - 1);
+            }
+        }
+
+        lv.setAdapter(new ExpandableAdapter(OverView.this));
+
+        for (int id : needExpand) {
+            lv.expandGroup(id);
+        }
+
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.overview);
+        ViewTreeObserver vto = findViewById(R.id.textView38).getViewTreeObserver();
 
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                findViewById(R.id.textView38).getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                hahaha = findViewById(R.id.textView38).getWidth();
+                lv.setAdapter(new ExpandableAdapter(OverView.this));
+            }
+        });
         lv=(ExpandableListView)findViewById(R.id.expandableListView);
-
+        findViewById(R.id.scearch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doSearch();
+            }
+        });
         groupArray = new ArrayList<String>();
         childArray = new ArrayList<List<String>>();
         findViewById(R.id.backc).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((TextView) findViewById(R.id.textView15c)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((TextView) findViewById(R.id.textView15c)).setTextColor(Color.parseColor("#7fffffff"));
                 ((ImageView) findViewById(R.id.backimc)).setImageResource(R.drawable.backdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.textView15c)).setTextColor(Color.parseColor("#ffffff"));
@@ -68,7 +115,7 @@ public class OverView extends Activity {
             groupArray.add(c.name);
             List<String> tempArray = new ArrayList<String>();
             for (int j = 0; j < c.members.length; j++) {
-                tempArray.add(c.members[j]+"|"+c.scores[j]);
+                tempArray.add(c.members[j]+"|"+(c.scores[j]/10.0));
             }
             childArray.add(tempArray);
         }
@@ -111,13 +158,29 @@ public class OverView extends Activity {
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         Classes c = MainActivity.classes.get(fKey);
                                                         try {
-                                                            c.scores[childPosition]= (int) (Double.parseDouble(text.getText().toString()) * 10);
+                                                            int change=(int) (Double.parseDouble(text.getText().toString()) * 10)-c.scores[childPosition];
+                                                            Date d=new Date();
+                                                            c.histories.add(new History(change, c.members[childPosition],
+                                                                    "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("Username", "未登录用户")));
+                                                            c.unsyncHistories.add(new History(change, c.members[childPosition],
+                                                                    "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username", "未登录用户")));
+                                                            c.scores[childPosition]+=change;
                                                             showToast("设置分数成功");
                                                         }catch (Exception e){
                                                             showToast("设置分数失败:必须输入数字");
                                                             e.printStackTrace();
                                                         }
-                                                        ((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+                                                        for (final String key : MainActivity.classes.keySet()) {
+                                                            Classes c2 = MainActivity.classes.get(key);
+                                                            groupArray.add(c2.name);
+                                                            List<String> tempArray = new ArrayList<String>();
+                                                            for (int j = 0; j < c2.members.length; j++) {
+                                                                tempArray.add(c2.members[j]+"|"+(c2.scores[j]/10.0));
+                                                            }
+                                                            childArray.add(tempArray);
+                                                        }
+
+                                                        lv.setAdapter(new ExpandableAdapter(OverView.this));
                                                     }})
                                                 .setNegativeButton("取消", null)
                                                 .show();
@@ -127,7 +190,8 @@ public class OverView extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-
+                                        finish();
+                                        MainActivity.MainActivityPointer.jumpToStudent(fKey, MainActivity.classes.get(fKey).members[childPosition]);
                                     }
                                 })
                         .show();
@@ -138,33 +202,7 @@ public class OverView extends Activity {
         ((EditText) (findViewById(R.id.editText))).setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                filter = ((EditText) (findViewById(R.id.editText))).getText().toString();
-
-                groupArray = new ArrayList<String>();
-                childArray = new ArrayList<List<String>>();
-
-                ArrayList<Integer> needExpand = new ArrayList<Integer>();
-
-                for (final String key : MainActivity.classes.keySet()) {
-                    Classes c = MainActivity.classes.get(key);
-                    List<String> tempArray = new ArrayList<String>();
-                    for (int j = 0; j < c.members.length; j++) {
-                        if (!filter.isEmpty() && !c.members[j].contains(filter)) continue;
-                        tempArray.add(c.members[j] + "|" + c.scores[j]);
-                    }
-                    if (!tempArray.isEmpty()) {
-                        groupArray.add(c.name);
-                        childArray.add(tempArray);
-                        needExpand.add(groupArray.size() - 1);
-                    }
-                }
-
-                lv.setAdapter(new ExpandableAdapter(OverView.this));
-
-                for (int id : needExpand) {
-                    lv.expandGroup(id);
-                }
-
+                doSearch();
                 return false;
             }
         });
@@ -225,7 +263,7 @@ public class OverView extends Activity {
         {
             String string = groupArray.get(groupPosition);
             AbsListView.LayoutParams layoutParams = new  AbsListView.LayoutParams(
-                    ViewGroup.LayoutParams.FILL_PARENT, 84 );
+                    ViewGroup.LayoutParams.FILL_PARENT, hahaha );
             TextView text = new  TextView(activity);
             text.setLayoutParams(layoutParams);
             text.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);

@@ -120,7 +120,7 @@ public class AlertDialogios {
 		btn_neg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				listener.onClick(v);
+				if(listener!=null) listener.onClick(v);
 				dialog.dismiss();
 			}
 		});

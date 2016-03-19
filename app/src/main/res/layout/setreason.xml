@@ -81,7 +81,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingTop="25dp"
                 android:textColor="#ffffff"
-                android:textColorHint="#e1e1e1"
+                android:textColorHint="#add7f6"
                 android:hint="此处键入理由" />
 
             <TextView

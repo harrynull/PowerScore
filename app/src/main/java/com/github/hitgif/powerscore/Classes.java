@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Classes {
     public Classes(String _name){
         histories = new ArrayList<History>();
+        unsyncHistories = new ArrayList<History>();
         name=_name;
     }
     public void setMembers(String _members) {
@@ -17,5 +18,6 @@ public class Classes {
     public String name;
     public String[] members;
     public ArrayList<History> histories = new ArrayList<History>();
+    public ArrayList<History> unsyncHistories = new ArrayList<History>();
     public int[] scores;
 }
