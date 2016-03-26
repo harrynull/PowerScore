@@ -1,6 +1,5 @@
 package com.github.hitgif.powerscore;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -15,10 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Gravity;
@@ -28,7 +24,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -107,11 +102,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
     private void doSync() {
         //findViewById(R.id.add).setEnabled(false);
-        String rawClasses = spReader.getString("classes", "");
-        if (rawClasses.isEmpty()) {
-            getClassInfo();
-            return;
-        }
+        getClassInfo();
         for (final String key : classes.keySet()) {
             final Classes c = classes.get(key);
             //分班级同步
@@ -127,11 +118,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             //将生成的diff上传到服务器上
             String username = spReader.getString("username", "");
             String password = spReader.getString("password", "");
-            String classID = key;
 
-            new AccessNetwork("POST",
+            new Thread(new AccessNetwork("POST",
                     "http://scoremanagement.applinzi.com/sync.php",
-                    "username=" + username + "&password=" + password + "&cid=" + classID + "&diff=" + diff, new Handler() {
+                    "username=" + username + "&password=" + password + "&cid=" + key + "&diff=" + diff, new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
                     switch (msg.what) {
@@ -146,7 +136,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             break;
                     }
                 }
-            }, 0).run();
+            }, 0)).start();
 
             //同步结束
             c.unsyncHistories.clear();
@@ -685,9 +675,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
              });
              dpd.show();
          }
-     }
-
-        );
+        });
 
         //读取个人信息
         //读取组列表
@@ -704,32 +692,26 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         //读取数据
         String rawClasses = spReader.getString("classes", "");
-        if (rawClasses.isEmpty()) {
-            getClassInfo();
-        } else {
-            String[] classesinfo = rawClasses.split(",");
-            for (int i = 0; i < classesinfo.length; i += 2) {
-                Classes readNow = new Classes(classesinfo[i + 1]);
-
-                //读取数据
-                try {
-                    FileInputStream inputStream = this.openFileInput(classesinfo[i] + ".dat");
-                    byte[] bytes = new byte[inputStream.available()];
-                    ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-                    while (inputStream.read(bytes) != -1) {
-                        arrayOutputStream.write(bytes, 0, bytes.length);
-                    }
-                    inputStream.close();
-                    arrayOutputStream.close();
-                    readData(new String(arrayOutputStream.toByteArray()), readNow);
-
-                } catch (Exception ignored) {
-                    ignored.printStackTrace();
+        getClassInfo();
+        String[] classesinfo = rawClasses.split(",");
+        for (int i = 0; i < classesinfo.length; i += 2) {
+            Classes readNow = new Classes(classesinfo[i + 1]);
+            //读取数据
+            try {
+                FileInputStream inputStream = this.openFileInput(classesinfo[i] + ".dat");
+                byte[] bytes = new byte[inputStream.available()];
+                ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+                while (inputStream.read(bytes) != -1) {
+                    arrayOutputStream.write(bytes, 0, bytes.length);
                 }
+                inputStream.close();
+                arrayOutputStream.close();
+                readData(new String(arrayOutputStream.toByteArray()), readNow);
 
-                classes.put(classesinfo[i], readNow);
-            }
+            } catch (Exception ignored) {}
+            classes.put(classesinfo[i], readNow);
         }
+
 
         //默认选择一个班
         if (classes.size() != 0) {
@@ -752,12 +734,11 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA);
 
+            if (strs.length < 3) return;
             String[] histories = strs[2].split("\\|");
             for (int j = 0; j < histories.length; j += 5) {
-
                 readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
                         histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
-
             }
             if (strs.length < 4) return;
             String[] usHistories = strs[3].split("\\|");
@@ -818,7 +799,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         spEditor.putString("groups", groupsStr);
         spEditor.apply();
     }
-
     private void getClassInfo() {
         //从网上获得数据
         final String username = spReader.getString("username", "");
@@ -836,18 +816,15 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                         showToast("无法获取班级数据：无法连接到网络");
                         break;
                     case 2:
-                        Log.d("SYNC", "STEP 1 SUCCESS!" + msg.obj);
-
-
                         String[] ids = msg.obj.toString().split(",");
                         for (int i = 0; i < ids.length - 1; i += 2) {
+                            if(classes.containsKey(ids[i])) continue;
                             final Classes c = new Classes(ids[i + 1]);
                             new Thread(new AccessNetwork("POST",
                                     "http://scoremanagement.applinzi.com/sync.php",
                                     "username=" + username + "&password=" + password + "&cid=" + ids[i] + "&diff=", new Handler() {
                                 @Override
                                 public void handleMessage(Message msg) {
-                                    Log.d("SYNC", "STEP 2 ENTERED!" + msg.obj);
                                     switch (msg.what) {
                                         case 0:
                                             showToast("无法获取班级数据：未知错误");
@@ -890,18 +867,8 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         //下拉到空闲是，且最后一个item的数等于数据的总数时，进行更新
         if (isLastRow && scrollState == SCROLL_STATE_IDLE) {
-            new Handler() {
-                public void handleMessage(android.os.Message msg) {
-                    switch (msg.what) {
-                        case 0:
-                            loadMore();  //加载更多数据，这里可以使用异步加载
-                            updateList();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }.sendEmptyMessage(0);
+             loadMore();
+             updateList();
         }
 
     }
@@ -1101,15 +1068,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         private String version;
         private String url;
         private String description;
-        private String url_server;
-
-        public String getUrl_server() {
-            return url_server;
-        }
-
-        public void setUrl_server(String url_server) {
-            this.url_server = url_server;
-        }
 
         public String getVersion() {
             return version;
@@ -1193,7 +1151,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
     public class CheckVersionTask implements Runnable {
         InputStream is;
-        boolean u = false;
 
         public void run() {
 
@@ -1239,16 +1196,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         //当点确定按钮时从服务器上下载 新的apk 然后安装   װ
         builer.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "下载apk,更新");
                 downLoadApk();
             }
         });
-        builer.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                //do sth
-            }
-        });
+        builer.setNegativeButton("取消", null);
         AlertDialog dialog = builer.create();
         dialog.show();
     }
@@ -1267,7 +1218,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             public void run() {
                 try {
                     File file = DownLoadManager.getFileFromServer(info.getUrl(), pd);
-                    sleep(3000);
                     installApk(file);
                     pd.dismiss(); //结束掉进度条对话框
                 } catch (Exception e) {
