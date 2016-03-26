@@ -38,14 +38,13 @@
         android:layout_height="50dip"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@drawable/input_back"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:hint="用户名"
         android:paddingLeft="10dip"
         android:singleLine="true"
-        android:textColor="#3b454b"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        style="@style/common_input_style" />
     <EditText
         android:id="@+id/password_editor"
         android:layout_width="fill_parent"
@@ -53,16 +52,15 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:background="@drawable/input_back"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:hint="密码"
         android:paddingLeft="10dip"
         android:singleLine="true"
-        android:textColor="#3b454b"
         android:layout_below="@+id/account_editor"
         android:layout_alignParentRight="true"
-        android:password="true" />
+        android:password="true"
+        style="@style/common_input_style" />
 
     <ImageView
         android:layout_width="wrap_content"

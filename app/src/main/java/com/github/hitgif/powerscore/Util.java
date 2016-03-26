@@ -27,6 +27,36 @@ public class Util {
 
     }
 
+    @TargetApi(19)
+    static public void setTranslucent_white(Activity a) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window win = a.getWindow();
+            WindowManager.LayoutParams winParams = win.getAttributes();
+            final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+            winParams.flags |= bits;
+            win.setAttributes(winParams);
+            SystemBarTintManager tintManager = new SystemBarTintManager(a);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.sdwhi);//通知栏所需颜色
+        }
+
+    }
+
+    @TargetApi(19)
+    static public void setTranslucent_icon(Activity a) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window win = a.getWindow();
+            WindowManager.LayoutParams winParams = win.getAttributes();
+            final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+            winParams.flags |= bits;
+            win.setAttributes(winParams);
+            SystemBarTintManager tintManager = new SystemBarTintManager(a);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.icon_b);//通知栏所需颜色
+        }
+
+    }
+
     /**
      * 设置系统栏可见性
      */

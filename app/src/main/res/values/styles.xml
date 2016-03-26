@@ -24,6 +24,15 @@
         <item name="android:layout_gravity">center_horizontal</item>
 
     </style>
+    <style name="common_input_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dip</item>
+        <item name="android:background">@drawable/input_back_st</item>
+        <item name="android:padding">6.0dip</item>
+        <item name="android:textColor">@color/dqh</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+
+    </style>
     <!-- 自定义仿IOS的ActionSheet底部Dialog的样式 ，有模糊效果 -->
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
 

@@ -19,7 +19,7 @@ public class login extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Util.setTranslucent(this);
+        Util.setTranslucent_white(this);
         setContentView(R.layout.login);
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

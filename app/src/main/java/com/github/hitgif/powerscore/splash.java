@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.Window;
+import android.view.WindowManager;
 
 
 import java.io.OutputStream;
@@ -21,10 +24,20 @@ public class splash extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Util.setTranslucent(this);
-        getWindow().getDecorView().setBackgroundResource(R.drawable.per);
-        Util.setSystemBarVisible(this, false);
+        Util.setTranslucent_icon(this);
         super.onCreate(savedInstanceState);
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        int screenWidth = screenWidth = display.getWidth();
+        int screenHeight = screenHeight = display.getHeight();
+        Log.d("3243",String.valueOf(screenHeight));
+        if(screenHeight<1280){
+            getWindow().setBackgroundDrawableResource(R.drawable.spl_1024);
+        }else {
+            getWindow().setBackgroundDrawableResource(R.drawable.spl_1920);
+        }
+
+        Util.setSystemBarVisible(this, false);
         boolean splash = getSharedPreferences("data", 0).getBoolean("splash", true);
 
         if(!splash){
@@ -38,7 +51,7 @@ public class splash extends Activity {
         }
 
         Handler x = new Handler();
-        x.postDelayed(new splashhandler(), 1000);
+        x.postDelayed(new splashhandler(), 1500);
 
         setContentView(R.layout.splash);
     }
@@ -47,25 +60,14 @@ public class splash extends Activity {
         public void run() {
 
             preferences = getSharedPreferences("count",MODE_WORLD_READABLE);
-            int count = preferences.getInt("count", 0);
-            //判断程序与第几次运行，如果是第一次运行则跳转到引导页面
-            if (count == 0) {
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(),LG.class);
-                startActivity(intent);
-                splash.this.finish();
-            }
-            else {
+
                 if(!getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username","").isEmpty())
                     startActivity(new Intent(getApplication(), MainActivity.class));
                 else
                     startActivity(new Intent(getApplication(), login.class));
 
                 splash.this.finish();
-            }
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt("count", ++count);
-            editor.apply();
+
 
         }
 
