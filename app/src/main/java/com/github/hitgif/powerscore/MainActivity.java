@@ -2,10 +2,15 @@ package com.github.hitgif.powerscore;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +20,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.Log;
+import android.util.Xml;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,10 +45,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParser;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,16 +95,25 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private ImageView sync;
 
     private Animation in_per;
-
+    private final String TAG = this.getClass().getName();
+    private final int UPDATA_NONEED = 0;
+    private final int UPDATA_CLIENT = 1;
+    private final int GET_UNDATAINFO_ERROR = 2;
+    private final int DOWN_ERROR = 4;
+    private UpdataInfo info;
+    private String localVersion;
     Button gen;
     Button per;
-
     private void doSync(){
-        findViewById(R.id.add).setEnabled(false);
+        //findViewById(R.id.add).setEnabled(false);
+        String rawClasses = spReader.getString("classes", "");
+        if (rawClasses.isEmpty()) {
+            getClassInfo();
+            return;
+        }
         for (final String key : classes.keySet()) {
-            Classes c = classes.get(key);
+            final Classes c = classes.get(key);
             //分班级同步
-
             //生成diff
             String diff="";
             for(int i=0;i!=c.unsyncHistories.size();i++){
@@ -102,15 +123,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 diff+=c.unsyncHistories.get(i).getDate(true) + "|";
                 diff+=c.unsyncHistories.get(i).oper + "|";
             }
-            Log.d("diff",diff);
             //将生成的diff上传到服务器上
             String username=spReader.getString("username","");
             String password=spReader.getString("password","");
             String classID=key;
-            /*
-            new Thread(new AccessNetwork("POST",
+
+            new AccessNetwork("POST",
                     "http://scoremanagement.applinzi.com/sync.php",
-                    "username="+ username + "&password=" + password, new Handler(){
+                    "username="+ username + "&password=" + password + "&cid=" + classID + "&diff=" + diff, new Handler(){
                 @Override
                 public void handleMessage(Message msg) {
                     switch(msg.what){
@@ -118,18 +138,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             showToast("登陆失败，用户名或密码错误");
                             break;
                         case 1:
-                            SharedPreferences.Editor spEditor = getSharedPreferences("data", Activity.MODE_PRIVATE).edit();
-                            spEditor.putString("username", username);
-                            spEditor.putString("password", password);
-                            spEditor.apply();
+                            showToast("网络异常，请检查网络连接");
                             break;
                         case 2:
-                            showToast("网络异常，请检查网络连接");
+                            readData(msg.obj.toString(), c);
                             break;
                     }
                 }
-            }, 0)).start();
-            */
+            }, 0).run();;
 
             //同步结束
             c.unsyncHistories.clear();
@@ -163,9 +179,9 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             else
                 m.obj = GetPostUtil.sendGet(url, params);
 
-            if(m.obj.toString().replace("\n", "").equals("0")){
+            if(m.obj.toString().equals("F")){
                 m.what=0;
-            }else if(m.obj.toString().replace("\n", "").equals("1")){
+            }else if(m.obj.toString().isEmpty()){
                 m.what=1;
             }else m.what=2;
             h.sendMessage(m);
@@ -208,18 +224,21 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.main);//通知栏所需颜色
-        }
+        Util.setTranslucent(this);
         RelativeLayout genLayout;
         RelativeLayout perLayout;
         ImageView add;
         //初始化
         spReader = getSharedPreferences("data", Activity.MODE_PRIVATE);
         spEditor = spReader.edit();
+        try {
+            localVersion = getVersionName();
+            CheckVersionTask cv = new CheckVersionTask();
+
+            new Thread(cv).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //布局初始化
         setContentView(R.layout.activity_main);
@@ -391,48 +410,48 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         findViewById(R.id.reason).setOnClickListener(new View.OnClickListener() {
 
-                                               public void onClick(View v) {
-                                                   startActivity(new Intent(MainActivity.this, reason_setting.class));
-                                               }
+                                                         public void onClick(View v) {
+                                                             startActivity(new Intent(MainActivity.this, reason_setting.class));
+                                                         }
 
-                                           }
+                                                     }
 
-                        );
+        );
 
         findViewById(R.id.setspl).setOnClickListener(new View.OnClickListener() {
 
-                                               public void onClick(View v) {
-                                                   SharedPreferences.Editor sharedata2 = getSharedPreferences("data", 0).edit();
-                                                   Boolean Oncp;
-                                                   if (findViewById(R.id.onspl).getVisibility() == View.VISIBLE) {
-                                                       Oncp = false;
-                                                       findViewById(R.id.onspl).setVisibility(View.GONE);
-                                                   } else {
-                                                       Oncp = true;
-                                                       findViewById(R.id.onspl).setVisibility(View.VISIBLE);
-                                                   }
-                                                   sharedata2.putBoolean("splash", Oncp);
-                                                   sharedata2.apply();
+                                                         public void onClick(View v) {
+                                                             SharedPreferences.Editor sharedata2 = getSharedPreferences("data", 0).edit();
+                                                             Boolean Oncp;
+                                                             if (findViewById(R.id.onspl).getVisibility() == View.VISIBLE) {
+                                                                 Oncp = false;
+                                                                 findViewById(R.id.onspl).setVisibility(View.GONE);
+                                                             } else {
+                                                                 Oncp = true;
+                                                                 findViewById(R.id.onspl).setVisibility(View.VISIBLE);
+                                                             }
+                                                             sharedata2.putBoolean("splash", Oncp);
+                                                             sharedata2.apply();
 
-                                               }
+                                                         }
 
-                                           }
+                                                     }
 
-                        );
+        );
 
         findViewById(R.id.linearLayout7).setOnClickListener(new View.OnClickListener() {
-                                               public void onClick(View v) {
-                                                   startActivity(new Intent(MainActivity.this, group_setting.class));
-                                               }
+                                                                public void onClick(View v) {
+                                                                    startActivity(new Intent(MainActivity.this, group_setting.class));
+                                                                }
 
-                                           }
+                                                            }
 
-                        );
+        );
 
         findViewById(R.id.overView).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, OverView.class));
-                }
+            }
         });
         lv = (ListView) findViewById(R.id.listView3);
 
@@ -494,7 +513,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                                                   i.putExtra("record", info_of_record);
                                                                   i.setClass(MainActivity.this, moreinfo.class);
                                                                   startActivity(i);
-
                                                               }
                                                           })
                                                           //可添加多个SheetItem
@@ -545,105 +563,105 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         );
 
         findViewById(R.id.pnmb).setOnTouchListener(new View.OnTouchListener() {
-                                               @Override
-                                               public boolean onTouch(View v, MotionEvent event) {
-                                                   ((TextView) findViewById(R.id._name)).setTextColor(Color.parseColor("#7fffffff"));
-                                                   ((ImageView) findViewById(R.id.nmdr)).setImageResource(R.drawable.dropdown);
-                                                   if (event.getAction() == MotionEvent.ACTION_UP) {
-                                                       ((TextView) findViewById(R.id._name)).setTextColor(Color.parseColor("#ffffff"));
-                                                       ((ImageView) findViewById(R.id.nmdr)).setImageResource(R.drawable.drop);
-                                                       startActivityForResult(new Intent(MainActivity.this, choosestudent.class), 1);
+                                                       @Override
+                                                       public boolean onTouch(View v, MotionEvent event) {
+                                                           ((TextView) findViewById(R.id._name)).setTextColor(Color.parseColor("#7fffffff"));
+                                                           ((ImageView) findViewById(R.id.nmdr)).setImageResource(R.drawable.dropdown);
+                                                           if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                               ((TextView) findViewById(R.id._name)).setTextColor(Color.parseColor("#ffffff"));
+                                                               ((ImageView) findViewById(R.id.nmdr)).setImageResource(R.drawable.drop);
+                                                               startActivityForResult(new Intent(MainActivity.this, choosestudent.class), 1);
+                                                           }
+                                                           return false;
+                                                       }
                                                    }
-                                                   return false;
-                                               }
-                                           }
 
-                        );
+        );
 
         findViewById(R.id.pickpm).setOnTouchListener(new View.OnTouchListener() {
-                                               @Override
-                                               public boolean onTouch(View v, MotionEvent event) {
-                                                   ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#7fffffff"));
-                                                   ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.dropdown);
-                                                   if (event.getAction() == MotionEvent.ACTION_UP) {
-                                                       ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#ffffff"));
-                                                       ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.drop);
-                                                   }
-                                                   return false;
-                                               }
-                                           }
+                                                         @Override
+                                                         public boolean onTouch(View v, MotionEvent event) {
+                                                             ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#7fffffff"));
+                                                             ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.dropdown);
+                                                             if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                                 ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#ffffff"));
+                                                                 ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.drop);
+                                                             }
+                                                             return false;
+                                                         }
+                                                     }
 
-                        );
+        );
 
         //筛选加减分
         findViewById(R.id.pickpm).setOnClickListener(new View.OnClickListener() {
-                                               public void onClick(View v) {
-                                                   new ActionSheetDialog(MainActivity.this).builder()
-                                                           .setTitle("筛选加/减分")
-                                                           .setCancelable(false)
-                                                           .setCanceledOnTouchOutside(true)
-                                                           .addSheetItem("加分", ActionSheetDialog.SheetItemColor.Blue,
-                                                                   new ActionSheetDialog.OnSheetItemClickListener() {
-                                                                       @Override
-                                                                       public void onClick(int which) {
-                                                                           ((TextView) findViewById(R.id.pm)).setText("  + ");
-                                                                           // ((TextView) findViewById(R.id.pm)).setTextSize(30);
-                                                                           scoreFilter = 1;
-                                                                           updateList();
-                                                                       }
-                                                                   })
-                                                           .addSheetItem("减分", ActionSheetDialog.SheetItemColor.Blue,
-                                                                   new ActionSheetDialog.OnSheetItemClickListener() {
-                                                                       @Override
-                                                                       public void onClick(int which) {
-                                                                           ((TextView) findViewById(R.id.pm)).setText(" — ");
-                                                                           //  ((TextView) findViewById(R.id.pm)).setTextSize(30);
-                                                                           scoreFilter = 0;
-                                                                           updateList();
-                                                                       }
-                                                                   })
-                                                           .addSheetItem("不限", ActionSheetDialog.SheetItemColor.Blue,
-                                                                   new ActionSheetDialog.OnSheetItemClickListener() {
-                                                                       @Override
-                                                                       public void onClick(int which) {
-                                                                           ((TextView) findViewById(R.id.pm)).setText("不限");
-                                                                           //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
-                                                                           scoreFilter = -1;
-                                                                           updateList();
-                                                                       }
-                                                                   })
-                                                                   //可添加多个SheetItem
-                                                           .show();
-                                               }
+                                                         public void onClick(View v) {
+                                                             new ActionSheetDialog(MainActivity.this).builder()
+                                                                     .setTitle("筛选加/减分")
+                                                                     .setCancelable(false)
+                                                                     .setCanceledOnTouchOutside(true)
+                                                                     .addSheetItem("加分", ActionSheetDialog.SheetItemColor.Blue,
+                                                                             new ActionSheetDialog.OnSheetItemClickListener() {
+                                                                                 @Override
+                                                                                 public void onClick(int which) {
+                                                                                     ((TextView) findViewById(R.id.pm)).setText("  + ");
+                                                                                     // ((TextView) findViewById(R.id.pm)).setTextSize(30);
+                                                                                     scoreFilter = 1;
+                                                                                     updateList();
+                                                                                 }
+                                                                             })
+                                                                     .addSheetItem("减分", ActionSheetDialog.SheetItemColor.Blue,
+                                                                             new ActionSheetDialog.OnSheetItemClickListener() {
+                                                                                 @Override
+                                                                                 public void onClick(int which) {
+                                                                                     ((TextView) findViewById(R.id.pm)).setText(" — ");
+                                                                                     //  ((TextView) findViewById(R.id.pm)).setTextSize(30);
+                                                                                     scoreFilter = 0;
+                                                                                     updateList();
+                                                                                 }
+                                                                             })
+                                                                     .addSheetItem("不限", ActionSheetDialog.SheetItemColor.Blue,
+                                                                             new ActionSheetDialog.OnSheetItemClickListener() {
+                                                                                 @Override
+                                                                                 public void onClick(int which) {
+                                                                                     ((TextView) findViewById(R.id.pm)).setText("不限");
+                                                                                     //  ((TextView) findViewById(R.id.pm)).setTextSize(20);
+                                                                                     scoreFilter = -1;
+                                                                                     updateList();
+                                                                                 }
+                                                                             })
+                                                                             //可添加多个SheetItem
+                                                                     .show();
+                                                         }
 
-                                           }
+                                                     }
 
-                        );
+        );
 
         findViewById(R.id.pickclass). setOnClickListener(new View.OnClickListener() {
-                                               public void onClick(View v) {
-                                                   ActionSheetDialog ASD = new ActionSheetDialog(MainActivity.this).builder()
-                                                           .setTitle("选择班级")
-                                                           .setCancelable(false)
-                                                           .setCanceledOnTouchOutside(true);
-                                                   for (final String key : classes.keySet()) {
-                                                       final String name = classes.get(key).name;
-                                                       ASD.addSheetItem(name, ActionSheetDialog.SheetItemColor.Blue,
-                                                               new ActionSheetDialog.OnSheetItemClickListener() {
-                                                                   @Override
-                                                                   public void onClick(int which) {
-                                                                       ((TextView) findViewById(R.id.classnow)).setText(name);
-                                                                       classNow = key;
-                                                                       updateList();
-                                                                   }
-                                                               });
-                                                   }
-                                                   ASD.show();
-                                               }
+                                                             public void onClick(View v) {
+                                                                 ActionSheetDialog ASD = new ActionSheetDialog(MainActivity.this).builder()
+                                                                         .setTitle("选择班级")
+                                                                         .setCancelable(false)
+                                                                         .setCanceledOnTouchOutside(true);
+                                                                 for (final String key : classes.keySet()) {
+                                                                     final String name = classes.get(key).name;
+                                                                     ASD.addSheetItem(name, ActionSheetDialog.SheetItemColor.Blue,
+                                                                             new ActionSheetDialog.OnSheetItemClickListener() {
+                                                                                 @Override
+                                                                                 public void onClick(int which) {
+                                                                                     ((TextView) findViewById(R.id.classnow)).setText(name);
+                                                                                     classNow = key;
+                                                                                     updateList();
+                                                                                 }
+                                                                             });
+                                                                 }
+                                                                 ASD.show();
+                                                             }
 
-                                           }
+                                                         }
 
-                        );
+        );
         add.setOnClickListener(new View.OnClickListener()
                                {
                                    public void onClick(View v) {
@@ -655,57 +673,57 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         //筛选日期
         findViewById(R.id.pick).setOnClickListener(new View.OnClickListener() {
-                                               public void onClick(View v) {
-                                                   Calendar calendar = Calendar.getInstance();
-                                                   superFlag = true;
-                                                   DatePickerDialog dpd = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
-                                                       @Override
-                                                       public void onDateSet(DatePicker view, int year, int month, int day) {
-                                                           if (superFlag) {
-                                                               showYear = String.valueOf(year) + "年";
-                                                               showMonth = ((month + 1) < 10) ?
-                                                                       "0" + (month + 1) :
-                                                                       String.valueOf(month + 1);
-                                                               showDay = (day < 10) ? "0" + day : String.valueOf(day);
-                                                               ((TextView) findViewById(R.id.year)).setText(showYear);
-                                                               ((TextView) findViewById(R.id.month)).setText(showMonth);
-                                                               ((TextView) findViewById(R.id.day)).setText(showDay);
-                                                               ((TextView) findViewById(R.id.textView5)).setText("月");
-                                                               ((TextView) findViewById(R.id.textView7)).setText("日");
-                                                               //  ((TextView) findViewById(R.id.month)).setTextSize(30);
-                                                               d = String.valueOf(year) + '-' + (month + 1) + '-' + day;
-                                                               SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-                                                               Date date = new Date();
-                                                               try {
-                                                                   date = simpleDateFormat.parse(d);
-                                                               } catch (ParseException e) {
-                                                                   //e.printStackTrace();
+                                                       public void onClick(View v) {
+                                                           Calendar calendar = Calendar.getInstance();
+                                                           superFlag = true;
+                                                           DatePickerDialog dpd = new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                                               @Override
+                                                               public void onDateSet(DatePicker view, int year, int month, int day) {
+                                                                   if (superFlag) {
+                                                                       showYear = String.valueOf(year) + "年";
+                                                                       showMonth = ((month + 1) < 10) ?
+                                                                               "0" + (month + 1) :
+                                                                               String.valueOf(month + 1);
+                                                                       showDay = (day < 10) ? "0" + day : String.valueOf(day);
+                                                                       ((TextView) findViewById(R.id.year)).setText(showYear);
+                                                                       ((TextView) findViewById(R.id.month)).setText(showMonth);
+                                                                       ((TextView) findViewById(R.id.day)).setText(showDay);
+                                                                       ((TextView) findViewById(R.id.textView5)).setText("月");
+                                                                       ((TextView) findViewById(R.id.textView7)).setText("日");
+                                                                       //  ((TextView) findViewById(R.id.month)).setTextSize(30);
+                                                                       d = String.valueOf(year) + '-' + (month + 1) + '-' + day;
+                                                                       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                                                                       Date date = new Date();
+                                                                       try {
+                                                                           date = simpleDateFormat.parse(d);
+                                                                       } catch (ParseException e) {
+                                                                           //e.printStackTrace();
+                                                                       }
+                                                                       timeStamp = date.getTime() / 1000;
+                                                                       updateList();
+                                                                   }
+
                                                                }
-                                                               timeStamp = date.getTime() / 1000;
-                                                               updateList();
-                                                           }
-
+                                                           }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                                                           dpd.setButton(DialogInterface.BUTTON_NEGATIVE, "不限", new DialogInterface.OnClickListener() {
+                                                               @Override
+                                                               public void onClick(DialogInterface dialog, int which) {
+                                                                   d = "不限";
+                                                                   ((TextView) findViewById(R.id.month)).setText(d);
+                                                                   ((TextView) findViewById(R.id.year)).setText("");
+                                                                   ((TextView) findViewById(R.id.day)).setText("");
+                                                                   ((TextView) findViewById(R.id.textView5)).setText("");
+                                                                   ((TextView) findViewById(R.id.textView7)).setText("");
+                                                                   superFlag = false;
+                                                                   timeStamp = 0;
+                                                                   updateList();
+                                                               }
+                                                           });
+                                                           dpd.show();
                                                        }
-                                                   }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                                                   dpd.setButton(DialogInterface.BUTTON_NEGATIVE, "不限", new DialogInterface.OnClickListener() {
-                                                       @Override
-                                                       public void onClick(DialogInterface dialog, int which) {
-                                                           d = "不限";
-                                                           ((TextView) findViewById(R.id.month)).setText(d);
-                                                           ((TextView) findViewById(R.id.year)).setText("");
-                                                           ((TextView) findViewById(R.id.day)).setText("");
-                                                           ((TextView) findViewById(R.id.textView5)).setText("");
-                                                           ((TextView) findViewById(R.id.textView7)).setText("");
-                                                           superFlag = false;
-                                                           timeStamp = 0;
-                                                           updateList();
-                                                       }
-                                                   });
-                                                   dpd.show();
-                                               }
-                                           }
+                                                   }
 
-                        );
+        );
 
         //读取个人信息
         //读取组列表
@@ -723,11 +741,9 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         //读取数据
         String rawClasses = spReader.getString("classes", "");
         if (rawClasses.isEmpty())
-
         {
-            classes = getClassInfo();
+            getClassInfo();
         } else
-
         {
             String[] classesinfo = rawClasses.split(",");
             for (int i = 0; i < classesinfo.length; i += 2) {
@@ -743,29 +759,8 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                     }
                     inputStream.close();
                     arrayOutputStream.close();
-                    String buffer = new String(arrayOutputStream.toByteArray());
+                    readData(new String(arrayOutputStream.toByteArray()), readNow);
 
-                    String[] strs = buffer.split("\n");
-                    readNow.setMembers(strs[0]);
-
-                    String[] strScores = strs[1].split(" ");
-                    for (int j = 0; j < readNow.members.length; j++) {
-                        readNow.scores[j] = Integer.valueOf(strScores[j]);
-                    }
-
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA);
-
-                    String[] histories = strs[2].split("\\|");
-                    for (int j = 0; j < histories.length; j += 5) {
-                        readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
-                                histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
-                    }
-
-                    String[] usHistories = strs[3].split("\\|");
-                    for (int j = 0; j < usHistories.length; j += 5) {
-                        readNow.unsyncHistories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
-                                histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
-                    }
                 } catch (Exception ignored) {
                     ignored.printStackTrace();
                 }
@@ -776,7 +771,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         //默认选择一个班
         if (classes.size() != 0)
-
         {
             Classes c = classes.get(classes.firstKey());
             ((TextView) findViewById(R.id.classnow)).setText(c.name);
@@ -784,7 +778,35 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             updateList();
         }
     }
+    public void readData(String data, Classes readNow) {
+        try {
+            String[] strs = data.split("\n");
+            readNow.setMembers(strs[0]);
 
+            String[] strScores = strs[1].split(" ");
+            for (int j = 0; j < readNow.members.length; j++) {
+                readNow.scores[j] = Integer.valueOf(strScores[j]);
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA);
+
+            String[] histories = strs[2].split("\\|");
+            for (int j = 0; j < histories.length; j += 5) {
+
+                readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
+                        histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
+
+            }
+            if(strs.length<4) return;
+            String[] usHistories = strs[3].split("\\|");
+            for (int j = 0; j < usHistories.length; j += 5) {
+                readNow.unsyncHistories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
+                        histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
     public void onStop(){
         super.onStop();
         //保存数据
@@ -834,29 +856,54 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         spEditor.apply();
     }
 
-    private TreeMap<String, Classes> getClassInfo(){
-        //假装从网上获得了数据
-        TreeMap<String, Classes> c=new TreeMap<String, Classes>();
-        Classes c1=new Classes("1班");
-        c1.setMembers("A B C");
-        Classes c2=new Classes("2班");
-        c2.setMembers("甲 乙 丙");
-        c.put("1", c1);
-        c.put("2", c2);
-        return c;
-    }
+    private void getClassInfo(){
+        //从网上获得数据
+        final String username=spReader.getString("username","");
+        final String password=spReader.getString("password","");
+        new Thread(new AccessNetwork("POST",
+                "http://scoremanagement.applinzi.com/getclasses.php",
+                "username="+ username + "&password=" + password, new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch(msg.what){
+                    case 0:
+                        showToast("无法获取班级数据：用户名或密码错误");
+                        break;
+                    case 1:
+                        showToast("无法获取班级数据：无法连接到网络");
+                        break;
+                    case 2:
+                        Log.d("SYNC","STEP 1 SUCCESS!"+msg.obj);
 
-    @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
+
+                        String[] ids=msg.obj.toString().split(",");
+                        for (int i = 0; i < ids.length - 1; i+=2) {
+                            final Classes c=new Classes(ids[i+1]);
+                            new Thread(new AccessNetwork("POST",
+                                    "http://scoremanagement.applinzi.com/sync.php",
+                                    "username="+ username + "&password=" + password + "&cid=" + ids[i] + "&diff=", new Handler(){
+                                @Override
+                                public void handleMessage(Message msg) {
+                                    Log.d("SYNC","STEP 2 ENTERED!"+msg.obj);
+                                    switch(msg.what){
+                                        case 0:
+                                            showToast("无法获取班级数据：未知错误");
+                                            break;
+                                        case 1:
+                                            showToast("无法获取班级数据：网络连接不稳定");
+                                            break;
+                                        case 2:
+                                            readData(msg.obj.toString().substring(1), c);
+                                            break;
+                                    }
+                                }
+                            }, 0)).start();
+                            classes.put(ids[i], c);
+                        }
+                        break;
+                }
+            }
+        }, 0)).start();
     }
 
     public void onResume(){
@@ -1061,9 +1108,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                     for (final String key : classes.keySet()) { //查找每个班
                         if(!namesByClasses[cid].isEmpty()) {
                             String names=namesByClasses[cid].substring(0, namesByClasses[cid].length()-1);
+                            String oper=spReader.getString("username","未登录用户");
                             Date d=new Date();
-                            classes.get(key).histories.add(new History(score, names, results[0], d, spReader.getString("username","未登录用户")));
-                            classes.get(key).unsyncHistories.add(new History(score, names, results[0], d, spReader.getString("username","未登录用户")));
+                            classes.get(key).histories.add(new History(score, names, results[0], d, oper));
+                            classes.get(key).unsyncHistories.add(new History(score, names, results[0], d, oper));
                             for(String name:names.split(",")){
                                 for (int i = 0; i < classes.get(key).members.length; i++) {
                                     if(classes.get(key).members[i].equals(name)) classes.get(key).scores[i]+=score;
@@ -1080,6 +1128,193 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
     private void showToast(String msg){
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /////检查更新
+    public static class UpdataInfo {
+        private String version;
+        private String url;
+        private String description;
+        private String url_server;
+
+        public String getUrl_server() {
+            return url_server;
+        }
+        public void setUrl_server(String url_server) {
+            this.url_server = url_server;
+        }
+        public String getVersion() {
+            return version;
+        }
+        public void setVersion(String version) {
+            this.version = version;
+        }
+        public String getUrl() {
+            return url;
+        }
+        public void setUrl(String url) {
+            this.url = url;
+        }
+        public String getDescription() {
+            return description;
+        }
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+
+    public static class UpdataInfoParser {
+        public static UpdataInfo getUpdataInfo(InputStream is) throws Exception{
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setInput(is, "utf-8");
+            int type = parser.getEventType();
+            UpdataInfo info = new UpdataInfo();
+            while(type != XmlPullParser.END_DOCUMENT ){
+                switch (type) {
+                    case XmlPullParser.START_TAG:
+                        if("version".equals(parser.getName())){
+                            info.setVersion(parser.nextText());
+                        }else if ("url".equals(parser.getName())){
+                            info.setUrl(parser.nextText());
+                        }else if ("description".equals(parser.getName())){
+                            info.setDescription(parser.nextText());
+                        }
+                        break;
+                }
+                type = parser.next();
+            }
+            return info;
+        }
+    }
+
+
+    private String getVersionName() throws Exception {
+        //getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageManager packageManager = getPackageManager();
+        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),
+                0);
+        return packInfo.versionName;
+    }
+    Handler updateHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case UPDATA_NONEED:
+                    showToast("已是最新版本 :)");
+                    break;
+                case UPDATA_CLIENT:
+                    //对话框通知用户升级程序
+                    showUpdataDialog();
+                    break;
+                case GET_UNDATAINFO_ERROR:
+                    //服务器超时
+                    showToast("获取更新失败 :( 请检查网络");
+                    break;
+                case DOWN_ERROR:
+                    //下载apk失败
+                    showToast("下载新版本失败 :(");
+                    break;
+            }
+        }
+    };
+    public class CheckVersionTask implements Runnable {
+        InputStream is;
+        boolean u=false;
+
+        public void run() {
+
+            try {
+                String path = getResources().getString(R.string.url_server);
+                URL url = new URL(path);
+                HttpURLConnection conn = (HttpURLConnection) url
+                        .openConnection();
+                conn.setConnectTimeout(5000);
+                conn.setRequestMethod("GET");
+                int responseCode = conn.getResponseCode();
+                if (responseCode == 200) {
+                    // 从服务器获得一个输入流
+                    is = conn.getInputStream();
+                }
+                info = UpdataInfoParser.getUpdataInfo(is);
+                if (info.getVersion().equals(localVersion)) {
+                    Log.i(TAG, "版本号相同");
+                    Message msg = new Message();
+                    msg.what = UPDATA_NONEED;
+                    updateHandler.sendMessage(msg);
+                    // LoginMain();
+                } else {
+                    Log.i(TAG, "版本号不相同 ");
+                    Message msg = new Message();
+                    msg.what = UPDATA_CLIENT;
+                    updateHandler.sendMessage(msg);
+                }
+            } catch (Exception e) {
+                Message msg = new Message();
+                msg.what = GET_UNDATAINFO_ERROR;
+                updateHandler.sendMessage(msg);
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    protected void showUpdataDialog() {
+        AlertDialog.Builder builer = new AlertDialog.Builder(this);
+        builer.setTitle("版本升级");
+        builer.setMessage(info.getDescription());
+        //当点确定按钮时从服务器上下载 新的apk 然后安装   װ
+        builer.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i(TAG, "下载apk,更新");
+                downLoadApk();
+            }
+        });
+        builer.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                //do sth
+            }
+        });
+        AlertDialog dialog = builer.create();
+        dialog.show();
+    }
+
+    /*
+    * 从服务器中下载APK
+    */
+    protected void downLoadApk() {
+        final ProgressDialog pd;    //进度条对话框
+        pd = new  ProgressDialog(this);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMessage("正在下载更新");
+        pd.show();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    File file = DownLoadManager.getFileFromServer(info.getUrl(), pd);
+                    sleep(3000);
+                    installApk(file);
+                    pd.dismiss(); //结束掉进度条对话框
+                } catch (Exception e) {
+                    Message msg = new Message();
+                    msg.what = DOWN_ERROR;
+                    updateHandler.sendMessage(msg);
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    //安装apk
+    protected void installApk(File file) {
+        Intent intent = new Intent();
+        //执行动作
+        intent.setAction(Intent.ACTION_VIEW);
+        //执行的数据类型
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        startActivity(intent);
     }
 
 }

@@ -30,6 +30,7 @@ public class group_setting extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Util.setTranslucent(this);
         setContentView(R.layout.group_setting);
         setupActionBar();
         lv = (ListView) findViewById(R.id.listViewddd);

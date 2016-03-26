@@ -147,7 +147,7 @@
                     android:layout_height="43dp"
                     android:layout_weight="1"
                     android:background="@color/main"
-                    android:text="全局"
+                    android:text="班级"
                     android:textSize="15dp"
                     android:id="@+id/gen"
                     android:layout_alignParentTop="true"

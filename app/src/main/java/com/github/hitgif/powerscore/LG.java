@@ -18,6 +18,7 @@ public class LG extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Util.setTranslucent(this);
         setContentView(R.layout.lg);
         initViewPager();
     }
@@ -71,7 +72,7 @@ public class LG extends Activity {
     }
     public void enter(View v) {
         Intent intent = new Intent();
-        intent.setClass(getApplicationContext(),MainActivity.class);
+        intent.setClass(getApplicationContext(),login.class);
         startActivity(intent);
         LG.this.finish();
 

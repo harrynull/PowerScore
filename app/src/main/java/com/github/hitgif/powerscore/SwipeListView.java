@@ -101,6 +101,7 @@ public class SwipeListView extends ListView {
             public boolean onDown(MotionEvent e) {
                 return false;
             }
+
         });
     }
 

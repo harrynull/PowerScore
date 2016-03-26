@@ -34,6 +34,7 @@ public class set_group extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Util.setTranslucent(this);
         setContentView(R.layout.set_student_for_group);
 
         final int editGroup=getIntent().getIntExtra("editgroup", -1);

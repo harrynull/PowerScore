@@ -21,23 +21,26 @@ public class splash extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Util.setTranslucent(this);
         getWindow().getDecorView().setBackgroundResource(R.drawable.per);
         Util.setSystemBarVisible(this, false);
         super.onCreate(savedInstanceState);
         boolean splash = getSharedPreferences("data", 0).getBoolean("splash", true);
 
         if(!splash){
-            startActivity(new Intent(getApplication(), MainActivity.class));
-            splash.this.finish();
-            return;
+            if(!getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username","").isEmpty())
+                startActivity(new Intent(getApplication(), login.class));
+            else {
+                startActivity(new Intent(getApplication(), MainActivity.class));
+                splash.this.finish();
+                return;
+            }
         }
 
         Handler x = new Handler();
-        x.postDelayed(new splashhandler(), 2000);
+        x.postDelayed(new splashhandler(), 1000);
 
         setContentView(R.layout.splash);
-
-
     }
     class splashhandler implements Runnable{
 
@@ -53,7 +56,7 @@ public class splash extends Activity {
                 splash.this.finish();
             }
             else {
-                if(!getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username","").isEmpty() || true)
+                if(!getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username","").isEmpty())
                     startActivity(new Intent(getApplication(), MainActivity.class));
                 else
                     startActivity(new Intent(getApplication(), login.class));

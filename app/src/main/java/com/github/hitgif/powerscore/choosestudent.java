@@ -38,6 +38,7 @@ public class choosestudent extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Util.setTranslucent(this);
         setContentView(R.layout.choosestudent);
         listView = (ExpandableListView) findViewById(R.id.expandableListView);
         adapter = new EListAdapter(this);

@@ -42,6 +42,7 @@ public class setreason extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Util.setTranslucent(this);
         setContentView(R.layout.setreason);
 
         input = (EditText)findViewById(R.id.input);

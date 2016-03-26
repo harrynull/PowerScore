@@ -116,17 +116,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".chooseclass"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".group_setting"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustNothing"

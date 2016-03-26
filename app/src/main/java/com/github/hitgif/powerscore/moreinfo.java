@@ -18,6 +18,7 @@ public class moreinfo extends Activity {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Util.setTranslucent(this);
         setContentView(R.layout.moreinfo);
 
         Intent intent=getIntent();

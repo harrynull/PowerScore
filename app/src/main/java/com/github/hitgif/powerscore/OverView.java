@@ -1,5 +1,6 @@
 package com.github.hitgif.powerscore;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -52,7 +55,7 @@ public class OverView extends Activity {
             List<String> tempArray = new ArrayList<String>();
             for (int j = 0; j < c.members.length; j++) {
                 if (!filter.isEmpty() && !c.members[j].contains(filter)) continue;
-                tempArray.add(c.members[j] + "|" + c.scores[j]);
+                tempArray.add(c.members[j] + "|" + (c.scores[j]/10.0));
             }
             if (!tempArray.isEmpty()) {
                 groupArray.add(c.name);
@@ -72,6 +75,12 @@ public class OverView extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.main);//通知栏所需颜色
+        }
         setContentView(R.layout.overview);
         ViewTreeObserver vto = findViewById(R.id.textView38).getViewTreeObserver();
 
@@ -139,8 +148,15 @@ public class OverView extends Activity {
                 }
                 final String fKey=Key;
                 if(c==null) return false;
+                int sid=0;
+                String name=childArray.get(groupPosition).get(childPosition).split("\\|")[0];
+                for (final String student : c.members) { //查找每个班
+                    if (student.equals(name)) break;
+                    sid++;
+                }
+                final int fSid=sid;
                 new ActionSheetDialog(OverView.this).builder()
-                        .setTitle(String.valueOf(c.members[childPosition]))
+                        .setTitle(String.valueOf(c.members[fSid]))
                         .setCancelable(false)
                         .setCanceledOnTouchOutside(true)
                         .addSheetItem("修改分数", ActionSheetDialog.SheetItemColor.Blue,
@@ -148,7 +164,7 @@ public class OverView extends Activity {
                                     @Override
                                     public void onClick(int which) {
                                         final EditText text = new EditText(OverView.this);
-                                        text.setText(String.valueOf(MainActivity.classes.get(fKey).scores[childPosition]/10.0));
+                                        text.setText(String.valueOf(MainActivity.classes.get(fKey).scores[fSid] / 10.0));
                                         new AlertDialog.Builder(OverView.this)
                                                 .setTitle("请设置分数")
                                                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -158,15 +174,15 @@ public class OverView extends Activity {
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         Classes c = MainActivity.classes.get(fKey);
                                                         try {
-                                                            int change=(int) (Double.parseDouble(text.getText().toString()) * 10)-c.scores[childPosition];
-                                                            Date d=new Date();
-                                                            c.histories.add(new History(change, c.members[childPosition],
+                                                            int change = (int) (Double.parseDouble(text.getText().toString()) * 10) - c.scores[fSid];
+                                                            Date d = new Date();
+                                                            c.histories.add(new History(change, c.members[fSid],
                                                                     "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("Username", "未登录用户")));
-                                                            c.unsyncHistories.add(new History(change, c.members[childPosition],
+                                                            c.unsyncHistories.add(new History(change, c.members[fSid],
                                                                     "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username", "未登录用户")));
-                                                            c.scores[childPosition]+=change;
+                                                            c.scores[fSid] += change;
                                                             showToast("设置分数成功");
-                                                        }catch (Exception e){
+                                                        } catch (Exception e) {
                                                             showToast("设置分数失败:必须输入数字");
                                                             e.printStackTrace();
                                                         }
@@ -175,13 +191,14 @@ public class OverView extends Activity {
                                                             groupArray.add(c2.name);
                                                             List<String> tempArray = new ArrayList<String>();
                                                             for (int j = 0; j < c2.members.length; j++) {
-                                                                tempArray.add(c2.members[j]+"|"+(c2.scores[j]/10.0));
+                                                                tempArray.add(c2.members[j] + "|" + (c2.scores[j] / 10.0));
                                                             }
                                                             childArray.add(tempArray);
                                                         }
 
                                                         lv.setAdapter(new ExpandableAdapter(OverView.this));
-                                                    }})
+                                                    }
+                                                })
                                                 .setNegativeButton("取消", null)
                                                 .show();
                                     }
@@ -191,7 +208,7 @@ public class OverView extends Activity {
                                     @Override
                                     public void onClick(int which) {
                                         finish();
-                                        MainActivity.MainActivityPointer.jumpToStudent(fKey, MainActivity.classes.get(fKey).members[childPosition]);
+                                        MainActivity.MainActivityPointer.jumpToStudent(fKey, MainActivity.classes.get(fKey).members[fSid]);
                                     }
                                 })
                         .show();
@@ -207,6 +224,19 @@ public class OverView extends Activity {
             }
         });
     }
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+
     public  class  ExpandableAdapter extends BaseExpandableListAdapter
     {
         Activity activity;
