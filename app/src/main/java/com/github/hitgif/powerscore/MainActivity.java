@@ -693,6 +693,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         //读取数据
         String rawClasses = spReader.getString("classes", "");
         getClassInfo();
+        rawClasses = spReader.getString("classes", "");
         String[] classesinfo = rawClasses.split(",");
         for (int i = 0; i < classesinfo.length; i += 2) {
             Classes readNow = new Classes(classesinfo[i + 1]);
