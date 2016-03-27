@@ -26,16 +26,7 @@ public class splash extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Util.setTranslucent_icon(this);
         super.onCreate(savedInstanceState);
-        WindowManager windowManager = getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        int screenWidth = screenWidth = display.getWidth();
-        int screenHeight = screenHeight = display.getHeight();
-        Log.d("3243",String.valueOf(screenHeight));
-        if(screenHeight<1280){
-            getWindow().setBackgroundDrawableResource(R.drawable.spl_1024);
-        }else {
-            getWindow().setBackgroundDrawableResource(R.drawable.spl_1920);
-        }
+
 
         Util.setSystemBarVisible(this, false);
         boolean splash = getSharedPreferences("data", 0).getBoolean("splash", true);
