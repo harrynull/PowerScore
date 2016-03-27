@@ -710,9 +710,22 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 arrayOutputStream.close();
                 readData(new String(arrayOutputStream.toByteArray()), readNow);
 
-            } catch (Exception ignored) {}
-            classes.put(classesinfo[i], readNow);
-        }
+        if(rawClasses.isEmpty())getClassInfo();
+        else {
+            String[] classesinfo = rawClasses.split(",");
+            for (int i = 0; i < classesinfo.length; i += 2) {
+                Classes readNow = new Classes(classesinfo[i + 1]);
+                //读取数据
+                try {
+                    FileInputStream inputStream = this.openFileInput(classesinfo[i] + ".dat");
+                    byte[] bytes = new byte[inputStream.available()];
+                    ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+                    while (inputStream.read(bytes) != -1) {
+                        arrayOutputStream.write(bytes, 0, bytes.length);
+                    }
+                    inputStream.close();
+                    arrayOutputStream.close();
+                    readData(new String(arrayOutputStream.toByteArray()), readNow);
 
 
         //默认选择一个班
