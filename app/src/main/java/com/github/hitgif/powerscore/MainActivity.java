@@ -133,6 +133,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             break;
                         case 2:
                             readData(msg.obj.toString(), c);
+                            readData(msg.obj.toString().substring(1), c);
                             break;
                     }
                 }
