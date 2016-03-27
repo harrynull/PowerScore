@@ -132,7 +132,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             showToast("网络异常，请检查网络连接");
                             break;
                         case 2:
-                            readData(msg.obj.toString(), c);
+                            readData(msg.obj.toString().substring(1), c);
                             break;
                     }
                 }
@@ -692,26 +692,28 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         //读取数据
         String rawClasses = spReader.getString("classes", "");
-        getClassInfo();
-        String[] classesinfo = rawClasses.split(",");
-        for (int i = 0; i < classesinfo.length; i += 2) {
-            Classes readNow = new Classes(classesinfo[i + 1]);
-            //读取数据
-            try {
-                FileInputStream inputStream = this.openFileInput(classesinfo[i] + ".dat");
-                byte[] bytes = new byte[inputStream.available()];
-                ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-                while (inputStream.read(bytes) != -1) {
-                    arrayOutputStream.write(bytes, 0, bytes.length);
+        if(rawClasses.isEmpty())getClassInfo();
+        else {
+            String[] classesinfo = rawClasses.split(",");
+            for (int i = 0; i < classesinfo.length; i += 2) {
+                Classes readNow = new Classes(classesinfo[i + 1]);
+                //读取数据
+                try {
+                    FileInputStream inputStream = this.openFileInput(classesinfo[i] + ".dat");
+                    byte[] bytes = new byte[inputStream.available()];
+                    ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+                    while (inputStream.read(bytes) != -1) {
+                        arrayOutputStream.write(bytes, 0, bytes.length);
+                    }
+                    inputStream.close();
+                    arrayOutputStream.close();
+                    readData(new String(arrayOutputStream.toByteArray()), readNow);
+
+                } catch (Exception ignored) {
                 }
-                inputStream.close();
-                arrayOutputStream.close();
-                readData(new String(arrayOutputStream.toByteArray()), readNow);
-
-            } catch (Exception ignored) {}
-            classes.put(classesinfo[i], readNow);
+                classes.put(classesinfo[i], readNow);
+            }
         }
-
 
         //默认选择一个班
         if (classes.size() != 0) {
