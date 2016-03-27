@@ -60,6 +60,16 @@ public class setreason extends Activity{
 
             }
         });
+        findViewById(R.id.ok).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#7fffffff"));
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((Button) findViewById(R.id.ok)).setTextColor(Color.parseColor("#ffffff"));
+                }
+                return false;
+            }
+        });
         findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!input.getText().toString().matches("")) {

@@ -37,6 +37,7 @@ public class reason_setting extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Util.setTranslucent(this);
         setContentView(R.layout.reason_setting);
         mListView = (ListView) findViewById(R.id.lv_data);
         spReader= getSharedPreferences("data", Activity.MODE_PRIVATE);
@@ -142,7 +143,7 @@ public class reason_setting extends Activity {
         findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((TextView) findViewById(R.id.textView24)).setTextColor(Color.parseColor("#9b9b9b"));
+                ((TextView) findViewById(R.id.textView24)).setTextColor(Color.parseColor("#7fffffff"));
                 ((ImageView) findViewById(R.id.imageView40)).setImageResource(R.drawable.backdown);
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     ((TextView) findViewById(R.id.textView24)).setTextColor(Color.parseColor("#ffffff"));
