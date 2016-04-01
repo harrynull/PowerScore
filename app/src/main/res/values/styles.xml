@@ -80,7 +80,7 @@
 
     <!-- ActionSheet进出动画 -->
     <style name="personalAnimation" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/personal_in</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_fromr</item>
         <item name="android:windowExitAnimation">@anim/personal_out</item>
     </style>
 

@@ -30,6 +30,7 @@ public class choosestudent extends Activity {
             iB.setClass(choosestudent.this, MainActivity.class);
             choosestudent.this.setResult(1, iB);
             choosestudent.this.finish();
+            overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -65,6 +66,7 @@ public class choosestudent extends Activity {
                 iB.setClass(choosestudent.this, MainActivity.class);
                 choosestudent.this.setResult(1, iB);
                 choosestudent.this.finish();
+                overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
             }
         });
         findViewById(R.id.ok).setOnTouchListener(new View.OnTouchListener() {
@@ -96,6 +98,7 @@ public class choosestudent extends Activity {
                     i.setClass(choosestudent.this, MainActivity.class);
                     choosestudent.this.setResult(1, i);
                     choosestudent.this.finish();
+                    overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                 } else {
                     new AlertDialogios(choosestudent.this).builder()
                             .setTitle("提示")

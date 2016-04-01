@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.text.ParseException;
@@ -71,11 +72,25 @@ public class add extends Activity{
 
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
-            Intent iB = new Intent();
-            iB.putExtra("his", "NULL");
-            iB.setClass(add.this, add.class);
-            add.this.setResult(4, iB);
-            add.this.finish();
+            new AlertDialogios(add.this).builder()
+                    .setTitle("提示")
+                    .setMsg("确认返回吗? 所做的修改将不能被保存 :(")
+                    .setPositiveButton("确认", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent iB = new Intent();
+                            String[] result=new String[3];
+                            result[0]="NULL";
+                            result[1]="NULL";
+                            result[2]="NULL";
+                            iB.putExtra("data", result);
+                            iB.setClass(add.this, MainActivity.class);
+                            add.this.setResult(2, iB);
+                            add.this.finish();
+                            overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
+                        }
+                    })
+                    .setNegativeButton("取消", null).show();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -190,7 +205,9 @@ public class add extends Activity{
                                             i.putExtra("data", result);
                                             i.setClass(add.this, MainActivity.class);
                                             add.this.setResult(2, i);
+                                            showToast("添加成功 :)");
                                             add.this.finish();
+                                            overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                                         }
                                     })
 
@@ -205,7 +222,9 @@ public class add extends Activity{
                             i.putExtra("data", result);
                             i.setClass(add.this, MainActivity.class);
                             add.this.setResult(2, i);
+                            showToast("添加成功 :)");
                             add.this.finish();
+                            overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                         }
 
                     }
@@ -235,15 +254,25 @@ public class add extends Activity{
 
         ((RelativeLayout)findViewById(R.id.back)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent iB = new Intent();
-                String[] result=new String[3];
-                result[0]="NULL";
-                result[1]="NULL";
-                result[2]="NULL";
-                iB.putExtra("data", result);
-                iB.setClass(add.this, MainActivity.class);
-                add.this.setResult(2, iB);
-                add.this.finish();
+                new AlertDialogios(add.this).builder()
+                        .setTitle("提示")
+                        .setMsg("确认返回吗? 所做的修改将不会被保存 :(")
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent iB = new Intent();
+                                String[] result=new String[3];
+                                result[0]="NULL";
+                                result[1]="NULL";
+                                result[2]="NULL";
+                                iB.putExtra("data", result);
+                                iB.setClass(add.this, MainActivity.class);
+                                add.this.setResult(2, iB);
+                                add.this.finish();
+                                overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
                    }
             });
         ///////////////////////////////////////////////////////小键盘begin
@@ -383,7 +412,9 @@ public class add extends Activity{
         ///////////////////////////////////////////////////////小键盘end
 
     }
-
+    private void showToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(resultCode){
             case 3:

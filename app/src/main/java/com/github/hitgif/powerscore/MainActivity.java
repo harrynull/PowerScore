@@ -1,5 +1,4 @@
 package com.github.hitgif.powerscore;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -68,7 +67,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
     private long timeStamp = 0;
     private boolean superFlag = true;
-    private boolean isSync = false;
+    public boolean isSync = false;
 
     private String classNow = "-1";
     private String d = "不限";
@@ -79,8 +78,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private String filterName = "";
     private Boolean isGen = true;
     private int scoreFilter = -1;
-    private int countLimit = 20;
-    private boolean isLastRow;
+    private int countLimit = 40;
+    private boolean needLoadMore;
+    private int countNow;
+    private int countMax;
 
     //布局
     private ListView lv;
@@ -90,6 +91,9 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private ImageView sync;
 
     private Animation in_per;
+    private Animation round;
+    private Animation upg;
+    private Animation dog;
     private final String TAG = this.getClass().getName();
     private final int Update_NONEED = 0;
     private final int Update_CLIENT = 1;
@@ -97,12 +101,24 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private final int DOWN_ERROR = 4;
     private UpdateInfo info;
     private String localVersion;
+    private ProgressDialog pdLoading=null;
     Button gen;
     Button per;
+    private boolean lastTip=false;
 
     private void doSync() {
-        //findViewById(R.id.add).setEnabled(false);
+        if(isSync){
+            new AlertDialogios(MainActivity.this).builder()
+                    .setTitle("提示")
+                    .setMsg("抱歉，数据同步中，请等待同步完成 :(")
+                    .setNegativeButton("好的", null).show();
+            return;
+        }
+        isSync = true;
+        sync.setAnimation(round);
         getClassInfo();
+        countMax=classes.size();
+        countNow=0;
         for (final String key : classes.keySet()) {
             final Classes c = classes.get(key);
             //分班级同步
@@ -132,8 +148,13 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             showToast("网络异常，请检查网络连接");
                             break;
                         case 2:
+                            showToast("同步成功");
                             readData(msg.obj.toString().substring(1), c);
                             break;
+                    }
+                    if(++countNow==countMax){
+                        isSync = false;
+                        sync.clearAnimation();
                     }
                 }
             }, 0)).start();
@@ -141,8 +162,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             //同步结束
             c.unsyncHistories.clear();
         }
-        sync.clearAnimation();
-        isSync = false;
     }
 
     class AccessNetwork implements Runnable {
@@ -198,6 +217,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         findViewById(R.id.pnm).setVisibility(View.VISIBLE);
         isGen = false;
         ((DrawerLayout) findViewById(R.id.drawerlayout)).closeDrawer(leftLayout);
+
         updateList();
     }
 
@@ -256,8 +276,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         final Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
         final Animation out_gen = AnimationUtils.loadAnimation(this, R.anim.personal_out);
         in_per = AnimationUtils.loadAnimation(this, R.anim.personal_in);
+        round = AnimationUtils.loadAnimation(this, R.anim.tip);
+        upg = AnimationUtils.loadAnimation(this, R.anim.up_prosess);
+        dog = AnimationUtils.loadAnimation(this, R.anim.down_prosess);
         per.setTextColor(Color.parseColor("#7fffffff"));
-
         in_per.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -275,7 +297,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
             }
         });
-
         LinearInterpolator lin = new LinearInterpolator();
         operatingAnim.setInterpolator(lin);
         genLayout.setVisibility(View.VISIBLE);
@@ -294,12 +315,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             public void onDrawerOpened(View drawerView) {
                 ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerLockMode(
                         DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
+                findViewById(R.id.button3).setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerLockMode(
                         DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+                findViewById(R.id.button3).setVisibility(View.GONE);
             }
 
             @Override
@@ -314,7 +337,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 if (!isSync) {
                     //开始转
                     sync.startAnimation(operatingAnim);
-                    isSync = true;
                     doSync();
                 }
             }
@@ -332,7 +354,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 findViewById(R.id.pnm).setVisibility(View.GONE);
                 findViewById(R.id.pcr).setVisibility(View.VISIBLE);
                 isGen = true;
-                countLimit = 20;
+                countLimit = 40;
                 updateList();
             }
         });
@@ -378,20 +400,25 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                 spEditor.putString("password", "");
                                 spEditor.apply();
                                 startActivity(new Intent(getApplication(), login.class));
+                                overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                                 MainActivity.this.finish();
                             }
                         })
-                        .setNegativeButton("取消", new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        }).show();
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+        findViewById(R.id.buttong).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplication(), about.class));
+                overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
             }
         });
 
         findViewById(R.id.reason).setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
                startActivity(new Intent(MainActivity.this, reason_setting.class));
+               overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
            }
 
         });
@@ -418,12 +445,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         findViewById(R.id.linearLayout7).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, group_setting.class));
+                overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
             }
         });
 
         findViewById(R.id.overView).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, OverView.class));
+                overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
             }
         });
         lv = (ListView) findViewById(R.id.listView3);
@@ -448,6 +477,13 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             new ActionSheetDialog.OnSheetItemClickListener() {
                                 @Override
                                 public void onClick(int which) {
+                                    if(isSync){
+                                        new AlertDialogios(MainActivity.this).builder()
+                                                .setTitle("提示")
+                                                .setMsg("抱歉，数据同步中，删除记录暂不可用，请等待同步完成 :(")
+                                                .setNegativeButton("好的", null).show();
+                                        return;
+                                    }
                                     new AlertDialogios(MainActivity.this).builder()
                                             .setTitle("删除记录")
                                             .setMsg("确认删除记录“" + reason + "”吗?\n该条记录所修改的分数将被撤销")
@@ -467,11 +503,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                                     updateList();
                                                 }
                                             })
-                                            .setNegativeButton("取消", new OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                }
-                                            }).show();
+                                            .setNegativeButton("取消", null).show();
                                 }
 
                             })
@@ -485,6 +517,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                     i.putExtra("record", info_of_record);
                                     i.setClass(MainActivity.this, moreinfo.class);
                                     startActivity(i);
+                                    overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
                                 }
                             })
                             //可添加多个SheetItem
@@ -537,6 +570,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                  ((TextView) findViewById(R.id._name)).setTextColor(Color.parseColor("#ffffff"));
                  ((ImageView) findViewById(R.id.nmdr)).setImageResource(R.drawable.drop);
                  startActivityForResult(new Intent(MainActivity.this, choosestudent.class), 1);
+                 overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
              }
              return false;
          }
@@ -621,7 +655,15 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         add.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
+                 if(isSync){
+                     new AlertDialogios(MainActivity.this).builder()
+                             .setTitle("提示")
+                             .setMsg("抱歉，数据同步中，添加记录暂不可用，请等待同步完成 :(")
+                             .setNegativeButton("好的", null).show();
+                     return;
+                 }
                  startActivityForResult(new Intent(MainActivity.this, add.class), 2);
+                 overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
              }
         });
 
@@ -739,12 +781,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
             if (strs.length < 3) return;
             String[] histories = strs[2].split("\\|");
+            readNow.histories.clear();
             for (int j = 0; j < histories.length; j += 5) {
                 readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
                         histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
             }
             if (strs.length < 4) return;
             String[] usHistories = strs[3].split("\\|");
+            readNow.unsyncHistories.clear();
             for (int j = 0; j < usHistories.length; j += 5) {
                 readNow.unsyncHistories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
                         histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
@@ -861,23 +905,40 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                          int visibleItemCount, int totalItemCount) {
 
         if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
-            isLastRow = true;
+            if(countLimit != classes.get(classNow).histories.size()) {
+                if (pdLoading == null) {
+                    pdLoading = new ProgressDialog(this);
+                    pdLoading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    pdLoading.setMessage("加载中");
+                    pdLoading.setCanceledOnTouchOutside(false);
+                    pdLoading.show();
+                }
+                needLoadMore = true;
+            }else{
+                if(!lastTip) {
+                    showToast("没有更多了");
+                    lastTip=true;
+                }
+            }
+        }else{
+            lastTip=false;
         }
+
 
     }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         //下拉到空闲是，且最后一个item的数等于数据的总数时，进行更新
-        if (isLastRow && scrollState == SCROLL_STATE_IDLE) {
-             loadMore();
-             updateList();
+        if (needLoadMore && scrollState == SCROLL_STATE_IDLE) {
+            loadMore();
+            updateList();
+            needLoadMore =false;
         }
-
     }
 
     private void loadMore() {
-        countLimit = lv.getAdapter().getCount() + 20;
+        countLimit = lv.getAdapter().getCount() + 40;
         if (countLimit > classes.get(classNow).histories.size())
             countLimit = classes.get(classNow).histories.size();
     }
@@ -907,6 +968,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             map.put("strmark", h.scoreWithSign);
             map.put("mark", h.score);
             map.put("date", h.getDate(false));
+            map.put("id", vaildItem);
             listItem.add(map);
         }
         return listItem;
@@ -980,16 +1042,25 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 holder = (ViewHolder) convertView.getTag();//取出ViewHolder对象
             }
             /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
-            holder.title.setText((String) (getData().get(position).get("ItemTitle")));
-            String s = (String) (getData().get(position).get("ItemText"));
+            HashMap<String, Object> hm=getData().get(position);
+            holder.title.setText((String) (hm.get("ItemTitle")));
+            String s = (String) (hm.get("ItemText"));
             holder.text.setText(s);
-            holder.mark.setText((String) (getData().get(position).get("strmark")));
-            holder.date.setText((String) (getData().get(position).get("date")));
-            if ((Integer) (getData().get(position).get("mark")) > 0) {
+            holder.mark.setText((String) (hm.get("strmark")));
+            holder.date.setText((String) (hm.get("date")));
+            if ((Integer) (hm.get("mark")) > 0) {
                 holder.positive.setImageResource(R.drawable.green);
             } else {
                 holder.positive.setImageResource(R.drawable.red);
             }
+            int j=2;
+            for(int i=0;i!=10000;i++){
+                j*=2;
+            }
+            if(pdLoading!=null){
+                pdLoading.dismiss();pdLoading=null;
+            }
+
             return convertView;
         }
 
@@ -1142,7 +1213,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                     break;
                 case GET_UNDATAINFO_ERROR:
                     //服务器超时
-                    showToast("获取更新失败 :( 请检查网络");
+                    //showToast("获取更新失败 :( 请检查网络");
                     break;
                 case DOWN_ERROR:
                     //下载apk失败

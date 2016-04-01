@@ -93,6 +93,7 @@ public class set_group extends Activity {
                 iB.setClass(set_group.this, add.class);
                 set_group.this.setResult(2, iB);
                 set_group.this.finish();
+                overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
             }
         });
 
@@ -134,9 +135,9 @@ public class set_group extends Activity {
                     else
                         MainActivity.groups.set(editGroup, new Group(name, members));
                     set_group.this.finish();
+                    overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                 }
             }
-            // choosestudent.this.finish();
 
         });
     }

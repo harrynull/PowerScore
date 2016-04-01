@@ -52,6 +52,7 @@ public class group_setting extends Activity {
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 group_setting.this.finish();
+                overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
             }
         });
 
@@ -189,6 +190,7 @@ public class group_setting extends Activity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+            overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
             return true;
         }
         return super.onOptionsItemSelected(item);

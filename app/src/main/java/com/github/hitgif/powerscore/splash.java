@@ -32,13 +32,13 @@ public class splash extends Activity {
         boolean splash = getSharedPreferences("data", 0).getBoolean("splash", true);
 
         if(!splash){
-            if(!getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username","").isEmpty())
-                startActivity(new Intent(getApplication(), login.class));
+            if(getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username","").isEmpty())
+                startActivity(new Intent(getApplication(), MainActivity.class));
             else {
                 startActivity(new Intent(getApplication(), MainActivity.class));
-                splash.this.finish();
-                return;
             }
+            splash.this.finish();
+            return;
         }
 
         Handler x = new Handler();

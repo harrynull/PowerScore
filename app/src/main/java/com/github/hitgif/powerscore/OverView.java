@@ -117,6 +117,7 @@ public class OverView extends Activity {
         findViewById(R.id.backc).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 OverView.this.finish();
+                overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
             }
         });
         for (final String key : MainActivity.classes.keySet()) {
@@ -163,6 +164,13 @@ public class OverView extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
+                                        if(MainActivity.MainActivityPointer.isSync){
+                                            new AlertDialogios(OverView.this).builder()
+                                                    .setTitle("提示")
+                                                    .setMsg("抱歉，数据同步中，修改分数暂不可用，请等待同步完成 :(")
+                                                    .setNegativeButton("好的", null).show();
+                                            return;
+                                        }
                                         final EditText text = new EditText(OverView.this);
                                         text.setText(String.valueOf(MainActivity.classes.get(fKey).scores[fSid] / 10.0));
                                         new AlertDialog.Builder(OverView.this)
@@ -208,6 +216,7 @@ public class OverView extends Activity {
                                     @Override
                                     public void onClick(int which) {
                                         finish();
+                                        overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                                         MainActivity.MainActivityPointer.jumpToStudent(fKey, MainActivity.classes.get(fKey).members[fSid]);
                                     }
                                 })

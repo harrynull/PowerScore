@@ -155,6 +155,7 @@ public class reason_setting extends Activity {
        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
                reason_setting.this.finish();
+               overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
            }
        });
     }

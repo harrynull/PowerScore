@@ -14,7 +14,6 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.github.hitgif.powerscore.MainActivity"
             android:fitsSystemWindows="true"
             android:background="#ffffff"
             android:visibility="visible">
@@ -357,6 +356,13 @@
                 android:background="@drawable/add_butt" />
 
         </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/button3"
+            android:background="#00000000"
+            android:visibility="gone" />
 
     </FrameLayout>
 
