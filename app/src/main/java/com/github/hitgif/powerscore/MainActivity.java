@@ -2,6 +2,7 @@ package com.github.hitgif.powerscore;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +31,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -101,11 +103,12 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private final int DOWN_ERROR = 4;
     private UpdateInfo info;
     private String localVersion;
-    private ProgressDialog pdLoading=null;
+    private Boolean pdLoading=false;
     Button gen;
     Button per;
     private boolean lastTip=false;
-
+    private boolean showednomore=false;
+    private ToastCommom toastCommom;
     private void doSync() {
         if(isSync){
             new AlertDialogios(MainActivity.this).builder()
@@ -280,6 +283,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         upg = AnimationUtils.loadAnimation(this, R.anim.up_prosess);
         dog = AnimationUtils.loadAnimation(this, R.anim.down_prosess);
         per.setTextColor(Color.parseColor("#7fffffff"));
+        toastCommom = ToastCommom.createToastConfig();
         in_per.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -341,8 +345,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 }
             }
         });
-        gen.setOnClickListener(new View.OnClickListener()
-        {
+        gen.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (!isGen) {
                     findViewById(R.id.bar).startAnimation(out_gen);
@@ -359,7 +362,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             }
         });
 
-        per.setOnClickListener(new View.OnClickListener(){
+        per.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 per.setTextColor(Color.parseColor("#ffffff"));
                 gen.setTextColor(Color.parseColor("#7fffffff"));
@@ -906,18 +909,28 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
             if(countLimit != classes.get(classNow).histories.size()) {
-                if (pdLoading == null) {
-                    pdLoading = new ProgressDialog(this);
-                    pdLoading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    pdLoading.setMessage("加载中");
-                    pdLoading.setCanceledOnTouchOutside(false);
-                    pdLoading.show();
+                if (pdLoading == false) {
+                    showCustomProgrssDialog("加载中...");
+                    pdLoading = true;
                 }
                 needLoadMore = true;
             }else{
-                if(!lastTip) {
+                if(!lastTip&&!showednomore) {
                     showToast("没有更多了");
                     lastTip=true;
+                    showednomore =true;
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(2000);
+                                showednomore = false;
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
                 }
             }
         }else{
@@ -1057,8 +1070,9 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             for(int i=0;i!=10000;i++){
                 j*=2;
             }
-            if(pdLoading!=null){
-                pdLoading.dismiss();pdLoading=null;
+            if(pdLoading!=false){
+                hideCustomProgressDialog();
+                pdLoading=false;
             }
 
             return convertView;
@@ -1134,7 +1148,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     }
 
     private void showToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        toastCommom.ToastShow(MainActivity.this, (ViewGroup) findViewById(R.id.toast_layout_root), msg);
     }
 
     /////检查更新
@@ -1312,6 +1326,24 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         //执行的数据类型
         intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
         startActivity(intent);
+    }
+
+    private SFProgrssDialog m_customProgrssDialog;
+    final void showCustomProgrssDialog(String msg) {
+        if (null == m_customProgrssDialog)
+            m_customProgrssDialog = SFProgrssDialog
+                    .createProgrssDialog(MainActivity.this);
+        if (null != m_customProgrssDialog) {
+            m_customProgrssDialog.setMessage(msg);
+            m_customProgrssDialog.show();
+            m_customProgrssDialog.setCancelable(false);
+        }
+    }
+    final void hideCustomProgressDialog() {
+        if (null != m_customProgrssDialog) {
+            m_customProgrssDialog.dismiss();
+            m_customProgrssDialog = null;
+        }
     }
 
 }

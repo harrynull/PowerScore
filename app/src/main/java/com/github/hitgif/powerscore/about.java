@@ -14,6 +14,7 @@ import android.os.Message;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,12 +38,14 @@ public class about extends Activity{
     private final int GET_UNDATAINFO_ERROR = 2;
     private final int DOWN_ERROR = 4;
     private UpdateInfo info;
+    private ToastCommom toastCommom;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Util.setTranslucent(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
+        toastCommom = ToastCommom.createToastConfig();
         try {
             localVersion = getVersionName();
         } catch (Exception e) {
@@ -71,7 +74,7 @@ public class about extends Activity{
         });
     }
     private void showToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        toastCommom.ToastShow(about.this, (ViewGroup) findViewById(R.id.toast_layout_root), msg);
     }
     /////检查更新
     public static class UpdateInfo {

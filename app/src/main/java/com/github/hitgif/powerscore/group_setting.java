@@ -24,7 +24,7 @@ import android.app.ActionBar;
 public class group_setting extends Activity {
     public static ArrayList<Group> groups=MainActivity.groups;
     private ListView lv;
-
+    private ToastCommom toastCommom;
     private void updateList(){((BaseAdapter)lv.getAdapter()).notifyDataSetChanged();}
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class group_setting extends Activity {
         setupActionBar();
         lv = (ListView) findViewById(R.id.listViewddd);
         lv.setAdapter(new MyAdapter(this));
-
+        toastCommom = ToastCommom.createToastConfig();
         findViewById(R.id.back).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -85,7 +85,7 @@ public class group_setting extends Activity {
                                                     public void onClick(View v) {
                                                         groups.remove(pos);
                                                         updateList();
-                                                        Toast.makeText(group_setting.this, "删除成功", Toast.LENGTH_SHORT).show();
+                                                        showToast("删除成功");
                                                     }
                                                 })
                                                 .setNegativeButton("取消", null).show();
@@ -105,7 +105,9 @@ public class group_setting extends Activity {
         });
 
     }
-
+    private void showToast(String msg) {
+        toastCommom.ToastShow(group_setting.this, (ViewGroup) findViewById(R.id.toast_layout_root), msg);
+    }
     private ArrayList<HashMap<String, Object>> getData(){
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i!=groups.size();i++){

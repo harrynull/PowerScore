@@ -68,6 +68,7 @@ public class add extends Activity{
     private boolean onlyzero = true;
     private boolean caninputpoint = true;
     private boolean memchoosed = false;
+    private ToastCommom toastCommom;
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK
@@ -119,7 +120,7 @@ public class add extends Activity{
         backspace = (ImageButton) findViewById(R.id.backspace);
         inputscore = (LinearLayout) findViewById(R.id.inputscore);
         ind = (RelativeLayout)findViewById(R.id.relativeLayout15);
-
+        toastCommom = ToastCommom.createToastConfig();
         SimpleDateFormat sdf=new SimpleDateFormat("yy-MM-dd");
         String date=sdf.format(new java.util.Date());
         ((TextView)findViewById(R.id.showdate)).setText(date);
@@ -413,7 +414,7 @@ public class add extends Activity{
 
     }
     private void showToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        toastCommom.ToastShow(add.this, (ViewGroup) findViewById(R.id.toast_layout_root), msg);
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(resultCode){

@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="finish">233</string>
     <string name="url_server">http://scoremanagement.applinzi.com/update.xml</string>
+    <string name="sf_progress_dialog_image_loading">加载中...</string>
+
 </resources>

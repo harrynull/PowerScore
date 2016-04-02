@@ -326,6 +326,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/listView3"
                     android:layout_weight="1"
+                    android:divider="@color/lightg_gray"
+                    android:dividerHeight="0.5dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />

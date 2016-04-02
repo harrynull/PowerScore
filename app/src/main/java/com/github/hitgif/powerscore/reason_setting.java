@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +25,7 @@ public class reason_setting extends Activity {
     private String[] reasonsArray;
     SharedPreferences spReader;
     SharedPreferences.Editor spEditor;
-
+    private ToastCommom toastCommom;
     private void updateList(){
         mListView.setAdapter(new ArrayAdapter(getApplicationContext(), R.layout.list_view_item, R.id.list_item, reasonsArray));
     }
@@ -39,6 +40,7 @@ public class reason_setting extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Util.setTranslucent(this);
         setContentView(R.layout.reason_setting);
+        toastCommom = ToastCommom.createToastConfig();
         mListView = (ListView) findViewById(R.id.lv_data);
         spReader= getSharedPreferences("data", Activity.MODE_PRIVATE);
         spEditor = spReader.edit();
@@ -58,14 +60,25 @@ public class reason_setting extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        String newReasons = "";
-                                        for (int i = 0; i < reasonsArray.length; i++) {
-                                            if (i == pos) continue;
-                                            newReasons += reasonsArray[i] + " ";
-                                        }
-                                        reasonsArray = newReasons.split(" ");
-                                        updateList();
-                                        saveReasons(newReasons);
+                                        new AlertDialog.Builder(reason_setting.this)
+                                                .setTitle("删除理由")
+                                                .setMessage("确定删除理由“"+reasonsArray[pos]+"”吗？")
+                                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        String newReasons = "";
+                                                        for (int i = 0; i < reasonsArray.length; i++) {
+                                                            if (i == pos) continue;
+                                                            newReasons += reasonsArray[i] + " ";
+                                                        }
+                                                        reasonsArray = newReasons.split(" ");
+                                                        updateList();
+                                                        saveReasons(newReasons);
+                                                    }
+                                                })
+                                                .setNegativeButton("取消", null)
+                                                .show();
+
                                     }
                                 })
                         .addSheetItem("修改", ActionSheetDialog.SheetItemColor.Blue,
@@ -82,7 +95,7 @@ public class reason_setting extends Activity {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         if (text.getText().toString().isEmpty()) {
-                                                            Toast.makeText(reason_setting.this, "修改理由失败:理由不能为空", Toast.LENGTH_SHORT).show();
+                                                            showToast("修改理由失败:理由不能为空");
                                                         } else {
                                                             reasonsArray[pos] = text.getText().toString();
                                                             updateList();
@@ -91,7 +104,8 @@ public class reason_setting extends Activity {
                                                                 newReasons += aReasonsArray + " ";
                                                             }
                                                             saveReasons(newReasons);
-                                                            Toast.makeText(reason_setting.this, "修改理由成功", Toast.LENGTH_SHORT).show();
+
+                                                            showToast("修改理由成功");
                                                         }
                                                     }
                                                 })
@@ -120,7 +134,7 @@ public class reason_setting extends Activity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (textp.getText().toString().isEmpty()) {
-                                    Toast.makeText(reason_setting.this, "添加理由失败:理由不能为空", Toast.LENGTH_SHORT).show();
+                                    showToast("添加理由失败:理由不能为空");
                                 } else {
                                     String newReasons = "";
                                     for (String aReasonsArray : reasonsArray) {
@@ -130,7 +144,7 @@ public class reason_setting extends Activity {
                                     reasonsArray = newReasons.split(" ");
                                     updateList();
                                     saveReasons(newReasons);
-                                    Toast.makeText(reason_setting.this, "添加理由成功", Toast.LENGTH_SHORT).show();
+                                    showToast("添加理由成功");
                                 }
                             }
                         })
@@ -158,5 +172,8 @@ public class reason_setting extends Activity {
                overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
            }
        });
+    }
+    private void showToast(String msg) {
+        toastCommom.ToastShow(reason_setting.this, (ViewGroup) findViewById(R.id.toast_layout_root), msg);
     }
 }
