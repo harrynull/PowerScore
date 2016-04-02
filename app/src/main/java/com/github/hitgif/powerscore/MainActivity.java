@@ -2,7 +2,6 @@ package com.github.hitgif.powerscore;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,7 +30,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -39,7 +37,6 @@ import android.widget.TextView;
 import android.widget.DatePicker;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -94,21 +91,20 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
     private Animation in_per;
     private Animation round;
-    private Animation upg;
-    private Animation dog;
     private final String TAG = this.getClass().getName();
     private final int Update_NONEED = 0;
     private final int Update_CLIENT = 1;
-    private final int GET_UNDATAINFO_ERROR = 2;
+    private final int GET_UPDATAINFO_ERROR = 2;
     private final int DOWN_ERROR = 4;
     private UpdateInfo info;
     private String localVersion;
-    private Boolean pdLoading=false;
+    private boolean pdLoading=false;
     Button gen;
     Button per;
     private boolean lastTip=false;
     private boolean showednomore=false;
     private ToastCommom toastCommom;
+    private static final Object synclock = new Object();
     private void doSync() {
         if(isSync){
             new AlertDialogios(MainActivity.this).builder()
@@ -119,7 +115,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         }
         isSync = true;
         sync.setAnimation(round);
-        getClassInfo();
+        getClassInfoOnly();
         countMax=classes.size();
         countNow=0;
         for (final String key : classes.keySet()) {
@@ -143,19 +139,32 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                     "username=" + username + "&password=" + password + "&cid=" + key + "&diff=" + diff, new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case 0:
-                            showToast("登陆失败，用户名或密码错误");
-                            break;
-                        case 1:
-                            showToast("网络异常，请检查网络连接");
-                            break;
-                        case 2:
-                            showToast("同步成功");
-                            readData(msg.obj.toString().substring(1), c);
-                            break;
+                    if(msg.what==2){
+                        readData(msg.obj.toString().substring(1), c);
+                    }else if(msg.what==4){
+                        //无权限或已被删除的班级
+                        //同时删除本地的班级数据
+                        classes.remove(key);
+                        deleteFile(key + ".dat");
+                        synchronized (synclock) {
+                            countMax--;
+                        }
                     }
-                    if(++countNow==countMax){
+                    synchronized (synclock) {
+                        countNow++;
+                    }
+                    if(countNow==countMax){
+                        switch (msg.what) {
+                            case 0:
+                                showToast("登陆失败，用户名或密码错误");
+                                break;
+                            case 1:
+                                showToast("网络异常，请检查网络连接");
+                                break;
+                            case 2:
+                                showToast("同步成功");
+                                break;
+                        }
                         isSync = false;
                         sync.clearAnimation();
                     }
@@ -192,8 +201,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             else
                 m.obj = GetPostUtil.sendGet(url, params);
 
-            if (m.obj.toString().equals("F")) {
+            if (m.obj.toString().substring(1).equals("F")) {
                 m.what = 0;
+            } else if (m.obj.toString().substring(1).equals("P")) {
+                m.what = 4;
             } else if (m.obj.toString().isEmpty()) {
                 m.what = 1;
             } else m.what = 2;
@@ -280,8 +291,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         final Animation out_gen = AnimationUtils.loadAnimation(this, R.anim.personal_out);
         in_per = AnimationUtils.loadAnimation(this, R.anim.personal_in);
         round = AnimationUtils.loadAnimation(this, R.anim.tip);
-        upg = AnimationUtils.loadAnimation(this, R.anim.up_prosess);
-        dog = AnimationUtils.loadAnimation(this, R.anim.down_prosess);
         per.setTextColor(Color.parseColor("#7fffffff"));
         toastCommom = ToastCommom.createToastConfig();
         in_per.setAnimationListener(new Animation.AnimationListener() {
@@ -395,13 +404,20 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             public void onClick(View v) {
                 new AlertDialogios(MainActivity.this).builder()
                         .setTitle("退出登录")
-                        .setMsg("确定要退出登录吗?")
+                        .setMsg("确定要退出登录吗?\n(未同步数据将会丢失)")
                         .setPositiveButton("退出登录", new OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 spEditor.putString("username", "");
                                 spEditor.putString("password", "");
+                                spEditor.putString("classes", "");
                                 spEditor.apply();
+                                //清除所有数据
+                                for (final String key : classes.keySet()) {
+                                    deleteFile(key+".dat");
+                                }
+
+                                classes.clear();
                                 startActivity(new Intent(getApplication(), login.class));
                                 overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                                 MainActivity.this.finish();
@@ -727,18 +743,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         String content = spReader.getString("groups", "");
         String[] result = content.split(",");
         groups.clear();
-        for (
-                int i = 0;
-                i < result.length - 1; i += 2)
-
-        {
+        for (int i = 0;i < result.length - 1; i += 2){
             groups.add(new Group(result[i], result[i + 1]));
         }
 
         //读取数据
         String rawClasses = spReader.getString("classes", "");
 
-        if(rawClasses.isEmpty())getClassInfo();
+        if(rawClasses.isEmpty()) getClassInfoAndData();
         else {
             String[] classesinfo = rawClasses.split(",");
             for (int i = 0; i < classesinfo.length; i += 2) {
@@ -799,6 +811,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        updateList();
     }
 
     public void onStop() {
@@ -849,8 +862,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         spEditor.putString("groups", groupsStr);
         spEditor.apply();
     }
-    private void getClassInfo() {
+    private void getClassInfoAndData() {
         //从网上获得数据
+        isSync = true;
+        sync.setAnimation(round);
         final String username = spReader.getString("username", "");
         final String password = spReader.getString("password", "");
         new Thread(new AccessNetwork("POST",
@@ -866,7 +881,9 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                         showToast("无法获取班级数据：无法连接到网络");
                         break;
                     case 2:
-                        String[] ids = msg.obj.toString().split(",");
+                        String[] ids = msg.obj.toString().substring(1).split(",");
+                        countMax=ids.length-1;
+                        countNow=0;
                         for (int i = 0; i < ids.length - 1; i += 2) {
                             if(classes.containsKey(ids[i])) continue;
                             final Classes c = new Classes(ids[i + 1]);
@@ -875,27 +892,62 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                     "username=" + username + "&password=" + password + "&cid=" + ids[i] + "&diff=", new Handler() {
                                 @Override
                                 public void handleMessage(Message msg) {
+                                    countNow++;
                                     switch (msg.what) {
                                         case 0:
-                                            showToast("无法获取班级数据：未知错误");
+                                            if(countNow==countMax) showToast("无法获取班级数据：请稍候重试");
                                             break;
                                         case 1:
-                                            showToast("无法获取班级数据：网络连接不稳定");
+                                            if(countNow==countMax) showToast("无法获取班级数据：网络连接不稳定");
                                             break;
                                         case 2:
                                             readData(msg.obj.toString().substring(1), c);
                                             break;
                                     }
+                                    if(countNow==countMax) {
+                                        isSync = false;
+                                        sync.clearAnimation();
+                                    }
                                 }
                             }, 0)).start();
                             classes.put(ids[i], c);
+                            if(classNow.equals("-1")) {
+                                ((TextView) findViewById(R.id.classnow)).setText(c.name);
+                                classNow = classes.firstKey();
+                                updateList();
+                            }
                         }
                         break;
                 }
             }
         }, 0)).start();
     }
-
+    private void getClassInfoOnly() {
+        final String username = spReader.getString("username", "");
+        final String password = spReader.getString("password", "");
+        new Thread(new AccessNetwork("POST",
+                "http://scoremanagement.applinzi.com/getclasses.php",
+                "username=" + username + "&password=" + password, new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 2:
+                        String[] ids = msg.obj.toString().substring(1).split(",");
+                        for (int i = 0; i < ids.length - 1; i += 2) {
+                            if(classes.containsKey(ids[i])) continue;
+                            final Classes c = new Classes(ids[i + 1]);
+                            classes.put(ids[i], c);
+                            if(classNow.equals("-1")) {
+                                ((TextView) findViewById(R.id.classnow)).setText(c.name);
+                                classNow = classes.firstKey();
+                                updateList();
+                            }
+                        }
+                        break;
+                }
+            }
+        }, 0)).start();
+    }
     public void onResume() {
         super.onResume();
         MyAdapter mAdapter = new MyAdapter(this);//得到一个MyAdapter对象
@@ -909,7 +961,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
         if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
             if(countLimit != classes.get(classNow).histories.size()) {
-                if (pdLoading == false) {
+                if (!pdLoading) {
                     showCustomProgrssDialog("加载中...");
                     pdLoading = true;
                 }
@@ -926,7 +978,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                 Thread.sleep(2000);
                                 showednomore = false;
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                         }
@@ -1066,11 +1117,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             } else {
                 holder.positive.setImageResource(R.drawable.red);
             }
-            int j=2;
-            for(int i=0;i!=10000;i++){
-                j*=2;
-            }
-            if(pdLoading!=false){
+            if(pdLoading){
                 hideCustomProgressDialog();
                 pdLoading=false;
             }
@@ -1225,7 +1272,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                     //对话框通知用户升级程序
                     showUpdateDialog();
                     break;
-                case GET_UNDATAINFO_ERROR:
+                case GET_UPDATAINFO_ERROR:
                     //服务器超时
                     //showToast("获取更新失败 :( 请检查网络");
                     break;
@@ -1269,7 +1316,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 }
             } catch (Exception e) {
                 Message msg = new Message();
-                msg.what = GET_UNDATAINFO_ERROR;
+                msg.what = GET_UPDATAINFO_ERROR;
                 updateHandler.sendMessage(msg);
                 e.printStackTrace();
             }
