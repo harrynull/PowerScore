@@ -33,6 +33,10 @@
         <item name="android:layout_gravity">center_horizontal</item>
 
     </style>
+    <style name="Theme.Start" parent="android:Theme">
+        <item name="android:windowBackground">@drawable/load</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
     <style name="SF_dialogCustom" parent="@android:style/Theme.Holo.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>

@@ -964,6 +964,22 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 if (!pdLoading) {
                     showCustomProgrssDialog("加载中...");
                     pdLoading = true;
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(800);
+                                if(pdLoading) {
+                                    hideCustomProgressDialog();
+                                    pdLoading = false;
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    }.start();
                 }
                 needLoadMore = true;
             }else{

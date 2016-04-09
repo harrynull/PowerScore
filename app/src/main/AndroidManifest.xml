@@ -13,23 +13,15 @@
         <activity
             android:name=".splash"
             android:label="PowerScore"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LG"
-            android:label="使用引导"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".MainActivity"
