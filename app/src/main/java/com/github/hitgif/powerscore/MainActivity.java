@@ -135,7 +135,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             String password = spReader.getString("password", "");
 
             new Thread(new AccessNetwork("POST",
-                    "http://scoremanagement.applinzi.com/sync.php",
+                    "http://powerscore.duapp.com/sync.php",
                     "username=" + username + "&password=" + password + "&cid=" + key + "&diff=" + diff, new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -869,7 +869,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         final String username = spReader.getString("username", "");
         final String password = spReader.getString("password", "");
         new Thread(new AccessNetwork("POST",
-                "http://scoremanagement.applinzi.com/getclasses.php",
+                "http://powerscore.duapp.com/getclasses.php",
                 "username=" + username + "&password=" + password, new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -888,7 +888,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             if(classes.containsKey(ids[i])) continue;
                             final Classes c = new Classes(ids[i + 1]);
                             new Thread(new AccessNetwork("POST",
-                                    "http://scoremanagement.applinzi.com/sync.php",
+                                    "http://powerscore.duapp.com/sync.php",
                                     "username=" + username + "&password=" + password + "&cid=" + ids[i] + "&diff=", new Handler() {
                                 @Override
                                 public void handleMessage(Message msg) {
@@ -926,7 +926,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         final String username = spReader.getString("username", "");
         final String password = spReader.getString("password", "");
         new Thread(new AccessNetwork("POST",
-                "http://scoremanagement.applinzi.com/getclasses.php",
+                "http://powerscore.duapp.com/getclasses.php",
                 "username=" + username + "&password=" + password, new Handler() {
             @Override
             public void handleMessage(Message msg) {
