@@ -30,20 +30,20 @@ public class login extends Activity {
         findViewById(R.id.textView22).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://scoremanagement.applinzi.com/login.php")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://powerscore.duapp.com/login.php")));
             }
         });
         findViewById(R.id.textView23).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://scoremanagement.applinzi.com/forget.php")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://powerscore.duapp.com/forget.php")));
             }
         });
     }
 
     public void loginAction(final String username, final String password){
         new Thread(new AccessNetwork("POST",
-                "http://scoremanagement.applinzi.com/islogin.php",
+                "http://powerscore.duapp.com/islogin.php",
                 "username="+ username + "&password=" + password, new Handler(){
                     @Override
                     public void handleMessage(Message msg) {
