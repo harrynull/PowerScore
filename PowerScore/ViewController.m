@@ -24,6 +24,8 @@
     __weak IBOutlet UIButton *person_false;
     
     __weak IBOutlet UIButton *openleft_bt;
+    
+    __weak IBOutlet UILabel *toolback;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)UIView *leftView;
@@ -46,6 +48,7 @@
     
     [self.view addSubview:self.scroll];
     [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
+    [toolback setBackgroundColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [flit setBackgroundImage:[UIImage imageNamed:@"flitback"] forState:UIControlStateHighlighted];
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
         NSArray *list=self.navigationController.navigationBar.subviews;
