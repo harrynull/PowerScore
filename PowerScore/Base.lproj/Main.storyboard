@@ -95,10 +95,11 @@
                     <connections>
                         <outlet property="class_bt" destination="pqQ-Du-nxf" id="MA5-1q-IV3"/>
                         <outlet property="flit" destination="y4Z-Ua-u61" id="E8X-zc-z9w"/>
+                        <outlet property="movinglable" destination="Niw-Ch-QSa" id="d6V-QI-tPT"/>
                         <outlet property="openleft_bt" destination="vNw-bY-l4s" id="esG-ht-gbS"/>
                         <outlet property="person_bt" destination="9vg-ZM-G8G" id="Se1-IP-Beq"/>
                         <outlet property="person_false" destination="HjT-K4-8nh" id="WSz-Ho-thS"/>
-                        <outlet property="toolback" destination="0gs-ty-gny" id="g2M-ui-ozE"/>
+                        <outlet property="toolback" destination="0gs-ty-gny" id="mLG-VK-Qgl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAz-nr-U3q" sceneMemberID="firstResponder"/>

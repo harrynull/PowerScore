@@ -26,6 +26,8 @@
     __weak IBOutlet UIButton *openleft_bt;
     
     __weak IBOutlet UILabel *toolback;
+    
+    __weak IBOutlet UILabel *movinglable;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)UIView *leftView;
@@ -80,6 +82,11 @@
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
     [person_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
+    
+    [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        movinglable.frame = CGRectMake(0, 41, 90, 3);
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (IBAction)personbtOnclick:(id)sender {
@@ -87,6 +94,11 @@
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
     [person_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
+    
+    [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        movinglable.frame = CGRectMake(90, 41, 90, 3);
+    } completion:^(BOOL finished) {
+    }];
 }
 
 
