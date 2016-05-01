@@ -13,6 +13,7 @@
 
 #define maxWidth 270 //可拖动最大距离
 
+#define rightmaxWidth 100 //右视图最大距离
 
 @interface AndyScrollView ()<UIGestureRecognizerDelegate>
 {
@@ -71,11 +72,9 @@
 -(UIView *)leftView
 {
     if (!_leftView) {
-        
-        
-        
+ 
         _leftView = [[LeftView alloc]initWithFrame:CGRectMake(-maxWidth, 0, maxWidth, self.frame.size.height)];
-        //_leftView.backgroundColor = [UIColor whiteColor];
+        
         
     }
     return _leftView;

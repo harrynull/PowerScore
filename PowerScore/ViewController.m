@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "AndyScrollView.h"
-
+#import "RightScrollView.h"
 
 @interface ViewController ()
 <UIScrollViewDelegate,UIGestureRecognizerDelegate>
@@ -30,7 +30,9 @@
     __weak IBOutlet UILabel *movinglable;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
+@property(nonatomic,strong)RightScrollView *rscroll;
 @property(nonatomic,strong)UIView *leftView;
+@property(nonatomic,strong)UIView *rightView;
 
 
 @end
@@ -49,6 +51,7 @@
 {
     
     [self.view addSubview:self.scroll];
+    [self.view addSubview:self.rscroll];
     [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [toolback setBackgroundColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [flit setBackgroundImage:[UIImage imageNamed:@"flitback"] forState:UIControlStateHighlighted];
@@ -75,6 +78,9 @@
 - (IBAction)openleftOnclick:(id)sender {
     self.scroll.stloadleftview;
 
+}
+- (IBAction)flitOnclick:(id)sender {
+    self.rscroll.stloadrightview;
 }
 
 - (IBAction)classbtOnclick:(id)sender {
@@ -115,7 +121,19 @@
     }
     return _scroll;
 }
-
+-(UIScrollView *)rscroll
+{
+    if (!_rscroll)
+    {
+        _rscroll = [[RightScrollView alloc]initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        _rscroll.contentSize = CGSizeMake(self.view.frame.size.width * 2, 0);
+        _rscroll.pagingEnabled = YES;
+        _rscroll.showsHorizontalScrollIndicator = NO;
+        _rscroll.delegate = self;
+        _rscroll.bounces = NO;
+    }
+    return _rscroll;
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 {
 //    NSLog(@">>>>>>>>>%f",scrollView.contentOffset.x);

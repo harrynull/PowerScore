@@ -46,6 +46,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="筛选器" image="thun"/>
+                                <connections>
+                                    <action selector="flitOnclick:" destination="AGT-0a-dei" eventType="touchUpInside" id="UcQ-YF-Eh0"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Niw-Ch-QSa">
                                 <rect key="frame" x="0.0" y="41" width="90" height="3"/>
