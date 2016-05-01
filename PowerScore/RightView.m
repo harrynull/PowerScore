@@ -14,7 +14,10 @@
 @end
 
 @implementation RightView
-
+//锁定竖屏
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 - (void)choosedateOnclick
 {
     //筛选日期

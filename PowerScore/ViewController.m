@@ -28,6 +28,8 @@
     __weak IBOutlet UILabel *toolback;
     
     __weak IBOutlet UILabel *movinglable;
+    
+    __weak IBOutlet UIButton *add_bt;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -38,6 +40,11 @@
 @end
 
 @implementation ViewController
+
+//锁定竖屏
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,6 +59,7 @@
     
     [self.view addSubview:self.scroll];
     [self.view addSubview:self.rscroll];
+    [add_bt setBackgroundImage:[UIImage imageNamed:@"add_press"] forState:UIControlStateHighlighted];
     [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [toolback setBackgroundColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [flit setBackgroundImage:[UIImage imageNamed:@"flitback"] forState:UIControlStateHighlighted];

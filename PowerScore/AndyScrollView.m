@@ -25,7 +25,10 @@
 @end
 
 @implementation AndyScrollView
-
+//锁定竖屏
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 -(instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -83,7 +86,7 @@
 {
     if (!_backView)
     {
-        _backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1000, self.frame.size.height)];
+        _backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 2000, self.frame.size.height)];
         _backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0];
         UIPanGestureRecognizer *backPan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(backPanGes:)];
         [_backView addGestureRecognizer:backPan];

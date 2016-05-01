@@ -14,7 +14,10 @@
 @end
 
 @implementation NavController;
-
+//锁定竖屏
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 -(void)initUI
 {
     [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];

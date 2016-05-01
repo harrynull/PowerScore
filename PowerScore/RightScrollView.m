@@ -25,7 +25,10 @@
 
 @implementation RightScrollView
 
-
+//锁定竖屏
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 -(UIView *)RightView
 {
     if (!_RightView) {
@@ -39,7 +42,7 @@
 {
     if (!_backView)
     {
-        _backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1000, self.frame.size.height)];
+        _backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 2000, self.frame.size.height)];
         _backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(backViewTapGes:)];
         [_backView addGestureRecognizer:tap];
