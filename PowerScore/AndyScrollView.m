@@ -139,7 +139,6 @@
         self.pan.enabled = YES;
         [_leftView removeFromSuperview];
         [_backView removeFromSuperview];
-        NSLog(@"78937689");
     }];
 }
 -(void)dragLeftView:(UIPanGestureRecognizer *)panGes

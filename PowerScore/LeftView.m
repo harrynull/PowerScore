@@ -18,7 +18,6 @@
 -(void)openabout
 {
     ViewController *v =[[ViewController alloc]init];
-    NSLog(@"2333");
     [v vc_openabout];
 }
 
