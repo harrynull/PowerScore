@@ -78,9 +78,14 @@
             }
         }
     }
-
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopen:)name:@"toopen" object:nil];
     
        // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+}
+
+-(void)toopen:(NSNotification *)sender
+{
+    [self vc_openabouteee];
 }
 
 - (IBAction)openleftOnclick:(id)sender {
@@ -116,15 +121,14 @@
     } completion:^(BOOL finished) {
     }];
 }
-
 -(void)vc_openabout
 {
-    [self vc_openabouteee];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"toopen" object:nil];
 }
 -(void)vc_openabouteee
 {
     self.scroll.stcloseleftview;
-    //[self performSegueWithIdentifier:@"gotoabout" sender:self];
+    [self performSegueWithIdentifier:@"gotoabout" sender:self];
 }
 
 -(UIScrollView *)scroll
