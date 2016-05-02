@@ -129,6 +129,19 @@
         self.pan.enabled = NO;
     }];
 }
+-(void)stcloseleftview
+{
+    
+    [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        _leftView.frame = CGRectMake(-maxWidth, 0, maxWidth, self.frame.size.height);
+        _backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0];
+    } completion:^(BOOL finished) {
+        self.pan.enabled = YES;
+        [_leftView removeFromSuperview];
+        [_backView removeFromSuperview];
+        NSLog(@"78937689");
+    }];
+}
 -(void)dragLeftView:(UIPanGestureRecognizer *)panGes
 {
     

@@ -7,12 +7,21 @@
 //
 
 #import "LeftView.h"
+#import "ViewController.h"
+@interface LeftView ()
+
+@end
 
 @implementation LeftView
-//锁定竖屏
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+
+
+-(void)openabout
+{
+    ViewController *v =[[ViewController alloc]init];
+    NSLog(@"2333");
+    [v vc_openabout];
 }
+
 -(id)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
@@ -104,6 +113,7 @@
         [about setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [about setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateNormal];
         [about setBackgroundImage:[UIImage imageNamed:@"grey"] forState:UIControlStateHighlighted];
+        [about addTarget:self action:@selector(openabout) forControlEvents:UIControlEventTouchUpInside];
         [about setTitle:@"关于" forState:(UIControlStateNormal)];
         about.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:about];

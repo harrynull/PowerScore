@@ -11,6 +11,7 @@
 @interface AndyScrollView : UIScrollView
 
 -(void) stloadleftview;
+-(void)stcloseleftview;
 @property(nonatomic)UIPanGestureRecognizer *pan;
 
 

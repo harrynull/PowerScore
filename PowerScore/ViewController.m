@@ -85,6 +85,8 @@
 
 - (IBAction)openleftOnclick:(id)sender {
     self.scroll.stloadleftview;
+    //[self vc_openabouteee];
+    
 
 }
 - (IBAction)flitOnclick:(id)sender {
@@ -108,13 +110,22 @@
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
     [person_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
-    
+    [self vc_openabout];
     [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         movinglable.frame = CGRectMake(90, 41, 90, 3);
     } completion:^(BOOL finished) {
     }];
 }
 
+-(void)vc_openabout
+{
+    [self vc_openabouteee];
+}
+-(void)vc_openabouteee
+{
+    self.scroll.stcloseleftview;
+    //[self performSegueWithIdentifier:@"gotoabout" sender:self];
+}
 
 -(UIScrollView *)scroll
 {

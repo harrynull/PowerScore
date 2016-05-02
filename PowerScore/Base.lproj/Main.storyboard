@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="dO1-QT-7A6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="dO1-QT-7A6">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -59,16 +59,16 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Klw-mS-BrH">
-                                <rect key="frame" x="221" y="383" width="72" height="72"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <state key="normal" image="add"/>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="mvH-dq-MT3">
                                 <rect key="frame" x="0.0" y="44" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Klw-mS-BrH">
+                                <rect key="frame" x="221" y="383" width="72" height="72"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <state key="normal" image="add"/>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="HjT-K4-8nh">
                                 <rect key="frame" x="90" y="0.0" width="90" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -115,11 +115,27 @@
                         <outlet property="person_bt" destination="9vg-ZM-G8G" id="Se1-IP-Beq"/>
                         <outlet property="person_false" destination="HjT-K4-8nh" id="WSz-Ho-thS"/>
                         <outlet property="toolback" destination="0gs-ty-gny" id="mLG-VK-Qgl"/>
+                        <segue destination="FHh-uz-SQa" kind="push" identifier="gotoabout" id="E6C-in-rBE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAz-nr-U3q" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="685" y="1089"/>
+            <point key="canvasLocation" x="693" y="1089"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="0gB-vi-5NB">
+            <objects>
+                <viewController id="FHh-uz-SQa" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OFM-Jb-veU">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="C5E-Tz-xWi"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OuF-HI-Sd0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1143" y="1089"/>
         </scene>
         <!--Nav Controller-->
         <scene sceneID="urM-Xy-Ors">
