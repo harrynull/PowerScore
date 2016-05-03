@@ -10,6 +10,8 @@
 		6F035A231CCF2A3200BA023E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A1F1CCF2A3200BA023E /* ViewController.m */; };
 		6F035A241CCF2A3200BA023E /* AndyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A201CCF2A3200BA023E /* AndyScrollView.m */; };
 		6F035A251CCF2A3200BA023E /* LeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A221CCF2A3200BA023E /* LeftView.m */; };
+		6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6602FB1CD81EF6001D4903 /* AboutViewController.m */; };
+		6F6602FE1CD8241F001D4903 /* powerscore_icon_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */; };
 		6F6D7CEB1C9EA9F70089521E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D7CEA1C9EA9F70089521E /* main.m */; };
 		6F6D7CEE1C9EA9F70089521E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D7CED1C9EA9F70089521E /* AppDelegate.m */; };
 		6F6D7CF41C9EA9F70089521E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F6D7CF21C9EA9F70089521E /* Main.storyboard */; };
@@ -54,6 +56,9 @@
 		6F035A201CCF2A3200BA023E /* AndyScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndyScrollView.m; sourceTree = "<group>"; };
 		6F035A211CCF2A3200BA023E /* LeftView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftView.h; sourceTree = "<group>"; };
 		6F035A221CCF2A3200BA023E /* LeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftView.m; sourceTree = "<group>"; };
+		6F6602FA1CD81EF6001D4903 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		6F6602FB1CD81EF6001D4903 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powerscore_icon_p.png; sourceTree = "<group>"; };
 		6F6D7CE61C9EA9F70089521E /* PowerScore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PowerScore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F6D7CEA1C9EA9F70089521E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6F6D7CEC1C9EA9F70089521E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -138,10 +143,13 @@
 				6F7E34231CD56D9D006CA8AE /* grey.png */,
 				6F7E342B1CD59D9D006CA8AE /* light_blue.png */,
 				6F7E342D1CD5A198006CA8AE /* right_divide.png */,
+				6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */,
 				6F6D7CEC1C9EA9F70089521E /* AppDelegate.h */,
 				6F6D7CED1C9EA9F70089521E /* AppDelegate.m */,
 				6F035A1D1CCF2A3200BA023E /* ViewController.h */,
 				6F035A1F1CCF2A3200BA023E /* ViewController.m */,
+				6F6602FA1CD81EF6001D4903 /* AboutViewController.h */,
+				6F6602FB1CD81EF6001D4903 /* AboutViewController.m */,
 				6FA295981CD4505C005B0574 /* NavController.h */,
 				6FA295991CD4505C005B0574 /* NavController.m */,
 				6F035A1E1CCF2A3200BA023E /* AndyScrollView.h */,
@@ -305,6 +313,7 @@
 				6F6D7CF91C9EA9F70089521E /* LaunchScreen.storyboard in Resources */,
 				6F6D7CF61C9EA9F70089521E /* Assets.xcassets in Resources */,
 				6F6D7CF41C9EA9F70089521E /* Main.storyboard in Resources */,
+				6F6602FE1CD8241F001D4903 /* powerscore_icon_p.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +344,7 @@
 				6FA2959A1CD4505C005B0574 /* NavController.m in Sources */,
 				6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */,
 				6F6F62051CD618E000BEC283 /* HistoryListTableViewCell.m in Sources */,
+				6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */,
 				6F7E34271CD57B02006CA8AE /* RightView.m in Sources */,
 				6F6D7CEE1C9EA9F70089521E /* AppDelegate.m in Sources */,
 				6F6D7CEB1C9EA9F70089521E /* main.m in Sources */,
