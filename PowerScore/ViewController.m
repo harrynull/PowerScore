@@ -122,6 +122,11 @@
     } completion:^(BOOL finished) {
     }];
 }
+
+- (IBAction)add_btOnclick:(id)sender {
+    [self performSegueWithIdentifier:@"gotoadd" sender:self];
+}
+
 -(void)vc_openabout
 {
     [[NSNotificationCenter defaultCenter]postNotificationName:@"toopen" object:nil];
