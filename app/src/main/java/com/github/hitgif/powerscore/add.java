@@ -301,7 +301,7 @@ public class add extends Activity{
             }
         });
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        b1.setOnClickListener( new View.OnClickListener() {
             public void onClick(View v) {
                 keyboardCallback("1");
             }

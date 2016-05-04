@@ -98,6 +98,7 @@ public class multiplychoosestudent extends Activity {
                 ArrayList<String> results = new ArrayList<String>();
                 ArrayList<EListAdapter.Group> groups = adapter.getGroups();
                 nothing = 0;
+                result = "";
                 for (int i = 0; i < groups.size(); i++) {
                     for (int k = 0; k < groups.get(i).getChildrenCount(); k++) {
                         if (groups.get(i).getChildItem(k).getChecked()) {
