@@ -9,9 +9,11 @@
 #import "ViewController.h"
 #import "AndyScrollView.h"
 #import "RightScrollView.h"
+#import "HistoryListTableViewCell.h"
+#import "History.h"
 
 @interface ViewController ()
-<UIScrollViewDelegate,UIGestureRecognizerDelegate>
+<UIScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     //UIPanGestureRecognizer *pan;
 
@@ -30,6 +32,10 @@
     __weak IBOutlet UILabel *movinglable;
     
     __weak IBOutlet UIButton *add_bt;
+    
+    __weak IBOutlet UITableView *tableview;
+    
+    NSMutableArray * histories;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -45,6 +51,25 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return histories.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString * identifier = @"HistoryListTableViewCellIdentifier";
+    HistoryListTableViewCell * cell;
+    cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[HistoryListTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    History *history = histories[indexPath.row];
+    cell.reasonl = [[UILabel alloc] init];
+    [cell.reasonl setText:history.reason];
+    return cell;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -81,7 +106,13 @@
     }
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopen:)name:@"toopen" object:nil];
     
-       // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    histories = [NSMutableArray array];
+    [histories addObject:[[History alloc] initWithData:@"123" :@"321" :@"233" :@"23333"]];
+    
+    [histories addObject:[[History alloc] initWithData:@"123" :@"321" :@"233" :@"23333"]];
+    
+    [histories addObject:[[History alloc] initWithData:@"123" :@"321" :@"233" :@"23333"]];
 }
 
 -(void)toopen:(NSNotification *)sender

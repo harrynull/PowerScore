@@ -10,14 +10,9 @@
 
 @interface HistoryListTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *datel;
-@property (weak, nonatomic) IBOutlet UILabel *reasonl;
-@property (weak, nonatomic) IBOutlet UILabel *meml;
-@property (weak, nonatomic) IBOutlet UILabel *markl;
-@property (weak, nonatomic) IBOutlet UIImageView *imagev;
-@property (copy,nonatomic) UIImage *showimage;
-@property (copy,nonatomic) NSString *showdate_short;
-@property (copy,nonatomic) NSString *showreason;
-@property (copy,nonatomic) NSString *showmembers;
-@property (copy,nonatomic) NSString *showmark;
+@property (strong, nonatomic) IBOutlet UILabel *datel;
+@property (strong, nonatomic) IBOutlet UILabel *reasonl;
+@property (strong, nonatomic) IBOutlet UILabel *meml;
+@property (strong, nonatomic) IBOutlet UILabel *markl;
+@property (strong, nonatomic) IBOutlet UIImageView *imagev;
 @end
