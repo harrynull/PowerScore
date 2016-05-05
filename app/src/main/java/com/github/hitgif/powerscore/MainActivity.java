@@ -201,13 +201,12 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             else
                 m.obj = GetPostUtil.sendGet(url, params);
 
-            if (m.obj.toString().substring(1).equals("F")) {
+            } else if (m.obj.toString().substring(1).equals("F")) {
                 m.what = 0;
             } else if (m.obj.toString().substring(1).equals("P")) {
                 m.what = 4;
             } else if (m.obj.toString().isEmpty()) {
                 m.what = 1;
-            } else m.what = 2;
             h.sendMessage(m);
         }
     }
