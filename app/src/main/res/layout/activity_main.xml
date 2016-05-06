@@ -444,7 +444,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/ses"
-                    android:layout_below="@+id/relativeLayout18">
+                   >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -534,7 +534,7 @@
                                     android:orientation="horizontal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="50dp"
-                                    android:layout_below="@+id/relativeLayout20"
+
                                     android:background="@drawable/button_press"
                                     android:id="@+id/reason"
                                     android:paddingLeft="10dp"
@@ -576,7 +576,7 @@
                                     android:layout_height="50dp"
                                     android:background="@drawable/button_press"
                                     android:id="@+id/linearLayout7"
-                                    android:layout_below="@+id/imageView38"
+
                                     android:paddingLeft="10dp"
                                     android:gravity="center_vertical"
                                     android:layout_alignParentRight="true"
@@ -634,7 +634,7 @@
                                     android:orientation="horizontal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="50dp"
-                                    android:layout_below="@+id/relativeLayout20"
+
                                     android:id="@+id/linearLayout8"
                                     android:paddingLeft="10dp"
                                     android:gravity="center_vertical" >
