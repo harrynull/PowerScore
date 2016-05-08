@@ -9,13 +9,21 @@
 #import "HistoryListTableViewCell.h"
 
 
-@implementation HistoryListTableViewCell
+#define KColor(r,g,b)  [UIColor colorWithHue:r/255.0 saturation:g/255.0 brightness:b/255.0 alpha:1]
+#define kStatusTableViewCellControlSpacing 10//控件间距
+#define kStatusTableViewCellBackgroundColor KColor(251,251,251)
+#define kStatusGrayColor KColor(50,50,50)
+#define kStatusLightGrayColor KColor(120,120,120)
 
-@synthesize showimage;
-@synthesize showdate_short;
-@synthesize showreason;
-@synthesize showmembers;
-@synthesize showmark;
+#define kStatusTableViewCellAvatarWidth 40 //头像宽度
+#define kStatusTableViewCellAvatarHeight kStatusTableViewCellAvatarWidth
+#define kStatusTableViewCellUserNameFontSize 14
+#define kStatusTableViewCellMbTypeWidth 13 //会员图标宽度
+#define kStatusTableViewCellMbTypeHeight kStatusTableViewCellMbTypeWidth
+#define kStatusTableViewCellCreateAtFontSize 12
+#define kStatusTableViewCellSourceFontSize 12
+#define kStatusTableViewCellTextFontSize 14
+@implementation HistoryListTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -27,50 +35,29 @@
     // Configure the view for the selected state
 }
 
-//重写set函数
-- (void)setImage:(UIImage *)img
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if(![img isEqual:showimage])
-    {
-        showimage = [img copy];
-        self.imagev.image = showimage;
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        // Initialization code
+        _datel = [[UILabel alloc]init];
+        [self addSubview:_datel];
+        _reasonl = [[UILabel alloc]init];
+        _reasonl.textColor = kStatusGrayColor;
+        _reasonl.font = [UIFont systemFontOfSize:kStatusTableViewCellTextFontSize];
+        [self addSubview:_reasonl];
+        _meml = [[UILabel alloc]init];
+        [self addSubview:_meml];
+        _markl = [[UILabel alloc]init];
+        _markl.textColor = kStatusGrayColor;
+        _markl.font = [UIFont systemFontOfSize:kStatusTableViewCellTextFontSize];
+        [_markl setText:@"233"];
+        [self addSubview:_markl];
+        _imagev = [[UIImageView alloc]init];
+        [self addSubview:_imagev];
     }
-    
+    return self;
 }
-- (void)setDate:(NSString *)dat
-{
-    if(![dat isEqual:showdate_short])
-    {
-        showdate_short = [dat copy];
-        self.datel.text = showdate_short;
-    }
-    
-}
-- (void)setReason:(NSString *)rea
-{
-    if(![rea isEqual:showreason])
-    {
-        showreason = [rea copy];
-        self.reasonl.text = showreason;
-    }
-    
-}
-- (void)setMenbers:(NSString *)mem
-{
-    if(![mem isEqual:showmembers])
-    {
-        showmembers = [mem copy];
-        self.meml.text = showmembers;
-    }
-    
-}
-- (void)setMark:(NSString *)mar
-{
-    if(![mar isEqual:showmark])
-    {
-        showmark = [mar copy];
-        self.markl.text = showmark;
-    }
-    
-}
+
+
 @end
