@@ -11,6 +11,7 @@
 		6F035A241CCF2A3200BA023E /* AndyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A201CCF2A3200BA023E /* AndyScrollView.m */; };
 		6F035A251CCF2A3200BA023E /* LeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A221CCF2A3200BA023E /* LeftView.m */; };
 		6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3B6B751CD8CF0F00897197 /* AddViewController.m */; };
+		6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3B6B781CD8E7E500897197 /* UpLineLable.m */; };
 		6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6602FB1CD81EF6001D4903 /* AboutViewController.m */; };
 		6F6602FE1CD8241F001D4903 /* powerscore_icon_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */; };
 		6F6D7CEB1C9EA9F70089521E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D7CEA1C9EA9F70089521E /* main.m */; };
@@ -28,6 +29,7 @@
 		6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7E34291CD57E86006CA8AE /* RightScrollView.m */; };
 		6F7E342C1CD59D9D006CA8AE /* light_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7E342B1CD59D9D006CA8AE /* light_blue.png */; };
 		6F7E342E1CD5A198006CA8AE /* right_divide.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7E342D1CD5A198006CA8AE /* right_divide.png */; };
+		6F848B551CD9AE2D007CD526 /* memViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F848B541CD9AE2D007CD526 /* memViewController.m */; };
 		6F93ABDE1CD4BD43009504E4 /* setting_tx.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F93ABDD1CD4BD43009504E4 /* setting_tx.png */; };
 		6F93ABE01CD4BDEA009504E4 /* account.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F93ABDF1CD4BDEA009504E4 /* account.plist */; };
 		6FA2959A1CD4505C005B0574 /* NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA295991CD4505C005B0574 /* NavController.m */; };
@@ -59,6 +61,8 @@
 		6F035A221CCF2A3200BA023E /* LeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftView.m; sourceTree = "<group>"; };
 		6F3B6B741CD8CF0F00897197 /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		6F3B6B751CD8CF0F00897197 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
+		6F3B6B771CD8E7E500897197 /* UpLineLable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpLineLable.h; sourceTree = "<group>"; };
+		6F3B6B781CD8E7E500897197 /* UpLineLable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpLineLable.m; sourceTree = "<group>"; };
 		6F6602FA1CD81EF6001D4903 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		6F6602FB1CD81EF6001D4903 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powerscore_icon_p.png; sourceTree = "<group>"; };
@@ -87,6 +91,8 @@
 		6F7E34291CD57E86006CA8AE /* RightScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightScrollView.m; sourceTree = "<group>"; };
 		6F7E342B1CD59D9D006CA8AE /* light_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_blue.png; sourceTree = "<group>"; };
 		6F7E342D1CD5A198006CA8AE /* right_divide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_divide.png; sourceTree = "<group>"; };
+		6F848B531CD9AE2D007CD526 /* memViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memViewController.h; sourceTree = "<group>"; };
+		6F848B541CD9AE2D007CD526 /* memViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = memViewController.m; sourceTree = "<group>"; };
 		6F93ABDD1CD4BD43009504E4 /* setting_tx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_tx.png; sourceTree = "<group>"; };
 		6F93ABDF1CD4BDEA009504E4 /* account.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = account.plist; sourceTree = "<group>"; };
 		6FA295981CD4505C005B0574 /* NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavController.h; sourceTree = "<group>"; };
@@ -155,6 +161,8 @@
 				6F6602FB1CD81EF6001D4903 /* AboutViewController.m */,
 				6F3B6B741CD8CF0F00897197 /* AddViewController.h */,
 				6F3B6B751CD8CF0F00897197 /* AddViewController.m */,
+				6F848B531CD9AE2D007CD526 /* memViewController.h */,
+				6F848B541CD9AE2D007CD526 /* memViewController.m */,
 				6FA295981CD4505C005B0574 /* NavController.h */,
 				6FA295991CD4505C005B0574 /* NavController.m */,
 				6F035A1E1CCF2A3200BA023E /* AndyScrollView.h */,
@@ -165,6 +173,8 @@
 				6F035A221CCF2A3200BA023E /* LeftView.m */,
 				6F7E34251CD57B02006CA8AE /* RightView.h */,
 				6F7E34261CD57B02006CA8AE /* RightView.m */,
+				6F3B6B771CD8E7E500897197 /* UpLineLable.h */,
+				6F3B6B781CD8E7E500897197 /* UpLineLable.m */,
 				6F6F62021CD618E000BEC283 /* HistoryListTableViewCell.h */,
 				6F6F62031CD618E000BEC283 /* HistoryListTableViewCell.m */,
 				6F6F62041CD618E000BEC283 /* HistoryListTableViewCell.xib */,
@@ -345,9 +355,11 @@
 			files = (
 				6F035A251CCF2A3200BA023E /* LeftView.m in Sources */,
 				6F035A231CCF2A3200BA023E /* ViewController.m in Sources */,
+				6F848B551CD9AE2D007CD526 /* memViewController.m in Sources */,
 				6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */,
 				6F035A241CCF2A3200BA023E /* AndyScrollView.m in Sources */,
 				6FA2959A1CD4505C005B0574 /* NavController.m in Sources */,
+				6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */,
 				6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */,
 				6F6F62051CD618E000BEC283 /* HistoryListTableViewCell.m in Sources */,
 				6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import "AddViewController.h"
+#import "UpLineLable.h"
 
 @interface AddViewController ()
 
@@ -29,6 +30,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *showmark;
 
+@property (weak, nonatomic) IBOutlet UpLineLable *showmems;
+@property (weak, nonatomic) IBOutlet UIButton *mem_bt;
+@property (weak, nonatomic) IBOutlet UIButton *reason_bt;
 
 @end
 
@@ -42,6 +46,10 @@ bool caninputpoint = true;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.btbackspace setImage:[UIImage imageNamed:@"backspacedown"] forState:UIControlStateHighlighted];
+    [self.showmems setVerticalAlignment:VerticalAlignmentTop];
+    [self.mem_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0]] forState:UIControlStateHighlighted];
+    [self.reason_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0]] forState:UIControlStateHighlighted];
+    
     // Do any additional setup after loading the view.
 }
 - (IBAction)plusOnclick:(id)sender {
@@ -54,7 +62,12 @@ bool caninputpoint = true;
     [self.minus_bt setImage:[UIImage imageNamed:@"minus_on"] forState:UIControlStateNormal];
     isplus = false;
 }
+- (IBAction)membtOnclick:(id)sender {
+    [self performSegueWithIdentifier:@"gotomem" sender:self];
+}
 
+- (IBAction)reasonOnclick:(id)sender {
+}
 
 - (IBAction)bt1Onclick:(id)sender {
     [self keyboardcallback:@"1"];
@@ -159,6 +172,20 @@ bool caninputpoint = true;
             }
         }
     }
+}
+
+- (UIImage *)colorimg:(UIColor *)color
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 - (void)didReceiveMemoryWarning {
