@@ -13,6 +13,9 @@
 		6F035A251CCF2A3200BA023E /* LeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A221CCF2A3200BA023E /* LeftView.m */; };
 		6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3B6B751CD8CF0F00897197 /* AddViewController.m */; };
 		6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3B6B781CD8E7E500897197 /* UpLineLable.m */; };
+		6F4A8AB61D06E9A400734F84 /* OverViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4A8AB51D06E9A400734F84 /* OverViewViewController.m */; };
+		6F4A8AB91D06EA6800734F84 /* ReasonSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4A8AB81D06EA6800734F84 /* ReasonSettingViewController.m */; };
+		6F4A8ABC1D06EA7C00734F84 /* GroupSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4A8ABB1D06EA7C00734F84 /* GroupSettingViewController.m */; };
 		6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6602FB1CD81EF6001D4903 /* AboutViewController.m */; };
 		6F6602FE1CD8241F001D4903 /* powerscore_icon_p.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */; };
 		6F6D7CEB1C9EA9F70089521E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D7CEA1C9EA9F70089521E /* main.m */; };
@@ -22,8 +25,7 @@
 		6F6D7CF91C9EA9F70089521E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F6D7CF71C9EA9F70089521E /* LaunchScreen.storyboard */; };
 		6F6D7D041C9EA9F70089521E /* PowerScoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D7D031C9EA9F70089521E /* PowerScoreTests.m */; };
 		6F6D7D0F1C9EA9F70089521E /* PowerScoreUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6D7D0E1C9EA9F70089521E /* PowerScoreUITests.m */; };
-		6F6F62051CD618E000BEC283 /* HistoryListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6F62031CD618E000BEC283 /* HistoryListTableViewCell.m */; };
-		6F6F62061CD618E000BEC283 /* HistoryListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F6F62041CD618E000BEC283 /* HistoryListTableViewCell.xib */; };
+		6F6F62061CD618E000BEC283 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F6F62041CD618E000BEC283 /* HistoryTableViewCell.xib */; };
 		6F7E34221CD56C67006CA8AE /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7E34211CD56C67006CA8AE /* white.png */; };
 		6F7E34241CD56D9D006CA8AE /* grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7E34231CD56D9D006CA8AE /* grey.png */; };
 		6F7E34271CD57B02006CA8AE /* RightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F7E34261CD57B02006CA8AE /* RightView.m */; };
@@ -31,6 +33,7 @@
 		6F7E342C1CD59D9D006CA8AE /* light_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7E342B1CD59D9D006CA8AE /* light_blue.png */; };
 		6F7E342E1CD5A198006CA8AE /* right_divide.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F7E342D1CD5A198006CA8AE /* right_divide.png */; };
 		6F848B551CD9AE2D007CD526 /* memViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F848B541CD9AE2D007CD526 /* memViewController.m */; };
+		6F860CD31CDEE5B0001C3D24 /* ChooseReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F860CD21CDEE5B0001C3D24 /* ChooseReasonViewController.m */; };
 		6F93ABDE1CD4BD43009504E4 /* setting_tx.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F93ABDD1CD4BD43009504E4 /* setting_tx.png */; };
 		6F93ABE01CD4BDEA009504E4 /* account.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F93ABDF1CD4BDEA009504E4 /* account.plist */; };
 		6FA2959A1CD4505C005B0574 /* NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA295991CD4505C005B0574 /* NavController.m */; };
@@ -66,6 +69,12 @@
 		6F3B6B751CD8CF0F00897197 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		6F3B6B771CD8E7E500897197 /* UpLineLable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpLineLable.h; sourceTree = "<group>"; };
 		6F3B6B781CD8E7E500897197 /* UpLineLable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpLineLable.m; sourceTree = "<group>"; };
+		6F4A8AB41D06E9A400734F84 /* OverViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverViewViewController.h; sourceTree = "<group>"; };
+		6F4A8AB51D06E9A400734F84 /* OverViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverViewViewController.m; sourceTree = "<group>"; };
+		6F4A8AB71D06EA6800734F84 /* ReasonSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReasonSettingViewController.h; sourceTree = "<group>"; };
+		6F4A8AB81D06EA6800734F84 /* ReasonSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReasonSettingViewController.m; sourceTree = "<group>"; };
+		6F4A8ABA1D06EA7C00734F84 /* GroupSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSettingViewController.h; sourceTree = "<group>"; };
+		6F4A8ABB1D06EA7C00734F84 /* GroupSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupSettingViewController.m; sourceTree = "<group>"; };
 		6F6602FA1CD81EF6001D4903 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		6F6602FB1CD81EF6001D4903 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powerscore_icon_p.png; sourceTree = "<group>"; };
@@ -83,9 +92,7 @@
 		6F6D7D0A1C9EA9F70089521E /* PowerScoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PowerScoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F6D7D0E1C9EA9F70089521E /* PowerScoreUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerScoreUITests.m; sourceTree = "<group>"; };
 		6F6D7D101C9EA9F70089521E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F6F62021CD618E000BEC283 /* HistoryListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListTableViewCell.h; sourceTree = "<group>"; };
-		6F6F62031CD618E000BEC283 /* HistoryListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListTableViewCell.m; sourceTree = "<group>"; };
-		6F6F62041CD618E000BEC283 /* HistoryListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryListTableViewCell.xib; sourceTree = "<group>"; };
+		6F6F62041CD618E000BEC283 /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		6F7E34211CD56C67006CA8AE /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = white.png; sourceTree = "<group>"; };
 		6F7E34231CD56D9D006CA8AE /* grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grey.png; sourceTree = "<group>"; };
 		6F7E34251CD57B02006CA8AE /* RightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightView.h; sourceTree = "<group>"; };
@@ -96,6 +103,8 @@
 		6F7E342D1CD5A198006CA8AE /* right_divide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_divide.png; sourceTree = "<group>"; };
 		6F848B531CD9AE2D007CD526 /* memViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memViewController.h; sourceTree = "<group>"; };
 		6F848B541CD9AE2D007CD526 /* memViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = memViewController.m; sourceTree = "<group>"; };
+		6F860CD11CDEE5B0001C3D24 /* ChooseReasonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseReasonViewController.h; sourceTree = "<group>"; };
+		6F860CD21CDEE5B0001C3D24 /* ChooseReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseReasonViewController.m; sourceTree = "<group>"; };
 		6F93ABDD1CD4BD43009504E4 /* setting_tx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_tx.png; sourceTree = "<group>"; };
 		6F93ABDF1CD4BDEA009504E4 /* account.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = account.plist; sourceTree = "<group>"; };
 		6FA295981CD4505C005B0574 /* NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavController.h; sourceTree = "<group>"; };
@@ -166,6 +175,14 @@
 				6F3B6B751CD8CF0F00897197 /* AddViewController.m */,
 				6F848B531CD9AE2D007CD526 /* memViewController.h */,
 				6F848B541CD9AE2D007CD526 /* memViewController.m */,
+				6F860CD11CDEE5B0001C3D24 /* ChooseReasonViewController.h */,
+				6F860CD21CDEE5B0001C3D24 /* ChooseReasonViewController.m */,
+				6F4A8AB41D06E9A400734F84 /* OverViewViewController.h */,
+				6F4A8AB51D06E9A400734F84 /* OverViewViewController.m */,
+				6F4A8AB71D06EA6800734F84 /* ReasonSettingViewController.h */,
+				6F4A8AB81D06EA6800734F84 /* ReasonSettingViewController.m */,
+				6F4A8ABA1D06EA7C00734F84 /* GroupSettingViewController.h */,
+				6F4A8ABB1D06EA7C00734F84 /* GroupSettingViewController.m */,
 				6FA295981CD4505C005B0574 /* NavController.h */,
 				6FA295991CD4505C005B0574 /* NavController.m */,
 				6F035A1E1CCF2A3200BA023E /* AndyScrollView.h */,
@@ -178,17 +195,15 @@
 				6F7E34261CD57B02006CA8AE /* RightView.m */,
 				6F3B6B771CD8E7E500897197 /* UpLineLable.h */,
 				6F3B6B781CD8E7E500897197 /* UpLineLable.m */,
-				6F6F62021CD618E000BEC283 /* HistoryListTableViewCell.h */,
-				6F6F62031CD618E000BEC283 /* HistoryListTableViewCell.m */,
-				6F6F62041CD618E000BEC283 /* HistoryListTableViewCell.xib */,
+				6F6F62041CD618E000BEC283 /* HistoryTableViewCell.xib */,
+				26F6FFAE1CD9BCE40073C540 /* History.h */,
+				26F6FFAF1CD9BCE40073C540 /* History.m */,
 				6F6D7CF21C9EA9F70089521E /* Main.storyboard */,
 				6F6D7CF51C9EA9F70089521E /* Assets.xcassets */,
 				6F6D7CF71C9EA9F70089521E /* LaunchScreen.storyboard */,
 				6F6D7CFA1C9EA9F70089521E /* Info.plist */,
 				6F93ABDF1CD4BDEA009504E4 /* account.plist */,
 				6F6D7CE91C9EA9F70089521E /* Supporting Files */,
-				26F6FFAE1CD9BCE40073C540 /* History.h */,
-				26F6FFAF1CD9BCE40073C540 /* History.m */,
 			);
 			path = PowerScore;
 			sourceTree = "<group>";
@@ -327,7 +342,7 @@
 				6F7E342E1CD5A198006CA8AE /* right_divide.png in Resources */,
 				6F93ABE01CD4BDEA009504E4 /* account.plist in Resources */,
 				6F7E34241CD56D9D006CA8AE /* grey.png in Resources */,
-				6F6F62061CD618E000BEC283 /* HistoryListTableViewCell.xib in Resources */,
+				6F6F62061CD618E000BEC283 /* HistoryTableViewCell.xib in Resources */,
 				6F7E34221CD56C67006CA8AE /* white.png in Resources */,
 				6F93ABDE1CD4BD43009504E4 /* setting_tx.png in Resources */,
 				6F6D7CF91C9EA9F70089521E /* LaunchScreen.storyboard in Resources */,
@@ -359,20 +374,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F035A251CCF2A3200BA023E /* LeftView.m in Sources */,
+				6F4A8AB91D06EA6800734F84 /* ReasonSettingViewController.m in Sources */,
 				6F035A231CCF2A3200BA023E /* ViewController.m in Sources */,
-<<<<<<< HEAD
 				6F848B551CD9AE2D007CD526 /* memViewController.m in Sources */,
-=======
 				26F6FFB01CD9BCE40073C540 /* History.m in Sources */,
->>>>>>> origin/iOS
+				6F4A8ABC1D06EA7C00734F84 /* GroupSettingViewController.m in Sources */,
 				6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */,
 				6F035A241CCF2A3200BA023E /* AndyScrollView.m in Sources */,
 				6FA2959A1CD4505C005B0574 /* NavController.m in Sources */,
 				6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */,
 				6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */,
-				6F6F62051CD618E000BEC283 /* HistoryListTableViewCell.m in Sources */,
+				6F4A8AB61D06E9A400734F84 /* OverViewViewController.m in Sources */,
 				6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */,
 				6F7E34271CD57B02006CA8AE /* RightView.m in Sources */,
+				6F860CD31CDEE5B0001C3D24 /* ChooseReasonViewController.m in Sources */,
 				6F6D7CEE1C9EA9F70089521E /* AppDelegate.m in Sources */,
 				6F6D7CEB1C9EA9F70089521E /* main.m in Sources */,
 			);

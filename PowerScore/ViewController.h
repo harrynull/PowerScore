@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 -(void)vc_openabout;
-
+-(void)vc_openov;
+-(void)vc_opensr;
+-(void)vc_opensg;
+@property (nonatomic, strong) IBOutlet UITableViewCell *HistoryCell;
 @end
 

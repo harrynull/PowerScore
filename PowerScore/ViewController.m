@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "AndyScrollView.h"
 #import "RightScrollView.h"
-#import "HistoryListTableViewCell.h"
 #import "History.h"
 
 @interface ViewController ()
@@ -35,7 +34,10 @@
     
     __weak IBOutlet UITableView *tableview;
     
-    NSMutableArray * histories;
+    __weak IBOutlet UIButton *class_or_student;
+    
+    NSArray *_histories;
+
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -47,38 +49,62 @@
 
 @implementation ViewController
 
-//锁定竖屏
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return histories.count;
+    return [_histories count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    static NSString * identifier = @"HistoryListTableViewCellIdentifier";
-    HistoryListTableViewCell * cell;
+
+    static NSString * identifier = @"HistoryIdentifier";
+    UITableViewCell * cell;
     cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[HistoryListTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HistoryTableViewCell" owner:self options:nil];
+    if ([nib count]>0)
+    {
+        self.HistoryCell = [nib objectAtIndex:0];
+        cell = self.HistoryCell;
     }
-    History *history = histories[indexPath.row];
-    cell.reasonl = [[UILabel alloc] init];
-    [cell.reasonl setText:history.reason];
+    History *history = [_histories objectAtIndex:indexPath.row];
+    UILabel *reason = (UILabel *)[cell.contentView viewWithTag:1];
+    UILabel *date_short = (UILabel *)[cell.contentView viewWithTag:2];
+    UILabel *mark = (UILabel *)[cell.contentView viewWithTag:3];
+    UILabel *members = (UILabel *)[cell.contentView viewWithTag:4];
+    
+    reason.text = history.reason;
+    date_short.text = history.date_short;
+    mark.text = history.mark;
+    members.text = history.members;
     return cell;
 }
 
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self initUI];
-    
+    [self loadHistory];
     
 }
-
+-(void)loadHistory
+{
+    History *h1 = [[History alloc] init];
+    h1.reason = @"垃圾";
+    h1.date_short = @"06-07";
+    h1.mark = @"-50";
+    h1.members = @"张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,";
+    
+    History *h2 = [[History alloc] init];
+    h2.reason = @"不行不行不行不行不行不行";
+    h2.date_short = @"06-08";
+    h2.mark = @"-50";
+    h2.members = @"张子凡";
+    
+    _histories = [NSArray arrayWithObjects:h1, h2, nil];
+}
+    
 -(void)initUI
 {
     
@@ -86,7 +112,11 @@
     [self.view addSubview:self.rscroll];
     [add_bt setBackgroundImage:[UIImage imageNamed:@"add_press"] forState:UIControlStateHighlighted];
     [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
-     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
+    [class_or_student setBackgroundImage:[UIImage imageNamed:@"light_blue"] forState:UIControlStateHighlighted];
+    class_or_student.adjustsImageWhenHighlighted = NO;
+    [class_or_student setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
+    [class_or_student setImageEdgeInsets:UIEdgeInsetsMake(0, class_or_student.titleLabel.bounds.size.width+5, 0, -class_or_student.titleLabel.bounds.size.width-5)];
     [toolback setBackgroundColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [flit setBackgroundImage:[UIImage imageNamed:@"flitback"] forState:UIControlStateHighlighted];
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
@@ -105,24 +135,32 @@
         }
     }
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopen:)name:@"toopen" object:nil];
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopenov:)name:@"toopenov" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopensr:)name:@"toopensr" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopensg:)name:@"toopensg" object:nil];
     // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    histories = [NSMutableArray array];
-    [histories addObject:[[History alloc] initWithData:@"123" :@"321" :@"233" :@"23333"]];
-    
-    [histories addObject:[[History alloc] initWithData:@"123" :@"321" :@"233" :@"23333"]];
-    
-    [histories addObject:[[History alloc] initWithData:@"123" :@"321" :@"233" :@"23333"]];
+   
 }
 
 -(void)toopen:(NSNotification *)sender
 {
     [self vc_openabouteee];
 }
-
+-(void)toopenov:(NSNotification *)sender
+{
+    [self vc_openoverview];
+}
+-(void)toopensr:(NSNotification *)sender
+{
+    [self vc_opensetreason];
+}
+-(void)toopensg:(NSNotification *)sender
+{
+    [self vc_opensetgroup];
+}
 - (IBAction)openleftOnclick:(id)sender {
     self.scroll.stloadleftview;
-    //[self vc_openabouteee];
+
     
 
 }
@@ -147,7 +185,6 @@
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
     [person_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
-    [self vc_openabout];
     [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         movinglable.frame = CGRectMake(90, 41, 90, 3);
     } completion:^(BOOL finished) {
@@ -162,10 +199,37 @@
 {
     [[NSNotificationCenter defaultCenter]postNotificationName:@"toopen" object:nil];
 }
+-(void)vc_openov
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"toopenov" object:nil];
+}
+-(void)vc_opensr
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"toopensr" object:nil];
+}
+-(void)vc_opensg
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"toopensg" object:nil];
+}
 -(void)vc_openabouteee
 {
     self.scroll.stcloseleftview;
     [self performSegueWithIdentifier:@"gotoabout" sender:self];
+}
+-(void)vc_openoverview
+{
+    self.scroll.stcloseleftview;
+    [self performSegueWithIdentifier:@"gotooverview" sender:self];
+}
+-(void)vc_opensetreason
+{
+    self.scroll.stcloseleftview;
+    [self performSegueWithIdentifier:@"gotosetreason" sender:self];
+}
+-(void)vc_opensetgroup
+{
+    self.scroll.stcloseleftview;
+    [self performSegueWithIdentifier:@"gotosetgroup" sender:self];
 }
 
 -(UIScrollView *)scroll

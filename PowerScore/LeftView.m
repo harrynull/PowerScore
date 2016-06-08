@@ -20,7 +20,21 @@
     ViewController *v =[[ViewController alloc]init];
     [v vc_openabout];
 }
-
+-(void)openov
+{
+    ViewController *v =[[ViewController alloc]init];
+    [v vc_openov];
+}
+-(void)opensr
+{
+    ViewController *v =[[ViewController alloc]init];
+    [v vc_opensr];
+}
+-(void)opensg
+{
+    ViewController *v =[[ViewController alloc]init];
+    [v vc_opensg];
+}
 -(id)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
@@ -60,6 +74,7 @@
         [overview setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [overview setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
         overview.titleLabel.textAlignment = NSTextAlignmentLeft;
+        [overview addTarget:self action:@selector(openov) forControlEvents:UIControlEventTouchUpInside];
         [overview setTitle:@"     学分总览                  " forState:(UIControlStateNormal)];
         [overview setImage:[UIImage imageNamed:@"overview"] forState:UIControlStateNormal];
         overview.adjustsImageWhenHighlighted = NO;
@@ -72,6 +87,7 @@
         reason.titleLabel.textAlignment = NSTextAlignmentLeft;
         [reason setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [reason setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
+        [reason addTarget:self action:@selector(opensr) forControlEvents:UIControlEventTouchUpInside];
         [reason setTitle:@"     常用理由                  " forState:(UIControlStateNormal)];
         [reason setImage:[UIImage imageNamed:@"reason"] forState:UIControlStateNormal];
         reason.translatesAutoresizingMaskIntoConstraints = NO;
@@ -85,6 +101,7 @@
         group.titleLabel.font = [UIFont systemFontOfSize:18.0];
         [group setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [group setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
+        [group addTarget:self action:@selector(opensg) forControlEvents:UIControlEventTouchUpInside];
         [group setTitle:@"     成员组                     " forState:(UIControlStateNormal)];
         [group setImage:[UIImage imageNamed:@"group"] forState:UIControlStateNormal];
         group.translatesAutoresizingMaskIntoConstraints = NO;

@@ -49,6 +49,7 @@ bool caninputpoint = true;
     [self.showmems setVerticalAlignment:VerticalAlignmentTop];
     [self.mem_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0]] forState:UIControlStateHighlighted];
     [self.reason_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0]] forState:UIControlStateHighlighted];
+    [self.reason_bt setAdjustsImageWhenHighlighted:NO];
     
     // Do any additional setup after loading the view.
 }
@@ -67,6 +68,7 @@ bool caninputpoint = true;
 }
 
 - (IBAction)reasonOnclick:(id)sender {
+    [self performSegueWithIdentifier:@"gotochoosereason" sender:self];
 }
 
 - (IBAction)bt1Onclick:(id)sender {
@@ -130,7 +132,8 @@ bool caninputpoint = true;
 - (IBAction)btbackspaceOnclick:(id)sender {
     if (self.showmark.text.length == 1) {
         [self.showmark setText:@"0"];
-            onlyzero = true;
+        onlyzero = true;
+        caninputpoint = true;
     } else {
         NSString *s = self.showmark.text;
         s = [s substringToIndex:self.showmark.text.length - 1];
@@ -143,10 +146,10 @@ bool caninputpoint = true;
         }
         if ([s isEqualToString: @"0"])
         {
-            NSLog(@"8700");
             onlyzero = true;
         }
     }
+    caninput = true;
 }
 
 -(void)keyboardcallback:(NSString *)num

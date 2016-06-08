@@ -9,11 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface History : NSObject
-@property (copy,nonatomic) NSString *date_short;
-@property (copy,nonatomic) NSString *reason;
-@property (copy,nonatomic) NSString *members;
-@property (copy,nonatomic) NSString *mark;
-
-- (History *)initWithData: (NSString*) date_short : (NSString*) reason : (NSString*) members : (NSString*) mark;
+@property (nonatomic, strong) NSString *date_short;
+@property (nonatomic, strong) NSString *reason;
+@property (nonatomic, strong) NSString *members;
+@property (nonatomic, strong) NSString *mark;
+@property  BOOL *ispositive;
 
 @end
