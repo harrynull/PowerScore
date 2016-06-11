@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="358" height="77"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng1-L8-LuR">
+                    <rect key="frame" x="321" y="28" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="AfL-8W-aGx"/>
+                        <constraint firstAttribute="height" constant="20" id="GyU-T5-9cu"/>
+                    </constraints>
+                    <state key="normal" image="deselect">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="select.png"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4Q-ZT-gBy">
+                    <rect key="frame" x="55" y="28" width="220" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="220" id="HtG-Lp-llM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downsig" translatesAutoresizingMaskIntoConstraints="NO" id="mih-5U-dEY">
+                    <rect key="frame" x="17" y="34" width="13" height="7"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="7" id="1gk-tW-hXf"/>
+                        <constraint firstAttribute="width" constant="13" id="9qo-EJ-yCj"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="mih-5U-dEY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="17" id="9ud-L2-dQd"/>
+                <constraint firstAttribute="centerY" secondItem="b4Q-ZT-gBy" secondAttribute="centerY" id="Eiz-1c-856"/>
+                <constraint firstAttribute="trailing" secondItem="ng1-L8-LuR" secondAttribute="trailing" constant="17" id="c2L-Wd-tmo"/>
+                <constraint firstAttribute="centerY" secondItem="ng1-L8-LuR" secondAttribute="centerY" id="ghI-Ns-Ved"/>
+                <constraint firstAttribute="centerY" secondItem="mih-5U-dEY" secondAttribute="centerY" constant="1" id="r6Z-86-y2R"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="jiantouInageView" destination="mih-5U-dEY" id="6vy-4r-vO0"/>
+                <outlet property="nameLabel" destination="b4Q-ZT-gBy" id="pph-N5-4WK"/>
+                <outlet property="selectButton" destination="ng1-L8-LuR" id="qpX-xj-RM2"/>
+            </connections>
+            <point key="canvasLocation" x="278" y="176.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="deselect" width="20" height="20"/>
+        <image name="downsig" width="13" height="7"/>
+        <image name="select.png" width="20" height="20"/>
+    </resources>
+</document>

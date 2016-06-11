@@ -1,12 +1,12 @@
 //
-//  memViewController.m
-//  PowerScore
+//  ChooseTableView.m
+//  
 //
-//  Created by Gustav Wang on 16/5/4.
-//  Copyright © 2016年 Gustav Wang. All rights reserved.
+//  Created by 杨智 on 15/9/1.
+//
 //
 
-#import "memViewController.h"
+#import "ChooseTableView.h"
 
 #import "HeaderView.h"
 #import "ChooseRoleCell.h"
@@ -14,7 +14,7 @@
 static NSString * const ReuseIdentifierHeader = @"header";
 static NSString * const ReuseIdentifierCell = @"dcell";
 
-@interface memViewController ()
+@interface ChooseTableView ()
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 @property (nonatomic, strong) NSArray             *dataArray;
@@ -24,22 +24,17 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 
 @end
 
-@implementation memViewController
+@implementation ChooseTableView
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //self.navigationItem.title = @"多选";
+    self.navigationItem.title = @"多选";
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    UIBarButtonItem *item0 = [[UIBarButtonItem alloc]initWithTitle:@"  组" style:UIBarButtonItemStylePlain target:self action:@selector(groupAction)];
-
-    self.navigationController.toolbarHidden = NO;
-    self.toolbarItems = @[item0];
-    [self.navigationController.toolbar setBarTintColor:[UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     
     NSString *path  = [[NSBundle mainBundle] pathForResource:@"role" ofType:@"plist"];
     NSMutableArray *wai = [[NSMutableArray alloc] initWithContentsOfFile:path];
@@ -59,17 +54,8 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HeaderView class]) bundle:nil] forHeaderFooterViewReuseIdentifier:ReuseIdentifierHeader];
     
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-    
-}
 
-- (void)groupAction
-{
-    
 }
-- (IBAction)okAction:(id)sender {
-}
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -128,9 +114,9 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     [view.tap addTarget:self action:@selector(headerTap:)];
     
     if ([self.expendArray containsObject:key]) {
-        [view.jiantouInageView setImage:[UIImage imageNamed:@"upsig"]];
+        view.jiantouInageView.transform = CGAffineTransformMakeRotation(M_PI_2);
     }else {
-        //view.jiantouInageView.transform = CGAffineTransformIdentity;
+        view.jiantouInageView.transform = CGAffineTransformIdentity;
     }
     return view;
 }
@@ -192,10 +178,14 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     
     if ([self.expendArray containsObject:key]) {
         [self.expendArray removeObject:key];
-    
+        [UIView animateWithDuration:0.1 animations:^{
+            view.jiantouInageView.transform = CGAffineTransformIdentity;
+        }];
     }else {
         [self.expendArray addObject:key];
-        [view.jiantouInageView setImage:[UIImage imageNamed:@"downsig"]];
+        [UIView animateWithDuration:0.1 animations:^{
+            view.jiantouInageView.transform = CGAffineTransformMakeRotation(M_PI_2);
+        }];
     }
     
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationNone];

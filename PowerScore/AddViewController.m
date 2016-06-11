@@ -43,6 +43,10 @@ bool caninput = true;
 bool onlyzero = true;
 bool caninputpoint = true;
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.toolbarHidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.btbackspace setImage:[UIImage imageNamed:@"backspacedown"] forState:UIControlStateHighlighted];

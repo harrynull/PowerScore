@@ -54,6 +54,7 @@
     return [_histories count];
 }
 
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     static NSString * identifier = @"HistoryIdentifier";
@@ -77,6 +78,10 @@
     mark.text = history.mark;
     members.text = history.members;
     return cell;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.toolbarHidden = YES;
 }
 
 
@@ -111,8 +116,10 @@
     [self.view addSubview:self.scroll];
     [self.view addSubview:self.rscroll];
     [add_bt setBackgroundImage:[UIImage imageNamed:@"add_press"] forState:UIControlStateHighlighted];
+    self.navigationController.toolbarHidden = YES;
     [self.navigationController.navigationBar setBarTintColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
+    
     [class_or_student setBackgroundImage:[UIImage imageNamed:@"light_blue"] forState:UIControlStateHighlighted];
     class_or_student.adjustsImageWhenHighlighted = NO;
     [class_or_student setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
@@ -140,6 +147,11 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopensg:)name:@"toopensg" object:nil];
     // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
 }
 
 -(void)toopen:(NSNotification *)sender

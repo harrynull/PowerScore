@@ -36,6 +36,11 @@
 		6F860CD31CDEE5B0001C3D24 /* ChooseReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F860CD21CDEE5B0001C3D24 /* ChooseReasonViewController.m */; };
 		6F93ABDE1CD4BD43009504E4 /* setting_tx.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F93ABDD1CD4BD43009504E4 /* setting_tx.png */; };
 		6F93ABE01CD4BDEA009504E4 /* account.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F93ABDF1CD4BDEA009504E4 /* account.plist */; };
+		6F9B2E191D09747100A5746A /* ChooseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B2E121D09747100A5746A /* ChooseTableView.m */; };
+		6F9B2E1A1D09747100A5746A /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B2E141D09747100A5746A /* HeaderView.m */; };
+		6F9B2E1B1D09747100A5746A /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F9B2E151D09747100A5746A /* HeaderView.xib */; };
+		6F9B2E1C1D09747100A5746A /* ChooseRoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B2E171D09747100A5746A /* ChooseRoleCell.m */; };
+		6F9B2E1D1D09747100A5746A /* role.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F9B2E181D09747100A5746A /* role.plist */; };
 		6FA2959A1CD4505C005B0574 /* NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA295991CD4505C005B0574 /* NavController.m */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +112,14 @@
 		6F860CD21CDEE5B0001C3D24 /* ChooseReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseReasonViewController.m; sourceTree = "<group>"; };
 		6F93ABDD1CD4BD43009504E4 /* setting_tx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_tx.png; sourceTree = "<group>"; };
 		6F93ABDF1CD4BDEA009504E4 /* account.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = account.plist; sourceTree = "<group>"; };
+		6F9B2E111D09747100A5746A /* ChooseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseTableView.h; sourceTree = "<group>"; };
+		6F9B2E121D09747100A5746A /* ChooseTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseTableView.m; sourceTree = "<group>"; };
+		6F9B2E131D09747100A5746A /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		6F9B2E141D09747100A5746A /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
+		6F9B2E151D09747100A5746A /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		6F9B2E161D09747100A5746A /* ChooseRoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseRoleCell.h; sourceTree = "<group>"; };
+		6F9B2E171D09747100A5746A /* ChooseRoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseRoleCell.m; sourceTree = "<group>"; };
+		6F9B2E181D09747100A5746A /* role.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = role.plist; sourceTree = "<group>"; };
 		6FA295981CD4505C005B0574 /* NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavController.h; sourceTree = "<group>"; };
 		6FA295991CD4505C005B0574 /* NavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -195,6 +208,14 @@
 				6F7E34261CD57B02006CA8AE /* RightView.m */,
 				6F3B6B771CD8E7E500897197 /* UpLineLable.h */,
 				6F3B6B781CD8E7E500897197 /* UpLineLable.m */,
+				6F9B2E111D09747100A5746A /* ChooseTableView.h */,
+				6F9B2E121D09747100A5746A /* ChooseTableView.m */,
+				6F9B2E131D09747100A5746A /* HeaderView.h */,
+				6F9B2E141D09747100A5746A /* HeaderView.m */,
+				6F9B2E151D09747100A5746A /* HeaderView.xib */,
+				6F9B2E161D09747100A5746A /* ChooseRoleCell.h */,
+				6F9B2E171D09747100A5746A /* ChooseRoleCell.m */,
+				6F9B2E181D09747100A5746A /* role.plist */,
 				6F6F62041CD618E000BEC283 /* HistoryTableViewCell.xib */,
 				26F6FFAE1CD9BCE40073C540 /* History.h */,
 				26F6FFAF1CD9BCE40073C540 /* History.m */,
@@ -341,8 +362,10 @@
 				6F7E342C1CD59D9D006CA8AE /* light_blue.png in Resources */,
 				6F7E342E1CD5A198006CA8AE /* right_divide.png in Resources */,
 				6F93ABE01CD4BDEA009504E4 /* account.plist in Resources */,
+				6F9B2E1B1D09747100A5746A /* HeaderView.xib in Resources */,
 				6F7E34241CD56D9D006CA8AE /* grey.png in Resources */,
 				6F6F62061CD618E000BEC283 /* HistoryTableViewCell.xib in Resources */,
+				6F9B2E1D1D09747100A5746A /* role.plist in Resources */,
 				6F7E34221CD56C67006CA8AE /* white.png in Resources */,
 				6F93ABDE1CD4BD43009504E4 /* setting_tx.png in Resources */,
 				6F6D7CF91C9EA9F70089521E /* LaunchScreen.storyboard in Resources */,
@@ -381,10 +404,13 @@
 				6F4A8ABC1D06EA7C00734F84 /* GroupSettingViewController.m in Sources */,
 				6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */,
 				6F035A241CCF2A3200BA023E /* AndyScrollView.m in Sources */,
+				6F9B2E191D09747100A5746A /* ChooseTableView.m in Sources */,
 				6FA2959A1CD4505C005B0574 /* NavController.m in Sources */,
+				6F9B2E1C1D09747100A5746A /* ChooseRoleCell.m in Sources */,
 				6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */,
 				6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */,
 				6F4A8AB61D06E9A400734F84 /* OverViewViewController.m in Sources */,
+				6F9B2E1A1D09747100A5746A /* HeaderView.m in Sources */,
 				6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */,
 				6F7E34271CD57B02006CA8AE /* RightView.m in Sources */,
 				6F860CD31CDEE5B0001C3D24 /* ChooseReasonViewController.m in Sources */,
