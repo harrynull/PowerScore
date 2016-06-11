@@ -13,6 +13,7 @@
 		6F035A251CCF2A3200BA023E /* LeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A221CCF2A3200BA023E /* LeftView.m */; };
 		6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3B6B751CD8CF0F00897197 /* AddViewController.m */; };
 		6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3B6B781CD8E7E500897197 /* UpLineLable.m */; };
+		6F4636EC1D0BF3E500FDB338 /* ChooseMemTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4636EB1D0BF3E500FDB338 /* ChooseMemTableViewController.m */; };
 		6F4A8AB61D06E9A400734F84 /* OverViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4A8AB51D06E9A400734F84 /* OverViewViewController.m */; };
 		6F4A8AB91D06EA6800734F84 /* ReasonSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4A8AB81D06EA6800734F84 /* ReasonSettingViewController.m */; };
 		6F4A8ABC1D06EA7C00734F84 /* GroupSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4A8ABB1D06EA7C00734F84 /* GroupSettingViewController.m */; };
@@ -74,6 +75,8 @@
 		6F3B6B751CD8CF0F00897197 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		6F3B6B771CD8E7E500897197 /* UpLineLable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpLineLable.h; sourceTree = "<group>"; };
 		6F3B6B781CD8E7E500897197 /* UpLineLable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpLineLable.m; sourceTree = "<group>"; };
+		6F4636EA1D0BF3E500FDB338 /* ChooseMemTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseMemTableViewController.h; sourceTree = "<group>"; };
+		6F4636EB1D0BF3E500FDB338 /* ChooseMemTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseMemTableViewController.m; sourceTree = "<group>"; };
 		6F4A8AB41D06E9A400734F84 /* OverViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverViewViewController.h; sourceTree = "<group>"; };
 		6F4A8AB51D06E9A400734F84 /* OverViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverViewViewController.m; sourceTree = "<group>"; };
 		6F4A8AB71D06EA6800734F84 /* ReasonSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReasonSettingViewController.h; sourceTree = "<group>"; };
@@ -196,6 +199,8 @@
 				6F4A8AB81D06EA6800734F84 /* ReasonSettingViewController.m */,
 				6F4A8ABA1D06EA7C00734F84 /* GroupSettingViewController.h */,
 				6F4A8ABB1D06EA7C00734F84 /* GroupSettingViewController.m */,
+				6F4636EA1D0BF3E500FDB338 /* ChooseMemTableViewController.h */,
+				6F4636EB1D0BF3E500FDB338 /* ChooseMemTableViewController.m */,
 				6FA295981CD4505C005B0574 /* NavController.h */,
 				6FA295991CD4505C005B0574 /* NavController.m */,
 				6F035A1E1CCF2A3200BA023E /* AndyScrollView.h */,
@@ -400,6 +405,7 @@
 				6F4A8AB91D06EA6800734F84 /* ReasonSettingViewController.m in Sources */,
 				6F035A231CCF2A3200BA023E /* ViewController.m in Sources */,
 				6F848B551CD9AE2D007CD526 /* memViewController.m in Sources */,
+				6F4636EC1D0BF3E500FDB338 /* ChooseMemTableViewController.m in Sources */,
 				26F6FFB01CD9BCE40073C540 /* History.m in Sources */,
 				6F4A8ABC1D06EA7C00734F84 /* GroupSettingViewController.m in Sources */,
 				6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */,

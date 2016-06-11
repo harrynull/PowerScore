@@ -206,6 +206,9 @@
 - (IBAction)add_btOnclick:(id)sender {
     [self performSegueWithIdentifier:@"gotoadd" sender:self];
 }
+- (IBAction)class_or_studentOnClick:(id)sender {
+    [self performSegueWithIdentifier:@"gotochoosemem" sender:self];
+}
 
 -(void)vc_openabout
 {
