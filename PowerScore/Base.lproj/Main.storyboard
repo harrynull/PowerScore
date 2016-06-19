@@ -1043,6 +1043,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uFK-Wd-agi">
                                 <rect key="frame" x="0.0" y="111" width="320" height="349"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="j0r-No-GGk" id="skq-9n-eSi"/>
+                                    <outlet property="delegate" destination="j0r-No-GGk" id="gF2-xu-q4n"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1144,12 +1148,20 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0S7-0P-IBM">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="33t-b6-kU3" id="sjm-b0-c3n"/>
+                                    <outlet property="delegate" destination="33t-b6-kU3" id="yIB-Hr-lFt"/>
+                                </connections>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7r-0O-s9g">
                                 <rect key="frame" x="0.0" y="460" width="320" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="0.44705882349999998" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
-                                    <barButtonItem style="plain" systemItem="add" id="aFw-HS-M3K"/>
+                                    <barButtonItem style="plain" systemItem="add" id="aFw-HS-M3K">
+                                        <connections>
+                                            <action selector="addreasonOnClick:" destination="33t-b6-kU3" id="gkb-Pq-fBH"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
@@ -1216,7 +1228,6 @@
         <!--Mem View Controller-->
         <scene sceneID="Xek-6c-n5g">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6kO-Jv-4Bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="table" id="bER-PG-Xcg" customClass="memViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vac-hJ-nzO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -1280,13 +1291,13 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6kO-Jv-4Bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-413" y="2725"/>
         </scene>
         <!--Choose Mem Table View Controller-->
         <scene sceneID="Cph-BT-236">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rOV-ME-ygV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="table2" id="7Yn-Eh-pKc" customClass="ChooseMemTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ar5-KS-Vqd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -1350,6 +1361,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rOV-ME-ygV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1933" y="1977"/>
         </scene>

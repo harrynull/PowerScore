@@ -10,6 +10,7 @@
 
 @interface ChooseReasonViewController ()
 
+
 @end
 
 @implementation ChooseReasonViewController
@@ -24,14 +25,45 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSMutableArray*)getplistarray
+{
+    NSString *plistpath = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
+    NSMutableArray *reasonarray = [[NSMutableArray alloc] initWithContentsOfFile:plistpath];
+    return reasonarray;
 }
-*/
+-(NSUInteger)getplistcount
+{
+    int plistcount;
+    NSString *plistpath = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
+    NSMutableArray *reasonarray = [[NSMutableArray alloc] initWithContentsOfFile:plistpath];
+    plistcount = reasonarray.count;
+    return plistcount;
+}
+
+- (NSUInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSUInteger)section
+{
+    int count = [self getplistcount];
+    
+    NSLog([NSString stringWithFormat:@"%d",count]);
+    return count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowInSection:(NSUInteger)section {
+    return 50;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *ID = @"ID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    
+    NSUInteger row = [indexPath row];
+    NSArray *reasons = [self getplistarray];
+    cell.textLabel.text = [reasons objectAtIndex:row];
+    return cell;
+}
+
 
 @end
