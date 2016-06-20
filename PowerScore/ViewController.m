@@ -96,16 +96,16 @@
 -(void)loadHistory
 {
     History *h1 = [[History alloc] init];
-    h1.reason = @"垃圾";
+    h1.reason = @"讲话";
     h1.date_short = @"06-07";
-    h1.mark = @"-50";
-    h1.members = @"张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,张子凡,";
+    h1.mark = @"-1";
+    h1.members = @"张三,李四";
     
     History *h2 = [[History alloc] init];
-    h2.reason = @"不行不行不行不行不行不行";
+    h2.reason = @"迟到";
     h2.date_short = @"06-08";
-    h2.mark = @"-50";
-    h2.members = @"张子凡";
+    h2.mark = @"-1";
+    h2.members = @"王五";
     
     _histories = [NSArray arrayWithObjects:h1, h2, nil];
 }
