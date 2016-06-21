@@ -352,7 +352,6 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 {
-//    NSLog(@">>>>>>>>>%f",scrollView.contentOffset.x);
     if (scrollView.contentOffset.x <= 0) {
         self.scroll.pan.enabled = YES;
     }else if (scrollView.contentOffset.x >= self.view.frame.size.width)

@@ -144,7 +144,6 @@
         UIButton *home = [[UIButton alloc]initWithFrame:rect7];
         [home setImage:[UIImage imageNamed:@"home"] forState:UIControlStateNormal];
         [self addSubview:home];
-        NSLog(@"2");
     }
     return self;
 }
