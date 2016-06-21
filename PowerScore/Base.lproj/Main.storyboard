@@ -1174,10 +1174,10 @@
                             <constraint firstItem="0S7-0P-IBM" firstAttribute="leading" secondItem="06v-zx-dl3" secondAttribute="leadingMargin" constant="-20" id="4fs-kc-5Gn"/>
                             <constraint firstItem="w7r-0O-s9g" firstAttribute="leading" secondItem="06v-zx-dl3" secondAttribute="leadingMargin" constant="-20" id="8DJ-j0-GKa"/>
                             <constraint firstItem="29q-qH-wZH" firstAttribute="top" secondItem="w7r-0O-s9g" secondAttribute="bottom" id="WB0-Kp-nfY"/>
-                            <constraint firstItem="29q-qH-wZH" firstAttribute="top" secondItem="0S7-0P-IBM" secondAttribute="bottom" id="ePv-92-mc1"/>
                             <constraint firstItem="0S7-0P-IBM" firstAttribute="top" secondItem="sD6-IT-93y" secondAttribute="bottom" id="fEO-VF-Ef3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0S7-0P-IBM" secondAttribute="trailing" constant="-20" id="hcS-xp-kDl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w7r-0O-s9g" secondAttribute="trailing" constant="-20" id="oHc-ku-xWl"/>
+                            <constraint firstItem="w7r-0O-s9g" firstAttribute="top" secondItem="0S7-0P-IBM" secondAttribute="bottom" id="pBh-aO-iAc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="w2f-0Q-blZ"/>

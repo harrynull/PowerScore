@@ -10,6 +10,7 @@
 
 @interface ReasonSettingViewController ()
 @property (nonatomic,strong) NSString *newreason;
+@property (nonatomic,strong) NSString *plistPath;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @end
 
@@ -17,7 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self creatplist];
+}
+
+-(void)creatplist
+{
+        NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        self.plistPath = [documentsDirectory stringByAppendingPathComponent:@"Reasons.plist"];
+ 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,19 +42,24 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         UITextField *reason = alertcontroller.textFields.firstObject;
         self.newreason = reason.text;
+        NSLog(self.newreason);
+        NSString *path = [self getplistpath];
+        NSMutableDictionary *newdic = [[[NSMutableDictionary alloc]initWithContentsOfFile:path]mutableCopy];
+        NSInteger totalnum = [self getplistcount]+1;
+        NSString *total = [NSString stringWithFormat:@"%ld",(long)totalnum];
+        NSLog(total);
+        [newdic setObject:self.newreason forKey:total];
+        [newdic writeToFile:[self getplistpath] atomically:YES];
         
-        NSString *path1 = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
-        NSMutableArray *newarray = [[NSMutableArray alloc] initWithContentsOfFile:path1];
-        [newarray addObject:self.newreason];
-        [newarray writeToFile:path1 atomically:YES];
         [self.tableview reloadData];
         
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     }];
     okAction.enabled = NO;
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    [alertcontroller addAction:okAction];
+    
     [alertcontroller addAction:cancelAction];
+    [alertcontroller addAction:okAction];
     [self presentViewController:alertcontroller animated:YES completion:nil];
 }
 
@@ -53,36 +67,37 @@
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
     if(alertController){
         UITextField *reason = alertController.textFields.firstObject;
-        UIAlertAction *okAction = alertController.actions.firstObject;
+        UIAlertAction *okAction = alertController.actions.lastObject;
         okAction.enabled = reason.text.length > 0;
     }
 }
-- (NSMutableArray*)getplistarray
+- (NSMutableDictionary*)getplistdic
 {
-    NSString *plistpath = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
-    NSMutableArray *reasonarray = [[NSMutableArray alloc] initWithContentsOfFile:plistpath];
-    return reasonarray;
+    NSMutableDictionary *reasonadic = [[NSMutableDictionary alloc] initWithContentsOfFile:[self getplistpath]];
+    return reasonadic;
 }
+- (NSString*)getplistpath
+{
+    return _plistPath;
+}
+
 -(NSUInteger)getplistcount
 {
     int plistcount;
-    NSString *plistpath = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
-    NSMutableArray *reasonarray = [[NSMutableArray alloc] initWithContentsOfFile:plistpath];
-    plistcount = reasonarray.count;
+    NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile:[self getplistpath]];
+    plistcount = reasondic.allKeys.count;
     return plistcount;
 }
 
 - (NSUInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSUInteger)section
 {
     int count = [self getplistcount];
-    
-    
     return count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 55;
+    return 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,9 +108,15 @@
     }
     
     NSUInteger row = [indexPath row];
-    NSArray *reasons = [self getplistarray];
-    cell.textLabel.text = [reasons objectAtIndex:row];
+    NSArray *reasonkeys = [self getplistdic].allKeys;
+    NSArray *reasons = [self getplistdic].allValues;
+    cell.textLabel.text = [reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])];
     return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *choosedreason = [[self getplistdic].allValues objectAtIndex:[indexPath row]];
+    NSLog(choosedreason);
 }
 
 @end

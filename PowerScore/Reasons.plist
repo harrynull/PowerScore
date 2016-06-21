@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<array>
-	<string>上课发言</string>
-	<string>打扫卫生</string>
-	<string>小组加分</string>
-	<string>上午迟到</string>
-	<string>中午迟到</string>
-	<string>上课讲话</string>
-	<string>晚修讲话</string>
-	<string>随意下位</string>
-	<string>没有值日</string>
-</array>
+<dict/>
 </plist>

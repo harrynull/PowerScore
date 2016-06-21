@@ -43,7 +43,7 @@
 @property(nonatomic,strong)RightScrollView *rscroll;
 @property(nonatomic,strong)UIView *leftView;
 @property(nonatomic,strong)UIView *rightView;
-
+@property (nonatomic,strong) NSString *plistPath;
 
 @end
 
@@ -88,11 +88,36 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     [self initUI];
     [self loadHistory];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
+    {
+        //第一次运行时初始化预设理由
+        [self creatplist];
+    }
     
 }
+    
+-(void)creatplist
+    {
+        NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        self.plistPath = [documentsDirectory stringByAppendingPathComponent:@"Reasons.plist"];
+        NSMutableDictionary *dictplist = [[NSMutableDictionary alloc ] init];
+        //设置属性值
+        [dictplist setObject:@"上课发言"forKey:@"1"];
+        [dictplist setObject:@"打扫卫生"forKey:@"2"];
+        [dictplist setObject:@"小组加分"forKey:@"3"];
+        [dictplist setObject:@"上午迟到"forKey:@"4"];
+        [dictplist setObject:@"中午迟到"forKey:@"5"];
+        [dictplist setObject:@"上课讲话"forKey:@"6"];
+        [dictplist setObject:@"晚修讲话"forKey:@"7"];
+        [dictplist setObject:@"随意下位"forKey:@"8"];
+        [dictplist setObject:@"没有值日"forKey:@"9"];
+        //写入文件
+        [dictplist writeToFile:_plistPath atomically:YES];
+        
+    }
 -(void)loadHistory
 {
     History *h1 = [[History alloc] init];

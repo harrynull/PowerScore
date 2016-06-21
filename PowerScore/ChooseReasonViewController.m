@@ -11,40 +11,50 @@
 @interface ChooseReasonViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *reasoninputlable;
-
+@property (nonatomic,strong) NSString *newreason;
+@property (nonatomic,strong) NSString *plistPath;
 @end
 
 @implementation ChooseReasonViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self creatplist];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (NSMutableArray*)getplistarray
+-(void)creatplist
 {
-    NSString *plistpath = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
-    NSMutableArray *reasonarray = [[NSMutableArray alloc] initWithContentsOfFile:plistpath];
-    return reasonarray;
+    NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    self.plistPath = [documentsDirectory stringByAppendingPathComponent:@"Reasons.plist"];
+    
 }
+
+- (NSMutableDictionary*)getplistdic
+{
+    NSMutableDictionary *reasonadic = [[NSMutableDictionary alloc] initWithContentsOfFile:[self getplistpath]];
+    return reasonadic;
+}
+- (NSString*)getplistpath
+{
+    return _plistPath;
+}
+
 -(NSUInteger)getplistcount
 {
     int plistcount;
-    NSString *plistpath = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
-    NSMutableArray *reasonarray = [[NSMutableArray alloc] initWithContentsOfFile:plistpath];
-    plistcount = reasonarray.count;
+    NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile:[self getplistpath]];
+    plistcount = reasondic.allKeys.count;
     return plistcount;
 }
 
 - (NSUInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSUInteger)section
 {
     int count = [self getplistcount];
-    
     return count;
 }
 
@@ -58,14 +68,19 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
+    
     NSUInteger row = [indexPath row];
-    NSArray *reasons = [self getplistarray];
-    cell.textLabel.text = [reasons objectAtIndex:row];
+    NSArray *reasonkeys = [self getplistdic].allKeys;
+    NSArray *reasons = [self getplistdic].allValues;
+    cell.textLabel.text = [reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *choosedreason = [[self getplistarray] objectAtIndex:[indexPath row]];
+    NSUInteger row = [indexPath row];
+    NSArray *reasonkeys = [self getplistdic].allKeys;
+    NSArray *reasons = [self getplistdic].allValues;
+    NSString *choosedreason = [reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])];
     [self.reasoninputlable setText:choosedreason];
 }
 
