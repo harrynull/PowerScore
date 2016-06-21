@@ -10,6 +10,7 @@
 
 @interface ChooseReasonViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *reasoninputlable;
 
 @end
 
@@ -44,7 +45,6 @@
 {
     int count = [self getplistcount];
     
-    NSLog([NSString stringWithFormat:@"%d",count]);
     return count;
 }
 
@@ -58,12 +58,15 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    
     NSUInteger row = [indexPath row];
     NSArray *reasons = [self getplistarray];
     cell.textLabel.text = [reasons objectAtIndex:row];
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *choosedreason = [[self getplistarray] objectAtIndex:[indexPath row]];
+    [self.reasoninputlable setText:choosedreason];
+}
 
 @end

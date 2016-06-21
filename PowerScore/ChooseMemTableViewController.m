@@ -137,7 +137,9 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     NSString *name = array[indexPath.row];
     
     ChooseRoleCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifierCell forIndexPath:indexPath];
-    
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;    // regular chevron. doesn't track
+    //    UITableViewCellAccessoryDetailDisclosureButton, // blue button w/ chevron. tracks
+    //    UITableViewCellAccessoryCheckmark
     if ([self.selectArray containsObject:name]) {
         cell.selectImageVIew.selected = YES;
     }else {
@@ -161,6 +163,8 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     }
     
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
 }
 
 

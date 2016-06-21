@@ -1017,15 +1017,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Yq-HE-1PZ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="111"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="此处键入理由" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="gbA-8N-yLc">
                                         <rect key="frame" x="8" y="35" width="304" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="在下方列表中单击可选择常用理由" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUr-h9-wkM">
-                                        <rect key="frame" x="0.0" y="85" width="320" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="在下方列表中单击可选择常用理由" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUr-h9-wkM">
+                                        <rect key="frame" x="0.0" y="70" width="320" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1034,10 +1034,9 @@
                                 <color key="backgroundColor" red="0.0" green="0.44705882352941173" blue="0.76862745098039209" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="gbA-8N-yLc" firstAttribute="leading" secondItem="5Yq-HE-1PZ" secondAttribute="leading" constant="8" id="0Qf-M5-sqX"/>
-                                    <constraint firstItem="gbA-8N-yLc" firstAttribute="top" secondItem="5Yq-HE-1PZ" secondAttribute="top" constant="35" id="0ym-GR-9jP"/>
+                                    <constraint firstItem="gbA-8N-yLc" firstAttribute="top" secondItem="5Yq-HE-1PZ" secondAttribute="top" constant="20" id="0ym-GR-9jP"/>
                                     <constraint firstAttribute="trailing" secondItem="nUr-h9-wkM" secondAttribute="trailing" id="DJX-i0-IyO"/>
                                     <constraint firstAttribute="trailing" secondItem="gbA-8N-yLc" secondAttribute="trailing" constant="8" id="fvG-ea-xI5"/>
-                                    <constraint firstItem="nUr-h9-wkM" firstAttribute="top" secondItem="gbA-8N-yLc" secondAttribute="bottom" constant="13" id="rlI-SX-umR"/>
                                     <constraint firstItem="nUr-h9-wkM" firstAttribute="leading" secondItem="5Yq-HE-1PZ" secondAttribute="leading" id="xOv-1G-s2r"/>
                                 </constraints>
                             </view>
@@ -1066,6 +1065,9 @@
                         <barButtonItem key="rightBarButtonItem" title="完成" id="iUg-gO-zor"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="reasoninputlable" destination="gbA-8N-yLc" id="vPI-zi-IEH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pvJ-kW-yH5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
