@@ -93,6 +93,36 @@
     [self loadHistory];
     
 }
+
++ (void)readData:(NSString*) str
+{
+    NSArray *strs = [str componentsSeparatedByString:@"\n"];
+    //readNow.setMembers(strs[0]);
+    
+    NSArray *strScores = [strs[1] componentsSeparatedByString:@" "];
+    //for (int j = 0; j < readNow.members.length; j++) {
+    //    readNow.scores[j] = Integer.valueOf(strScores[j]);
+    //}
+    
+    //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA);
+    
+    if (strs.count < 3) return;
+    NSArray *histories = [strs[2] componentsSeparatedByString:@"|"];
+    
+    //for (int j = 0; j < histories.length; j += 5) {
+    //    readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
+    //                                      histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
+    //}
+    if (strs.count < 4) return;
+    NSArray *usHistories = [strs[3] componentsSeparatedByString:@"|"];
+    //readNow.unsyncHistories.clear();
+    //for (int j = 0; j < usHistories.length; j += 5) {
+    //    readNow.unsyncHistories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
+    //                                            histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
+    //}
+}
+
+
 -(void)loadHistory
 {
     History *h1 = [[History alloc] init];
@@ -101,15 +131,30 @@
     h1.mark = @"-1";
     h1.members = @"张三,李四";
     
-    History *h2 = [[History alloc] init];
-    h2.reason = @"迟到";
-    h2.date_short = @"06-08";
-    h2.mark = @"-1";
-    h2.members = @"王五";
+    //第一步，创建URL
+    NSURL * url = [[NSURL alloc]initWithString:@"http://powerscore.duapp.com/sync.php"];
+    //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
+    NSMutableURLRequest * request1 = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:100];
+    //timeoutInterval:post超时最大时间是240秒,在方法中设置多少秒也没用。
     
-    _histories = [NSArray arrayWithObjects:h1, h2, nil];
+    //第三步，设置POST请求方式
+    [request1 setHTTPMethod:@"POST"];
+    //第四步，设置参数
+    NSString * bodyStr = @"username=tester&password=123456&cid=21&diff=";
+    NSData * body = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];
+    [request1 setHTTPBody:body];
+    //第五步，连接服务器
+    NSData * data = [NSURLConnection sendSynchronousRequest:request1 returningResponse:nil error:nil];
+    NSString * str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    
+    _histories = [NSArray array];
+    
+    [ViewController readData:str];
+    
+    _histories = [NSArray arrayWithObjects:h1, nil];
 }
-    
+
+
 -(void)initUI
 {
     
