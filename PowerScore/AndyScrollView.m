@@ -26,52 +26,8 @@
 
 @implementation AndyScrollView
 //锁定竖屏
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
--(instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initUI];
-    }
-    return self;
-}
--(void)initUI
-{
-    [self addGestureRecognizer];
-}
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    if ([self panShowLeftView:gestureRecognizer])
-    {
-        return YES;
-    }
-    return NO;
-}
-#pragma mark - 解决手势冲突
-- (BOOL)panShowLeftView:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer == self.panGestureRecognizer)
-    {
-        UIPanGestureRecognizer *panGes = (UIPanGestureRecognizer *)gestureRecognizer;
-        CGPoint point = [panGes translationInView:self];
-        UIGestureRecognizerState state = gestureRecognizer.state;
-        if (UIGestureRecognizerStateBegan == state || UIGestureRecognizerStatePossible == state)
-        {
-            CGPoint location = [gestureRecognizer locationInView:self];
-            if (point.x < 0 && location.x < self.frame.size.width && self.contentOffset.x <= 0)
-            {
-                return YES;
-            }
-            
-        }
-        
-    }
-                return NO;
-                
-}
+
 -(UIView *)leftView
 {
     if (!_leftView) {
@@ -95,16 +51,7 @@
     }
     return _backView;
 }
--(void)addGestureRecognizer
-{
-    self.pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
-    self.pan.delegate = self;
-    [self addGestureRecognizer:self.pan];
-}
--(void)panGesture:(UIPanGestureRecognizer *)ges
-{
-    [self dragLeftView:ges];
-}
+
 
 -(void)backViewTapGes:(UITapGestureRecognizer *)ges
 {
@@ -139,65 +86,19 @@
         self.pan.enabled = YES;
         [_leftView removeFromSuperview];
         [_backView removeFromSuperview];
+        [self removeFromSuperview];
     }];
-}
--(void)dragLeftView:(UIPanGestureRecognizer *)panGes
-{
-    
-    [_leftView removeFromSuperview];
-    [_backView removeFromSuperview];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [window addSubview:self.backView];
-    [window addSubview:self.leftView];
-    
-    if (panGes.state == UIGestureRecognizerStateBegan) {
-        //获取leftView初始位置
-        initialPosition.x = self.leftView.center.x;
-        //        NSLog(@"222222>>>>%f",initialPosition.x);
-    }
-    
-    CGPoint point = [panGes translationInView:self];
-    
-    if (point.x >= 0 && point.x <= maxWidth) {
-        _leftView.center = CGPointMake(initialPosition.x + point.x , _leftView.center.y);
-        CGFloat alpha = MIN(0.5, (maxWidth + point.x) / (2* maxWidth) - 0.5);
-        _backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:alpha];
-    }
-
-    if (panGes.state == UIGestureRecognizerStateEnded)
-    {
-        if (point.x <= showLeftViewMaxWidth) {
-    
-            [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                _leftView.frame = CGRectMake(-maxWidth, 0, maxWidth, self.frame.size.height);
-                _backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0];
-            } completion:^(BOOL finished) {
-                [_backView removeFromSuperview];
-            }];
-
-        }else if (point.x > showLeftViewMaxWidth && point.x <= maxWidth)
-        {
-            [UIView animateWithDuration:0.35f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                _leftView.frame = CGRectMake(0, 0, maxWidth, self.frame.size.height);
-                _backView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.5];
-            } completion:^(BOOL finished) {
-                
-            }];
-        }
-    }
 }
 -(void)backPanGes:(UIPanGestureRecognizer *)ges
 {
     if (ges.state == UIGestureRecognizerStateBegan) {
         //获取leftView初始位置
         initialPosition.x = self.leftView.center.x;
-//                NSLog(@"222222>>>>%f",initialPosition.x);
+
     }
     
     CGPoint point = [ges translationInView:self];
     
-//    NSLog(@">>>>>///%f",initialPosition.x + point.x);
-//    NSLog(@"????????%f",point.x);
 
     if (point.x <= 0 && point.x <= maxWidth) {
         _leftView.center = CGPointMake(initialPosition.x + point.x , _leftView.center.y);

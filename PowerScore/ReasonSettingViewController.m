@@ -10,6 +10,7 @@
 
 @interface ReasonSettingViewController ()
 @property (nonatomic,strong) NSString *newreason;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 @end
 
 @implementation ReasonSettingViewController
@@ -32,6 +33,13 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         UITextField *reason = alertcontroller.textFields.firstObject;
         self.newreason = reason.text;
+        
+        NSString *path1 = [[NSBundle mainBundle] pathForResource:@"Reasons" ofType:@"plist"];
+        NSMutableArray *newarray = [[NSMutableArray alloc] initWithContentsOfFile:path1];
+        [newarray addObject:self.newreason];
+        [newarray writeToFile:path1 atomically:YES];
+        [self.tableview reloadData];
+        
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     }];
     okAction.enabled = NO;
@@ -68,7 +76,7 @@
 {
     int count = [self getplistcount];
     
-    NSLog([NSString stringWithFormat:@"%d",count]);
+    
     return count;
 }
 

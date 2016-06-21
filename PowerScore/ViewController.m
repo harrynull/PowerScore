@@ -171,6 +171,7 @@
     [self vc_opensetgroup];
 }
 - (IBAction)openleftOnclick:(id)sender {
+    [self.leftView reloadInputViews];
     self.scroll.stloadleftview;
 
     
@@ -239,11 +240,15 @@
 -(void)vc_opensetreason
 {
     self.scroll.stcloseleftview;
+ 
     [self performSegueWithIdentifier:@"gotosetreason" sender:self];
+    
+    [self.leftView removeFromSuperview];
 }
 -(void)vc_opensetgroup
 {
     self.scroll.stcloseleftview;
+    
     [self performSegueWithIdentifier:@"gotosetgroup" sender:self];
 }
 

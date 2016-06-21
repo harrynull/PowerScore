@@ -39,7 +39,7 @@
 {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:241.0/255.0 blue:242.0/255.0 alpha:1.0];
-        
+
         NSString *accpath = [[NSBundle mainBundle] pathForResource:@"account" ofType:@"plist"];
                              NSDictionary *accdic = [[NSDictionary alloc] initWithContentsOfFile:accpath];
         NSString *usernamest = [accdic objectForKey:@"realname"];
@@ -54,7 +54,7 @@
         UIImageView *headImage = [[UIImageView alloc] initWithFrame:recti];
         headImage.layer.masksToBounds = YES;
         headImage.layer.cornerRadius = 38;
-        headImage.translatesAutoresizingMaskIntoConstraints = NO;
+        //headImage.translatesAutoresizingMaskIntoConstraints = NO;
         [headImage setImage:[UIImage imageNamed:@"setting_tx"]];
         [self addSubview:headImage];
         
@@ -78,7 +78,6 @@
         [overview setTitle:@"     学分总览                  " forState:(UIControlStateNormal)];
         [overview setImage:[UIImage imageNamed:@"overview"] forState:UIControlStateNormal];
         overview.adjustsImageWhenHighlighted = NO;
-        overview.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:overview];
         
         CGRect rect2 = CGRectMake(0,255, 270, 50);
@@ -90,7 +89,6 @@
         [reason addTarget:self action:@selector(opensr) forControlEvents:UIControlEventTouchUpInside];
         [reason setTitle:@"     常用理由                  " forState:(UIControlStateNormal)];
         [reason setImage:[UIImage imageNamed:@"reason"] forState:UIControlStateNormal];
-        reason.translatesAutoresizingMaskIntoConstraints = NO;
         reason.adjustsImageWhenHighlighted = NO;
         [self addSubview:reason];
         
@@ -104,7 +102,6 @@
         [group addTarget:self action:@selector(opensg) forControlEvents:UIControlEventTouchUpInside];
         [group setTitle:@"     成员组                     " forState:(UIControlStateNormal)];
         [group setImage:[UIImage imageNamed:@"group"] forState:UIControlStateNormal];
-        group.translatesAutoresizingMaskIntoConstraints = NO;
         group.adjustsImageWhenHighlighted = NO;
         [self addSubview:group];
         
@@ -117,7 +114,6 @@
         [loadpage setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
         [loadpage setTitle:@"     显示启动页              " forState:(UIControlStateNormal)];
         [loadpage setImage:[UIImage imageNamed:@"window"] forState:UIControlStateNormal];
-        loadpage.translatesAutoresizingMaskIntoConstraints = NO;
         loadpage.adjustsImageWhenHighlighted = NO;
         [self addSubview:loadpage];
         
@@ -131,7 +127,6 @@
         [about setBackgroundImage:[UIImage imageNamed:@"grey"] forState:UIControlStateHighlighted];
         [about addTarget:self action:@selector(openabout) forControlEvents:UIControlEventTouchUpInside];
         [about setTitle:@"关于" forState:(UIControlStateNormal)];
-        about.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:about];
         
         
@@ -143,14 +138,13 @@
         [unlog setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateNormal];
         [unlog setBackgroundImage:[UIImage imageNamed:@"grey"] forState:UIControlStateHighlighted];
         [unlog setTitle:@"退出登录" forState:(UIControlStateNormal)];
-        unlog.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:unlog];
         
         CGRect rect7 = CGRectMake(self.frame.size.width-55,42, 40, 40);
         UIButton *home = [[UIButton alloc]initWithFrame:rect7];
         [home setImage:[UIImage imageNamed:@"home"] forState:UIControlStateNormal];
-        home.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:home];
+        NSLog(@"2");
     }
     return self;
 }
