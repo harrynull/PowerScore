@@ -97,27 +97,59 @@
     }
     
 }
+
+
++ (void)readData:(NSString*) str
+{
+    NSArray *strs = [str componentsSeparatedByString:@"\n"];
+    //readNow.setMembers(strs[0]);
     
+    NSArray *strScores = [strs[1] componentsSeparatedByString:@" "];
+    //for (int j = 0; j < readNow.members.length; j++) {
+    //    readNow.scores[j] = Integer.valueOf(strScores[j]);
+    //}
+    
+    //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA);
+    
+    if (strs.count < 3) return;
+    NSArray *histories = [strs[2] componentsSeparatedByString:@"|"];
+    
+    //for (int j = 0; j < histories.length; j += 5) {
+    //    readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
+    //                                      histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
+    //}
+    if (strs.count < 4) return;
+    NSArray *usHistories = [strs[3] componentsSeparatedByString:@"|"];
+    //readNow.unsyncHistories.clear();
+    //for (int j = 0; j < usHistories.length; j += 5) {
+    //    readNow.unsyncHistories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
+    //                                            histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
+    //}
+}
+
+
+
 -(void)creatplist
-    {
-        NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        self.plistPath = [documentsDirectory stringByAppendingPathComponent:@"Reasons.plist"];
-        NSMutableDictionary *dictplist = [[NSMutableDictionary alloc ] init];
-        //设置属性值
-        [dictplist setObject:@"上课发言"forKey:@"1"];
-        [dictplist setObject:@"打扫卫生"forKey:@"2"];
-        [dictplist setObject:@"小组加分"forKey:@"3"];
-        [dictplist setObject:@"上午迟到"forKey:@"4"];
-        [dictplist setObject:@"中午迟到"forKey:@"5"];
-        [dictplist setObject:@"上课讲话"forKey:@"6"];
-        [dictplist setObject:@"晚修讲话"forKey:@"7"];
-        [dictplist setObject:@"随意下位"forKey:@"8"];
-        [dictplist setObject:@"没有值日"forKey:@"9"];
-        //写入文件
-        [dictplist writeToFile:_plistPath atomically:YES];
-        
-    }
+{
+    NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    self.plistPath = [documentsDirectory stringByAppendingPathComponent:@"Reasons.plist"];
+    NSMutableDictionary *dictplist = [[NSMutableDictionary alloc ] init];
+    //设置属性值
+    [dictplist setObject:@"上课发言"forKey:@"1"];
+    [dictplist setObject:@"打扫卫生"forKey:@"2"];
+    [dictplist setObject:@"小组加分"forKey:@"3"];
+    [dictplist setObject:@"上午迟到"forKey:@"4"];
+    [dictplist setObject:@"中午迟到"forKey:@"5"];
+    [dictplist setObject:@"上课讲话"forKey:@"6"];
+    [dictplist setObject:@"晚修讲话"forKey:@"7"];
+    [dictplist setObject:@"随意下位"forKey:@"8"];
+    [dictplist setObject:@"没有值日"forKey:@"9"];
+    //写入文件
+    [dictplist writeToFile:_plistPath atomically:YES];
+    
+}
+
 -(void)loadHistory
 {
     History *h1 = [[History alloc] init];
@@ -126,15 +158,30 @@
     h1.mark = @"-1";
     h1.members = @"张三,李四";
     
-    History *h2 = [[History alloc] init];
-    h2.reason = @"迟到";
-    h2.date_short = @"06-08";
-    h2.mark = @"-1";
-    h2.members = @"王五";
+    //第一步，创建URL
+    NSURL * url = [[NSURL alloc]initWithString:@"http://powerscore.duapp.com/sync.php"];
+    //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
+    NSMutableURLRequest * request1 = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:100];
+    //timeoutInterval:post超时最大时间是240秒,在方法中设置多少秒也没用。
     
-    _histories = [NSArray arrayWithObjects:h1, h2, nil];
+    //第三步，设置POST请求方式
+    [request1 setHTTPMethod:@"POST"];
+    //第四步，设置参数
+    NSString * bodyStr = @"username=tester&password=123456&cid=21&diff=";
+    NSData * body = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];
+    [request1 setHTTPBody:body];
+    //第五步，连接服务器
+    NSData * data = [NSURLConnection sendSynchronousRequest:request1 returningResponse:nil error:nil];
+    NSString * str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    
+    _histories = [NSArray array];
+    
+    [ViewController readData:str];
+    
+    _histories = [NSArray arrayWithObjects:h1, nil];
 }
-    
+
+
 -(void)initUI
 {
     
