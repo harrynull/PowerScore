@@ -68,51 +68,51 @@
         
        ///////////////////////////////////////////////////////////////////////////////////
         
-        CGRect rect1 = CGRectMake(0,200, 270, 50);
+        CGRect rect1 = CGRectMake(0,195, 270, 45);
         UIButton *overview = [[UIButton alloc] initWithFrame:rect1];
-        [overview.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
+        [overview.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
         [overview setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [overview setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
         overview.titleLabel.textAlignment = NSTextAlignmentLeft;
         [overview addTarget:self action:@selector(openov) forControlEvents:UIControlEventTouchUpInside];
-        [overview setTitle:@"     学分总览                  " forState:(UIControlStateNormal)];
+        [overview setTitle:@"    学分总览                                " forState:(UIControlStateNormal)];
         [overview setImage:[UIImage imageNamed:@"overview"] forState:UIControlStateNormal];
         overview.adjustsImageWhenHighlighted = NO;
         [self addSubview:overview];
         
-        CGRect rect2 = CGRectMake(0,255, 270, 50);
+        CGRect rect2 = CGRectMake(0,245, 270, 45);
         UIButton *reason = [[UIButton alloc]initWithFrame:rect2];
-        reason.titleLabel.font = [UIFont systemFontOfSize:18.0];
+        reason.titleLabel.font = [UIFont systemFontOfSize:15.0];
         reason.titleLabel.textAlignment = NSTextAlignmentLeft;
         [reason setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [reason setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
         [reason addTarget:self action:@selector(opensr) forControlEvents:UIControlEventTouchUpInside];
-        [reason setTitle:@"     常用理由                  " forState:(UIControlStateNormal)];
+        [reason setTitle:@"    常用理由                                " forState:(UIControlStateNormal)];
         [reason setImage:[UIImage imageNamed:@"reason"] forState:UIControlStateNormal];
         reason.adjustsImageWhenHighlighted = NO;
         [self addSubview:reason];
         
         
-        CGRect rect3 = CGRectMake(0,310, 270, 50);
+        CGRect rect3 = CGRectMake(0,295, 270, 45);
         UIButton *group = [[UIButton alloc]initWithFrame:rect3];
         group.titleLabel.textAlignment = NSTextAlignmentLeft;
-        group.titleLabel.font = [UIFont systemFontOfSize:18.0];
+        group.titleLabel.font = [UIFont systemFontOfSize:15.0];
         [group setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [group setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
         [group addTarget:self action:@selector(opensg) forControlEvents:UIControlEventTouchUpInside];
-        [group setTitle:@"     成员组                     " forState:(UIControlStateNormal)];
+        [group setTitle:@"    成员组                                   " forState:(UIControlStateNormal)];
         [group setImage:[UIImage imageNamed:@"group"] forState:UIControlStateNormal];
         group.adjustsImageWhenHighlighted = NO;
         [self addSubview:group];
         
         
-        CGRect rect4 = CGRectMake(0,365, 270, 50);
+        CGRect rect4 = CGRectMake(0,345, 270, 45);
         UIButton *loadpage = [[UIButton alloc]initWithFrame:rect4];
         loadpage.titleLabel.textAlignment = NSTextAlignmentLeft;
-        loadpage.titleLabel.font = [UIFont systemFontOfSize:18.0];
+        loadpage.titleLabel.font = [UIFont systemFontOfSize:15.0];
         [loadpage setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
         [loadpage setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
-        [loadpage setTitle:@"     显示启动页              " forState:(UIControlStateNormal)];
+        [loadpage setTitle:@"    显示启动页                            " forState:(UIControlStateNormal)];
         [loadpage setImage:[UIImage imageNamed:@"window"] forState:UIControlStateNormal];
         loadpage.adjustsImageWhenHighlighted = NO;
         [self addSubview:loadpage];
@@ -144,6 +144,11 @@
         UIButton *home = [[UIButton alloc]initWithFrame:rect7];
         [home setImage:[UIImage imageNamed:@"home"] forState:UIControlStateNormal];
         [self addSubview:home];
+        
+        CGRect rect8 = CGRectMake(134,self.frame.size.height-45, 1, 35);
+        UIButton *split = [[UIButton alloc]initWithFrame:rect8];
+        [split setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1]];
+        [self addSubview:split];
     }
     return self;
 }

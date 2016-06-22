@@ -861,7 +861,6 @@
                                                 <color key="backgroundColor" red="0.92156862750000001" green="0.93725490199999995" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="BGm-gs-pGa" secondAttribute="trailing" id="KKN-35-JKe"/>
-                                                    <constraint firstItem="lpM-Co-giB" firstAttribute="height" secondItem="BGm-gs-pGa" secondAttribute="height" id="TtR-nE-Rdg"/>
                                                     <constraint firstItem="BGm-gs-pGa" firstAttribute="leading" secondItem="IT1-H7-Hzk" secondAttribute="leading" id="Zpm-KI-a5s"/>
                                                     <constraint firstItem="lpM-Co-giB" firstAttribute="leading" secondItem="IT1-H7-Hzk" secondAttribute="leading" id="vcj-Yb-NlL"/>
                                                 </constraints>
@@ -899,6 +898,7 @@
                                         <constraints>
                                             <constraint firstItem="IT1-H7-Hzk" firstAttribute="leading" secondItem="kgA-c6-bC5" secondAttribute="trailing" id="6xW-Az-8ac"/>
                                             <constraint firstItem="IT1-H7-Hzk" firstAttribute="width" secondItem="kgA-c6-bC5" secondAttribute="width" multiplier="1:2" id="7ic-IR-qwB"/>
+                                            <constraint firstItem="lpM-Co-giB" firstAttribute="height" secondItem="kcb-fj-DNG" secondAttribute="height" id="EgV-0D-aXm"/>
                                             <constraint firstItem="IT1-H7-Hzk" firstAttribute="top" secondItem="L1a-YK-XDb" secondAttribute="top" id="JOL-JX-l95"/>
                                             <constraint firstItem="kgA-c6-bC5" firstAttribute="top" secondItem="L1a-YK-XDb" secondAttribute="top" id="JXY-Ln-KA1"/>
                                             <constraint firstAttribute="bottom" secondItem="kgA-c6-bC5" secondAttribute="bottom" id="V5n-T2-tfu"/>

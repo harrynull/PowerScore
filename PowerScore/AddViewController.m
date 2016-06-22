@@ -110,6 +110,7 @@ BOOL flag;
         
         
     }
+    self.oldheight = 0;
 }
 
 - (void)viewDidLoad {
