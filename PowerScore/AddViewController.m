@@ -154,7 +154,7 @@ BOOL flag;
 - (void)resetview
 {
     if (numisdragdown) {
-        
+        [self rotate];
 
         CGRect rect = self.contain.frame;
         CGRect rect1 = self.memcontain.frame;
