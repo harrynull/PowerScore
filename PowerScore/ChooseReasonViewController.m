@@ -7,12 +7,15 @@
 //
 
 #import "ChooseReasonViewController.h"
+#import "AddViewController.h"
 
 @interface ChooseReasonViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *reasoninputlable;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *okbt;
 @property (nonatomic,strong) NSString *newreason;
 @property (nonatomic,strong) NSString *plistPath;
+@property (nonatomic,strong) NSString *reasonback;
 @end
 
 @implementation ChooseReasonViewController
@@ -82,6 +85,31 @@
     NSArray *reasons = [self getplistdic].allValues;
     NSString *choosedreason = [reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])];
     [self.reasoninputlable setText:choosedreason];
+}
+- (IBAction)okbtOnClick:(id)sender {
+    if(![self.reasoninputlable.text isEqual: @""])
+    {
+        
+        //初始化返回值为理由
+        self.reasonback = self.reasoninputlable.text;
+        AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+        receive.reasonreceive = self.reasonback;
+        //使用popToViewController返回并传值到上一页面
+        NSLog(receive.reasonreceive);
+        [self.navigationController popToViewController:receive animated:true];
+        
+    } else {
+        
+        //初始化返回值为空
+        self.reasonback = @"&&**##NOREASONINPUT$#%";
+        AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+        receive.reasonreceive = self.reasonback;
+        //使用popToViewController返回并传值到上一页面
+        NSLog(receive.reasonreceive);
+        [self.navigationController popToViewController:receive animated:true];
+
+        
+    }
 }
 
 @end

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface AddViewController : UIViewController
-
+@property (nonatomic,strong) NSString *reasonreceive;
 @end

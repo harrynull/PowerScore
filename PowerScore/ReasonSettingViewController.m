@@ -162,7 +162,7 @@
         
         UIAlertController *alertcontroller = [UIAlertController alertControllerWithTitle:[reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])] message:@"修改该理由" preferredStyle:UIAlertControllerStyleAlert];
         [alertcontroller addTextFieldWithConfigurationHandler:^(UITextField *inputreason){
-            inputreason.placeholder = @"键入新理由";
+            inputreason.text = [reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:inputreason];
         }];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
