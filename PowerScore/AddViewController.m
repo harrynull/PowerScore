@@ -49,6 +49,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *meg4;
 
 @property (nonatomic,strong) NSString *reasonadd;
+@property CGFloat oldheight;
 
 @property (weak, nonatomic) IBOutlet UIView *contain;
 @property (weak, nonatomic) IBOutlet UIView *memcontain;
@@ -59,6 +60,12 @@
 @property (weak, nonatomic) IBOutlet UIView *uk5;
 @property (weak, nonatomic) IBOutlet UIView *ik;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *meg1bottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *meg2bottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *showmemsbottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *unsetablebottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *meg4bottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *membtbottom;
 
 
 @end
@@ -69,6 +76,8 @@ bool isplus = true;
 bool caninput = true;
 bool onlyzero = true;
 bool caninputpoint = true;
+bool numisdragdown = false;
+BOOL flag;
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.toolbarHidden = YES;
@@ -85,20 +94,20 @@ bool caninputpoint = true;
             self.reasonadd = self.reasonreceive;
             self.showreason.text = self.reasonadd;
             [self turnReasonBlue];
-         
-       
+            
+            
         } else {
             
             self.showreason.text = @"理由";
             [self turnReasonWhite];
-       
+            
             
         }
     } else {
         
         self.showreason.text = @"理由";
         [self turnReasonWhite];
-       
+        
         
     }
 }
@@ -107,13 +116,13 @@ bool caninputpoint = true;
     [super viewDidLoad];
     [self.btbackspace setImage:[UIImage imageNamed:@"backspacedown"] forState:UIControlStateHighlighted];
     [self.showmems setVerticalAlignment:VerticalAlignmentTop];
-    [self.mem_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:0.1]] forState:UIControlStateHighlighted];
-    [self.reason_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:0.1]] forState:UIControlStateHighlighted];
+    [self.mem_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0]] forState:UIControlStateHighlighted];
+    [self.reason_bt setBackgroundImage:[self colorimg:[UIColor colorWithRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0]] forState:UIControlStateHighlighted];
     [self.reason_bt setAdjustsImageWhenHighlighted:NO];
     self.reasonreceive = @"";
     [self.dropdownnum setAdjustsImageWhenHighlighted:NO];
     [self.dropdownnum setBackgroundImage:[UIImage imageNamed:@"dropback"] forState:UIControlStateHighlighted];
-
+    flag = YES;
     // Do any additional setup after loading the view.
 }
 - (IBAction)plusOnclick:(id)sender {
@@ -127,55 +136,110 @@ bool caninputpoint = true;
     isplus = false;
 }
 - (IBAction)membtOnclick:(id)sender {
+    [self resetview];
     [self performSegueWithIdentifier:@"gotomem" sender:self];
+
 }
 
 - (IBAction)reasonOnclick:(id)sender {
+    [self resetview];
     [self performSegueWithIdentifier:@"gotochoosereason" sender:self];
 }
 - (IBAction)dropdownnumOnClick:(id)sender {
+    [self rotate];
     [self refreshview];
 }
 
+
+- (void)resetview
+{
+    if (numisdragdown) {
+        
+
+        CGRect rect = self.contain.frame;
+        CGRect rect1 = self.memcontain.frame;
+        
+        int h = self.oldheight-self.ik.frame.size.height;
+        
+        rect1.size.height -= h;
+        rect.origin.y -= h;
+        rect.size.height = self.oldheight;
+        CGFloat addheight = h;
+        self.memcontain.frame = rect1;
+        self.contain.frame = rect;
+        
+        self.meg1bottom.constant += addheight;
+        self.meg2bottom.constant += addheight;
+        self.meg4bottom.constant += addheight;
+        self.showmemsbottom.constant += addheight;
+        self.unsetablebottom.constant += addheight;
+        self.membtbottom.constant += addheight;
+        
+
+        numisdragdown = false;
+        
+        
+    }
+
+}
+
+
 - (void)refreshview
 {
-    [NSThread sleepForTimeInterval:0.1f];
-    [self.uk1 removeFromSuperview];
-    [self.uk2 removeFromSuperview];
-    [self.uk3 removeFromSuperview];
-    [self.uk4 removeFromSuperview];
-    [self.uk5 removeFromSuperview];
-    [NSThread sleepForTimeInterval:0.1f];
-    CGRect rect = self.contain.frame;
-    CGRect rect1 = self.memcontain.frame;
-    CGRect rect2 = self.meg1.frame;
-    CGRect rect3 = self.meg2.frame;
-    CGRect rect4 = self.showmems.frame;
-    CGRect rect5 = self.unsetlable.frame;
-    CGRect rect6 = self.meg4.frame;
-    [NSThread sleepForTimeInterval:0.1f];
-    int h = rect.size.height-self.ik.frame.size.height;
-    [NSThread sleepForTimeInterval:0.1f];
-    rect.origin.y += h;
-    rect6.origin.y += h;
-    rect.size.height = self.ik.frame.size.height;
-    [NSThread sleepForTimeInterval:0.1f];
-    rect1.size.height += h;
-    rect2.size.height += h;
-    rect3.size.height += h;
-    rect4.size.height += h;
-    rect5.size.height += h;
-    NSLog(@"%f",rect5.size.height);
-    [NSThread sleepForTimeInterval:0.1f];
-    self.memcontain.frame = rect1;
-    self.contain.frame = rect;
-    self.meg1.frame = rect2;
-    self.meg2.frame = rect3;
-    self.showmems.frame = rect4;
-    self.unsetlable.frame = rect5;
-    self.meg4.frame = rect6;
-    NSLog(@"%f",self.unsetlable.frame.size.height);
-    [NSThread sleepForTimeInterval:0.1f];
+    if (numisdragdown) {
+        
+        CGRect rect = self.contain.frame;
+        CGRect rect1 = self.memcontain.frame;
+        
+        int h = self.oldheight-self.ik.frame.size.height;
+        
+        rect1.size.height -= h;
+        rect.origin.y -= h;
+        rect.size.height = self.oldheight;
+        CGFloat addheight = h;
+        self.memcontain.frame = rect1;
+        self.contain.frame = rect;
+        
+        self.meg1bottom.constant += addheight;
+        self.meg2bottom.constant += addheight;
+        self.meg4bottom.constant += addheight;
+        self.showmemsbottom.constant += addheight;
+        self.unsetablebottom.constant += addheight;
+        self.membtbottom.constant += addheight;
+        
+        
+        numisdragdown = false;
+        
+        
+    } else {
+        
+       
+        CGRect rect = self.contain.frame;
+        CGRect rect1 = self.memcontain.frame;
+        
+        self.oldheight = rect.size.height;
+        int h = rect.size.height-self.ik.frame.size.height;
+        
+        rect1.size.height += h;
+        rect.origin.y += h;
+        rect.size.height = self.ik.frame.size.height;
+        CGFloat addheight = h;
+        self.memcontain.frame = rect1;
+        self.contain.frame = rect;
+        
+        self.meg1bottom.constant -= addheight;
+        self.meg2bottom.constant -= addheight;
+        self.meg4bottom.constant -= addheight;
+        self.showmemsbottom.constant -= addheight;
+        self.unsetablebottom.constant -= addheight;
+        self.membtbottom.constant -= addheight;
+        
+        
+        numisdragdown = true;
+        
+    }
+    
+    
 }
 
 
@@ -287,7 +351,7 @@ bool caninputpoint = true;
 
 - (UIImage *)colorimg:(UIColor *)color
 {
-    CGRect rect = CGRectMake(0.0f, 0.0f, 0.1f, 0.1f);
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [color CGColor]);
@@ -326,6 +390,23 @@ bool caninputpoint = true;
     
 }
 
+- (void)rotate
+{
+    if (flag) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.dropdownnum.transform = CGAffineTransformMakeRotation(M_PI);
+        } completion:^(BOOL finished) {
+            flag = NO;
+        }];
+    }
+    else {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.dropdownnum.transform = CGAffineTransformMakeRotation(0);
+        } completion:^(BOOL finished) {
+            flag = YES;
+        }];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -333,13 +414,13 @@ bool caninputpoint = true;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

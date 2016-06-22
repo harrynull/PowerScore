@@ -395,7 +395,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
                                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PXd-q1-7EI">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PXd-q1-7EI">
                                         <rect key="frame" x="0.0" y="169" width="320" height="2"/>
                                         <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
@@ -415,7 +415,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="bK1-Q1-hky" firstAttribute="top" secondItem="0et-VX-Enr" secondAttribute="top" constant="42" id="1lb-pg-0xX"/>
                                     <constraint firstAttribute="bottom" secondItem="bK1-Q1-hky" secondAttribute="bottom" constant="8" id="1qU-Hd-atO"/>
@@ -436,13 +435,16 @@
                                     <constraint firstAttribute="trailing" secondItem="PXd-q1-7EI" secondAttribute="trailing" id="bcO-Zs-53B"/>
                                     <constraint firstItem="TBs-SU-dDI" firstAttribute="top" secondItem="0et-VX-Enr" secondAttribute="top" id="c2U-C1-sbp"/>
                                     <constraint firstAttribute="trailing" secondItem="6g4-Vv-wEp" secondAttribute="trailing" id="cAH-bc-ZV7"/>
+                                    <constraint firstAttribute="bottom" secondItem="TBs-SU-dDI" secondAttribute="bottom" id="dOp-Dn-YUP"/>
                                     <constraint firstAttribute="trailing" secondItem="ca8-aL-eN2" secondAttribute="trailing" constant="138" id="eID-bq-Vbn"/>
                                     <constraint firstItem="smp-Y2-J60" firstAttribute="leading" secondItem="0et-VX-Enr" secondAttribute="leading" id="gOi-SI-N4d"/>
                                     <constraint firstItem="6g4-Vv-wEp" firstAttribute="leading" secondItem="0et-VX-Enr" secondAttribute="leading" id="goA-3v-25n"/>
+                                    <constraint firstItem="PXd-q1-7EI" firstAttribute="top" secondItem="6g4-Vv-wEp" secondAttribute="bottom" id="i4l-pl-2Vl"/>
                                     <constraint firstAttribute="trailing" secondItem="bK1-Q1-hky" secondAttribute="trailing" constant="10" id="i6w-wY-UVp"/>
                                     <constraint firstAttribute="trailing" secondItem="2w4-iW-NFv" secondAttribute="trailing" constant="10" id="keA-un-myv"/>
                                     <constraint firstAttribute="bottom" secondItem="PXd-q1-7EI" secondAttribute="bottom" constant="-2" id="pQk-IJ-zYB"/>
                                     <constraint firstItem="ca8-aL-eN2" firstAttribute="top" secondItem="0et-VX-Enr" secondAttribute="top" constant="13" id="qXw-xZ-cuu"/>
+                                    <constraint firstAttribute="bottom" secondItem="smp-Y2-J60" secondAttribute="bottom" id="qcG-WH-2d0"/>
                                     <constraint firstItem="PXd-q1-7EI" firstAttribute="leading" secondItem="0et-VX-Enr" secondAttribute="leading" id="w1U-AP-PcQ"/>
                                     <constraint firstItem="2w4-iW-NFv" firstAttribute="top" secondItem="0et-VX-Enr" secondAttribute="top" constant="30" id="wgf-3u-eL2"/>
                                 </constraints>
@@ -985,7 +987,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="WV4-yf-gNh" firstAttribute="leading" secondItem="dWe-jW-tIM" secondAttribute="trailing" constant="17" id="DOc-Zw-L7f"/>
                             <constraint firstItem="dWe-jW-tIM" firstAttribute="top" secondItem="2Hg-JV-fK6" secondAttribute="bottom" constant="10" id="Ej9-gj-KXc"/>
@@ -1025,10 +1027,14 @@
                         <outlet property="dropdownnum" destination="VYm-pO-B5z" id="ql5-fQ-gk1"/>
                         <outlet property="ik" destination="K4I-Q3-0U7" id="Xna-2p-oRA"/>
                         <outlet property="meg1" destination="smp-Y2-J60" id="3jt-Ji-Oab"/>
+                        <outlet property="meg1bottom" destination="Y0S-va-FbX" id="AK7-HF-IVb"/>
                         <outlet property="meg2" destination="TBs-SU-dDI" id="vAY-8V-Mpy"/>
+                        <outlet property="meg2bottom" destination="HZZ-uB-rGA" id="9Jg-In-Txj"/>
                         <outlet property="meg3" destination="VKI-IM-Aie" id="ee1-cC-jyB"/>
                         <outlet property="meg4" destination="PXd-q1-7EI" id="cZq-GE-wNa"/>
+                        <outlet property="meg4bottom" destination="pQk-IJ-zYB" id="U9r-la-rT5"/>
                         <outlet property="mem_bt" destination="6g4-Vv-wEp" id="Tlx-wh-ebl"/>
+                        <outlet property="membtbottom" destination="Oqq-AG-3cP" id="1tv-KS-7Gr"/>
                         <outlet property="memcontain" destination="0et-VX-Enr" id="nYx-yk-wlS"/>
                         <outlet property="memlable" destination="ca8-aL-eN2" id="Hn6-0R-HeF"/>
                         <outlet property="minus_bt" destination="ORD-l9-Cfq" id="EdA-zA-0xS"/>
@@ -1040,12 +1046,14 @@
                         <outlet property="reg4" destination="SE9-VX-vQv" id="mIX-EE-jmo"/>
                         <outlet property="showmark" destination="sHU-l5-4J4" id="1gA-e8-HEd"/>
                         <outlet property="showmems" destination="bK1-Q1-hky" id="f0d-3B-lB3"/>
+                        <outlet property="showmemsbottom" destination="1qU-Hd-atO" id="yKM-vW-x7T"/>
                         <outlet property="showreason" destination="jNh-zS-Iml" id="AGT-Cr-b8J"/>
                         <outlet property="uk1" destination="SOK-Ee-BHM" id="r1T-cQ-Zrl"/>
                         <outlet property="uk2" destination="VT8-48-LqM" id="N0B-si-7Jd"/>
                         <outlet property="uk3" destination="00n-AB-MWQ" id="Esp-tI-ZrK"/>
                         <outlet property="uk4" destination="L1a-YK-XDb" id="tcX-cl-YKc"/>
                         <outlet property="uk5" destination="O5H-Uv-4Pn" id="hG6-EA-Ye0"/>
+                        <outlet property="unsetablebottom" destination="UeD-Gm-2YZ" id="1kr-yb-OjY"/>
                         <outlet property="unsetlable" destination="2w4-iW-NFv" id="zkP-Me-wSN"/>
                         <segue destination="j0r-No-GGk" kind="push" identifier="gotochoosereason" id="n09-bE-47w"/>
                         <segue destination="bER-PG-Xcg" kind="push" identifier="gotomem" id="fCJ-hb-Msb"/>
