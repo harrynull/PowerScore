@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dO1-QT-7A6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dAD-d3-94o">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -961,7 +962,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="SOK-Ee-BHM" firstAttribute="leading" secondItem="6S6-u5-b44" secondAttribute="leading" id="3ki-3e-Ifu"/>
                                     <constraint firstItem="VT8-48-LqM" firstAttribute="top" secondItem="SOK-Ee-BHM" secondAttribute="bottom" id="4gY-It-aHt"/>
@@ -1138,10 +1139,54 @@
             </objects>
             <point key="canvasLocation" x="103" y="2725"/>
         </scene>
+        <!--Launch View Controller-->
+        <scene sceneID="T1C-T0-Cdj">
+            <objects>
+                <viewController id="dAD-d3-94o" customClass="LaunchViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zP1-J4-ZVL"/>
+                        <viewControllerLayoutGuide type="bottom" id="cvb-eV-Wxq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yRe-j2-XI9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="spl_1.png" translatesAutoresizingMaskIntoConstraints="NO" id="6ff-9C-A6i">
+                                <rect key="frame" x="-1" y="125" width="321" height="269"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="6ff-9C-A6i" secondAttribute="height" multiplier="321:269" id="5Ns-Tm-UeD"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="spl_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="wf0-ut-Us0">
+                                <rect key="frame" x="-1" y="523" width="321" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="wf0-ut-Us0" secondAttribute="height" multiplier="107:15" id="SLv-bZ-HN4"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wf0-ut-Us0" firstAttribute="leading" secondItem="yRe-j2-XI9" secondAttribute="leadingMargin" constant="-21" id="1XS-kV-jGM"/>
+                            <constraint firstItem="6ff-9C-A6i" firstAttribute="centerY" secondItem="yRe-j2-XI9" secondAttribute="centerY" id="7fB-Hd-2E7"/>
+                            <constraint firstItem="6ff-9C-A6i" firstAttribute="leading" secondItem="yRe-j2-XI9" secondAttribute="leadingMargin" constant="-21" id="u5X-Rc-hgg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wf0-ut-Us0" secondAttribute="trailing" constant="-20" id="vd8-Ue-0nO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6ff-9C-A6i" secondAttribute="trailing" constant="-20" id="yng-ZZ-m7k"/>
+                            <constraint firstItem="cvb-eV-Wxq" firstAttribute="top" secondItem="wf0-ut-Us0" secondAttribute="bottom" id="z0S-Lh-vfI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="spl1" destination="6ff-9C-A6i" id="bfR-Zo-Wkj"/>
+                        <outlet property="spl2" destination="wf0-ut-Us0" id="2mo-Kx-m1N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Ie-HX-nDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-240" y="1089"/>
+        </scene>
         <!--Nav Controller-->
         <scene sceneID="urM-Xy-Ors">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dO1-QT-7A6" customClass="NavController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavController" automaticallyAdjustsScrollViewInsets="NO" id="dO1-QT-7A6" customClass="NavController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="FUr-Hv-pT1">
@@ -1449,6 +1494,8 @@
         <image name="plus_on" width="83" height="83"/>
         <image name="powerscore_icon_p.png" width="1024" height="1024"/>
         <image name="select.png" width="20" height="20"/>
+        <image name="spl_1.png" width="1080" height="906"/>
+        <image name="spl_2.png" width="1080" height="152"/>
         <image name="sync" width="33" height="33"/>
         <image name="thun" width="22" height="22"/>
         <image name="trangle" width="10" height="10"/>

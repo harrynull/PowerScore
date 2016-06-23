@@ -44,6 +44,7 @@
 @property(nonatomic,strong)UIView *leftView;
 @property(nonatomic,strong)UIView *rightView;
 @property (nonatomic,strong) NSString *plistPath;
+@property (nonatomic,strong) NSString *plistPath1;
 
 @end
 
@@ -90,6 +91,7 @@
     [super viewDidLoad];
     [self initUI];
     [self loadHistory];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
     {
         //第一次运行时初始化预设理由
@@ -147,6 +149,17 @@
     [dictplist setObject:@"没有值日"forKey:@"9"];
     //写入文件
     [dictplist writeToFile:_plistPath atomically:YES];
+    
+}
+
+-(void)loadplist
+{
+    NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    self.plistPath1 = [documentsDirectory stringByAppendingPathComponent:@"Launch_or_not.plist"];
+    NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: self.plistPath1];
+    NSString *load_or_not = [reasondic objectForKey:@"key"];
+    NSLog(load_or_not);
     
 }
 
@@ -298,6 +311,32 @@
 -(void)vc_opensg
 {
     [[NSNotificationCenter defaultCenter]postNotificationName:@"toopensg" object:nil];
+}
+-(void)vc_changelaunch:(BOOL *)launch
+{
+    [self loadplist];
+    NSMutableDictionary *dictplist = [[NSMutableDictionary alloc ] init];
+    
+    if (launch)
+    {
+        NSLog(@"8989");
+        //设置属性值
+        [dictplist setObject:@"YES" forKey:@"key"];
+        //写入文件
+        [dictplist writeToFile:_plistPath1 atomically:YES];
+        NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: _plistPath1];
+        NSString *load_or_not = [reasondic objectForKey:@"key"];
+        NSLog(load_or_not);
+    } else {
+        NSLog(@"9898");
+        //设置属性值
+        [dictplist setObject:@"NO" forKey:@"key"];
+        //写入文件
+        [dictplist writeToFile:_plistPath1 atomically:YES];
+        NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: _plistPath1];
+        NSString *load_or_not = [reasondic objectForKey:@"key"];
+        NSLog(load_or_not);
+    }
 }
 -(void)vc_openabouteee
 {

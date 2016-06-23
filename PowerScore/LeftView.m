@@ -9,7 +9,7 @@
 #import "LeftView.h"
 #import "ViewController.h"
 @interface LeftView ()
-
+@property (nonatomic,strong) NSString *plistPath;
 @end
 
 @implementation LeftView
@@ -34,6 +34,28 @@
 {
     ViewController *v =[[ViewController alloc]init];
     [v vc_opensg];
+}
+-(void)launchDidChange:(id)sender
+{
+    UISwitch *switchButton = (UISwitch*)sender;
+    BOOL isButtonOn = [switchButton isOn];
+    ViewController *v =[[ViewController alloc]init];
+
+    if (isButtonOn) {
+        [v vc_changelaunch:true];
+        NSLog(@"3627");
+    }else {
+        [v vc_changelaunch:false];
+        NSLog(@"7676");
+    }
+    
+}
+-(void)loadplist
+{
+    NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    self.plistPath = [documentsDirectory stringByAppendingPathComponent:@"Launch_or_not.plist"];
+    
 }
 -(id)initWithFrame:(CGRect)frame
 {
@@ -105,17 +127,37 @@
         group.adjustsImageWhenHighlighted = NO;
         [self addSubview:group];
         
-        
         CGRect rect4 = CGRectMake(0,345, 270, 45);
         UIButton *loadpage = [[UIButton alloc]initWithFrame:rect4];
         loadpage.titleLabel.textAlignment = NSTextAlignmentLeft;
         loadpage.titleLabel.font = [UIFont systemFontOfSize:15.0];
         [loadpage setTitleColor:[UIColor colorWithRed:59.0/255.0 green:69.0/255.0 blue:75.0/255.0 alpha:1] forState:UIControlStateNormal];
-        [loadpage setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
+        //[loadpage setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateHighlighted];
         [loadpage setTitle:@"    显示启动页                            " forState:(UIControlStateNormal)];
         [loadpage setImage:[UIImage imageNamed:@"window"] forState:UIControlStateNormal];
         loadpage.adjustsImageWhenHighlighted = NO;
         [self addSubview:loadpage];
+        
+        CGRect rect9 = CGRectMake(210,352, 51, 31);
+        UISwitch *loadlaunch = [[UISwitch alloc]initWithFrame:rect9];
+        [self loadplist];
+        NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: _plistPath];
+        NSString *load_or_not = [reasondic objectForKey:@"key"];
+        
+        if([load_or_not isEqualToString:@"NO"])
+            
+        {
+            [loadlaunch setOn:NO];
+        } else {
+            [loadlaunch setOn:YES];
+        }
+
+        [loadlaunch addTarget:self action:@selector(launchDidChange:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:loadlaunch];
+        
+       
+        
+        
         
         ////////////////////////////////////////////////////////////////////////////////////
         CGRect rect5 = CGRectMake(0,self.frame.size.height-55, 135, 55);

@@ -48,9 +48,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *meg3;
 @property (weak, nonatomic) IBOutlet UIImageView *meg4;
 
-@property (nonatomic,strong) NSString *reasonadd;
-@property CGFloat oldheight;
-
 @property (weak, nonatomic) IBOutlet UIView *contain;
 @property (weak, nonatomic) IBOutlet UIView *memcontain;
 @property (weak, nonatomic) IBOutlet UIView *uk1;
@@ -69,6 +66,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containheight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containbottom;
 
+@property (nonatomic,strong) NSString *reasonadd;
+@property CGFloat oldheight;
 
 @end
 

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		26F6FFB01CD9BCE40073C540 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F6FFAF1CD9BCE40073C540 /* History.m */; };
 		270B1B311D19346100E7331A /* Reasons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270B1B301D19346100E7331A /* Reasons.plist */; };
+		271B25491D1B6898007094DA /* spl_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 271B25481D1B6898007094DA /* spl_1.png */; };
+		271B254C1D1B68E2007094DA /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B254B1D1B68E2007094DA /* LaunchViewController.m */; };
+		271B254E1D1B6D11007094DA /* spl_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 271B254D1D1B6D11007094DA /* spl_2.png */; };
+		27930F421D1B7B8F004901B7 /* Launch_or_not.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27930F411D1B7B8F004901B7 /* Launch_or_not.plist */; };
 		6F035A231CCF2A3200BA023E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A1F1CCF2A3200BA023E /* ViewController.m */; };
 		6F035A241CCF2A3200BA023E /* AndyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A201CCF2A3200BA023E /* AndyScrollView.m */; };
 		6F035A251CCF2A3200BA023E /* LeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F035A221CCF2A3200BA023E /* LeftView.m */; };
@@ -67,6 +71,11 @@
 		26F6FFAE1CD9BCE40073C540 /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
 		26F6FFAF1CD9BCE40073C540 /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
 		270B1B301D19346100E7331A /* Reasons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Reasons.plist; sourceTree = "<group>"; };
+		271B25481D1B6898007094DA /* spl_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spl_1.png; sourceTree = "<group>"; };
+		271B254A1D1B68E2007094DA /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
+		271B254B1D1B68E2007094DA /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		271B254D1D1B6D11007094DA /* spl_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spl_2.png; sourceTree = "<group>"; };
+		27930F411D1B7B8F004901B7 /* Launch_or_not.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Launch_or_not.plist; sourceTree = "<group>"; };
 		6F035A1D1CCF2A3200BA023E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		6F035A1E1CCF2A3200BA023E /* AndyScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndyScrollView.h; sourceTree = "<group>"; };
 		6F035A1F1CCF2A3200BA023E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -219,6 +228,8 @@
 		6F7A40111D0CEC63002721DB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				271B254A1D1B68E2007094DA /* LaunchViewController.h */,
+				271B254B1D1B68E2007094DA /* LaunchViewController.m */,
 				6F035A1D1CCF2A3200BA023E /* ViewController.h */,
 				6F035A1F1CCF2A3200BA023E /* ViewController.m */,
 				6F6602FA1CD81EF6001D4903 /* AboutViewController.h */,
@@ -252,6 +263,8 @@
 				6F7E342B1CD59D9D006CA8AE /* light_blue.png */,
 				6F7E342D1CD5A198006CA8AE /* right_divide.png */,
 				6F6602FD1CD8241F001D4903 /* powerscore_icon_p.png */,
+				271B25481D1B6898007094DA /* spl_1.png */,
+				271B254D1D1B6D11007094DA /* spl_2.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -288,6 +301,7 @@
 				6F6D7CFA1C9EA9F70089521E /* Info.plist */,
 				270B1B301D19346100E7331A /* Reasons.plist */,
 				6F93ABDF1CD4BDEA009504E4 /* account.plist */,
+				27930F411D1B7B8F004901B7 /* Launch_or_not.plist */,
 			);
 			name = plists;
 			sourceTree = "<group>";
@@ -408,9 +422,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				270B1B311D19346100E7331A /* Reasons.plist in Resources */,
+				271B25491D1B6898007094DA /* spl_1.png in Resources */,
 				6F7E342C1CD59D9D006CA8AE /* light_blue.png in Resources */,
 				6F7E342E1CD5A198006CA8AE /* right_divide.png in Resources */,
 				6F93ABE01CD4BDEA009504E4 /* account.plist in Resources */,
+				27930F421D1B7B8F004901B7 /* Launch_or_not.plist in Resources */,
 				6F9B2E1B1D09747100A5746A /* HeaderView.xib in Resources */,
 				6F7E34241CD56D9D006CA8AE /* grey.png in Resources */,
 				6F6F62061CD618E000BEC283 /* HistoryTableViewCell.xib in Resources */,
@@ -418,6 +434,7 @@
 				6F7E34221CD56C67006CA8AE /* white.png in Resources */,
 				6F93ABDE1CD4BD43009504E4 /* setting_tx.png in Resources */,
 				6F6D7CF91C9EA9F70089521E /* LaunchScreen.storyboard in Resources */,
+				271B254E1D1B6D11007094DA /* spl_2.png in Resources */,
 				6F6D7CF61C9EA9F70089521E /* Assets.xcassets in Resources */,
 				6F6D7CF41C9EA9F70089521E /* Main.storyboard in Resources */,
 				6F6602FE1CD8241F001D4903 /* powerscore_icon_p.png in Resources */,
@@ -466,6 +483,7 @@
 				6F860CD31CDEE5B0001C3D24 /* ChooseReasonViewController.m in Sources */,
 				6F6D7CEE1C9EA9F70089521E /* AppDelegate.m in Sources */,
 				6F6D7CEB1C9EA9F70089521E /* main.m in Sources */,
+				271B254C1D1B68E2007094DA /* LaunchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,7 +627,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PowerScore/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hitgif.github.com.PowerScore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -625,7 +643,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PowerScore/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hitgif.github.com.PowerScore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
