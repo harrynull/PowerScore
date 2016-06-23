@@ -116,7 +116,7 @@
     NSUInteger row = [indexPath row];
     NSArray *reasonkeys = [self getplistdic].allKeys;
     NSArray *reasons = [self getplistdic].allValues;
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])]message:@"选择对该记录的操作" preferredStyle: UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])]message:@"选择对该理由的操作" preferredStyle: UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         UIAlertController *alertcontroller = [UIAlertController alertControllerWithTitle:[reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])] message:@"确认要删除这个理由吗？" preferredStyle:UIAlertControllerStyleAlert];
