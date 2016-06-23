@@ -66,6 +66,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *unsetablebottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *meg4bottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *membtbottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containheight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containbottom;
 
 
 @end
@@ -110,7 +112,8 @@ BOOL flag;
         
         
     }
-    self.oldheight = 0;
+    //初始化小键盘原始高度便于计算
+    self.oldheight = 291.0;
 }
 
 - (void)viewDidLoad {
@@ -137,13 +140,11 @@ BOOL flag;
     isplus = false;
 }
 - (IBAction)membtOnclick:(id)sender {
-    [self resetview];
     [self performSegueWithIdentifier:@"gotomem" sender:self];
 
 }
 
 - (IBAction)reasonOnclick:(id)sender {
-    [self resetview];
     [self performSegueWithIdentifier:@"gotochoosereason" sender:self];
 }
 - (IBAction)dropdownnumOnClick:(id)sender {
@@ -152,82 +153,39 @@ BOOL flag;
 }
 
 
-- (void)resetview
-{
-    if (numisdragdown) {
-        [self rotate];
 
-        CGRect rect = self.contain.frame;
-        CGRect rect1 = self.memcontain.frame;
-        
-        int h = self.oldheight-self.ik.frame.size.height;
-        
-        rect1.size.height -= h;
-        rect.origin.y -= h;
-        rect.size.height = self.oldheight;
-        CGFloat addheight = h;
-        self.memcontain.frame = rect1;
-        self.contain.frame = rect;
-        
-        self.meg1bottom.constant += addheight;
-        self.meg2bottom.constant += addheight;
-        self.meg4bottom.constant += addheight;
-        self.showmemsbottom.constant += addheight;
-        self.unsetablebottom.constant += addheight;
-        self.membtbottom.constant += addheight;
-        
-
-        numisdragdown = false;
-        
-        
-    }
-
-}
-
-
+//小键盘伸缩
 - (void)refreshview
 {
     if (numisdragdown) {
-        
-        CGRect rect = self.contain.frame;
-        CGRect rect1 = self.memcontain.frame;
-        
+
         int h = self.oldheight-self.ik.frame.size.height;
-        
-        rect1.size.height -= h;
-        rect.origin.y -= h;
-        rect.size.height = self.oldheight;
-        CGFloat addheight = h;
-        self.memcontain.frame = rect1;
-        self.contain.frame = rect;
-        
+        CGFloat addheight = h-self.oldheight+self.ik.frame.size.height;
+
+        //通过改变约束值而不是frame避免调用view时重新加载导致复原
+        self.containheight.constant += h;
         self.meg1bottom.constant += addheight;
         self.meg2bottom.constant += addheight;
         self.meg4bottom.constant += addheight;
         self.showmemsbottom.constant += addheight;
         self.unsetablebottom.constant += addheight;
         self.membtbottom.constant += addheight;
-        
-        
+
+        self.uk1.hidden = NO;
+        self.uk2.hidden = NO;
+        self.uk3.hidden = NO;
+        self.uk4.hidden = NO;
+        self.uk5.hidden = NO;
+
         numisdragdown = false;
-        
-        
+   
     } else {
+ 
+        int h = self.oldheight-self.ik.frame.size.height;
+        CGFloat addheight = h-self.oldheight+self.ik.frame.size.height;
         
-       
-        CGRect rect = self.contain.frame;
-        CGRect rect1 = self.memcontain.frame;
-        
-        self.oldheight = rect.size.height;
-        int h = rect.size.height-self.ik.frame.size.height;
-        
-        rect1.size.height += h;
-        rect.origin.y += h;
-        rect.size.height = self.ik.frame.size.height;
-        CGFloat addheight = h;
-        self.memcontain.frame = rect1;
-        self.contain.frame = rect;
-        
+        //通过改变约束值而不是frame避免调用view时重新加载导致复原
+        self.containheight.constant -= h;
         self.meg1bottom.constant -= addheight;
         self.meg2bottom.constant -= addheight;
         self.meg4bottom.constant -= addheight;
@@ -235,12 +193,16 @@ BOOL flag;
         self.unsetablebottom.constant -= addheight;
         self.membtbottom.constant -= addheight;
         
+        self.uk1.hidden = YES;
+        self.uk2.hidden = YES;
+        self.uk3.hidden = YES;
+        self.uk4.hidden = YES;
+        self.uk5.hidden = YES;
         
         numisdragdown = true;
         
     }
-    
-    
+ 
 }
 
 
