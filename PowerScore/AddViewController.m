@@ -158,7 +158,7 @@ BOOL flag;
 
 //小键盘伸缩
 - (void)refreshview
-{NSLog(@"%d",numisdragdown);
+{
     if (numisdragdown) {
 
         int h = self.oldheight-self.ik.frame.size.height;

@@ -159,7 +159,6 @@
     self.plistPath1 = [documentsDirectory stringByAppendingPathComponent:@"Launch_or_not.plist"];
     NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: self.plistPath1];
     NSString *load_or_not = [reasondic objectForKey:@"key"];
-    NSLog(load_or_not);
     
 }
 
@@ -319,23 +318,19 @@
     
     if (launch)
     {
-        NSLog(@"8989");
         //设置属性值
         [dictplist setObject:@"YES" forKey:@"key"];
         //写入文件
         [dictplist writeToFile:_plistPath1 atomically:YES];
         NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: _plistPath1];
         NSString *load_or_not = [reasondic objectForKey:@"key"];
-        NSLog(load_or_not);
     } else {
-        NSLog(@"9898");
         //设置属性值
         [dictplist setObject:@"NO" forKey:@"key"];
         //写入文件
         [dictplist writeToFile:_plistPath1 atomically:YES];
         NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: _plistPath1];
         NSString *load_or_not = [reasondic objectForKey:@"key"];
-        NSLog(load_or_not);
     }
 }
 -(void)vc_openabouteee

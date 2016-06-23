@@ -43,10 +43,8 @@
 
     if (isButtonOn) {
         [v vc_changelaunch:true];
-        NSLog(@"3627");
     }else {
         [v vc_changelaunch:false];
-        NSLog(@"7676");
     }
     
 }

@@ -95,7 +95,6 @@
         AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
         receive.reasonreceive = self.reasonback;
         //使用popToViewController返回并传值到上一页面
-        NSLog(receive.reasonreceive);
         [self.navigationController popToViewController:receive animated:true];
         
     } else {
@@ -105,7 +104,6 @@
         AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
         receive.reasonreceive = self.reasonback;
         //使用popToViewController返回并传值到上一页面
-        NSLog(receive.reasonreceive);
         [self.navigationController popToViewController:receive animated:true];
 
         
