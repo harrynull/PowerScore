@@ -79,6 +79,8 @@ bool caninput = true;
 bool onlyzero = true;
 bool caninputpoint = true;
 bool numisdragdown = false;
+
+//判断箭头动画的
 BOOL flag;
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -127,6 +129,7 @@ BOOL flag;
     [self.dropdownnum setAdjustsImageWhenHighlighted:NO];
     [self.dropdownnum setBackgroundImage:[UIImage imageNamed:@"dropback"] forState:UIControlStateHighlighted];
     flag = YES;
+    numisdragdown = false;
     // Do any additional setup after loading the view.
 }
 - (IBAction)plusOnclick:(id)sender {
@@ -156,7 +159,7 @@ BOOL flag;
 
 //小键盘伸缩
 - (void)refreshview
-{
+{NSLog(@"%d",numisdragdown);
     if (numisdragdown) {
 
         int h = self.oldheight-self.ik.frame.size.height;
