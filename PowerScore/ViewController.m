@@ -89,15 +89,15 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+
     [self initUI];
     [self loadHistory];
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
     {
         //第一次运行时初始化预设理由
         [self creatplist];
+
     }
-    
 }
 
 
@@ -170,7 +170,7 @@
     h1.mark = @"-1";
     h1.members = @"张三,李四";
     
-    //第一步，创建URL
+  /*  //第一步，创建URL
     NSURL * url = [[NSURL alloc]initWithString:@"http://powerscore.duapp.com/sync.php"];
     //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
     NSMutableURLRequest * request1 = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:100];
@@ -189,7 +189,7 @@
     _histories = [NSArray array];
     
     [ViewController readData:str];
-    
+  */  
     _histories = [NSArray arrayWithObjects:h1, nil];
 }
 

@@ -25,7 +25,7 @@
     self.spl2.hidden = YES;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
     {
-        //第一次默认显示启动页
+                //第一次默认显示启动页
         [self creatplist];
         
     }
@@ -66,6 +66,7 @@
     //延时
     [NSThread sleepForTimeInterval:0.4f];
     //打开主界面
+        
     [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"NavController"] animated:YES completion:nil];
     }
 }
