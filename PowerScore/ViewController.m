@@ -73,12 +73,61 @@
     UILabel *date_short = (UILabel *)[cell.contentView viewWithTag:2];
     UILabel *mark = (UILabel *)[cell.contentView viewWithTag:3];
     UILabel *members = (UILabel *)[cell.contentView viewWithTag:4];
+    UIImageView *positive = (UIImageView *)[cell.contentView viewWithTag:5];
     
     reason.text = history.reason;
     date_short.text = history.date_short;
     mark.text = history.mark;
     members.text = history.members;
+    
+    if([history.mark containsString:@"-"])
+    {
+        [positive setBackgroundColor:[UIColor redColor]];
+    }
+    
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSUInteger row = [indexPath row];
+    History *history = [_histories objectAtIndex:indexPath.row];
+    NSString *reason = history.reason;
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:reason message:@"选择对该记录的操作" preferredStyle: UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        
+        NSString *tip = [NSString stringWithFormat:@"确认要删除记录“%@”吗？\n该条记录所修改的分数将被撤销",reason];
+        
+        UIAlertController *alertcontroller = [UIAlertController alertControllerWithTitle:@"删除记录" message:tip preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+        //删除记录
+            
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertcontroller addAction:cancelAction];
+        [alertcontroller addAction:okAction];
+        [self presentViewController:alertcontroller animated:YES completion:nil];
+
+    }];
+    
+    UIAlertAction *moreinfoAction = [UIAlertAction actionWithTitle:@"查看详细" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        //详细记录
+      
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:deleteAction];
+    [alertController addAction:moreinfoAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -170,6 +219,12 @@
     h1.mark = @"-1";
     h1.members = @"张三,李四";
     
+    History *h2 = [[History alloc] init];
+    h2.reason = @"讲话";
+    h2.date_short = @"06-07";
+    h2.mark = @"+1";
+    h2.members = @"张三,李四";
+    
   /*  //第一步，创建URL
     NSURL * url = [[NSURL alloc]initWithString:@"http://powerscore.duapp.com/sync.php"];
     //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
@@ -190,7 +245,7 @@
     
     [ViewController readData:str];
   */  
-    _histories = [NSArray arrayWithObjects:h1, nil];
+    _histories = [NSArray arrayWithObjects:h1,h2, nil];
 }
 
 

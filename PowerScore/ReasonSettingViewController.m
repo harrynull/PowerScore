@@ -190,6 +190,7 @@
     [alertController addAction:deleteAction];
     [alertController addAction:resetAction];
     [self presentViewController:alertController animated:YES completion:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
