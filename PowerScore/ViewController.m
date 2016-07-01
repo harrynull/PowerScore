@@ -284,6 +284,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopenov:)name:@"toopenov" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopensr:)name:@"toopensr" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopensg:)name:@"toopensg" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tounlog:)name:@"tounlog" object:nil];
     // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
    
 }
@@ -308,6 +309,10 @@
 -(void)toopensg:(NSNotification *)sender
 {
     [self vc_opensetgroup];
+}
+-(void)tounlog:(NSNotification *)sender
+{
+    [self vc_unlogger];
 }
 - (IBAction)openleftOnclick:(id)sender {
     [self.leftView reloadInputViews];
@@ -366,6 +371,12 @@
 {
     [[NSNotificationCenter defaultCenter]postNotificationName:@"toopensg" object:nil];
 }
+-(void)vc_unlog
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"tounlog" object:nil];
+
+}
+
 -(void)vc_changelaunch:(BOOL *)launch
 {
     [self loadplist];
@@ -411,6 +422,20 @@
     self.scroll.stcloseleftview;
     
     [self performSegueWithIdentifier:@"gotosetgroup" sender:self];
+}
+-(void)vc_unlogger
+{
+    UIAlertController *alertcontroller = [UIAlertController alertControllerWithTitle:@"退出登录" message:@"确定要退出登录吗？\n(未同步的数据将会丢失)" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        //退出登录
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alertcontroller addAction:cancelAction];
+    [alertcontroller addAction:okAction];
+    
+    [self presentViewController:alertcontroller animated:YES completion:nil];
 }
 
 -(UIScrollView *)scroll

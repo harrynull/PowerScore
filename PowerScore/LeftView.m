@@ -48,6 +48,13 @@
     }
     
 }
+
+-(void)unlog
+{
+    ViewController *v =[[ViewController alloc]init];
+    [v vc_unlog];
+}
+
 -(void)loadplist
 {
     NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
@@ -177,6 +184,7 @@
         [unlog setTitleColor:[UIColor colorWithRed:243.0/255.0 green:32.0/255.0 blue:32.0/255.0 alpha:1] forState:UIControlStateNormal];
         [unlog setBackgroundImage:[UIImage imageNamed:@"white"] forState:UIControlStateNormal];
         [unlog setBackgroundImage:[UIImage imageNamed:@"grey"] forState:UIControlStateHighlighted];
+        [unlog addTarget:self action:@selector(unlog) forControlEvents:UIControlEventTouchUpInside];
         [unlog setTitle:@"退出登录" forState:(UIControlStateNormal)];
         [self addSubview:unlog];
         

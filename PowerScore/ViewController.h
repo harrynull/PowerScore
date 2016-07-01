@@ -13,6 +13,7 @@
 -(void)vc_openov;
 -(void)vc_opensr;
 -(void)vc_opensg;
+-(void)vc_unlog;
 -(void)vc_changelaunch:(BOOL *)launch;
 @property (nonatomic, strong) IBOutlet UITableViewCell *HistoryCell;
 @end
