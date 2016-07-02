@@ -968,7 +968,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                         @Override
                         public void run() {
                             try {
-                                Thread.sleep(0);
+                                Thread.sleep(800);
                                 if(pdLoading) {
                                     hideCustomProgressDialog();
                                     pdLoading = false;
@@ -1166,87 +1166,45 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             case 2:
                 String[] results = data.getExtras().getStringArray("data");
                 //接收add
-                if(results[2].equals("2333")){
-                    for(int sd = 0;sd<80;sd++){
-                        String[] namesByClasses = new String[classes.size()]; //分别储存每个班的人
-                        String[] allNames = results[1].split("\\|");
-                        for (int i = 0; i != namesByClasses.length; i++) {
-                            namesByClasses[i] = "";
-                        }
-                        for (int i = 0; i < allNames.length; i += 2) {
-                            String[] members = classes.get(allNames[i]).members;
-                            for (int j = 0; j != members.length; j++) {
-                                if (allNames[i + 1].equals(members[j])) {
-                                    int cid = 0;
-                                    for (final String key : classes.keySet()) { //查找每个班
-                                        if (key.equals(allNames[i])) break;
-                                        cid++;
-                                    }
-                                    namesByClasses[cid] += allNames[i + 1] + ",";
-                                }
-                            }
-                        }
-                        int cid = 0;
-                        int score = (int) (sd);
-                        for (final String key : classes.keySet()) { //查找每个班
-                            if (!namesByClasses[cid].isEmpty()) {
-                                String names = namesByClasses[cid].substring(0, namesByClasses[cid].length() - 1);
-                                String oper = spReader.getString("username", "未登录用户");
-                                Date d = new Date();
-                                classes.get(key).histories.add(new History(score, names, results[0], d, oper));
-                                classes.get(key).unsyncHistories.add(new History(score, names, results[0], d, oper));
-                                for (String name : names.split(",")) {
-                                    for (int i = 0; i < classes.get(key).members.length; i++) {
-                                        if (classes.get(key).members[i].equals(name))
-                                            classes.get(key).scores[i] += score;
-                                    }
-                                }
-                            }
-                            cid++;
-                        }
-                        updateList();
+                if (!results[0].equals("NULL") && !results[2].isEmpty()) {
+                    //更新记录
+                    String[] namesByClasses = new String[classes.size()]; //分别储存每个班的人
+                    String[] allNames = results[1].split("\\|");
+                    for (int i = 0; i != namesByClasses.length; i++) {
+                        namesByClasses[i] = "";
                     }
-                }else {
-                    if (!results[0].equals("NULL") && !results[2].isEmpty()) {
-                        //更新记录
-                        String[] namesByClasses = new String[classes.size()]; //分别储存每个班的人
-                        String[] allNames = results[1].split("\\|");
-                        for (int i = 0; i != namesByClasses.length; i++) {
-                            namesByClasses[i] = "";
-                        }
-                        for (int i = 0; i < allNames.length; i += 2) {
-                            String[] members = classes.get(allNames[i]).members;
-                            for (int j = 0; j != members.length; j++) {
-                                if (allNames[i + 1].equals(members[j])) {
-                                    int cid = 0;
-                                    for (final String key : classes.keySet()) { //查找每个班
-                                        if (key.equals(allNames[i])) break;
-                                        cid++;
-                                    }
-                                    namesByClasses[cid] += allNames[i + 1] + ",";
+                    for (int i = 0; i < allNames.length; i += 2) {
+                        String[] members = classes.get(allNames[i]).members;
+                        for (int j = 0; j != members.length; j++) {
+                            if (allNames[i + 1].equals(members[j])) {
+                                int cid = 0;
+                                for (final String key : classes.keySet()) { //查找每个班
+                                    if (key.equals(allNames[i])) break;
+                                    cid++;
                                 }
+                                namesByClasses[cid] += allNames[i + 1] + ",";
                             }
                         }
-                        int cid = 0;
-                        int score = (int) (Float.parseFloat(results[2]) * 10);
-                        for (final String key : classes.keySet()) { //查找每个班
-                            if (!namesByClasses[cid].isEmpty()) {
-                                String names = namesByClasses[cid].substring(0, namesByClasses[cid].length() - 1);
-                                String oper = spReader.getString("username", "未登录用户");
-                                Date d = new Date();
-                                classes.get(key).histories.add(new History(score, names, results[0], d, oper));
-                                classes.get(key).unsyncHistories.add(new History(score, names, results[0], d, oper));
-                                for (String name : names.split(",")) {
-                                    for (int i = 0; i < classes.get(key).members.length; i++) {
-                                        if (classes.get(key).members[i].equals(name))
-                                            classes.get(key).scores[i] += score;
-                                    }
-                                }
-                            }
-                            cid++;
-                        }
-                        updateList();
                     }
+                    int cid = 0;
+                    int score = (int) (Float.parseFloat(results[2]) * 10);
+                    for (final String key : classes.keySet()) { //查找每个班
+                        if (!namesByClasses[cid].isEmpty()) {
+                            String names = namesByClasses[cid].substring(0, namesByClasses[cid].length() - 1);
+                            String oper = spReader.getString("username", "未登录用户");
+                            Date d = new Date();
+                            classes.get(key).histories.add(new History(score, names, results[0], d, oper));
+                            classes.get(key).unsyncHistories.add(new History(score, names, results[0], d, oper));
+                            for (String name : names.split(",")) {
+                                for (int i = 0; i < classes.get(key).members.length; i++) {
+                                    if (classes.get(key).members[i].equals(name))
+                                        classes.get(key).scores[i] += score;
+                                }
+                            }
+                        }
+                        cid++;
+                    }
+                    updateList();
                 }
                 break;
         }
