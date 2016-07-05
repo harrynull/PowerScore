@@ -38,6 +38,8 @@ import android.widget.DatePicker;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.iflytek.sunflower.FlowerCollector;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.ByteArrayOutputStream;
@@ -681,7 +683,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                              .setNegativeButton("好的", null).show();
                      return;
                  }
-                 startActivityForResult(new Intent(MainActivity.this, add.class), 2);
+                 startActivityForResult(new Intent(MainActivity.this, Listener.class), 2);
                  overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
              }
         });
@@ -952,6 +954,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         super.onResume();
         MyAdapter mAdapter = new MyAdapter(this);//得到一个MyAdapter对象
         lv.setAdapter(mAdapter);
+        FlowerCollector.onResume(this);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        FlowerCollector.onPause(this);
     }
 
 
