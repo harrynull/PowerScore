@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "AndyScrollView.h"
 #import "RightScrollView.h"
-#import "History.h"
+#import "PowerScore-swift.h"
 
 @interface ViewController ()
 <UIScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -76,11 +76,11 @@
     UIImageView *positive = (UIImageView *)[cell.contentView viewWithTag:5];
     
     reason.text = history.reason;
-    date_short.text = history.date_short;
-    mark.text = history.mark;
-    members.text = history.members;
+    date_short.text = history.shortDateStr;
+    mark.text = history.scoreWithSign;
+    members.text = history.names;
     
-    if([history.mark containsString:@"-"])
+    if(history.score<0)
     {
         [positive setBackgroundColor:[UIColor redColor]];
     }
@@ -213,6 +213,7 @@
 
 -(void)loadHistory
 {
+    /*
     History *h1 = [[History alloc] init];
     h1.reason = @"讲话";
     h1.date_short = @"06-07";
@@ -224,8 +225,8 @@
     h2.date_short = @"06-07";
     h2.mark = @"+1";
     h2.members = @"张三,李四";
-    
-  /*  //第一步，创建URL
+    */
+    //第一步，创建URL
     NSURL * url = [[NSURL alloc]initWithString:@"http://powerscore.duapp.com/sync.php"];
     //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
     NSMutableURLRequest * request1 = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:100];
@@ -241,11 +242,10 @@
     NSData * data = [NSURLConnection sendSynchronousRequest:request1 returningResponse:nil error:nil];
     NSString * str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     
-    _histories = [NSArray array];
+    DataGetter* sobj = [[DataGetter alloc] init];
+    ClassData* hello = [sobj process:str name:@"test"];
     
-    [ViewController readData:str];
-  */  
-    _histories = [NSArray arrayWithObjects:h1,h2, nil];
+    //_histories = [NSArray arrayWithObjects:h1,h2, nil];
 }
 
 

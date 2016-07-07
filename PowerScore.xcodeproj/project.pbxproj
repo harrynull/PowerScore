@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26F6FFB01CD9BCE40073C540 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F6FFAF1CD9BCE40073C540 /* History.m */; };
+		2625622C1D2DFB3F00425E08 /* DataGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625622B1D2DFB3F00425E08 /* DataGetter.swift */; };
+		2625622E1D2E000300425E08 /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625622D1D2E000300425E08 /* Class.swift */; };
+		262562301D2E021900425E08 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625622F1D2E021900425E08 /* History.swift */; };
+		262562321D2E08C500425E08 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262562311D2E08C500425E08 /* Date.swift */; };
 		270B1B311D19346100E7331A /* Reasons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270B1B301D19346100E7331A /* Reasons.plist */; };
 		271B25491D1B6898007094DA /* spl_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 271B25481D1B6898007094DA /* spl_1.png */; };
 		271B254C1D1B68E2007094DA /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B254B1D1B68E2007094DA /* LaunchViewController.m */; };
@@ -68,8 +71,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		26F6FFAE1CD9BCE40073C540 /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
-		26F6FFAF1CD9BCE40073C540 /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
+		2625622A1D2DFB3E00425E08 /* PowerScore-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PowerScore-Bridging-Header.h"; sourceTree = "<group>"; };
+		2625622B1D2DFB3F00425E08 /* DataGetter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataGetter.swift; sourceTree = "<group>"; };
+		2625622D1D2E000300425E08 /* Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
+		2625622F1D2E021900425E08 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		262562311D2E08C500425E08 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		270B1B301D19346100E7331A /* Reasons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Reasons.plist; sourceTree = "<group>"; };
 		271B25481D1B6898007094DA /* spl_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spl_1.png; sourceTree = "<group>"; };
 		271B254A1D1B68E2007094DA /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
@@ -163,6 +169,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		262562291D2DFB2500425E08 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				262562311D2E08C500425E08 /* Date.swift */,
+				2625622B1D2DFB3F00425E08 /* DataGetter.swift */,
+				2625622D1D2E000300425E08 /* Class.swift */,
+				2625622F1D2E021900425E08 /* History.swift */,
+			);
+			name = Swift;
+			sourceTree = "<group>";
+		};
 		6F6D7CDD1C9EA9F70089521E = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +203,8 @@
 		6F6D7CE81C9EA9F70089521E /* PowerScore */ = {
 			isa = PBXGroup;
 			children = (
+				2625622A1D2DFB3E00425E08 /* PowerScore-Bridging-Header.h */,
+				262562291D2DFB2500425E08 /* Swift */,
 				6F6D7CEC1C9EA9F70089521E /* AppDelegate.h */,
 				6F6D7CED1C9EA9F70089521E /* AppDelegate.m */,
 				6F7A40121D0CECCC002721DB /* Images */,
@@ -288,8 +307,6 @@
 				6F9B2E141D09747100A5746A /* HeaderView.m */,
 				6F9B2E161D09747100A5746A /* ChooseRoleCell.h */,
 				6F9B2E171D09747100A5746A /* ChooseRoleCell.m */,
-				26F6FFAE1CD9BCE40073C540 /* History.h */,
-				26F6FFAF1CD9BCE40073C540 /* History.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -467,18 +484,21 @@
 				6F035A231CCF2A3200BA023E /* ViewController.m in Sources */,
 				6F848B551CD9AE2D007CD526 /* memViewController.m in Sources */,
 				6F4636EC1D0BF3E500FDB338 /* ChooseMemTableViewController.m in Sources */,
-				26F6FFB01CD9BCE40073C540 /* History.m in Sources */,
 				6F4A8ABC1D06EA7C00734F84 /* GroupSettingViewController.m in Sources */,
 				6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */,
 				6F035A241CCF2A3200BA023E /* AndyScrollView.m in Sources */,
+				262562301D2E021900425E08 /* History.swift in Sources */,
 				6F9B2E191D09747100A5746A /* ChooseTableView.m in Sources */,
+				262562321D2E08C500425E08 /* Date.swift in Sources */,
 				6FA2959A1CD4505C005B0574 /* NavController.m in Sources */,
 				6F9B2E1C1D09747100A5746A /* ChooseRoleCell.m in Sources */,
+				2625622E1D2E000300425E08 /* Class.swift in Sources */,
 				6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */,
 				6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */,
 				6F4A8AB61D06E9A400734F84 /* OverViewViewController.m in Sources */,
 				6F9B2E1A1D09747100A5746A /* HeaderView.m in Sources */,
 				6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */,
+				2625622C1D2DFB3F00425E08 /* DataGetter.swift in Sources */,
 				6F7E34271CD57B02006CA8AE /* RightView.m in Sources */,
 				6F860CD31CDEE5B0001C3D24 /* ChooseReasonViewController.m in Sources */,
 				6F6D7CEE1C9EA9F70089521E /* AppDelegate.m in Sources */,
@@ -624,6 +644,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PowerScore/Info.plist;
@@ -632,6 +653,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hitgif.github.com.PowerScore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PowerScore/PowerScore-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -640,6 +663,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PowerScore/Info.plist;
@@ -648,6 +672,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hitgif.github.com.PowerScore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PowerScore/PowerScore-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
