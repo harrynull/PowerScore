@@ -51,6 +51,7 @@
 		6F9B2E1C1D09747100A5746A /* ChooseRoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B2E171D09747100A5746A /* ChooseRoleCell.m */; };
 		6F9B2E1D1D09747100A5746A /* role.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F9B2E181D09747100A5746A /* role.plist */; };
 		6FA2959A1CD4505C005B0574 /* NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA295991CD4505C005B0574 /* NavController.m */; };
+		848D93821D27717E00E4514D /* ChooseGroupMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848D93811D27717E00E4514D /* ChooseGroupMemberViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +143,8 @@
 		6F9B2E181D09747100A5746A /* role.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = role.plist; sourceTree = "<group>"; };
 		6FA295981CD4505C005B0574 /* NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavController.h; sourceTree = "<group>"; };
 		6FA295991CD4505C005B0574 /* NavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavController.m; sourceTree = "<group>"; };
+		848D93801D27717E00E4514D /* ChooseGroupMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupMemberViewController.h; sourceTree = "<group>"; };
+		848D93811D27717E00E4514D /* ChooseGroupMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupMemberViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +266,8 @@
 				6F4A8AB81D06EA6800734F84 /* ReasonSettingViewController.m */,
 				6F4A8ABA1D06EA7C00734F84 /* GroupSettingViewController.h */,
 				6F4A8ABB1D06EA7C00734F84 /* GroupSettingViewController.m */,
+				848D93801D27717E00E4514D /* ChooseGroupMemberViewController.h */,
+				848D93811D27717E00E4514D /* ChooseGroupMemberViewController.m */,
 				6F860CD11CDEE5B0001C3D24 /* ChooseReasonViewController.h */,
 				6F860CD21CDEE5B0001C3D24 /* ChooseReasonViewController.m */,
 				6F4636EA1D0BF3E500FDB338 /* ChooseMemTableViewController.h */,
@@ -483,6 +488,7 @@
 				6F4A8AB91D06EA6800734F84 /* ReasonSettingViewController.m in Sources */,
 				6F035A231CCF2A3200BA023E /* ViewController.m in Sources */,
 				6F848B551CD9AE2D007CD526 /* memViewController.m in Sources */,
+				848D93821D27717E00E4514D /* ChooseGroupMemberViewController.m in Sources */,
 				6F4636EC1D0BF3E500FDB338 /* ChooseMemTableViewController.m in Sources */,
 				6F4A8ABC1D06EA7C00734F84 /* GroupSettingViewController.m in Sources */,
 				6F3B6B761CD8CF0F00897197 /* AddViewController.m in Sources */,
