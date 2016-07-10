@@ -37,7 +37,8 @@
     __weak IBOutlet UIButton *class_or_student;
     
     NSArray *_histories;
-
+    
+    NSMutableDictionary* classes;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -150,36 +151,6 @@
 }
 
 
-+ (void)readData:(NSString*) str
-{
-    NSArray *strs = [str componentsSeparatedByString:@"\n"];
-    //readNow.setMembers(strs[0]);
-    
-    NSArray *strScores = [strs[1] componentsSeparatedByString:@" "];
-    //for (int j = 0; j < readNow.members.length; j++) {
-    //    readNow.scores[j] = Integer.valueOf(strScores[j]);
-    //}
-    
-    //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA);
-    
-    if (strs.count < 3) return;
-    NSArray *histories = [strs[2] componentsSeparatedByString:@"|"];
-    
-    //for (int j = 0; j < histories.length; j += 5) {
-    //    readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
-    //                                      histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
-    //}
-    if (strs.count < 4) return;
-    NSArray *usHistories = [strs[3] componentsSeparatedByString:@"|"];
-    //readNow.unsyncHistories.clear();
-    //for (int j = 0; j < usHistories.length; j += 5) {
-    //    readNow.unsyncHistories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
-    //                                            histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
-    //}
-}
-
-
-
 -(void)creatplist
 {
     NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
@@ -211,23 +182,9 @@
     
 }
 
--(void)loadHistory
-{
-    /*
-    History *h1 = [[History alloc] init];
-    h1.reason = @"讲话";
-    h1.date_short = @"06-07";
-    h1.mark = @"-1";
-    h1.members = @"张三,李四";
-    
-    History *h2 = [[History alloc] init];
-    h2.reason = @"讲话";
-    h2.date_short = @"06-07";
-    h2.mark = @"+1";
-    h2.members = @"张三,李四";
-    */
++(NSString*)post : (NSString*) strUrl : (NSString*) args{
     //第一步，创建URL
-    NSURL * url = [[NSURL alloc]initWithString:@"http://powerscore.duapp.com/sync.php"];
+    NSURL * url = [[NSURL alloc]initWithString:strUrl];
     //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
     NSMutableURLRequest * request1 = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:100];
     //timeoutInterval:post超时最大时间是240秒,在方法中设置多少秒也没用。
@@ -235,17 +192,45 @@
     //第三步，设置POST请求方式
     [request1 setHTTPMethod:@"POST"];
     //第四步，设置参数
-    NSString * bodyStr = @"username=tester&password=123456&cid=21&diff=";
+    NSString * bodyStr = args;
     NSData * body = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];
     [request1 setHTTPBody:body];
     //第五步，连接服务器
     NSData * data = [NSURLConnection sendSynchronousRequest:request1 returningResponse:nil error:nil];
-    NSString * str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     
-    DataGetter* sobj = [[DataGetter alloc] init];
-    ClassData* hello = [sobj process:str name:@"test"];
+    return [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+
+-(void)loadHistory
+{
     
-    //_histories = [NSArray arrayWithObjects:h1,h2, nil];
+    classes=[NSMutableDictionary dictionaryWithDictionary:[DataManager loadDataFromFiles]];
+    
+    if([classes count]!=0){
+        ClassData* cd=(ClassData*)[classes objectForKey:@"21"];
+        _histories = [cd getHistories];
+        return;
+    }
+    
+    NSString *username=@"tester", *password=@"123456";
+    
+    //获得改帐号所管理的班级
+    NSArray *cids = [[ViewController post:@"http://powerscore.duapp.com/getclasses.php": [NSString stringWithFormat:@"username=%@&password=%@",username,password]] componentsSeparatedByString:@","];
+    
+    classes=[NSMutableDictionary dictionaryWithCapacity:(cids.count-1)/2];
+    
+    //获取每个班级的数据
+    for (int i = 0; i < cids.count - 1; i += 2) {
+        ClassData* c = [DataManager process:[ViewController post:@"http://powerscore.duapp.com/sync.php":[NSString stringWithFormat:@"username=%@&password=%@&cid=%@&diff=",username,password,cids[i]]] name:cids[i+1]];
+        
+        [c save:cids[i]];
+        
+        [classes setObject:c forKey:cids[i]];
+    }
+    
+    ClassData* cd=(ClassData*)[classes objectForKey:@"21"];
+    _histories = [cd getHistories];
 }
 
 
