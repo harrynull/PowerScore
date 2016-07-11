@@ -683,7 +683,22 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                              .setNegativeButton("好的", null).show();
                      return;
                  }
-                 startActivityForResult(new Intent(MainActivity.this, Listener.class), 2);
+                 //打开语音识别
+                 Intent intent = new Intent(MainActivity.this, Listener.class);
+                 //打开新窗口。参数：主窗口，被调用窗口
+                 Bundle bundle = new Bundle();//通过Bundle实现数据的传递:
+                 String userwords = "{\"userword\":[{\"name\":\"学生\",\"words\":[";
+                 for (final String i : classes.keySet()) {
+                     for (int j = 0; j < classes.get(i).members.length; j++) {
+                         final String name = classes.get(i).members[j];
+                         userwords += "\"" + name + "\",";
+                     }
+                 }
+                 userwords = userwords.substring(0,userwords.length()-1);
+                 userwords += "]}]}";
+                 bundle.putString("key",userwords);
+                 intent.putExtras(bundle);
+                 startActivityForResult(intent, 2);
                  overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
              }
         });
@@ -782,6 +797,8 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             classNow = classes.firstKey();
             updateList();
         }
+
+
     }
 
     public void readData(String data, Classes readNow) {

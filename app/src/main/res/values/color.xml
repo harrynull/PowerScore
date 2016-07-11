@@ -20,4 +20,15 @@
     <color name="sdwhi">#f2f1f1</color>
     <color name="icon_b">#0088cc</color>
     <color name="aqua">#00ced1</color>
+
+    <drawable name="layout_backgroud">#000000</drawable>
+
+    <!-- 分割线背景色 -->
+    <drawable name="line_background">#161823</drawable>
+
+
+    <!-- 控件按下时显示的颜色 -->
+    <color name="list_backgroud_color">#2fb3cb</color>
+    <color name="title_color">#0f8ec5</color>
+    <color name="content_color">#737373</color>
 </resources>
