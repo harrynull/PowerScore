@@ -17,6 +17,20 @@
     <string name="pref_key_iat_show">iat_show</string>
     <string name="pref_title_iat_show">显示听写界面</string>
     <string name="pref_title_iat_dwa">结果动态修正</string>
+    <string name="notchoose">未选择</string>
+    <string name="classinfo">班级</string>
+    <string name="personalinfo">个人</string>
+    <string name="filter">筛选器</string>
+    <string name="credit_overview">学分总览</string>
+    <string name="often_use_reasons">常用理由</string>
+    <string name="members_group">成员组</string>
+    <string name="show_start_page">显示启动页</string>
+    <string name="about_us">关于</string>
+    <string name="exit">退出登录</string>
+    <string name="time">时间</string>
+    <string name="no_limit">不限</string>
+    <string name="p_or_m_credit">加/减分</string>
+    <string name="no_record">暂无记录 :(</string>
 
     <!-- 语言 -->
     <string-array name="language_entries">

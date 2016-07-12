@@ -287,6 +287,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             findViewById(R.id.ds).setLayoutParams(lp);
             findViewById(R.id.ds2).setLayoutParams(lp);
         }
+
         add = (ImageView) findViewById(R.id.add);
         sync = (ImageView) findViewById(R.id.sync);
         final Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
