@@ -10,7 +10,8 @@
 
 #import "HeaderView.h"
 #import "ChooseRoleCell.h"
-
+#import "PowerScore-Swift.h"
+#import "AppDelegate.h"
 static NSString * const ReuseIdentifierHeader = @"header";
 static NSString * const ReuseIdentifierCell = @"dcell";
 
@@ -40,18 +41,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     
     [self.navigationController.toolbar setBarTintColor:[UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     
-    NSString *path  = [[NSBundle mainBundle] pathForResource:@"role" ofType:@"plist"];
-    NSMutableArray *wai = [[NSMutableArray alloc] initWithContentsOfFile:path];
-    for (int i = 0; i < wai.count; i ++)
-    {
-        NSArray *list = [wai[i] objectForKey:@"list"];
-        NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
-        for (int j = 0; j < list.count; j ++) {
-            [array addObject:[list objectAtIndex:j]];
-            
-        }
-        [self.dataDic setObject:array forKey:[wai[i] objectForKey:@"name"]];
-    }
+    self.dataDic=[MemberChooseHelper getData:classes];
     self.dataArray = [self.dataDic allKeys];
     
     self.tableView.tableFooterView = [UIView new];

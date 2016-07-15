@@ -59,3 +59,6 @@
     return theImage;
 }
 @end
+
+NSMutableDictionary* classes;
+

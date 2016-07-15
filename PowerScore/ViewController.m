@@ -10,7 +10,7 @@
 #import "AndyScrollView.h"
 #import "RightScrollView.h"
 #import "PowerScore-swift.h"
-
+#import "AppDelegate.h"
 @interface ViewController ()
 <UIScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -36,9 +36,7 @@
     
     __weak IBOutlet UIButton *class_or_student;
     
-    NSArray *_histories;
-    
-    NSMutableDictionary* classes;
+    ClassData* classNow;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -53,7 +51,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [_histories count];
+    return [classNow.histories count];
 }
 
 
@@ -69,7 +67,7 @@
         self.HistoryCell = [nib objectAtIndex:0];
         cell = self.HistoryCell;
     }
-    History *history = [_histories objectAtIndex:indexPath.row];
+    History *history = [classNow.histories objectAtIndex:indexPath.row];
     UILabel *reason = (UILabel *)[cell.contentView viewWithTag:1];
     UILabel *date_short = (UILabel *)[cell.contentView viewWithTag:2];
     UILabel *mark = (UILabel *)[cell.contentView viewWithTag:3];
@@ -95,7 +93,7 @@
 {
     
     NSUInteger row = [indexPath row];
-    History *history = [_histories objectAtIndex:indexPath.row];
+    History *history = [classNow.histories objectAtIndex:indexPath.row];
     NSString *reason = history.reason;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:reason message:@"选择对该记录的操作" preferredStyle: UIAlertControllerStyleActionSheet];
@@ -209,7 +207,7 @@
     
     if([classes count]!=0){
         ClassData* cd=(ClassData*)[classes objectForKey:@"21"];
-        _histories = [cd getHistories];
+        classNow.histories = [cd getHistories];
         return;
     }
     
@@ -229,8 +227,7 @@
         [classes setObject:c forKey:cids[i]];
     }
     
-    ClassData* cd=(ClassData*)[classes objectForKey:@"21"];
-    _histories = [cd getHistories];
+    classNow = (ClassData*)[classes objectForKey:@"21"];
 }
 
 
@@ -301,13 +298,10 @@
 }
 - (IBAction)openleftOnclick:(id)sender {
     [self.leftView reloadInputViews];
-    self.scroll.stloadleftview;
-
-    
-
+    //self.scroll.stloadleftview;
 }
 - (IBAction)flitOnclick:(id)sender {
-    self.rscroll.stloadrightview;
+    //self.rscroll.stloadrightview;
 }
 
 - (IBAction)classbtOnclick:(id)sender {
@@ -386,17 +380,17 @@
 }
 -(void)vc_openabouteee
 {
-    self.scroll.stcloseleftview;
+    //self.scroll.stcloseleftview;
     [self performSegueWithIdentifier:@"gotoabout" sender:self];
 }
 -(void)vc_openoverview
 {
-    self.scroll.stcloseleftview;
+    //self.scroll.stcloseleftview;
     [self performSegueWithIdentifier:@"gotooverview" sender:self];
 }
 -(void)vc_opensetreason
 {
-    self.scroll.stcloseleftview;
+    //self.scroll.stcloseleftview;
  
     [self performSegueWithIdentifier:@"gotosetreason" sender:self];
     
@@ -404,7 +398,7 @@
 }
 -(void)vc_opensetgroup
 {
-    self.scroll.stcloseleftview;
+    //self.scroll.stcloseleftview;
     
     [self performSegueWithIdentifier:@"gotosetgroup" sender:self];
 }
