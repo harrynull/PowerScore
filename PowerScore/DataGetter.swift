@@ -66,4 +66,17 @@ class DataManager: NSObject {
         return classes;
     }
     
+    static func loadReasons(defaultReasons:String)->[String]{
+        let filePath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0]+"/reasons.plist"
+        if(NSFileManager.defaultManager().fileExistsAtPath(filePath)){
+            //如果存在，则直接读取
+            return NSArray(contentsOfFile: filePath) as! [String]
+        }else{
+            //如果不存在则新建
+            let reasons=defaultReasons.componentsSeparatedByString(",")
+            (reasons as NSArray).writeToFile(filePath, atomically: true)
+            return reasons
+        }
+    }
+    
 }

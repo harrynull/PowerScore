@@ -37,13 +37,13 @@
     __weak IBOutlet UIButton *class_or_student;
     
     ClassData* classNow;
+    
+    NSArray* reasons;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
 @property(nonatomic,strong)UIView *leftView;
 @property(nonatomic,strong)UIView *rightView;
-@property (nonatomic,strong) NSString *plistPath;
-@property (nonatomic,strong) NSString *plistPath1;
 
 @end
 
@@ -140,65 +140,14 @@
 
     [self initUI];
     [self loadHistory];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
-    {
-        //第一次运行时初始化预设理由
-        [self creatplist];
-
-    }
+    [self loadReasons];
 }
 
 
--(void)creatplist
+-(void)loadReasons
 {
-    NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    self.plistPath = [documentsDirectory stringByAppendingPathComponent:@"Reasons.plist"];
-    NSMutableDictionary *dictplist = [[NSMutableDictionary alloc ] init];
-    //设置属性值
-    [dictplist setObject:@"上课发言"forKey:@"1"];
-    [dictplist setObject:@"打扫卫生"forKey:@"2"];
-    [dictplist setObject:@"小组加分"forKey:@"3"];
-    [dictplist setObject:@"上午迟到"forKey:@"4"];
-    [dictplist setObject:@"中午迟到"forKey:@"5"];
-    [dictplist setObject:@"上课讲话"forKey:@"6"];
-    [dictplist setObject:@"晚修讲话"forKey:@"7"];
-    [dictplist setObject:@"随意下位"forKey:@"8"];
-    [dictplist setObject:@"没有值日"forKey:@"9"];
-    //写入文件
-    [dictplist writeToFile:_plistPath atomically:YES];
-    
+    reasons = [DataManager loadReasons: @"上课发言,打扫卫生,小组加分,上午迟到,中午迟到,上课讲话,晚修讲话,随意下位,没有值日"];
 }
-
--(void)loadplist
-{
-    NSArray *paths =NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    self.plistPath1 = [documentsDirectory stringByAppendingPathComponent:@"Launch_or_not.plist"];
-    NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: self.plistPath1];
-    NSString *load_or_not = [reasondic objectForKey:@"key"];
-    
-}
-
-+(NSString*)post : (NSString*) strUrl : (NSString*) args{
-    //第一步，创建URL
-    NSURL * url = [[NSURL alloc]initWithString:strUrl];
-    //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
-    NSMutableURLRequest * request1 = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:100];
-    //timeoutInterval:post超时最大时间是240秒,在方法中设置多少秒也没用。
-    
-    //第三步，设置POST请求方式
-    [request1 setHTTPMethod:@"POST"];
-    //第四步，设置参数
-    NSString * bodyStr = args;
-    NSData * body = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];
-    [request1 setHTTPBody:body];
-    //第五步，连接服务器
-    NSData * data = [NSURLConnection sendSynchronousRequest:request1 returningResponse:nil error:nil];
-    
-    return [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-}
-
 
 -(void)loadHistory
 {
@@ -355,29 +304,6 @@
     [[NSNotificationCenter defaultCenter]postNotificationName:@"tounlog" object:nil];
 
 }
-
--(void)vc_changelaunch:(BOOL *)launch
-{
-    [self loadplist];
-    NSMutableDictionary *dictplist = [[NSMutableDictionary alloc ] init];
-    
-    if (launch)
-    {
-        //设置属性值
-        [dictplist setObject:@"YES" forKey:@"key"];
-        //写入文件
-        [dictplist writeToFile:_plistPath1 atomically:YES];
-        NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: _plistPath1];
-        NSString *load_or_not = [reasondic objectForKey:@"key"];
-    } else {
-        //设置属性值
-        [dictplist setObject:@"NO" forKey:@"key"];
-        //写入文件
-        [dictplist writeToFile:_plistPath1 atomically:YES];
-        NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: _plistPath1];
-        NSString *load_or_not = [reasondic objectForKey:@"key"];
-    }
-}
 -(void)vc_openabouteee
 {
     //self.scroll.stcloseleftview;
@@ -457,6 +383,24 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
++(NSString*)post : (NSString*) strUrl : (NSString*) args{
+    //第一步，创建URL
+    NSURL * url = [[NSURL alloc]initWithString:strUrl];
+    //第二步，通过URL创建可变的request请求（只有创建可变的request才能设置POST请求）
+    NSMutableURLRequest * request1 = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:100];
+    //timeoutInterval:post超时最大时间是240秒,在方法中设置多少秒也没用。
+    
+    //第三步，设置POST请求方式
+    [request1 setHTTPMethod:@"POST"];
+    //第四步，设置参数
+    NSString * bodyStr = args;
+    NSData * body = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];
+    [request1 setHTTPBody:body];
+    //第五步，连接服务器
+    NSData * data = [NSURLConnection sendSynchronousRequest:request1 returningResponse:nil error:nil];
+    
+    return [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 @end
