@@ -8,14 +8,10 @@
 
 #import "ChooseReasonViewController.h"
 #import "AddViewController.h"
-
+#import "PowerScore-Swift.h"
 @interface ChooseReasonViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *reasoninputlable;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *okbt;
-@property (nonatomic,strong) NSString *newreason;
-@property (nonatomic,strong) NSString *plistPath;
-@property (nonatomic,strong) NSString *reasonback;
 @end
 
 @implementation ChooseReasonViewController
@@ -28,29 +24,9 @@
     [super didReceiveMemoryWarning];
 }
 
-
-- (NSMutableDictionary*)getplistdic
-{
-    NSMutableDictionary *reasonadic = [[NSMutableDictionary alloc] initWithContentsOfFile:[self getplistpath]];
-    return reasonadic;
-}
-- (NSString*)getplistpath
-{
-    return _plistPath;
-}
-
--(NSUInteger)getplistcount
-{
-    int plistcount;
-    NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile:[self getplistpath]];
-    plistcount = reasondic.allKeys.count;
-    return plistcount;
-}
-
 - (NSUInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSUInteger)section
 {
-    int count = [self getplistcount];
-    return count;
+    return GlobalData.reasons.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowInSection:(NSUInteger)section {
@@ -63,43 +39,18 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    
-    NSUInteger row = [indexPath row];
-    NSArray *reasonkeys = [self getplistdic].allKeys;
-    NSArray *reasons = [self getplistdic].allValues;
-    cell.textLabel.text = [reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])];
+    cell.textLabel.text = [GlobalData.reasons objectAtIndex:[indexPath row]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger row = [indexPath row];
-    NSArray *reasonkeys = [self getplistdic].allKeys;
-    NSArray *reasons = [self getplistdic].allValues;
-    NSString *choosedreason = [reasons objectAtIndex:([reasonkeys indexOfObject:([NSString stringWithFormat:@"%ld",(long)row+1])])];
-    [self.reasoninputlable setText:choosedreason];
+    [self.reasoninputlable setText:[GlobalData.reasons objectAtIndex:[indexPath row]]];
 }
 - (IBAction)okbtOnClick:(id)sender {
-    if(![self.reasoninputlable.text isEqual: @""])
-    {
-        
-        //初始化返回值为理由
-        self.reasonback = self.reasoninputlable.text;
-        AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-        receive.reasonreceive = self.reasonback;
-        //使用popToViewController返回并传值到上一页面
-        [self.navigationController popToViewController:receive animated:true];
-        
-    } else {
-        
-        //初始化返回值为空
-        self.reasonback = @"&&**##NOREASONINPUT$#%";
-        AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-        receive.reasonreceive = self.reasonback;
-        //使用popToViewController返回并传值到上一页面
-        [self.navigationController popToViewController:receive animated:true];
-
-        
-    }
+    AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+    receive.reasonreceive = [self.reasoninputlable.text isEqual: @""]?@"&&**##NOREASONINPUT$#%":self.reasoninputlable.text;
+    //使用popToViewController返回并传值到上一页面
+    [self.navigationController popToViewController:receive animated:true];
 }
 
 @end
