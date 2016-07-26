@@ -12,12 +12,13 @@
 #import "ChooseRoleCell.h"
 #import "PowerScore-Swift.h"
 #import "AppDelegate.h"
+#import "AddViewController.h"
 static NSString * const ReuseIdentifierHeader = @"header";
 static NSString * const ReuseIdentifierCell = @"dcell";
 
 @interface memViewController ()
 
-@property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) NSDictionary        *dataDic;
 @property (nonatomic, strong) NSArray             *dataArray;
 
 @property (nonatomic, strong) NSMutableArray      *expendArray;//记录打开的分组
@@ -30,12 +31,6 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //self.navigationItem.title = @"多选";
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UIBarButtonItem *item0 = [[UIBarButtonItem alloc]initWithTitle:@"  组" style:UIBarButtonItemStylePlain target:self action:@selector(groupAction)];
 
     self.navigationController.toolbarHidden = NO;
@@ -57,9 +52,14 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     
 }
 - (IBAction)okAction:(id)sender {
+    AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+    receive.membersreceive = @"";
+    for (NSString* object in _selectArray) {
+        receive.membersreceive = [[receive.membersreceive stringByAppendingString:object]stringByAppendingString:@";" ];
+    }
+    //使用popToViewController返回并传值到上一页面
+    [self.navigationController popToViewController:receive animated:true];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -107,8 +107,8 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     [view addSubview:lab];
     
     BOOL selectAll = YES;
-    for (id object in array) {
-        if (![self.selectArray containsObject:object]) {
+    for (NSString* object in array) {
+        if (![self.selectArray containsObject:[NSString stringWithFormat:@"%@,%@", key, object]]) {
             selectAll = NO;
         }
     }
@@ -131,13 +131,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     NSString *name = array[indexPath.row];
     
     ChooseRoleCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifierCell forIndexPath:indexPath];
-    
-    if ([self.selectArray containsObject:name]) {
-        cell.selectImageVIew.selected = YES;
-    }else {
-        cell.selectImageVIew.selected = NO;
-    }
-    //cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    cell.selectImageVIew.selected = [self.selectArray containsObject:[NSString stringWithFormat:@"%@,%@", key, name]];
     cell.nameLabel.text = name;
     return cell;
 }
@@ -147,11 +141,11 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     NSString *key = self.dataArray[indexPath.section];
     NSArray *array = self.dataDic[key];
     NSString *name = array[indexPath.row];
-    
-    if ([self.selectArray containsObject:name]) {
-        [self.selectArray removeObject:name];
+    NSString *keyname=[NSString stringWithFormat:@"%@,%@", key, name];
+    if ([self.selectArray containsObject:keyname]) {
+        [self.selectArray removeObject:keyname];
     }else {
-        [self.selectArray addObject:name];
+        [self.selectArray addObject:keyname];
     }
     
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
@@ -163,11 +157,14 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 - (void)headerButtonOnClick:(UIButton *)button {
     NSString *key = self.dataArray[button.tag];
     NSArray *array = self.dataDic[key];
-    
-    if (button.selected) {
-        [self.selectArray removeObjectsInArray:array];
-    }else {
-        [self.selectArray addObjectsFromArray:array];
+
+    for (NSString* name in array) {
+        NSString *keyname=[NSString stringWithFormat:@"%@,%@", key, name];
+        if (button.selected) {
+            [self.selectArray removeObject:keyname];
+        }else {
+            [self.selectArray addObject:keyname];
+        }
     }
     
     button.selected = !button.selected;
@@ -194,9 +191,9 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 
 #pragma mark - getters
 
-- (NSMutableDictionary *)dataDic {
+- (NSDictionary *)dataDic {
     if (!_dataDic) {
-        _dataDic = [NSMutableDictionary dictionaryWithCapacity:0];
+        _dataDic = [NSDictionary dictionary];
     }
     return _dataDic;
 }

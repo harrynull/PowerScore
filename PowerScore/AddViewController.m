@@ -89,30 +89,18 @@ BOOL flag;
 -(void)viewDidAppear:(BOOL)animated
 {
     //判断并接收返回的理由&成员
-    if (![self.reasonreceive isEqual:@""])
+    if (![self.reasonreceive isEqual:@""]&&![self.reasonreceive isEqual:@"&&**##NOREASONINPUT$#%"])
     {
-        if (![self.reasonreceive isEqual:@"&&**##NOREASONINPUT$#%"])
-        {
-            
-            self.reasonadd = self.reasonreceive;
-            self.showreason.text = self.reasonadd;
-            [self turnReasonBlue];
-            
-            
-        } else {
-            
-            self.showreason.text = @"理由";
-            [self turnReasonWhite];
-            
-            
-        }
+        self.reasonadd = self.reasonreceive;
+        self.showreason.text = self.reasonadd;
+        [self turnReasonBlue];
+
     } else {
-        
         self.showreason.text = @"理由";
         [self turnReasonWhite];
-        
-        
     }
+
+    self.showmems.text = self.membersreceive;
     //初始化小键盘原始高度便于计算
     self.oldheight = 291.0;
 }
@@ -206,11 +194,8 @@ BOOL flag;
     }
  
 }
-
-
 - (IBAction)bt1Onclick:(id)sender {
     [self keyboardcallback:@"1"];
-    
 }
 - (IBAction)bt2Onclick:(id)sender {
     [self keyboardcallback:@"2"];

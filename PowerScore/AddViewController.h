@@ -10,4 +10,5 @@
 
 @interface AddViewController : UIViewController
 @property (nonatomic,strong) NSString *reasonreceive;
+@property (nonatomic,strong) NSString *membersreceive;
 @end
