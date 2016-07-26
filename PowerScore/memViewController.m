@@ -42,7 +42,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     self.toolbarItems = @[item0];
     [self.navigationController.toolbar setBarTintColor:[UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     
-    self.dataDic=[MemberChooseHelper getData:classes];
+    self.dataDic=[MemberChooseHelper getData:[GlobalData classes]];
     self.dataArray = [self.dataDic allKeys];
     
     self.tableView.tableFooterView = [UIView new];

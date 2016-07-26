@@ -17,7 +17,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 
 @interface ChooseMemTableViewController ()
 
-@property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) NSDictionary<NSString *, NSArray<NSString *> *> *dataDic;
 @property (nonatomic, strong) NSArray             *dataArray;
 
 @property (nonatomic, strong) NSMutableArray      *expendArray;//记录打开的分组
@@ -41,7 +41,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     
     [self.navigationController.toolbar setBarTintColor:[UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     
-    self.dataDic=[MemberChooseHelper getData:classes];
+    self.dataDic=[MemberChooseHelper getData:GlobalData.classes];
     self.dataArray = [self.dataDic allKeys];
     
     self.tableView.tableFooterView = [UIView new];
@@ -194,7 +194,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 
 #pragma mark - getters
 
-- (NSMutableDictionary *)dataDic {
+- (NSDictionary<NSString *, NSArray<NSString *> *> *)dataDic {
     if (!_dataDic) {
         _dataDic = [NSMutableDictionary dictionaryWithCapacity:0];
     }

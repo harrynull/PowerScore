@@ -36,9 +36,6 @@
     
     __weak IBOutlet UIButton *class_or_student;
     
-    ClassData* classNow;
-    
-    NSArray* reasons;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -51,7 +48,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [classNow.histories count];
+    return [[[GlobalData getClassNow] histories] count];
 }
 
 
@@ -67,7 +64,7 @@
         self.HistoryCell = [nib objectAtIndex:0];
         cell = self.HistoryCell;
     }
-    History *history = [classNow.histories objectAtIndex:indexPath.row];
+    History *history = [[GlobalData getClassNow].histories objectAtIndex:indexPath.row];
     UILabel *reason = (UILabel *)[cell.contentView viewWithTag:1];
     UILabel *date_short = (UILabel *)[cell.contentView viewWithTag:2];
     UILabel *mark = (UILabel *)[cell.contentView viewWithTag:3];
@@ -91,9 +88,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSUInteger row = [indexPath row];
-    History *history = [classNow.histories objectAtIndex:indexPath.row];
+    //NSUInteger row = [indexPath row];
+    History *history = [[GlobalData getClassNow].histories objectAtIndex:indexPath.row];
     NSString *reason = history.reason;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:reason message:@"选择对该记录的操作" preferredStyle: UIAlertControllerStyleActionSheet];
@@ -146,26 +142,26 @@
 
 -(void)loadReasons
 {
-    reasons = [DataManager loadReasons: @"上课发言,打扫卫生,小组加分,上午迟到,中午迟到,上课讲话,晚修讲话,随意下位,没有值日"];
+    GlobalData.reasons = [DataManager loadReasons: @"上课发言,打扫卫生,小组加分,上午迟到,中午迟到,上课讲话,晚修讲话,随意下位,没有值日"];
 }
 
 -(void)loadHistory
 {
     
-    classes=[NSMutableDictionary dictionaryWithDictionary:[DataManager loadDataFromFiles]];
+    GlobalData.classes=[NSMutableDictionary dictionaryWithDictionary:[DataManager loadDataFromFiles]]; //先从文件读取
     
-    if([classes count]!=0){
-        ClassData* cd=(ClassData*)[classes objectForKey:@"21"];
-        classNow.histories = [cd getHistories];
+    if([GlobalData.classes count]!=0){ //判断是否读取成功
+        [GlobalData setClassNow:@"21"];
         return;
     }
     
+    //读取失败ze
     NSString *username=@"tester", *password=@"123456";
     
     //获得改帐号所管理的班级
     NSArray *cids = [[ViewController post:@"http://powerscore.duapp.com/getclasses.php": [NSString stringWithFormat:@"username=%@&password=%@",username,password]] componentsSeparatedByString:@","];
     
-    classes=[NSMutableDictionary dictionaryWithCapacity:(cids.count-1)/2];
+    GlobalData.classes=[NSMutableDictionary dictionaryWithCapacity:(cids.count-1)/2];
     
     //获取每个班级的数据
     for (int i = 0; i < cids.count - 1; i += 2) {
@@ -173,10 +169,10 @@
         
         [c save:cids[i]];
         
-        [classes setObject:c forKey:cids[i]];
+        [GlobalData.classes setValue:c forKey:cids[i]];
     }
     
-    classNow = (ClassData*)[classes objectForKey:@"21"];
+    [GlobalData setClassNow:@"21"];
 }
 
 

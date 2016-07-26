@@ -11,6 +11,7 @@
 		2625622E1D2E000300425E08 /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625622D1D2E000300425E08 /* Class.swift */; };
 		262562301D2E021900425E08 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2625622F1D2E021900425E08 /* History.swift */; };
 		262562321D2E08C500425E08 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262562311D2E08C500425E08 /* Date.swift */; };
+		265CBA551D472AD300B2636A /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265CBA541D472AD300B2636A /* GlobalData.swift */; };
 		266074D51D387F29004916B9 /* MemberChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266074D41D387F29004916B9 /* MemberChoose.swift */; };
 		270B1B311D19346100E7331A /* Reasons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270B1B301D19346100E7331A /* Reasons.plist */; };
 		271B25491D1B6898007094DA /* spl_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 271B25481D1B6898007094DA /* spl_1.png */; };
@@ -78,6 +79,7 @@
 		2625622D1D2E000300425E08 /* Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
 		2625622F1D2E021900425E08 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		262562311D2E08C500425E08 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		265CBA541D472AD300B2636A /* GlobalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
 		266074D41D387F29004916B9 /* MemberChoose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberChoose.swift; sourceTree = "<group>"; };
 		270B1B301D19346100E7331A /* Reasons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Reasons.plist; sourceTree = "<group>"; };
 		271B25481D1B6898007094DA /* spl_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spl_1.png; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				2625622D1D2E000300425E08 /* Class.swift */,
 				2625622F1D2E021900425E08 /* History.swift */,
 				266074D41D387F29004916B9 /* MemberChoose.swift */,
+				265CBA541D472AD300B2636A /* GlobalData.swift */,
 			);
 			name = Swift;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				2625622E1D2E000300425E08 /* Class.swift in Sources */,
 				6F3B6B791CD8E7E500897197 /* UpLineLable.m in Sources */,
 				6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */,
+				265CBA551D472AD300B2636A /* GlobalData.swift in Sources */,
 				6F4A8AB61D06E9A400734F84 /* OverViewViewController.m in Sources */,
 				6F9B2E1A1D09747100A5746A /* HeaderView.m in Sources */,
 				6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */,

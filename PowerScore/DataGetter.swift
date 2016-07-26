@@ -78,5 +78,4 @@ class DataManager: NSObject {
             return reasons
         }
     }
-    
 }

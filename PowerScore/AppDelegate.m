@@ -60,5 +60,3 @@
 }
 @end
 
-NSMutableDictionary* classes;
-
