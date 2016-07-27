@@ -12,13 +12,13 @@
 @interface ChooseReasonViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *reasoninputlable;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *okbt;
 @end
 
 @implementation ChooseReasonViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"89👂57976");
 }
 
 - (void)didReceiveMemoryWarning {
