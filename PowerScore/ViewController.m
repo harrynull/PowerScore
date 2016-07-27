@@ -242,6 +242,16 @@
 {
     [self vc_unlogger];
 }
+-(void)vc_changelaunch:(BOOL *)launch
+{
+    NSMutableDictionary *dictplist = [[NSMutableDictionary alloc ] init];
+    //设置属性值
+    [dictplist setObject:launch?@"YES":@"NO" forKey:@"key"];
+    //写入文件
+    [dictplist writeToFile:@"settings.plist" atomically:YES];
+    //NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile: @"settings.plist"];
+    //NSString *load_or_not = [reasondic objectForKey:@"key"];
+}
 - (IBAction)openleftOnclick:(id)sender {
     [self.leftView reloadInputViews];
     [self.scroll stloadleftview];
