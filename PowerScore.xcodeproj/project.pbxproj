@@ -13,7 +13,6 @@
 		262562321D2E08C500425E08 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262562311D2E08C500425E08 /* Date.swift */; };
 		265CBA551D472AD300B2636A /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265CBA541D472AD300B2636A /* GlobalData.swift */; };
 		266074D51D387F29004916B9 /* MemberChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266074D41D387F29004916B9 /* MemberChoose.swift */; };
-		270B1B311D19346100E7331A /* Reasons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270B1B301D19346100E7331A /* Reasons.plist */; };
 		271B25491D1B6898007094DA /* spl_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 271B25481D1B6898007094DA /* spl_1.png */; };
 		271B254C1D1B68E2007094DA /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B254B1D1B68E2007094DA /* LaunchViewController.m */; };
 		271B254E1D1B6D11007094DA /* spl_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 271B254D1D1B6D11007094DA /* spl_2.png */; };
@@ -81,7 +80,6 @@
 		262562311D2E08C500425E08 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		265CBA541D472AD300B2636A /* GlobalData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
 		266074D41D387F29004916B9 /* MemberChoose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberChoose.swift; sourceTree = "<group>"; };
-		270B1B301D19346100E7331A /* Reasons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Reasons.plist; sourceTree = "<group>"; };
 		271B25481D1B6898007094DA /* spl_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spl_1.png; sourceTree = "<group>"; };
 		271B254A1D1B68E2007094DA /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
 		271B254B1D1B68E2007094DA /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
@@ -327,7 +325,6 @@
 			children = (
 				6F9B2E181D09747100A5746A /* role.plist */,
 				6F6D7CFA1C9EA9F70089521E /* Info.plist */,
-				270B1B301D19346100E7331A /* Reasons.plist */,
 				6F93ABDF1CD4BDEA009504E4 /* account.plist */,
 				27930F411D1B7B8F004901B7 /* Launch_or_not.plist */,
 			);
@@ -449,7 +446,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				270B1B311D19346100E7331A /* Reasons.plist in Resources */,
 				271B25491D1B6898007094DA /* spl_1.png in Resources */,
 				6F7E342C1CD59D9D006CA8AE /* light_blue.png in Resources */,
 				6F7E342E1CD5A198006CA8AE /* right_divide.png in Resources */,

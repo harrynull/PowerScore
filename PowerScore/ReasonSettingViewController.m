@@ -81,16 +81,13 @@
 
 -(NSUInteger)getplistcount
 {
-    int plistcount;
     NSMutableDictionary *reasondic = [[NSMutableDictionary alloc] initWithContentsOfFile:[self getplistpath]];
-    plistcount = reasondic.allKeys.count;
-    return plistcount;
+    return reasondic.allKeys.count;
 }
 
 - (NSUInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSUInteger)section
 {
-    int count = [self getplistcount];
-    return count;
+    return [self getplistcount];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,7 +168,7 @@
             NSString *path = [self getplistpath];
             NSMutableDictionary *newdic = [[[NSMutableDictionary alloc]initWithContentsOfFile:path]mutableCopy];
             [newdic writeToFile:[self getplistpath] atomically:YES];
-            [newdic setObject:[self newreason] forKey:[NSString stringWithFormat:@"%d",indexPath.row+1]];
+            [newdic setObject:[self newreason] forKey:[NSString stringWithFormat:@"%ld",indexPath.row+1]];
             [newdic writeToFile:[self getplistpath] atomically:YES];
             [self.tableview reloadData];
             

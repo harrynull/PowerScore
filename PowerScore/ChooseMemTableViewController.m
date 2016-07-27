@@ -29,13 +29,6 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //self.navigationItem.title = @"多选";
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.navigationController.toolbarHidden = YES;
     

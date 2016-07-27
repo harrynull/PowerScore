@@ -80,7 +80,7 @@ bool caninputpoint = true;
 bool numisdragdown = false;
 
 //判断箭头动画的
-BOOL flag;
+bool flag;
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.toolbarHidden = YES;
@@ -100,7 +100,17 @@ BOOL flag;
         [self turnReasonWhite];
     }
 
-    self.showmems.text = self.membersreceive;
+    if(self.membersreceive!=nil&&![self.membersreceive isEqual:@""]){
+        NSArray* mems=[self.membersreceive componentsSeparatedByString:@";"];
+        NSString* allnames=@"";
+        for(NSString* str in mems){
+            if([str isEqual:@""]) continue;
+            if(![allnames isEqual:@""]) allnames=[allnames stringByAppendingString:@","];
+            allnames=[allnames stringByAppendingString: [[str componentsSeparatedByString:@","] objectAtIndex: 1]];
+        }
+        self.showmems.text=allnames;
+        [self.unsetlable setText:@""];
+    }
     //初始化小键盘原始高度便于计算
     self.oldheight = 291.0;
 }
@@ -133,7 +143,6 @@ BOOL flag;
     [self performSegueWithIdentifier:@"gotomem" sender:self];
 
 }
-
 - (IBAction)reasonOnclick:(id)sender {
     [self performSegueWithIdentifier:@"gotochoosereason" sender:self];
 }
