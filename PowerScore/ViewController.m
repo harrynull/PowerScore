@@ -244,10 +244,10 @@
 }
 - (IBAction)openleftOnclick:(id)sender {
     [self.leftView reloadInputViews];
-    //self.scroll.stloadleftview;
+    [self.scroll stloadleftview];
 }
 - (IBAction)flitOnclick:(id)sender {
-    //self.rscroll.stloadrightview;
+    [self.rscroll stloadrightview];
 }
 
 - (IBAction)classbtOnclick:(id)sender {
