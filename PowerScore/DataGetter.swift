@@ -21,7 +21,7 @@ class DataManager: NSObject {
         
         //Scores
         let strScores = strs[1].componentsSeparatedByString(" ")
-        for var j = 0; j < readNow.members.count-1; j++ {
+        for j in 0 ..< readNow.members.count-1 {
             readNow.scores[j] = Int(strScores[j])!
         }
         

@@ -35,7 +35,7 @@
     __weak IBOutlet UITableView *tableview;
     
     __weak IBOutlet UIButton *class_or_student;
-    
+
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -46,6 +46,7 @@
 
 @implementation ViewController
 
+bool ON_CLASS = YES;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [[[GlobalData getClassNow] histories] count];
@@ -127,6 +128,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.toolbarHidden = YES;
+    ON_CLASS = YES;
+    person_bt.hidden = NO;
+    person_false.hidden = YES;
+    [class_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
+    [person_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
+    [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        movinglable.frame = CGRectMake(0, 41, 90, 3);
+    } completion:^(BOOL finished) {
+    }];
+    
+    //查看班级
 }
 
 
@@ -152,6 +164,12 @@
     
     if([GlobalData.classes count]!=0){ //判断是否读取成功
         [GlobalData setClassNow:@"21"];
+        
+        [class_or_student setTitle:[GlobalData getClassNow].name forState:UIControlStateNormal];
+        [class_or_student setImage:[UIImage imageNamed:@"trangle"] forState:UIControlStateNormal];
+        [class_or_student setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
+        [class_or_student setImageEdgeInsets:UIEdgeInsetsMake(0, class_or_student.frame.size.width-15, 0, -class_or_student.titleLabel.bounds.size.width-5)];
+        
         return;
     }
     
@@ -174,6 +192,11 @@
     
     GlobalData.classes=dic;
     [GlobalData setClassNow:@"21"];
+    
+    [class_or_student setTitle:[GlobalData getClassNow].name forState:UIControlStateNormal];
+    [class_or_student setImage:[UIImage imageNamed:@"trangle"] forState:UIControlStateNormal];
+    [class_or_student setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
+    [class_or_student setImageEdgeInsets:UIEdgeInsetsMake(0, class_or_student.frame.size.width-15, 0, -class_or_student.titleLabel.bounds.size.width-5)];
 }
 
 
@@ -189,8 +212,7 @@
     
     [class_or_student setBackgroundImage:[UIImage imageNamed:@"light_blue"] forState:UIControlStateHighlighted];
     class_or_student.adjustsImageWhenHighlighted = NO;
-    [class_or_student setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
-    [class_or_student setImageEdgeInsets:UIEdgeInsetsMake(0, class_or_student.titleLabel.bounds.size.width+5, 0, -class_or_student.titleLabel.bounds.size.width-5)];
+    
     [toolback setBackgroundColor: [UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     [flit setBackgroundImage:[UIImage imageNamed:@"flitback"] forState:UIControlStateHighlighted];
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
@@ -261,18 +283,21 @@
 }
 
 - (IBAction)classbtOnclick:(id)sender {
+    ON_CLASS = YES;
     person_bt.hidden = NO;
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
     [person_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
-    
     [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         movinglable.frame = CGRectMake(0, 41, 90, 3);
     } completion:^(BOOL finished) {
     }];
+    
+    //查看班级
 }
 
 - (IBAction)personbtOnclick:(id)sender {
+    ON_CLASS = NO;
     person_bt.hidden = NO;
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
@@ -281,13 +306,36 @@
         movinglable.frame = CGRectMake(90, 41, 90, 3);
     } completion:^(BOOL finished) {
     }];
+    
+    //查看个人
 }
 
 - (IBAction)add_btOnclick:(id)sender {
     [self performSegueWithIdentifier:@"gotoadd" sender:self];
 }
 - (IBAction)class_or_studentOnClick:(id)sender {
-    [self performSegueWithIdentifier:@"gotochoosemem" sender:self];
+    if(ON_CLASS)
+    {
+        
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择班级" message:@"选择要查看的班级" preferredStyle: UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        
+        for(NSString* cid in GlobalData.classes)
+        {
+            [alertController addAction:[UIAlertAction actionWithTitle:GlobalData.classes[cid].name style:UIAlertActionStyleDefault handler:nil]];
+        }
+
+        
+        [alertController addAction:cancelAction];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"gotochoosemem" sender:self];
+    }
 }
 
 -(void)vc_openabout

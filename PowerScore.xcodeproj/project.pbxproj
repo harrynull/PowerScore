@@ -211,9 +211,9 @@
 			isa = PBXGroup;
 			children = (
 				2625622A1D2DFB3E00425E08 /* PowerScore-Bridging-Header.h */,
-				262562291D2DFB2500425E08 /* Swift */,
 				6F6D7CEC1C9EA9F70089521E /* AppDelegate.h */,
 				6F6D7CED1C9EA9F70089521E /* AppDelegate.m */,
+				262562291D2DFB2500425E08 /* Swift */,
 				6F7A40121D0CECCC002721DB /* Images */,
 				6F7A40111D0CEC63002721DB /* ViewControllers */,
 				6F7A40131D0CECE4002721DB /* Views */,
