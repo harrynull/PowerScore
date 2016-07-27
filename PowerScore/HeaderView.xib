@@ -11,17 +11,6 @@
             <rect key="frame" x="0.0" y="0.0" width="358" height="77"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng1-L8-LuR">
-                    <rect key="frame" x="321" y="28" width="20" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="20" id="AfL-8W-aGx"/>
-                        <constraint firstAttribute="height" constant="20" id="GyU-T5-9cu"/>
-                    </constraints>
-                    <state key="normal" image="deselect">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="selected" image="select.png"/>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4Q-ZT-gBy">
                     <rect key="frame" x="55" y="28" width="220" height="21"/>
                     <constraints>
@@ -38,11 +27,22 @@
                         <constraint firstAttribute="width" constant="13" id="9qo-EJ-yCj"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng1-L8-LuR">
+                    <rect key="frame" x="306" y="13" width="53" height="53"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="53" id="AfL-8W-aGx"/>
+                        <constraint firstAttribute="height" constant="53" id="GyU-T5-9cu"/>
+                    </constraints>
+                    <state key="normal" image="deselect">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="select.png"/>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="mih-5U-dEY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="17" id="9ud-L2-dQd"/>
                 <constraint firstAttribute="centerY" secondItem="b4Q-ZT-gBy" secondAttribute="centerY" id="Eiz-1c-856"/>
-                <constraint firstAttribute="trailing" secondItem="ng1-L8-LuR" secondAttribute="trailing" constant="17" id="c2L-Wd-tmo"/>
+                <constraint firstAttribute="trailing" secondItem="ng1-L8-LuR" secondAttribute="trailing" id="c2L-Wd-tmo"/>
                 <constraint firstAttribute="centerY" secondItem="ng1-L8-LuR" secondAttribute="centerY" id="ghI-Ns-Ved"/>
                 <constraint firstAttribute="centerY" secondItem="mih-5U-dEY" secondAttribute="centerY" constant="1" id="r6Z-86-y2R"/>
             </constraints>

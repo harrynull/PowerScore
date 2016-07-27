@@ -113,6 +113,13 @@ bool flag;
     }
     //初始化小键盘原始高度便于计算
     self.oldheight = 291.0;
+    
+    //初始化小键盘变量
+    isplus = true;
+    caninput = true;
+    onlyzero = true;
+    caninputpoint = true;
+    numisdragdown = false;
 }
 
 - (void)viewDidLoad {
