@@ -109,7 +109,7 @@ bool flag;
             allnames=[allnames stringByAppendingString: [[str componentsSeparatedByString:@","] objectAtIndex: 1]];
         }
         self.showmems.text=allnames;
-        [self.unsetlable setText:@""];
+        [self turnMemberBlue];
     }
     //初始化小键盘原始高度便于计算
     self.oldheight = 291.0;
