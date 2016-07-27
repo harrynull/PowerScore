@@ -148,7 +148,7 @@
 -(void)loadHistory
 {
     
-    //GlobalData.classes=[NSMutableDictionary dictionaryWithDictionary:[DataManager loadDataFromFiles]]; //先从文件读取
+    GlobalData.classes=[NSMutableDictionary dictionaryWithDictionary:[DataManager loadDataFromFiles]]; //先从文件读取
     
     if([GlobalData.classes count]!=0){ //判断是否读取成功
         [GlobalData setClassNow:@"21"];

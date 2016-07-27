@@ -22,9 +22,7 @@ class DataManager: NSObject {
         //Scores
         let strScores = strs[1].componentsSeparatedByString(" ")
         for var j = 0; j < readNow.members.count-1; j++ {
-            if(strScores[j] != ""){
-                readNow.scores[j] = Int(strScores[j])!
-            }
+            readNow.scores[j] = Int(strScores[j])!
         }
         
         if (strs.count < 3){
