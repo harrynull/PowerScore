@@ -313,17 +313,17 @@
 }
 -(void)vc_openabouteee
 {
-    self.scroll.stcloseleftview;
+    [self.scroll stcloseleftview];
     [self performSegueWithIdentifier:@"gotoabout" sender:self];
 }
 -(void)vc_openoverview
 {
-    self.scroll.stcloseleftview;
+    [self.scroll stcloseleftview];
     [self performSegueWithIdentifier:@"gotooverview" sender:self];
 }
 -(void)vc_opensetreason
 {
-    self.scroll.stcloseleftview;
+    [self.scroll stcloseleftview];
  
     [self performSegueWithIdentifier:@"gotosetreason" sender:self];
     
@@ -331,7 +331,7 @@
 }
 -(void)vc_opensetgroup
 {
-    self.scroll.stcloseleftview;
+    [self.scroll stcloseleftview];
     
     [self performSegueWithIdentifier:@"gotosetgroup" sender:self];
 }
