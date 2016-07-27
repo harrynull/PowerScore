@@ -148,20 +148,20 @@
 -(void)loadHistory
 {
     
-    GlobalData.classes=[NSMutableDictionary dictionaryWithDictionary:[DataManager loadDataFromFiles]]; //先从文件读取
+    //GlobalData.classes=[NSMutableDictionary dictionaryWithDictionary:[DataManager loadDataFromFiles]]; //先从文件读取
     
     if([GlobalData.classes count]!=0){ //判断是否读取成功
         [GlobalData setClassNow:@"21"];
         return;
     }
     
-    //读取失败ze
+    //读取失败 从网络获取
     NSString *username=@"tester", *password=@"123456";
     
     //获得改帐号所管理的班级
     NSArray *cids = [[ViewController post:@"http://powerscore.duapp.com/getclasses.php": [NSString stringWithFormat:@"username=%@&password=%@",username,password]] componentsSeparatedByString:@","];
     
-    GlobalData.classes=[NSMutableDictionary dictionaryWithCapacity:(cids.count-1)/2];
+    NSMutableDictionary* dic=[NSMutableDictionary dictionary];
     
     //获取每个班级的数据
     for (int i = 0; i < cids.count - 1; i += 2) {
@@ -169,9 +169,10 @@
         
         [c save:cids[i]];
         
-        [GlobalData.classes setValue:c forKey:cids[i]];
+        [dic setObject:c forKey:cids[i]];
     }
     
+    GlobalData.classes=dic;
     [GlobalData setClassNow:@"21"];
 }
 
