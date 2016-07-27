@@ -17,7 +17,7 @@ class History : NSObject{
         date=_date
         shortReason = reason.characters.count > 6 ? reason.substringWithRange(Range<String.Index>(start:reason.startIndex,end:reason.startIndex.advancedBy(6))) + "…" : reason
         shortNames = names.characters.count > 10 ? names.substringWithRange(Range<String.Index>(start:reason.startIndex,end:reason.startIndex.advancedBy(10))) + "…" : names
-        scoreWithSign = (score > 0 ? "+" : "-") + String(Double(score) / 10.0)
+        scoreWithSign = (score > 0 ? "+" : "") + String(Double(score) / 10.0)
         dateStr = date.stringWithFormat("yyyy-MM-dd HH:mm:ss:SS")
         shortDateStr = date.stringWithFormat("MM-dd")
     }
@@ -39,7 +39,7 @@ class History : NSObject{
         
         shortReason = reason.characters.count > 6 ? reason.substringWithRange(Range<String.Index>(start:reason.startIndex,end:reason.startIndex.advancedBy(6))) + "…" : reason
         shortNames = names.characters.count > 10 ? names.substringWithRange(Range<String.Index>(start:reason.startIndex,end:reason.startIndex.advancedBy(10))) + "…" : names
-        scoreWithSign = (score > 0 ? "+" : "-") + String(Double(score) / 10.0)
+        scoreWithSign = (score > 0 ? "+" : "") + String(Double(score) / 10.0)
         dateStr = date.stringWithFormat("yyyy-MM-dd HH:mm:ss:SS")
         shortDateStr = date.stringWithFormat("MM-dd")
     }
