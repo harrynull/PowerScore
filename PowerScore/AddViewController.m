@@ -105,7 +105,7 @@ bool flag;
         NSString* allnames=@"";
         for(NSString* str in mems){
             if([str isEqual:@""]) continue;
-            if(![allnames isEqual:@""]) allnames=[allnames stringByAppendingString:@","];
+            if(![allnames isEqual:@""]) allnames=[allnames stringByAppendingString:@", "];
             allnames=[allnames stringByAppendingString: [[str componentsSeparatedByString:@","] objectAtIndex: 1]];
         }
         self.showmems.text=allnames;
