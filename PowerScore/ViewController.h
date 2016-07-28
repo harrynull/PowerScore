@@ -16,6 +16,9 @@
 -(void)vc_unlog;
 -(void)vc_changelaunch:(BOOL *)launch;
 
+-(void)chooseplus;
+-(void)setdate;
+
 @property (nonatomic, strong) IBOutlet UITableViewCell *HistoryCell;
 @end
 

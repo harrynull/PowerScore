@@ -11,6 +11,14 @@
 #import "RightScrollView.h"
 #import "PowerScore-swift.h"
 #import "AppDelegate.h"
+#import "RightView.h"
+#import "HZQDatePickerView.h"
+
+// 屏幕尺寸 ScreenRect
+#define ScreenRect [UIScreen mainScreen].applicationFrame
+#define ScreenRectHeight [UIScreen mainScreen].applicationFrame.size.height
+#define ScreenRectWidth [UIScreen mainScreen].applicationFrame.size.width
+
 @interface ViewController ()
 <UIScrollViewDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -35,10 +43,13 @@
     __weak IBOutlet UITableView *tableview;
     
     __weak IBOutlet UIButton *class_or_student;
+    
+    HZQDatePickerView *_pikerView;
 
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
+@property(nonatomic,strong)RightView *rview;
 @property(nonatomic,strong)UIView *leftView;
 @property(nonatomic,strong)UIView *rightView;
 
@@ -235,6 +246,8 @@ bool ON_CLASS = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopensr:)name:@"toopensr" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(toopensg:)name:@"toopensg" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tounlog:)name:@"tounlog" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tochangeplus:)name:@"tochangeplus" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(tosetdate:)name:@"tosetdate" object:nil];
     // self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
    
 }
@@ -263,6 +276,14 @@ bool ON_CLASS = YES;
 -(void)tounlog:(NSNotification *)sender
 {
     [self vc_unlogger];
+}
+-(void)tochangeplus:(NSNotification *)sender
+{
+    [self chooseplussss];
+}
+-(void)tosetdate:(NSNotification *)sender
+{
+    [self setdateee];
 }
 -(void)vc_changelaunch:(BOOL *)launch
 {
@@ -316,15 +337,23 @@ bool ON_CLASS = YES;
 - (IBAction)class_or_studentOnClick:(id)sender {
     if(ON_CLASS)
     {
-        
-        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择班级" message:@"选择要查看的班级" preferredStyle: UIAlertControllerStyleActionSheet];
         
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         
         for(NSString* cid in GlobalData.classes)
         {
-            [alertController addAction:[UIAlertAction actionWithTitle:GlobalData.classes[cid].name style:UIAlertActionStyleDefault handler:nil]];
+            [alertController addAction:[UIAlertAction actionWithTitle:GlobalData.classes[cid].name style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                
+                [GlobalData setClassNow:cid];
+                
+                [class_or_student setTitle:[GlobalData getClassNow].name forState:UIControlStateNormal];
+                [class_or_student setImage:[UIImage imageNamed:@"trangle"] forState:UIControlStateNormal];
+                [class_or_student setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
+                [class_or_student setImageEdgeInsets:UIEdgeInsetsMake(0, class_or_student.frame.size.width-15, 0, -class_or_student.titleLabel.bounds.size.width-5)];
+                
+                [tableview reloadData];
+            }]];
         }
 
         
@@ -432,6 +461,89 @@ bool ON_CLASS = YES;
     {
         self.scroll.pan.enabled = NO;
     }
+}
+
+-(void)chooseplus
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"tochangeplus" object:nil];
+}
+
+-(void)setdate
+{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"tosetdate" object:nil];
+}
+
+-(void)setdateee
+{
+    [self showDatePicker:DateTypeOfEnd];
+}
+
+//筛选日期
+- (void)getSelectDate:(NSString *)date type:(DateType)type {
+    
+    if([date isEqualToString:@"alles"]){
+        //显示所有记录
+    }else{
+        //显示某一天记录，变量date为日期，格式为yyyy-mm-dd
+    }
+    [self.rscroll setDatetem:date];
+}
+
+//筛选加减分
+- (void)chooseplussss
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"筛选加/减分" message:@"" preferredStyle: UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"加分" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        //显示加分
+        [self.rscroll changePlus];
+        [tableview reloadData];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"减分" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        //显示减分
+        [self.rscroll changeMinus];
+        [tableview reloadData];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"不限" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        //显示全部
+        [self.rscroll changeAll];
+        [tableview reloadData];
+    }]];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+//日期选择器
+-(void)showDatePicker:(DateType)type {
+    
+    _pikerView = [HZQDatePickerView instanceDatePickerView];
+    
+    _pikerView.frame = CGRectMake(0, 0, ScreenRectWidth, ScreenRectHeight - 50);
+    
+    [_pikerView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];
+    
+    _pikerView.delegate = self;
+    
+    _pikerView.type = type;
+    
+    // 今天起之后的日期
+    
+    [_pikerView.datePickerView setMaximumDate:[NSDate date]];
+    
+    // 今天之前的日期
+    
+    //    [_pikerView.datePickerView setMaximumDate:[NSDate date]];
+    //[self.view addSubview:_pikerView];
+    //[self.view bringSubviewToFront:_pikerView];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    [window addSubview:_pikerView];
+    
 }
 
 

@@ -11,4 +11,9 @@
 
 @interface RightView : UIView
 
+-(void)changeToPlus;
+-(void)changeToMinus;
+-(void)changeToAll;
+-(void)setDate:(NSString *)date;
+
 @end

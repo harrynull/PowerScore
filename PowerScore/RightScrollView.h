@@ -10,5 +10,9 @@
 
 @interface RightScrollView : UIScrollView
 -(void) stloadrightview;
+-(void) changePlus;
+-(void) changeMinus;
+-(void) changeAll;
+-(void)setDatetem:(NSString *)date;
 @property(nonatomic)UIPanGestureRecognizer *pan;
 @end

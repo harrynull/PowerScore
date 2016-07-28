@@ -10,7 +10,6 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-@property(nonatomic,strong)ViewController *VC;
 @end
 
 @implementation RightView
@@ -20,12 +19,14 @@
 }
 - (void)choosedateOnclick
 {
-    //筛选日期
+    ViewController *v =[[ViewController alloc]init];
+    [v setdate];
 }
 
 - (void)chooseplusOnclick
 {
-    //筛选加减分
+    ViewController *v =[[ViewController alloc]init];
+    [v chooseplus];
 }
 
 -(id)initWithFrame:(CGRect)frame
@@ -59,13 +60,15 @@
         [showdate setText:@"不限"];
         [showdate setTextColor:[UIColor whiteColor]];
         [showdate setFont:[UIFont fontWithName:@"Helvetica" size:20.0]];
+        showdate.tag = 3;
         [self addSubview:showdate];
         
         CGRect rect2 = CGRectMake(70,35, 135, 30);
         UILabel *showyear = [[UILabel alloc]initWithFrame:rect2];
-        [showyear setText:@"2016年"];
+        [showyear setText:@""];
         [showyear setTextColor:[UIColor whiteColor]];
         [showyear setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
+        showyear.tag = 2;
         [self addSubview:showyear];
         
         CGRect rect3 = CGRectMake(102,70, 12 , 12);
@@ -92,6 +95,7 @@
         [showplus setText:@"不限"];
         [showplus setTextColor:[UIColor whiteColor]];
         [showplus setFont:[UIFont fontWithName:@"Helvetica" size:20.0]];
+        showplus.tag = 1;
         [self addSubview:showplus];
         
         CGRect rect7 = CGRectMake(102,155, 12 , 12);
@@ -99,17 +103,98 @@
         [downplus setImage:[UIImage imageNamed:@"trangle"]];
         [self addSubview:downplus];
         
+     
             }
     return self;
 }
--(instancetype)initWithCoder:(NSCoder *)aDecoder
+
+- (void)changeToPlus
 {
-    self = [super initWithCoder:aDecoder];
-    if(self)
-    {
-        
+    for (UILabel *subviews in [self subviews]) {
+        if (subviews.tag==1) {
+            [subviews removeFromSuperview];
+        }
     }
-    return self;
+    CGRect rectnew= CGRectMake(18,145, 135, 30);
+    UILabel *showplusnew = [[UILabel alloc]initWithFrame:rectnew];
+    [showplusnew setText:@"+"];
+    [showplusnew setTextColor:[UIColor whiteColor]];
+    [showplusnew setFont:[UIFont fontWithName:@"Helvetica" size:30.0]];
+    showplusnew.tag = 1;
+    [self addSubview:showplusnew];
+}
+- (void)changeToMinus
+{
+    for (UILabel *subviews in [self subviews]) {
+        if (subviews.tag==1) {
+            [subviews removeFromSuperview];
+        }
+    }
+    CGRect rectnew= CGRectMake(18,145, 135, 30);
+    UILabel *showplusnew = [[UILabel alloc]initWithFrame:rectnew];
+    [showplusnew setText:@"—"];
+    [showplusnew setTextColor:[UIColor whiteColor]];
+    [showplusnew setFont:[UIFont fontWithName:@"Helvetica" size:30.0]];
+    showplusnew.tag = 1;
+    [self addSubview:showplusnew];
+}
+- (void)changeToAll
+{
+    for (UILabel *subviews in [self subviews]) {
+        if (subviews.tag==1) {
+            [subviews removeFromSuperview];
+        }
+    }
+    CGRect rectnew= CGRectMake(18,145, 135, 30);
+    UILabel *showplusnew = [[UILabel alloc]initWithFrame:rectnew];
+    [showplusnew setText:@"不限"];
+    [showplusnew setTextColor:[UIColor whiteColor]];
+    [showplusnew setFont:[UIFont fontWithName:@"Helvetica" size:20.0]];
+    showplusnew.tag = 1;
+    [self addSubview:showplusnew];
+}
+
+- (void)setDate:(NSString *)date
+{
+    if([date isEqualToString:@"alles"])
+    {
+        for (UILabel *subviews in [self subviews]) {
+            if (subviews.tag==2 || subviews.tag==3) {
+                [subviews removeFromSuperview];
+            }
+        }
+        CGRect rectsdn = CGRectMake(18,60, 135, 30);
+        UILabel *showdatenew = [[UILabel alloc]initWithFrame:rectsdn];
+        [showdatenew setText:@"不限"];
+        [showdatenew setTextColor:[UIColor whiteColor]];
+        [showdatenew setFont:[UIFont fontWithName:@"Helvetica" size:20.0]];
+        showdatenew.tag = 3;
+        [self addSubview:showdatenew];
+
+    }else{
+        for (UILabel *subviews in [self subviews]) {
+            if (subviews.tag==2 || subviews.tag==3) {
+                [subviews removeFromSuperview];
+            }
+        }
+        NSArray *ymd = [date componentsSeparatedByString:@"-"];
+        
+        CGRect rectsdn = CGRectMake(18,60, 135, 30);
+        UILabel *showdatenew = [[UILabel alloc]initWithFrame:rectsdn];
+        [showdatenew setText:[NSString stringWithFormat:@"%@月%@日",[ymd objectAtIndex:1],[ymd objectAtIndex:2]]];
+        [showdatenew setTextColor:[UIColor whiteColor]];
+        [showdatenew setFont:[UIFont fontWithName:@"Helvetica" size:20.0]];
+        showdatenew.tag = 3;
+        [self addSubview:showdatenew];
+        
+        CGRect rectsyn = CGRectMake(70,35, 135, 30);
+        UILabel *showyearnew = [[UILabel alloc]initWithFrame:rectsyn];
+        [showyearnew setText:[NSString stringWithFormat:@"%@年",[ymd objectAtIndex:0]]];
+        [showyearnew setTextColor:[UIColor whiteColor]];
+        [showyearnew setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
+        showyearnew.tag = 2;
+        [self addSubview:showyearnew];
+    }
 }
 
 @end

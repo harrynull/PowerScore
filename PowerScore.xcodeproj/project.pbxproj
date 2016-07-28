@@ -52,6 +52,9 @@
 		6F9B2E1C1D09747100A5746A /* ChooseRoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B2E171D09747100A5746A /* ChooseRoleCell.m */; };
 		6F9B2E1D1D09747100A5746A /* role.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F9B2E181D09747100A5746A /* role.plist */; };
 		6FA2959A1CD4505C005B0574 /* NavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA295991CD4505C005B0574 /* NavController.m */; };
+		8454022D1D49E8CC00881B4E /* HZQDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845402291D49E8CC00881B4E /* HZQDatePickerView.m */; };
+		8454022E1D49E8CC00881B4E /* HZQDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8454022A1D49E8CC00881B4E /* HZQDatePickerView.xib */; };
+		8454022F1D49E8CC00881B4E /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 8454022C1D49E8CC00881B4E /* UIColor+HexString.m */; };
 		848D93821D27717E00E4514D /* ChooseGroupMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848D93811D27717E00E4514D /* ChooseGroupMemberViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +148,11 @@
 		6F9B2E181D09747100A5746A /* role.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = role.plist; sourceTree = "<group>"; };
 		6FA295981CD4505C005B0574 /* NavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavController.h; sourceTree = "<group>"; };
 		6FA295991CD4505C005B0574 /* NavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavController.m; sourceTree = "<group>"; };
+		845402281D49E8CC00881B4E /* HZQDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZQDatePickerView.h; sourceTree = "<group>"; };
+		845402291D49E8CC00881B4E /* HZQDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZQDatePickerView.m; sourceTree = "<group>"; };
+		8454022A1D49E8CC00881B4E /* HZQDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HZQDatePickerView.xib; sourceTree = "<group>"; };
+		8454022B1D49E8CC00881B4E /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
+		8454022C1D49E8CC00881B4E /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
 		848D93801D27717E00E4514D /* ChooseGroupMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupMemberViewController.h; sourceTree = "<group>"; };
 		848D93811D27717E00E4514D /* ChooseGroupMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseGroupMemberViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -278,6 +286,7 @@
 				6F4636EB1D0BF3E500FDB338 /* ChooseMemTableViewController.m */,
 				6FA295981CD4505C005B0574 /* NavController.h */,
 				6FA295991CD4505C005B0574 /* NavController.m */,
+				845402271D49E8CC00881B4E /* HZQDatePickerView */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -340,6 +349,18 @@
 				6F6D7CF71C9EA9F70089521E /* LaunchScreen.storyboard */,
 			);
 			name = Xib/Storyboard;
+			sourceTree = "<group>";
+		};
+		845402271D49E8CC00881B4E /* HZQDatePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				845402281D49E8CC00881B4E /* HZQDatePickerView.h */,
+				845402291D49E8CC00881B4E /* HZQDatePickerView.m */,
+				8454022A1D49E8CC00881B4E /* HZQDatePickerView.xib */,
+				8454022B1D49E8CC00881B4E /* UIColor+HexString.h */,
+				8454022C1D49E8CC00881B4E /* UIColor+HexString.m */,
+			);
+			path = HZQDatePickerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -453,6 +474,7 @@
 				27930F421D1B7B8F004901B7 /* Launch_or_not.plist in Resources */,
 				6F9B2E1B1D09747100A5746A /* HeaderView.xib in Resources */,
 				6F7E34241CD56D9D006CA8AE /* grey.png in Resources */,
+				8454022E1D49E8CC00881B4E /* HZQDatePickerView.xib in Resources */,
 				6F6F62061CD618E000BEC283 /* HistoryTableViewCell.xib in Resources */,
 				6F9B2E1D1D09747100A5746A /* role.plist in Resources */,
 				6F7E34221CD56C67006CA8AE /* white.png in Resources */,
@@ -486,6 +508,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8454022F1D49E8CC00881B4E /* UIColor+HexString.m in Sources */,
 				6F035A251CCF2A3200BA023E /* LeftView.m in Sources */,
 				6F4A8AB91D06EA6800734F84 /* ReasonSettingViewController.m in Sources */,
 				6F035A231CCF2A3200BA023E /* ViewController.m in Sources */,
@@ -506,6 +529,7 @@
 				6F7E342A1CD57E86006CA8AE /* RightScrollView.m in Sources */,
 				265CBA551D472AD300B2636A /* GlobalData.swift in Sources */,
 				6F4A8AB61D06E9A400734F84 /* OverViewViewController.m in Sources */,
+				8454022D1D49E8CC00881B4E /* HZQDatePickerView.m in Sources */,
 				6F9B2E1A1D09747100A5746A /* HeaderView.m in Sources */,
 				6F6602FC1CD81EF6001D4903 /* AboutViewController.m in Sources */,
 				2625622C1D2DFB3F00425E08 /* DataGetter.swift in Sources */,

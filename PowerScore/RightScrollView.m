@@ -75,5 +75,20 @@
     }];
 }
 
-
+-(void)changePlus
+{
+    [self.RightView changeToPlus];
+}
+-(void)changeMinus
+{
+    [self.RightView changeToMinus];
+}
+-(void)changeAll
+{
+    [self.RightView changeToAll];
+}
+-(void)setDatetem:(NSString *)date
+{
+    [self.RightView setDate:date];
+}
 @end
