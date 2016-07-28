@@ -38,6 +38,8 @@
     
     __weak IBOutlet UILabel *movinglable;
     
+    __weak IBOutlet UILabel *staylable;
+    
     __weak IBOutlet UIButton *add_bt;
     
     __weak IBOutlet UITableView *tableview;
@@ -93,8 +95,6 @@ bool ON_CLASS = YES;
         [positive setBackgroundColor:[UIColor redColor]];
     }
     
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     return cell;
 }
 
@@ -114,7 +114,7 @@ bool ON_CLASS = YES;
         UIAlertController *alertcontroller = [UIAlertController alertControllerWithTitle:@"删除记录" message:tip preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             
-        //删除记录
+        //$删除记录
             
         }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -126,7 +126,7 @@ bool ON_CLASS = YES;
     
     UIAlertAction *moreinfoAction = [UIAlertAction actionWithTitle:@"查看详细" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //详细记录
+        //$详细记录
       
     }];
     
@@ -139,17 +139,16 @@ bool ON_CLASS = YES;
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.toolbarHidden = YES;
-    ON_CLASS = YES;
-    person_bt.hidden = NO;
-    person_false.hidden = YES;
-    [class_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
-    [person_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
-    [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        movinglable.frame = CGRectMake(0, 41, 90, 3);
-    } completion:^(BOOL finished) {
-    }];
-    
-    //查看班级
+    if (ON_CLASS)
+    {
+        movinglable.hidden = NO;
+        staylable.hidden = YES;
+    }
+    else
+    {
+        movinglable.hidden = YES;
+        staylable.hidden = NO;
+    }
 }
 
 
@@ -305,20 +304,25 @@ bool ON_CLASS = YES;
 
 - (IBAction)classbtOnclick:(id)sender {
     ON_CLASS = YES;
+    movinglable.hidden = NO;
+    staylable.hidden = YES;
     person_bt.hidden = NO;
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
     [person_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
+    movinglable.frame = CGRectMake(90, 41, 90, 3);
     [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         movinglable.frame = CGRectMake(0, 41, 90, 3);
     } completion:^(BOOL finished) {
     }];
     
-    //查看班级
+    //$查看班级
 }
 
 - (IBAction)personbtOnclick:(id)sender {
     ON_CLASS = NO;
+    movinglable.hidden = NO;
+    staylable.hidden = YES;
     person_bt.hidden = NO;
     person_false.hidden = YES;
     [class_bt.titleLabel setTextColor:[UIColor colorWithRed:128.0/255.0 green:194.0/255.0 blue:219.0/255.0 alpha:1]];
@@ -328,7 +332,7 @@ bool ON_CLASS = YES;
     } completion:^(BOOL finished) {
     }];
     
-    //查看个人
+    //$查看个人
 }
 
 - (IBAction)add_btOnclick:(id)sender {
@@ -355,7 +359,6 @@ bool ON_CLASS = YES;
                 [tableview reloadData];
             }]];
         }
-
         
         [alertController addAction:cancelAction];
         
@@ -417,7 +420,7 @@ bool ON_CLASS = YES;
     UIAlertController *alertcontroller = [UIAlertController alertControllerWithTitle:@"退出登录" message:@"确定要退出登录吗？\n(未同步的数据将会丢失)" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"退出登录" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //退出登录
+        //$退出登录
         
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -482,9 +485,9 @@ bool ON_CLASS = YES;
 - (void)getSelectDate:(NSString *)date type:(DateType)type {
     
     if([date isEqualToString:@"alles"]){
-        //显示所有记录
+        //$显示所有记录
     }else{
-        //显示某一天记录，变量date为日期，格式为yyyy-mm-dd
+        //$显示某一天记录，变量date为日期，格式为yyyy-mm-dd
     }
     [self.rscroll setDatetem:date];
 }
@@ -498,19 +501,19 @@ bool ON_CLASS = YES;
 
     [alertController addAction:[UIAlertAction actionWithTitle:@"加分" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //显示加分
+        //$显示加分
         [self.rscroll changePlus];
         [tableview reloadData];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"减分" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //显示减分
+        //$显示减分
         [self.rscroll changeMinus];
         [tableview reloadData];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"不限" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //显示全部
+        //$显示全部
         [self.rscroll changeAll];
         [tableview reloadData];
     }]];
@@ -521,26 +524,15 @@ bool ON_CLASS = YES;
 
 //日期选择器
 -(void)showDatePicker:(DateType)type {
-    
     _pikerView = [HZQDatePickerView instanceDatePickerView];
-    
     _pikerView.frame = CGRectMake(0, 0, ScreenRectWidth, ScreenRectHeight - 50);
-    
     [_pikerView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];
-    
     _pikerView.delegate = self;
-    
     _pikerView.type = type;
-    
     // 今天起之后的日期
-    
-    [_pikerView.datePickerView setMaximumDate:[NSDate date]];
-    
+    //[_pikerView.datePickerView setMinimumDate:[NSDate date]];
     // 今天之前的日期
-    
-    //    [_pikerView.datePickerView setMaximumDate:[NSDate date]];
-    //[self.view addSubview:_pikerView];
-    //[self.view bringSubviewToFront:_pikerView];
+    [_pikerView.datePickerView setMaximumDate:[NSDate date]];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:_pikerView];
     

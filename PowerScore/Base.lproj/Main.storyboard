@@ -55,6 +55,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PaH-4r-gu5">
+                                <rect key="frame" x="90" y="41" width="90" height="3"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HjT-K4-8nh">
                                 <rect key="frame" x="90" y="0.0" width="90" height="44"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -149,6 +156,7 @@
                         <outlet property="openleft_bt" destination="vNw-bY-l4s" id="esG-ht-gbS"/>
                         <outlet property="person_bt" destination="9vg-ZM-G8G" id="Se1-IP-Beq"/>
                         <outlet property="person_false" destination="HjT-K4-8nh" id="WSz-Ho-thS"/>
+                        <outlet property="staylable" destination="PaH-4r-gu5" id="dFX-Rb-T9w"/>
                         <outlet property="tableview" destination="mvH-dq-MT3" id="t9z-e7-i1x"/>
                         <outlet property="toolback" destination="0gs-ty-gny" id="mLG-VK-Qgl"/>
                         <segue destination="FHh-uz-SQa" kind="push" identifier="gotoabout" id="E6C-in-rBE"/>
@@ -1588,6 +1596,14 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rOV-ME-ygV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jth-3y-HYk">
+                    <rect key="frame" x="0.0" y="0.0" width="90" height="3"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </objects>
             <point key="canvasLocation" x="1933" y="1977"/>
         </scene>
