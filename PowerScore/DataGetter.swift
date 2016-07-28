@@ -78,4 +78,8 @@ class DataManager: NSObject {
             return reasons
         }
     }
+    static func saveReasons(reasons:[String]){
+        let filePath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0]+"/reasons.plist"
+        (reasons as NSArray).writeToFile(filePath, atomically: true)
+    }
 }
