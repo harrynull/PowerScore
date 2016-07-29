@@ -20,6 +20,9 @@ class History : NSObject{
         scoreWithSign = (score > 0 ? "+" : "") + String(Double(score) / 10.0)
         dateStr = date.stringWithFormat("yyyy-MM-dd HH:mm:ss:SS")
         shortDateStr = date.stringWithFormat("MM-dd")
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat="yyyy-MM-dd"
+        nsDate=dateFormatter.dateFromString(date.stringWithFormat("yyyy-MM-dd"))!
     }
     func encodeWithCoder(aCoder: NSCoder){
         aCoder.encodeObject(self.date.timeInterval, forKey: "timeInterval")
@@ -42,8 +45,12 @@ class History : NSObject{
         scoreWithSign = (score > 0 ? "+" : "") + String(Double(score) / 10.0)
         dateStr = date.stringWithFormat("yyyy-MM-dd HH:mm:ss:SS")
         shortDateStr = date.stringWithFormat("MM-dd")
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat="yyyy-MM-dd"
+        nsDate=dateFormatter.dateFromString(date.stringWithFormat("yyyy-MM-dd"))!
     }
     let date:Date
+    let nsDate:NSDate;
     let score:Int
     let names:String
     let reason:String

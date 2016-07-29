@@ -1,10 +1,5 @@
 //
 //  ViewController.m
-//  测试Demo
-//
-//  Created by 933 on 16/3/21.
-//  Copyright © 2016年 Andy. All rights reserved.
-//
 
 #import "ViewController.h"
 #import "AndyScrollView.h"
@@ -47,7 +42,13 @@
     __weak IBOutlet UIButton *class_or_student;
     
     HZQDatePickerView *_pikerView;
-
+    
+    bool isFilterDate;
+    NSDate* filterDate;
+    int filterScore; //-1 负分 0 不筛选 1正分
+    
+    NSArray<History*>* cachedHistories;
+    bool cacheVaild;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -61,8 +62,29 @@
 
 bool ON_CLASS = YES;
 
+-(NSArray<History*>*) getTableViewHistories{
+    if(filterScore==0&&!isFilterDate){
+        return [[GlobalData getClassNow] histories];
+    }
+    if(!cacheVaild){
+        NSMutableArray<History*>* filteredHistories= [NSMutableArray<History*> array];
+        for(History* h in [[GlobalData getClassNow] histories]){
+            if(filterScore==-1&&h.score>0) continue;
+            if(filterScore==1&&h.score<0) continue;
+            if(isFilterDate&&h.nsDate!=filterDate) continue;
+            [filteredHistories addObject:h];
+        }
+        cachedHistories=filteredHistories;
+        cacheVaild=true;
+        return filteredHistories;
+    }else{
+        return cachedHistories;
+    }
+}
+
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[[GlobalData getClassNow] histories] count];
+    return [[self getTableViewHistories] count];
 }
 
 
@@ -78,7 +100,7 @@ bool ON_CLASS = YES;
         self.HistoryCell = [nib objectAtIndex:0];
         cell = self.HistoryCell;
     }
-    History *history = [[GlobalData getClassNow].histories objectAtIndex:indexPath.row];
+    History *history = [[self getTableViewHistories] objectAtIndex:indexPath.row];
     UILabel *reason = (UILabel *)[cell.contentView viewWithTag:1];
     UILabel *date_short = (UILabel *)[cell.contentView viewWithTag:2];
     UILabel *mark = (UILabel *)[cell.contentView viewWithTag:3];
@@ -101,7 +123,7 @@ bool ON_CLASS = YES;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //NSUInteger row = [indexPath row];
-    History *history = [[GlobalData getClassNow].histories objectAtIndex:indexPath.row];
+    History *history = [[self getTableViewHistories] objectAtIndex:indexPath.row];
     NSString *reason = history.reason;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:reason message:@"选择对该记录的操作" preferredStyle: UIAlertControllerStyleActionSheet];
@@ -483,13 +505,20 @@ bool ON_CLASS = YES;
 
 //筛选日期
 - (void)getSelectDate:(NSString *)date type:(DateType)type {
-    
     if([date isEqualToString:@"alles"]){
-        //$显示所有记录
+        //显示所有记录
+        isFilterDate=false;
+        cacheVaild=false;
     }else{
-        //$显示某一天记录，变量date为日期，格式为yyyy-mm-dd
+        //显示某一天记录，变量date为日期，格式为yyyy-mm-dd
+        isFilterDate=true;
+        cacheVaild=false;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat: @"yyyy-MM-dd"];
+        filterDate=[dateFormatter dateFromString:date];
     }
     [self.rscroll setDatetem:date];
+    [tableview reloadData];
 }
 
 //筛选加减分
@@ -501,19 +530,25 @@ bool ON_CLASS = YES;
 
     [alertController addAction:[UIAlertAction actionWithTitle:@"加分" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //$显示加分
+        //显示加分
+        filterScore=1;
+        cacheVaild=false;
         [self.rscroll changePlus];
         [tableview reloadData];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"减分" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //$显示减分
+        //显示减分
+        filterScore=-1;
+        cacheVaild=false;
         [self.rscroll changeMinus];
         [tableview reloadData];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"不限" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
-        //$显示全部
+        //显示全部
+        filterScore=0;
+        cacheVaild=false;
         [self.rscroll changeAll];
         [tableview reloadData];
     }]];
@@ -529,8 +564,6 @@ bool ON_CLASS = YES;
     [_pikerView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];
     _pikerView.delegate = self;
     _pikerView.type = type;
-    // 今天起之后的日期
-    //[_pikerView.datePickerView setMinimumDate:[NSDate date]];
     // 今天之前的日期
     [_pikerView.datePickerView setMaximumDate:[NSDate date]];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
