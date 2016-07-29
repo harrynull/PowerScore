@@ -1188,7 +1188,94 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Ie-HX-nDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-240" y="1089"/>
+            <point key="canvasLocation" x="-766" y="1089"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="eOF-0h-1IA">
+            <objects>
+                <viewController id="Cof-RN-QZw" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0vs-FQ-yPw"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZhW-tx-UsG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hfA-vk-kiF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L7I-QQ-EUI">
+                                <rect key="frame" x="0.0" y="82" width="320" height="315"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="用户名" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1nb-i8-f5H">
+                                        <rect key="frame" x="16" y="158" width="289" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密码" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rfg-fU-Lx9">
+                                        <rect key="frame" x="16" y="196" width="289" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSR-PY-fEp">
+                                        <rect key="frame" x="16" y="234" width="289" height="45"/>
+                                        <color key="backgroundColor" red="0.0" green="0.44705882349999998" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="jHc-lN-VDh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <state key="normal" title="登录"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EiM-N9-JtV">
+                                        <rect key="frame" x="16" y="287" width="43" height="30"/>
+                                        <state key="normal" title="注册">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbp-WY-Sd9">
+                                        <rect key="frame" x="239" y="287" width="66" height="30"/>
+                                        <state key="normal" title="忘记密码">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="user_blue.png" translatesAutoresizingMaskIntoConstraints="NO" id="Uww-iT-UJK">
+                                        <rect key="frame" x="95" y="0.0" width="130" height="130"/>
+                                        <color key="tintColor" red="0.0" green="0.87237835570469779" blue="0.65892407718120805" alpha="0.75" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="Tah-ht-2tU"/>
+                                            <constraint firstAttribute="height" constant="130" id="YHe-Xz-Nho"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="1nb-i8-f5H" secondAttribute="trailing" constant="20" id="3Ac-Vv-mKt"/>
+                                    <constraint firstItem="rfg-fU-Lx9" firstAttribute="leading" secondItem="L7I-QQ-EUI" secondAttribute="leading" constant="20" id="9YL-0m-KOw"/>
+                                    <constraint firstItem="EiM-N9-JtV" firstAttribute="top" secondItem="tSR-PY-fEp" secondAttribute="bottom" constant="8" id="FQi-ie-Wct"/>
+                                    <constraint firstAttribute="trailing" secondItem="fbp-WY-Sd9" secondAttribute="trailing" constant="20" id="NrA-1Z-Jg2"/>
+                                    <constraint firstItem="fbp-WY-Sd9" firstAttribute="top" secondItem="tSR-PY-fEp" secondAttribute="bottom" constant="8" id="PHS-64-Wts"/>
+                                    <constraint firstItem="tSR-PY-fEp" firstAttribute="leading" secondItem="L7I-QQ-EUI" secondAttribute="leading" constant="20" id="Txc-6M-S8f"/>
+                                    <constraint firstAttribute="trailing" secondItem="tSR-PY-fEp" secondAttribute="trailing" constant="20" id="Vdv-BS-eW4"/>
+                                    <constraint firstItem="1nb-i8-f5H" firstAttribute="top" secondItem="Uww-iT-UJK" secondAttribute="bottom" constant="20" id="XnL-bE-Ypm"/>
+                                    <constraint firstAttribute="height" constant="280" id="beA-R9-ftv"/>
+                                    <constraint firstItem="Uww-iT-UJK" firstAttribute="centerX" secondItem="L7I-QQ-EUI" secondAttribute="centerX" id="hNb-1E-73H"/>
+                                    <constraint firstItem="Uww-iT-UJK" firstAttribute="top" secondItem="L7I-QQ-EUI" secondAttribute="top" id="kIb-Tl-hGE"/>
+                                    <constraint firstItem="rfg-fU-Lx9" firstAttribute="top" secondItem="1nb-i8-f5H" secondAttribute="bottom" constant="10" id="ooz-q2-IU2"/>
+                                    <constraint firstItem="EiM-N9-JtV" firstAttribute="leading" secondItem="L7I-QQ-EUI" secondAttribute="leading" constant="20" id="t3W-ik-eCJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="rfg-fU-Lx9" secondAttribute="trailing" constant="20" id="u8e-iw-LqT"/>
+                                    <constraint firstItem="1nb-i8-f5H" firstAttribute="leading" secondItem="L7I-QQ-EUI" secondAttribute="leading" constant="20" id="xQs-JQ-aZK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="L7I-QQ-EUI" firstAttribute="leading" secondItem="hfA-vk-kiF" secondAttribute="leadingMargin" constant="-20" id="ON6-im-Bos"/>
+                            <constraint firstItem="L7I-QQ-EUI" firstAttribute="centerX" secondItem="hfA-vk-kiF" secondAttribute="centerX" id="QCR-vP-wNW"/>
+                            <constraint firstItem="L7I-QQ-EUI" firstAttribute="centerY" secondItem="hfA-vk-kiF" secondAttribute="centerY" constant="-50" id="SMs-Vr-ssL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="L7I-QQ-EUI" secondAttribute="trailing" constant="-20" id="XuY-9J-cBq"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F8b-Ph-UuB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-274" y="1089"/>
         </scene>
         <!--Nav Controller-->
         <scene sceneID="urM-Xy-Ors">
@@ -1530,7 +1617,7 @@
             </objects>
             <point key="canvasLocation" x="-413" y="2725"/>
         </scene>
-        <!--Choose Mem Table View Controller-->
+        <!--选择个人记录-->
         <scene sceneID="Cph-BT-236">
             <objects>
                 <tableViewController storyboardIdentifier="table2" id="7Yn-Eh-pKc" customClass="ChooseMemTableViewController" sceneMemberID="viewController">
@@ -1585,7 +1672,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="hbw-U7-wVG">
+                    <navigationItem key="navigationItem" title="选择个人记录" id="hbw-U7-wVG">
                         <barButtonItem key="rightBarButtonItem" title="完成" id="tKh-6p-luv">
                             <connections>
                                 <action selector="okAction:" destination="7Yn-Eh-pKc" id="d5l-2t-ufp"/>
@@ -1624,6 +1711,7 @@
         <image name="spl_2.png" width="1080" height="152"/>
         <image name="sync" width="33" height="33"/>
         <image name="thun" width="22" height="22"/>
+        <image name="user_blue.png" width="150" height="171"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
