@@ -9,6 +9,13 @@
 import UIKit
 
 class DataManager: NSObject {
+    static func post(strUrl:String, args:String)->String{
+        let request = NSMutableURLRequest(URL:NSURL(string: strUrl)!, cachePolicy:NSURLRequestCachePolicy.ReloadIgnoringCacheData, timeoutInterval:60)
+        request.HTTPMethod="POST"
+        request.HTTPBody=args.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = try? NSURLConnection.sendSynchronousRequest(request, returningResponse:nil);
+        return NSString(data: data!, encoding:NSUTF8StringEncoding) as! String;
+    }
     
     //解析数据字符串到Class
     //data:数据字符串, name:班级名
