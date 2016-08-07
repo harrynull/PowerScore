@@ -333,10 +333,67 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/perlayout"
-                android:visibility="visible"
-                android:layout_below="@+id/upt">
+                android:visibility="gone"
+                android:layout_below="@+id/upt"
+                android:background="#41000000">
+
 
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="29dp"
+                android:text="手动记录"
+                android:id="@+id/hand_tex"
+                android:layout_alignTop="@+id/hand_ic"
+                android:layout_toLeftOf="@+id/hand_ic"
+                android:layout_toStartOf="@+id/hand_ic"
+                android:layout_marginTop="21dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@color/dqh"
+                android:background="#c8ffffff"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="29dp"
+                android:text="语音录入"
+                android:id="@+id/speak_tex"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_alignTop="@+id/speak_ic"
+                android:layout_toLeftOf="@+id/speak_ic"
+                android:layout_toStartOf="@+id/speak_ic"
+                android:layout_marginTop="21dp"
+                android:singleLine="false"
+                android:textColor="@color/dqh"
+                android:background="#c8ffffff"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/speak_ic"
+                android:layout_weight="3"
+                android:src="@drawable/micro_gate"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="125dp"
+                android:layout_marginRight="30dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/hand_ic"
+                android:layout_weight="3"
+                android:src="@drawable/hand_gate"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="200dp"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="70dp"
@@ -347,7 +404,8 @@
                 android:layout_marginBottom="50dp"
                 android:layout_marginRight="30dp"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/add_butt" />
+                android:background="@drawable/add_press" />
+
 
         </RelativeLayout>
 

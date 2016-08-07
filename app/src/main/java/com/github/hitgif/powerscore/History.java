@@ -16,7 +16,7 @@ public class History {
         //score_now=_score_now;
         date=_date;
         shortReason=reason.length() > 6 ? reason.substring(0, 6) + "…" : reason;
-        shortNames=names.length() > 10 ? names.substring(0, 10) + "…" : names;
+        shortNames=names.length() > 25 ? names.substring(0, 25) + "…" : names;
         scoreWithSign=(score > 0 ? "+" : "") + (score / 10.0);
         dateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA).format(date);
         shortDateStr=new SimpleDateFormat("MM-dd", Locale.CHINA).format(date);

@@ -166,7 +166,7 @@ public class group_setting extends Activity {
                 holder = (ViewHolder)convertView.getTag();//取出ViewHolder对象
             }
             String s=(String)(getData().get(position).get("ItemText"));
-            if(s.length()>12) s=s.substring(0,12)+"…";
+            if(s.length()>20) s=s.substring(0,20)+"…";
             holder.text.setText(s);
             holder.title.setText((String)(getData().get(position).get("ItemTitle")));
             return convertView;

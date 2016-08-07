@@ -38,6 +38,7 @@ import android.widget.DatePicker;
 import android.content.Context;
 import android.content.DialogInterface;
 
+
 import com.iflytek.sunflower.FlowerCollector;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -56,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
@@ -78,6 +80,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private String filterClass = "";
     private String filterName = "";
     private Boolean isGen = true;
+    private Boolean isOnAdd = false;
     private int scoreFilter = -1;
     private int countLimit = 40;
     private boolean needLoadMore;
@@ -169,6 +172,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                         }
                         isSync = false;
                         sync.clearAnimation();
+                        updateList();
                     }
                 }
             }, 0)).start();
@@ -279,7 +283,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         gen = (Button) findViewById(R.id.gen);
         per = (Button) findViewById(R.id.per);
         genLayout = (RelativeLayout) findViewById(R.id.genlayout);
-        perLayout = (RelativeLayout) findViewById(R.id.perlayout);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ViewGroup.LayoutParams lp = findViewById(R.id.ds).getLayoutParams();
             lp.width = 1;
@@ -292,6 +295,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         sync = (ImageView) findViewById(R.id.sync);
         final Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.tip);
         final Animation out_gen = AnimationUtils.loadAnimation(this, R.anim.personal_out);
+        final Animation add_rotate_out = AnimationUtils.loadAnimation(this, R.anim.add_rotate_out);
+        final Animation add_rotate_in = AnimationUtils.loadAnimation(this, R.anim.add_rotate_in);
+        final Animation inputbtn_out = AnimationUtils.loadAnimation(this, R.anim.inputbtn_out);
+        final Animation inputtex_out = AnimationUtils.loadAnimation(this, R.anim.inputtex_out);
+        final Animation inputbtn_in = AnimationUtils.loadAnimation(this, R.anim.inputbtn_in);
+        final Animation inputtex_in = AnimationUtils.loadAnimation(this, R.anim.inputtex_in);
+        final Animation prelayout_out = AnimationUtils.loadAnimation(this, R.anim.perlayout_out);
+        final Animation prelayout_in = AnimationUtils.loadAnimation(this, R.anim.perlayout_in);
         in_per = AnimationUtils.loadAnimation(this, R.anim.personal_in);
         round = AnimationUtils.loadAnimation(this, R.anim.tip);
         per.setTextColor(Color.parseColor("#7fffffff"));
@@ -316,7 +327,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         LinearInterpolator lin = new LinearInterpolator();
         operatingAnim.setInterpolator(lin);
         genLayout.setVisibility(View.VISIBLE);
-        perLayout.setVisibility(View.GONE);
         leftLayout = (RelativeLayout) findViewById(R.id.left);
         rightLayout = (RelativeLayout) findViewById(R.id.right);
         ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerLockMode(
@@ -344,6 +354,15 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             @Override
             public void onDrawerStateChanged(int newState) {
 
+            }
+        });
+
+        findViewById(R.id.home).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse("http://powerscore.duapp.com/login.php"));
+                it.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                startActivity(it);
             }
         });
 
@@ -483,69 +502,69 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         lv.setAdapter(mAdapter);
         lv.setOnScrollListener(this);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,final int position, long id) {
-                final Classes c = classes.get(classNow);
-                final ArrayList<History> histories = c.histories;
-                final ArrayList<History> usHistories = c.unsyncHistories;
+                                      @Override
+                                      public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long id) {
+                                          final Classes c = classes.get(classNow);
+                                          final ArrayList<History> histories = c.histories;
+                                          final ArrayList<History> usHistories = c.unsyncHistories;
 
-                History h = histories.get(getPos(position));
-                final String reason = (h.reason);
-                new ActionSheetDialog(MainActivity.this).builder()
-                    .setTitle(reason)
-                    .setCancelable(false)
-                    .setCanceledOnTouchOutside(true)
-                    .addSheetItem("删除", ActionSheetDialog.SheetItemColor.Red,
-                            new ActionSheetDialog.OnSheetItemClickListener() {
-                                @Override
-                                public void onClick(int which) {
-                                    if(isSync){
-                                        new AlertDialogios(MainActivity.this).builder()
-                                                .setTitle("提示")
-                                                .setMsg("抱歉，数据同步中，删除记录暂不可用，请等待同步完成 :(")
-                                                .setNegativeButton("好的", null).show();
-                                        return;
-                                    }
-                                    new AlertDialogios(MainActivity.this).builder()
-                                            .setTitle("删除记录")
-                                            .setMsg("确认删除记录“" + reason + "”吗?\n该条记录所修改的分数将被撤销")
-                                            .setPositiveButton("删除", new OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    History h = histories.get(getPos(position));
-                                                    final int change = h.score;
-                                                    final String names = h.names;
-                                                    for (int i = 0; i != c.members.length; i++) {
-                                                        if (names.contains(c.members[i])) {
-                                                            c.scores[i] -= change;
-                                                        }
-                                                    }
-                                                    histories.remove(h);
-                                                    usHistories.add(new History(h.date));
-                                                    updateList();
-                                                }
-                                            })
-                                            .setNegativeButton("取消", null).show();
-                                }
+                                          History h = histories.get(getPos(position));
+                                          final String reason = (h.reason);
+                                          new ActionSheetDialog(MainActivity.this).builder()
+                                                  .setTitle(reason)
+                                                  .setCancelable(false)
+                                                  .setCanceledOnTouchOutside(true)
+                                                  .addSheetItem("删除", ActionSheetDialog.SheetItemColor.Red,
+                                                          new ActionSheetDialog.OnSheetItemClickListener() {
+                                                              @Override
+                                                              public void onClick(int which) {
+                                                                  if (isSync) {
+                                                                      new AlertDialogios(MainActivity.this).builder()
+                                                                              .setTitle("提示")
+                                                                              .setMsg("抱歉，数据同步中，删除记录暂不可用，请等待同步完成 :(")
+                                                                              .setNegativeButton("好的", null).show();
+                                                                      return;
+                                                                  }
+                                                                  new AlertDialogios(MainActivity.this).builder()
+                                                                          .setTitle("删除记录")
+                                                                          .setMsg("确认删除记录“" + reason + "”吗?\n该条记录所修改的分数将被撤销")
+                                                                          .setPositiveButton("删除", new OnClickListener() {
+                                                                              @Override
+                                                                              public void onClick(View v) {
+                                                                                  History h = histories.get(getPos(position));
+                                                                                  final int change = h.score;
+                                                                                  final String names = h.names;
+                                                                                  for (int i = 0; i != c.members.length; i++) {
+                                                                                      if (names.contains(c.members[i])) {
+                                                                                          c.scores[i] -= change;
+                                                                                      }
+                                                                                  }
+                                                                                  histories.remove(h);
+                                                                                  usHistories.add(new History(h.date));
+                                                                                  updateList();
+                                                                              }
+                                                                          })
+                                                                          .setNegativeButton("取消", null).show();
+                                                              }
 
-                            })
-                    .addSheetItem("查看详细", ActionSheetDialog.SheetItemColor.Blue,
-                            new ActionSheetDialog.OnSheetItemClickListener() {
-                                @Override
-                                public void onClick(int which) {
-                                    History h = histories.get(getPos(position));
-                                    String info_of_record = h.reason + "|" + c.name + "|" + h.names + "|" + h.getScore() + "|" + h.getDate(true) + "|" + h.oper;
-                                    Intent i = new Intent();
-                                    i.putExtra("record", info_of_record);
-                                    i.setClass(MainActivity.this, moreinfo.class);
-                                    startActivity(i);
-                                    overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
-                                }
-                            })
-                            //可添加多个SheetItem
-                    .show();
-                }
-            }
+                                                          })
+                                                  .addSheetItem("查看详细", ActionSheetDialog.SheetItemColor.Blue,
+                                                          new ActionSheetDialog.OnSheetItemClickListener() {
+                                                              @Override
+                                                              public void onClick(int which) {
+                                                                  History h = histories.get(getPos(position));
+                                                                  String info_of_record = h.reason + "|" + c.name + "|" + h.names + "|" + h.getScore() + "|" + h.getDate(true) + "|" + h.oper;
+                                                                  Intent i = new Intent();
+                                                                  i.putExtra("record", info_of_record);
+                                                                  i.setClass(MainActivity.this, moreinfo.class);
+                                                                  startActivity(i);
+                                                                  overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
+                                                              }
+                                                          })
+                                                          //可添加多个SheetItem
+                                                  .show();
+                                      }
+                                  }
         );
 
 
@@ -599,16 +618,16 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         });
 
         findViewById(R.id.pickpm).setOnTouchListener(new View.OnTouchListener() {
-           @Override
-           public boolean onTouch(View v, MotionEvent event) {
-               ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#7fffffff"));
-               ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.dropdown);
-               if (event.getAction() == MotionEvent.ACTION_UP) {
-                   ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#ffffff"));
-                   ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.drop);
-               }
-               return false;
-           }
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#7fffffff"));
+                ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.dropdown);
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    ((TextView) findViewById(R.id.pm)).setTextColor(Color.parseColor("#ffffff"));
+                    ((ImageView) findViewById(R.id.drop2)).setImageResource(R.drawable.drop);
+                }
+                return false;
+            }
         });
 
         //筛选加减分
@@ -675,15 +694,123 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
               }
         });
 
+        findViewById(R.id.perlayout).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                findViewById(R.id.add).startAnimation(add_rotate_in);
+
+                findViewById(R.id.hand_ic).startAnimation(inputbtn_in);
+                findViewById(R.id.hand_tex).startAnimation(inputtex_in);
+
+                findViewById(R.id.speak_ic).startAnimation(inputbtn_in);
+                findViewById(R.id.speak_tex).startAnimation(inputtex_in);
+
+                findViewById(R.id.speak_ic).startAnimation(inputbtn_in);
+                findViewById(R.id.speak_tex).startAnimation(inputtex_in);
+
+                findViewById(R.id.perlayout).startAnimation(prelayout_in);
+
+                findViewById(R.id.hand_ic).setVisibility(View.GONE);
+                findViewById(R.id.hand_tex).setVisibility(View.GONE);
+
+                findViewById(R.id.speak_ic).setVisibility(View.GONE);
+                findViewById(R.id.speak_tex).setVisibility(View.GONE);
+
+                findViewById(R.id.perlayout).setVisibility(View.GONE);
+                isOnAdd = false;
+
+            }
+        });
+
+        findViewById(R.id.hand_ic).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, add.class);
+                startActivityForResult(intent, 2);
+                overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
+
+            }
+        });
+
+        findViewById(R.id.speak_ic).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                showDevelopingListen();
+
+                /*
+                //打开语音识别
+                Intent intent = new Intent(MainActivity.this, Listener.class);
+                //打开新窗口。参数：主窗口，被调用窗口
+                Bundle bundle = new Bundle();//通过Bundle实现数据的传递:
+                String userwords = "{\"userword\":[{\"name\":\"学生\",\"words\":[";
+                for (final String i : classes.keySet()) {
+                    for (int j = 0; j < classes.get(i).members.length; j++) {
+                        final String name = classes.get(i).members[j];
+                        userwords += "\"" + name + "\",";
+                    }
+                }
+                userwords = userwords.substring(0,userwords.length()-1);
+                userwords += "]}]}";
+                bundle.putString("key",userwords);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 2);
+                overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
+                */
+
+            }
+        });
+
         add.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View v) {
-                 if(isSync){
-                     new AlertDialogios(MainActivity.this).builder()
-                             .setTitle("提示")
-                             .setMsg("抱歉，数据同步中，添加记录暂不可用，请等待同步完成 :(")
-                             .setNegativeButton("好的", null).show();
-                     return;
-                 }
+            public void onClick(View v) {
+                if (isSync) {
+                    new AlertDialogios(MainActivity.this).builder()
+                            .setTitle("提示")
+                            .setMsg("抱歉，数据同步中，添加记录暂不可用，请等待同步完成 :(")
+                            .setNegativeButton("好的", null).show();
+                    return;
+                }
+                if (isOnAdd) {
+                    findViewById(R.id.add).startAnimation(add_rotate_in);
+
+                    findViewById(R.id.hand_ic).startAnimation(inputbtn_in);
+                    findViewById(R.id.hand_tex).startAnimation(inputtex_in);
+
+                    findViewById(R.id.speak_ic).startAnimation(inputbtn_in);
+                    findViewById(R.id.speak_tex).startAnimation(inputtex_in);
+
+                    findViewById(R.id.speak_ic).startAnimation(inputbtn_in);
+                    findViewById(R.id.speak_tex).startAnimation(inputtex_in);
+
+                    findViewById(R.id.perlayout).startAnimation(prelayout_in);
+
+                    findViewById(R.id.hand_ic).setVisibility(View.GONE);
+                    findViewById(R.id.hand_tex).setVisibility(View.GONE);
+
+                    findViewById(R.id.speak_ic).setVisibility(View.GONE);
+                    findViewById(R.id.speak_tex).setVisibility(View.GONE);
+
+                    findViewById(R.id.perlayout).setVisibility(View.GONE);
+                    isOnAdd = false;
+                } else {
+                    findViewById(R.id.add).startAnimation(add_rotate_out);
+
+                    findViewById(R.id.perlayout).setVisibility(View.VISIBLE);
+
+                    findViewById(R.id.hand_ic).setVisibility(View.VISIBLE);
+                    findViewById(R.id.hand_tex).setVisibility(View.VISIBLE);
+
+                    findViewById(R.id.speak_ic).setVisibility(View.VISIBLE);
+                    findViewById(R.id.speak_tex).setVisibility(View.VISIBLE);
+
+                    findViewById(R.id.perlayout).startAnimation(prelayout_out);
+
+                    findViewById(R.id.hand_ic).startAnimation(inputbtn_out);
+                    findViewById(R.id.hand_tex).startAnimation(inputtex_out);
+
+                    findViewById(R.id.speak_ic).startAnimation(inputbtn_out);
+                    findViewById(R.id.speak_tex).startAnimation(inputtex_out);
+                    isOnAdd = true;
+                }
+
+                 /*
                  //打开语音识别
                  Intent intent = new Intent(MainActivity.this, Listener.class);
                  //打开新窗口。参数：主窗口，被调用窗口
@@ -700,8 +827,8 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                  bundle.putString("key",userwords);
                  intent.putExtras(bundle);
                  startActivityForResult(intent, 2);
-                 overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
-             }
+                 overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);*/
+            }
         });
 
         //筛选日期
@@ -798,6 +925,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             classNow = classes.firstKey();
             updateList();
         }
+
 
 
     }
@@ -927,6 +1055,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                     if(countNow==countMax) {
                                         isSync = false;
                                         sync.clearAnimation();
+                                        updateList();
                                     }
                                 }
                             }, 0)).start();
@@ -990,13 +1119,15 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0) {
             if(countLimit != classes.get(classNow).histories.size()) {
                 if (!pdLoading) {
+                    /*
                     showCustomProgrssDialog("加载中...");
                     pdLoading = true;
+
                     new Thread(){
                         @Override
                         public void run() {
                             try {
-                                Thread.sleep(800);
+                                Thread.sleep(200);
                                 if(pdLoading) {
                                     hideCustomProgressDialog();
                                     pdLoading = false;
@@ -1007,7 +1138,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
                         }
 
-                    }.start();
+                    }.start();*/
                 }
                 needLoadMore = true;
             }else{
@@ -1435,6 +1566,15 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             m_customProgrssDialog.dismiss();
             m_customProgrssDialog = null;
         }
+    }
+
+    private void showDevelopingListen()
+    {
+        new AlertDialogios(MainActivity.this).builder()
+                .setTitle("提示")
+                .setMsg("语音记录功能尚在开发中，敬请期待:)")
+                .setNegativeButton("好的", null)
+                .show();
     }
 
 }

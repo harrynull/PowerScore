@@ -55,6 +55,17 @@
                     android:layout_alignParentTop="true"
                     android:gravity="center_vertical" />
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="手动记录"
+                android:id="@+id/textView14"
+                android:textColor="#ffffff"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <LinearLayout

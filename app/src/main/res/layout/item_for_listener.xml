@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/listview_item"
+            android:paddingRight="0dp"
+            android:id="@+id/relativeLayout14">
+
+            <ImageView
+                android:layout_width="68dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView36"
+                android:background="@drawable/layout_press"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView5"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/into" />
+
+            <TextView
+                android:text="帮助打扫帮助打扫帮助打..."
+                android:layout_height="match_parent"
+                android:layout_width="118dp"
+                android:id="@+id/reason"
+                android:paddingLeft="10dp"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                android:lines="2"
+                android:background="@drawable/layout_press"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:text="你好,你好,你好你,你好你,你好你,你好你好,你好,你好你,你好你,你好你,你好你好,你好,你好你,你好你,你好你,你好…"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/names"
+                android:paddingLeft="7dp"
+                android:lines="3"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/imageView17"
+                android:layout_toStartOf="@+id/imageView36"
+                android:visibility="visible"
+                android:layout_toLeftOf="@+id/imageView36" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="+10"
+                android:id="@+id/mark"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/imageView5"
+                android:layout_toStartOf="@+id/imageView5"
+                android:layout_marginRight="0dp" />
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView17"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/reason"
+                android:layout_toEndOf="@+id/reason"
+                android:background="@color/list_backgroud_color" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

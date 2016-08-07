@@ -33,7 +33,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:text="你好,你好,你好你,你好你,你好你,你好…"
+                android:text="你好,你好,你好你,你好你,你好你,你好你好,你好,你好你,你…"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/ItemText"
