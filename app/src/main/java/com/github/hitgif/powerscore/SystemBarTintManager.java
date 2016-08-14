@@ -1,3 +1,4 @@
+
 package com.github.hitgif.powerscore;
 
 /**
@@ -66,6 +67,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param activity The host activity.
      */
+    @SuppressWarnings("ResourceType")
     @TargetApi(19)
     public SystemBarTintManager(Activity activity) {
 
@@ -120,6 +122,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param enabled True to enable tinting, false to disable it (default).
      */
+    @SuppressWarnings("ResourceType")
     public void setStatusBarTintEnabled(boolean enabled) {
         mStatusBarTintEnabled = enabled;
         if (mStatusBarAvailable) {
@@ -136,6 +139,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param enabled True to enable tinting, false to disable it (default).
      */
+    @SuppressWarnings("ResourceType")
     public void setNavigationBarTintEnabled(boolean enabled) {
         mNavBarTintEnabled = enabled;
         if (mNavBarAvailable) {
@@ -148,6 +152,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param color The color of the background tint.
      */
+    @SuppressWarnings("ResourceType")
     public void setTintColor(int color) {
         setStatusBarTintColor(color);
         setNavigationBarTintColor(color);
@@ -158,6 +163,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param res The identifier of the resource.
      */
+    @SuppressWarnings("ResourceType")
     public void setTintResource(int res) {
         setStatusBarTintResource(res);
         setNavigationBarTintResource(res);
@@ -168,6 +174,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param drawable The drawable to use as the background, or null to remove it.
      */
+    @SuppressWarnings("ResourceType")
     public void setTintDrawable(Drawable drawable) {
         setStatusBarTintDrawable(drawable);
         setNavigationBarTintDrawable(drawable);
@@ -178,6 +185,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param alpha The alpha to use
      */
+    @SuppressWarnings("ResourceType")
     public void setTintAlpha(float alpha) {
         setStatusBarAlpha(alpha);
         setNavigationBarAlpha(alpha);
@@ -188,6 +196,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param color The color of the background tint.
      */
+    @SuppressWarnings("ResourceType")
     public void setStatusBarTintColor(int color) {
         if (mStatusBarAvailable) {
             mStatusBarTintView.setBackgroundColor(color);
@@ -199,6 +208,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param res The identifier of the resource.
      */
+    @SuppressWarnings("ResourceType")
     public void setStatusBarTintResource(int res) {
         if (mStatusBarAvailable) {
             mStatusBarTintView.setBackgroundResource(res);
@@ -210,6 +220,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param drawable The drawable to use as the background, or null to remove it.
      */
+
     @SuppressWarnings("deprecation")
     public void setStatusBarTintDrawable(Drawable drawable) {
         if (mStatusBarAvailable) {
@@ -222,6 +233,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param alpha The alpha to use
      */
+    @SuppressWarnings("ResourceType")
     @TargetApi(11)
     public void setStatusBarAlpha(float alpha) {
         if (mStatusBarAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -234,6 +246,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param color The color of the background tint.
      */
+    @SuppressWarnings("ResourceType")
     public void setNavigationBarTintColor(int color) {
         if (mNavBarAvailable) {
             mNavBarTintView.setBackgroundColor(color);
@@ -245,6 +258,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param res The identifier of the resource.
      */
+    @SuppressWarnings("ResourceType")
     public void setNavigationBarTintResource(int res) {
         if (mNavBarAvailable) {
             mNavBarTintView.setBackgroundResource(res);
@@ -268,6 +282,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @param alpha The alpha to use
      */
+    @SuppressWarnings("ResourceType")
     @TargetApi(11)
     public void setNavigationBarAlpha(float alpha) {
         if (mNavBarAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -280,6 +295,7 @@ public class SystemBarTintManager extends Activity{
      *
      * @return The system bar configuration for the current device configuration.
      */
+    @SuppressWarnings("ResourceType")
     public SystemBarConfig getConfig() {
         return mConfig;
     }
@@ -288,7 +304,7 @@ public class SystemBarTintManager extends Activity{
      * Is tinting enabled for the system status bar?
      *
      * @return True if enabled, False otherwise.
-     */
+     */@SuppressWarnings("ResourceType")
     public boolean isStatusBarTintEnabled() {
         return mStatusBarTintEnabled;
     }
@@ -297,11 +313,11 @@ public class SystemBarTintManager extends Activity{
      * Is tinting enabled for the system navigation bar?
      *
      * @return True if enabled, False otherwise.
-     */
+     */@SuppressWarnings("ResourceType")
     public boolean isNavBarTintEnabled() {
         return mNavBarTintEnabled;
     }
-
+    @SuppressWarnings("ResourceType")
     private void setupStatusBarView(Context context, ViewGroup decorViewGroup) {
         mStatusBarTintView = new View(context);
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, mConfig.getStatusBarHeight());
@@ -314,7 +330,7 @@ public class SystemBarTintManager extends Activity{
         mStatusBarTintView.setVisibility(View.GONE);
         decorViewGroup.addView(mStatusBarTintView);
     }
-
+    @SuppressWarnings("ResourceType")
     private void setupNavBarView(Context context, ViewGroup decorViewGroup) {
         mNavBarTintView = new View(context);
         LayoutParams params;
@@ -331,7 +347,7 @@ public class SystemBarTintManager extends Activity{
         decorViewGroup.addView(mNavBarTintView);
     }
 
-
+    @SuppressWarnings("ResourceType")
     public static class SystemBarConfig {
 
         private static final String STATUS_BAR_HEIGHT_RES_NAME = "status_bar_height";

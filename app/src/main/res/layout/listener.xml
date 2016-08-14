@@ -12,9 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/main"
         android:id="@+id/relativeLayout6"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/iat_text"
-        android:layout_alignStart="@+id/iat_text">
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -72,8 +70,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignLeft="@+id/iat_text"
-        android:layout_alignStart="@+id/iat_text"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

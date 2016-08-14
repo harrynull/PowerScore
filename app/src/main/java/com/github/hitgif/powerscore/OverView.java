@@ -41,6 +41,7 @@ public class OverView extends Activity {
     private  List<List<String>> childArray;
     private String filter="";
     private int hahaha = 0;
+    private ToastCommom toastCommom;
     ExpandableListView lv;
     public void doSearch(){
         filter = ((EditText) (findViewById(R.id.editText))).getText().toString();
@@ -70,6 +71,31 @@ public class OverView extends Activity {
             lv.expandGroup(id);
         }
 
+    }
+
+    protected void Refresh()
+    {
+        filter = "";
+        groupArray = new ArrayList<String>();
+        childArray = new ArrayList<List<String>>();
+
+        ArrayList<Integer> needExpand = new ArrayList<Integer>();
+
+        for (final String key : MainActivity.classes.keySet()) {
+            Classes c = MainActivity.classes.get(key);
+            List<String> tempArray = new ArrayList<String>();
+            for (int j = 0; j < c.members.length; j++) {
+                if (!filter.isEmpty() && !c.members[j].contains(filter)) continue;
+                tempArray.add(c.members[j] + "|" + (c.scores[j]/10.0));
+            }
+            if (!tempArray.isEmpty()) {
+                groupArray.add(c.name);
+                childArray.add(tempArray);
+                needExpand.add(groupArray.size() - 1);
+            }
+        }
+
+        lv.setAdapter(new ExpandableAdapter(OverView.this));
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +139,7 @@ public class OverView extends Activity {
                 return false;
             }
         });
-
+        toastCommom = ToastCommom.createToastConfig();
         findViewById(R.id.backc).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 OverView.this.finish();
@@ -172,7 +198,8 @@ public class OverView extends Activity {
                                             return;
                                         }
                                         final EditText text = new EditText(OverView.this);
-                                        text.setText(String.valueOf(MainActivity.classes.get(fKey).scores[fSid] / 10.0));
+                                        final double scorenow = MainActivity.classes.get(fKey).scores[fSid];
+                                        text.setText(String.valueOf(scorenow / 10.0));
                                         new AlertDialog.Builder(OverView.this)
                                                 .setTitle("请设置分数")
                                                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -180,31 +207,38 @@ public class OverView extends Activity {
                                                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
-                                                        Classes c = MainActivity.classes.get(fKey);
-                                                        try {
-                                                            int change = (int) (Double.parseDouble(text.getText().toString()) * 10) - c.scores[fSid];
-                                                            Date d = new Date();
-                                                            c.histories.add(new History(change, c.members[fSid],
-                                                                    "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("Username", "未登录用户")));
-                                                            c.unsyncHistories.add(new History(change, c.members[fSid],
-                                                                    "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username", "未登录用户")));
-                                                            c.scores[fSid] += change;
-                                                            showToast("设置分数成功");
-                                                        } catch (Exception e) {
-                                                            showToast("设置分数失败:必须输入数字");
-                                                            e.printStackTrace();
-                                                        }
-                                                        for (final String key : MainActivity.classes.keySet()) {
-                                                            Classes c2 = MainActivity.classes.get(key);
-                                                            groupArray.add(c2.name);
-                                                            List<String> tempArray = new ArrayList<String>();
-                                                            for (int j = 0; j < c2.members.length; j++) {
-                                                                tempArray.add(c2.members[j] + "|" + (c2.scores[j] / 10.0));
-                                                            }
-                                                            childArray.add(tempArray);
-                                                        }
+                                                        if ((int) (Double.parseDouble(text.getText().toString()) * 10) != scorenow) {
+                                                            Classes c = MainActivity.classes.get(fKey);
 
-                                                        lv.setAdapter(new ExpandableAdapter(OverView.this));
+                                                            try {
+                                                                int change = (int) (Double.parseDouble(text.getText().toString()) * 10) - c.scores[fSid];
+                                                                Date d = new Date();
+                                                                c.histories.add(new History(change, c.members[fSid],
+                                                                        "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("Username", "未登录用户")));
+                                                                c.unsyncHistories.add(new History(change, c.members[fSid],
+                                                                        "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username", "未登录用户")));
+                                                                c.scores[fSid] += change;
+                                                                showToast("设置分数成功");
+                                                            } catch (Exception e) {
+                                                                showToast("设置分数失败:必须输入数字");
+                                                                e.printStackTrace();
+                                                            }
+                                                            for (final String key : MainActivity.classes.keySet()) {
+                                                                Classes c2 = MainActivity.classes.get(key);
+                                                                groupArray.add(c2.name);
+                                                                List<String> tempArray = new ArrayList<String>();
+                                                                for (int j = 0; j < c2.members.length; j++) {
+                                                                    tempArray.add(c2.members[j] + "|" + (c2.scores[j] / 10.0));
+                                                                }
+                                                                childArray.add(tempArray);
+                                                            }
+
+                                                            ((BaseAdapter) lv.getAdapter()).notifyDataSetChanged();
+                                                            Refresh();
+
+                                                        } else {
+                                                            showToast("分数未被修改");
+                                                        }
                                                     }
                                                 })
                                                 .setNegativeButton("取消", null)
@@ -321,7 +355,7 @@ public class OverView extends Activity {
         }
     }
 
-    private void showToast(String msg){
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    private void showToast(String msg) {
+        toastCommom.ToastShow(OverView.this, (ViewGroup) findViewById(R.id.toast_layout_root), msg);
     }
 }
