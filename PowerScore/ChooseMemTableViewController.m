@@ -15,6 +15,7 @@
 static NSString * const ReuseIdentifierHeader = @"header";
 static NSString * const ReuseIdentifierCell = @"dcell";
 
+
 @interface ChooseMemTableViewController ()
 
 @property (nonatomic, strong) NSDictionary<NSString *, NSArray<NSString *> *> *dataDic;
@@ -24,6 +25,8 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 @property (nonatomic, strong) NSMutableArray      *selectArray;//记录选择的所有选项
 
 @end
+
+NSString *oldname;
 
 @implementation ChooseMemTableViewController
 
@@ -87,8 +90,8 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     NSArray *array = self.dataDic[key];
     HeaderView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:ReuseIdentifierHeader];
     view.nameLabel.text = key;
-    view.selectButton.tag = section;
-    
+   // view.selectButton.tag = section;
+    view.selectButton.hidden = YES;
     
     UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, -2, self.view.bounds.size.width, 0.3)];
     lab.backgroundColor = [UIColor blackColor];
@@ -101,8 +104,8 @@ static NSString * const ReuseIdentifierCell = @"dcell";
             selectAll = NO;
         }
     }
-    view.selectButton.selected = selectAll;
-    [view.selectButton addTarget:self action:@selector(headerButtonOnClick:) forControlEvents:UIControlEventTouchUpInside];
+   // view.selectButton.selected = selectAll;
+   // [view.selectButton addTarget:self action:@selector(headerButtonOnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [view.tap addTarget:self action:@selector(headerTap:)];
     
@@ -120,7 +123,6 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     NSString *name = array[indexPath.row];
     
     ChooseRoleCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifierCell forIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;    // regular chevron. doesn't track
     //    UITableViewCellAccessoryDetailDisclosureButton, // blue button w/ chevron. tracks
     //    UITableViewCellAccessoryCheckmark
     if ([self.selectArray containsObject:name]) {
@@ -135,15 +137,23 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+   // [self.tableView ]
+    
     NSString *key = self.dataArray[indexPath.section];
     NSArray *array = self.dataDic[key];
     NSString *name = array[indexPath.row];
     
+    
     if ([self.selectArray containsObject:name]) {
         [self.selectArray removeObject:name];
     }else {
+        if(oldname != NULL)
+        {
+            [self.selectArray removeObject:oldname];
+        }
         [self.selectArray addObject:name];
     }
+    oldname = name;
     
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

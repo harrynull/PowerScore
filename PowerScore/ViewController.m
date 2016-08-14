@@ -114,7 +114,9 @@ bool ON_CLASS = YES;
     
     if(history.score<0)
     {
-        [positive setBackgroundColor:[UIColor redColor]];
+        [positive setImage:[UIImage imageNamed:@"red"]];
+    } else {
+        [positive setImage:[UIImage imageNamed:@"green"]];
     }
     
     return cell;

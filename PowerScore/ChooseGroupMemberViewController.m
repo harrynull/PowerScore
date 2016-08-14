@@ -61,6 +61,8 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     
+    
+    
 }
 
 
@@ -139,7 +141,6 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     NSString *name = array[indexPath.row];
     
     ChooseRoleCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifierCell forIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     if ([self.selectArray containsObject:name]) {
         cell.selectImageVIew.selected = YES;
     }else {

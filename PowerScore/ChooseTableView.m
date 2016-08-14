@@ -17,6 +17,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 @interface ChooseTableView ()
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
+@property (nonatomic, strong) NSMutableDictionary *marksDic;
 @property (nonatomic, strong) NSArray             *dataArray;
 
 @property (nonatomic, strong) NSMutableArray      *expendArray;//记录打开的分组
@@ -47,6 +48,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
             
         }
         [self.dataDic setObject:array forKey:[wai[i] objectForKey:@"name"]];
+
     }
     self.dataArray = [self.dataDic allKeys];
     
@@ -124,7 +126,10 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *key = self.dataArray[indexPath.section];
     NSArray *array = self.dataDic[key];
+    NSArray *array1 = self.marksDic[key];
+
     NSString *name = array[indexPath.row];
+    NSString *mark = array1[indexPath.row];
     
     ChooseRoleCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifierCell forIndexPath:indexPath];
     
@@ -135,6 +140,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     }
     //cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
     cell.nameLabel.text = name;
+    cell.markLable.text = mark;
     return cell;
 }
 
