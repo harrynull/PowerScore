@@ -41,7 +41,7 @@
     [self.checking_sign startAnimating];
     NSString *version_back;
     
-    //检查新版本
+    //$检查新版本
 
     [self.checking_sign stopAnimating];
     return version_back;

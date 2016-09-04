@@ -57,6 +57,8 @@
 		8454022E1D49E8CC00881B4E /* HZQDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8454022A1D49E8CC00881B4E /* HZQDatePickerView.xib */; };
 		8454022F1D49E8CC00881B4E /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 8454022C1D49E8CC00881B4E /* UIColor+HexString.m */; };
 		845402321D4A044B00881B4E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845402311D4A044B00881B4E /* LoginViewController.m */; };
+		846042781D7AFCF700111B3A /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846042771D7AFCF700111B3A /* DetailViewController.m */; };
+		846042851D7B049F00111B3A /* DetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846042831D7B049F00111B3A /* DetailTableViewCell.xib */; };
 		848204E91D604BCB00E279A0 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 848204E81D604BCB00E279A0 /* red.png */; };
 		848204EB1D604C4800E279A0 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 848204EA1D604C4800E279A0 /* green.png */; };
 		848D93821D27717E00E4514D /* ChooseGroupMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848D93811D27717E00E4514D /* ChooseGroupMemberViewController.m */; };
@@ -162,6 +164,9 @@
 		8454022C1D49E8CC00881B4E /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
 		845402301D4A044B00881B4E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		845402311D4A044B00881B4E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		846042761D7AFCF700111B3A /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		846042771D7AFCF700111B3A /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		846042831D7B049F00111B3A /* DetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailTableViewCell.xib; sourceTree = "<group>"; };
 		848204E81D604BCB00E279A0 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		848204EA1D604C4800E279A0 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
 		848D93801D27717E00E4514D /* ChooseGroupMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseGroupMemberViewController.h; sourceTree = "<group>"; };
@@ -300,6 +305,8 @@
 				6F4636EB1D0BF3E500FDB338 /* ChooseMemTableViewController.m */,
 				845402301D4A044B00881B4E /* LoginViewController.h */,
 				845402311D4A044B00881B4E /* LoginViewController.m */,
+				846042761D7AFCF700111B3A /* DetailViewController.h */,
+				846042771D7AFCF700111B3A /* DetailViewController.m */,
 				6FA295981CD4505C005B0574 /* NavController.h */,
 				6FA295991CD4505C005B0574 /* NavController.m */,
 				845402271D49E8CC00881B4E /* HZQDatePickerView */,
@@ -367,6 +374,7 @@
 				6F9B2E151D09747100A5746A /* HeaderView.xib */,
 				84EF21101D5FB3AB00D56DD2 /* OverviewTableViewCell.xib */,
 				6F6F62041CD618E000BEC283 /* HistoryTableViewCell.xib */,
+				846042831D7B049F00111B3A /* DetailTableViewCell.xib */,
 				6F6D7CF21C9EA9F70089521E /* Main.storyboard */,
 				6F6D7CF71C9EA9F70089521E /* LaunchScreen.storyboard */,
 			);
@@ -495,6 +503,7 @@
 				6F7E342E1CD5A198006CA8AE /* right_divide.png in Resources */,
 				84EF21121D5FB3AB00D56DD2 /* OverviewTableViewCell.xib in Resources */,
 				841B97C61D4B500500429CAE /* user_blue.png in Resources */,
+				846042851D7B049F00111B3A /* DetailTableViewCell.xib in Resources */,
 				6F93ABE01CD4BDEA009504E4 /* account.plist in Resources */,
 				27930F421D1B7B8F004901B7 /* Launch_or_not.plist in Resources */,
 				6F9B2E1B1D09747100A5746A /* HeaderView.xib in Resources */,
@@ -563,6 +572,7 @@
 				6F7E34271CD57B02006CA8AE /* RightView.m in Sources */,
 				6F860CD31CDEE5B0001C3D24 /* ChooseReasonViewController.m in Sources */,
 				6F6D7CEE1C9EA9F70089521E /* AppDelegate.m in Sources */,
+				846042781D7AFCF700111B3A /* DetailViewController.m in Sources */,
 				6F6D7CEB1C9EA9F70089521E /* main.m in Sources */,
 				271B254C1D1B68E2007094DA /* LaunchViewController.m in Sources */,
 				845402321D4A044B00881B4E /* LoginViewController.m in Sources */,

@@ -29,14 +29,10 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 
 @implementation OverViewViewController
 
+NSString *score_str;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    UIBarButtonItem *item0 = [[UIBarButtonItem alloc]initWithTitle:@"  组" style:UIBarButtonItemStylePlain target:self action:@selector(groupAction)];
-    
-    self.navigationController.toolbarHidden = NO;
-    self.toolbarItems = @[item0];
-    [self.navigationController.toolbar setBarTintColor:[UIColor colorWithRed:0.0 green:114.0/255.0 blue:198.0/255.0 alpha:1.0]];
     
     self.dataDic=[MemberChooseHelper getData:[GlobalData classes]];
     self.dataArray = [self.dataDic allKeys];
@@ -46,20 +42,6 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     
-}
-
-- (void)groupAction
-{
-    
-}
-- (IBAction)okAction:(id)sender {
-    AddViewController *receive = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-    receive.membersreceive = @"";
-    for (NSString* object in _selectArray) {
-        receive.membersreceive = [[receive.membersreceive stringByAppendingString:object]stringByAppendingString:@";" ];
-    }
-    //使用popToViewController返回并传值到上一页面
-    [self.navigationController popToViewController:receive animated:true];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -150,7 +132,7 @@ static NSString * const ReuseIdentifierCell = @"dcell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    /*
     NSString *key = self.dataArray[indexPath.section];
     NSArray *array = self.dataDic[key];
     NSString *name = array[indexPath.row];
@@ -160,11 +142,71 @@ static NSString * const ReuseIdentifierCell = @"dcell";
     }else {
         [self.selectArray addObject:keyname];
     }
-    
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationNone];
+     */
+    NSString *key = self.dataArray[indexPath.section];
+    NSArray *array = self.dataDic[key];
+    NSString *name = array[indexPath.row];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:name message:@"" preferredStyle: UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"修改分数" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        for(NSString* cid in GlobalData.classes)
+        {
+            ClassData *c = GlobalData.classes[cid];
+            NSNumber *score = [c.scores objectAtIndex:[c.members indexOfObject:array[indexPath.row]]];
+            score_str = [NSString stringWithFormat:@"%@",score];
+        }
+
+        UIAlertController *alertcontroller = [UIAlertController alertControllerWithTitle:@"请设置分数" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [alertcontroller addTextFieldWithConfigurationHandler:^(UITextField *inputreason){
+            inputreason.text = score_str;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:inputreason];
+        }];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            UITextField *input = alertcontroller.textFields.firstObject;
+            double newScore = [input.text doubleValue];
+            
+            //$直接修改分数,变量newScore为新输入的分数
+            
+            //[self.tableview reloadData];
+            
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+        }];
+        
+        okAction.enabled = NO;
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertcontroller addAction:cancelAction];
+        [alertcontroller addAction:okAction];
+        [self presentViewController:alertcontroller animated:YES completion:nil];
+        
+    }];
+    
+    UIAlertAction *moreinfoAction = [UIAlertAction actionWithTitle:@"查看记录" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+        //$查看选中学生的记录
+        
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:deleteAction];
+    [alertController addAction:moreinfoAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
 }
 
-
+-(void)alertTextFieldDidChange:(NSNotification *)notificton{
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if(alertController){
+        UITextField *reason = alertController.textFields.firstObject;
+        UIAlertAction *okAction = alertController.actions.lastObject;
+        okAction.enabled = reason.text.length > 0 && reason.text != score_str;
+    }
+}
 
 #pragma mark - private methods
 

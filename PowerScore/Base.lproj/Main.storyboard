@@ -165,11 +165,41 @@
                         <segue destination="33t-b6-kU3" kind="push" identifier="gotosetreason" id="kw8-hI-Ejl"/>
                         <segue destination="1KT-V8-3ye" kind="push" identifier="gotosetgroup" id="Lez-TC-KWO"/>
                         <segue destination="7Yn-Eh-pKc" kind="push" identifier="gotochoosemem" id="Fee-SE-NOh"/>
+                        <segue destination="Pg0-h1-yOI" kind="push" identifier="gotoDetail" id="Pt4-dD-dRD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAz-nr-U3q" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="717" y="1089"/>
+        </scene>
+        <!--详细记录-->
+        <scene sceneID="xl4-mI-set">
+            <objects>
+                <tableViewController id="Pg0-h1-yOI" customClass="DetailViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="DAJ-ah-d8U">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6d4-rl-tb7">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6d4-rl-tb7" id="Wux-2s-Ys1">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Pg0-h1-yOI" id="vlW-QX-nTE"/>
+                            <outlet property="delegate" destination="Pg0-h1-yOI" id="nND-Tg-gPu"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="详细记录" id="3iF-BH-z16"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rrk-Y3-1SO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1256" y="1089"/>
         </scene>
         <!--关于软件-->
         <scene sceneID="0gB-vi-5NB">

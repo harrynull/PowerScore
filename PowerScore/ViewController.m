@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "RightView.h"
 #import "HZQDatePickerView.h"
+#import "DetailViewController.h"
 
 // 屏幕尺寸 ScreenRect
 #define ScreenRect [UIScreen mainScreen].applicationFrame
@@ -49,6 +50,7 @@
     
     NSArray<History*>* cachedHistories;
     bool cacheVaild;
+    NSString *sendDetail;
 }
 @property(nonatomic,strong)AndyScrollView *scroll;
 @property(nonatomic,strong)RightScrollView *rscroll;
@@ -149,8 +151,9 @@ bool ON_CLASS = YES;
     }];
     
     UIAlertAction *moreinfoAction = [UIAlertAction actionWithTitle:@"查看详细" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        
-        //$详细记录
+        DetailViewController *detailpage = [[DetailViewController alloc]init];
+        detailpage.detailsReceived = [NSString stringWithFormat:@"%@|&*&|%@|&*&|%@|&*&|%@|&*&|%@|&*&|%@",history.reason,[GlobalData getClassNow].name,history.names,history.scoreWithSign,history.dateStr,history.oper];
+        [self.navigationController pushViewController:detailpage animated:YES];
       
     }];
     
@@ -160,6 +163,7 @@ bool ON_CLASS = YES;
     [self presentViewController:alertController animated:YES completion:nil];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.toolbarHidden = YES;

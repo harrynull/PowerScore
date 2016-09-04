@@ -65,6 +65,7 @@
                     <constraint firstItem="VxC-wH-TJS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rOf-rY-Csy"/>
                 </constraints>
             </tableViewCellContentView>
+            <point key="canvasLocation" x="228" y="427"/>
         </tableViewCell>
     </objects>
 </document>
