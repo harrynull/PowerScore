@@ -99,14 +99,14 @@ public class SwitchButton extends CompoundButton {
         mTextPaint.density = res.getDisplayMetrics().density;
         TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.SwitchButton, defStyle, 0);//�������ļ��л�ȡ�������
         mThumbDrawable = a.getDrawable(R.styleable.SwitchButton_thumb);//��ȡ���õĹ켣��Դ
-        mTrackDrawable = a.getDrawable(R.styleable.SwitchButton_track);//��ȡ���õĿ�����Դ
+        mTrackDrawable = a.getDrawable(R.styleable.SwitchButton_track2);//��ȡ���õĿ�����Դ
         mTextOn = a.getText(R.styleable.SwitchButton_textOn);//��ȡ������ ѡ������µ���ʾ����  on
         mTextOff = a.getText(R.styleable.SwitchButton_textOff);//��ȡ���õ� Ϊѡ������µ���ʾ���� off
-        mThumbTextPadding = a.getDimensionPixelSize( R.styleable.SwitchButton_thumbTextPadding, 0);//��ȡ���õİ�ť�����С
-        mSwitchMinWidth = a.getDimensionPixelSize(R.styleable.SwitchButton_switchMinWidth, 0);//��ȡ���õ���С���
-        mSwitchPadding = a.getDimensionPixelSize(R.styleable.SwitchButton_switchPadding, 0);//��ȡ���õ�padding����
+        mThumbTextPadding = a.getDimensionPixelSize( R.styleable.SwitchButton_thumbTextPadding2, 0);//��ȡ���õİ�ť�����С
+        mSwitchMinWidth = a.getDimensionPixelSize(R.styleable.SwitchButton_switchMinWidth2, 0);//��ȡ���õ���С���
+        mSwitchPadding = a.getDimensionPixelSize(R.styleable.SwitchButton_switchPadding2, 0);//��ȡ���õ�padding����
 
-        int appearance = a.getResourceId(R.styleable.SwitchButton_switchTextAppearance, 0);//��ȡ�����ļ��л�ȡ��ʾ�����ʽ
+        int appearance = a.getResourceId(R.styleable.SwitchButton_switchTextAppearance2, 0);//��ȡ�����ļ��л�ȡ��ʾ�����ʽ
         //�ж��趨��ʽ�Ƿ���ڣ����ڵĻ��͸�ֵ
         if (appearance != 0) {
             setSwitchTextAppearance(context, appearance);
