@@ -3,14 +3,11 @@ package com.github.hitgif.powerscore;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,14 +18,10 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +45,7 @@ public class OverView extends Activity {
         ArrayList<Integer> needExpand = new ArrayList<Integer>();
 
         for (final String key : MainActivity.classes.keySet()) {
-            Classes c = MainActivity.classes.get(key);
+            ClassData c = MainActivity.classes.get(key);
             List<String> tempArray = new ArrayList<String>();
             for (int j = 0; j < c.members.length; j++) {
                 if (!filter.isEmpty() && !c.members[j].contains(filter)) continue;
@@ -82,7 +75,7 @@ public class OverView extends Activity {
         ArrayList<Integer> needExpand = new ArrayList<Integer>();
 
         for (final String key : MainActivity.classes.keySet()) {
-            Classes c = MainActivity.classes.get(key);
+            ClassData c = MainActivity.classes.get(key);
             List<String> tempArray = new ArrayList<String>();
             for (int j = 0; j < c.members.length; j++) {
                 if (!filter.isEmpty() && !c.members[j].contains(filter)) continue;
@@ -147,7 +140,7 @@ public class OverView extends Activity {
             }
         });
         for (final String key : MainActivity.classes.keySet()) {
-            Classes c = MainActivity.classes.get(key);
+            ClassData c = MainActivity.classes.get(key);
             groupArray.add(c.name);
             List<String> tempArray = new ArrayList<String>();
             for (int j = 0; j < c.members.length; j++) {
@@ -162,7 +155,7 @@ public class OverView extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
                                         final int childPosition, long id) {
-                Classes c = null;
+                ClassData c = null;
                 String Key="";
                 int cid = 0;
                 for (final String key : MainActivity.classes.keySet()) { //查找每个班
@@ -190,7 +183,7 @@ public class OverView extends Activity {
                                 new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
-                                        if(MainActivity.MainActivityPointer.isSync){
+                                        if (MainActivity.MainActivityPointer.isSync) {
                                             new AlertDialogios(OverView.this).builder()
                                                     .setTitle("提示")
                                                     .setMsg("抱歉，数据同步中，修改分数暂不可用，请等待同步完成 :(")
@@ -207,57 +200,51 @@ public class OverView extends Activity {
                                                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
-                                                        if ((int) (Double.parseDouble(text.getText().toString()) * 10) != scorenow) {
-                                                            Classes c = MainActivity.classes.get(fKey);
-
-                                                            try {
-                                                                int change = (int) (Double.parseDouble(text.getText().toString()) * 10) - c.scores[fSid];
-                                                                Date d = new Date();
-                                                                c.histories.add(new History(change, c.members[fSid],
-                                                                        "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("Username", "未登录用户")));
-                                                                c.unsyncHistories.add(new History(change, c.members[fSid],
-                                                                        "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username", "未登录用户")));
-                                                                c.scores[fSid] += change;
-                                                                showToast("设置分数成功");
-                                                            } catch (Exception e) {
-                                                                showToast("设置分数失败:必须输入数字");
-                                                                e.printStackTrace();
-                                                            }
-                                                            for (final String key : MainActivity.classes.keySet()) {
-                                                                Classes c2 = MainActivity.classes.get(key);
-                                                                groupArray.add(c2.name);
-                                                                List<String> tempArray = new ArrayList<String>();
-                                                                for (int j = 0; j < c2.members.length; j++) {
-                                                                    tempArray.add(c2.members[j] + "|" + (c2.scores[j] / 10.0));
-                                                                }
-                                                                childArray.add(tempArray);
-                                                            }
-
-                                                            ((BaseAdapter) lv.getAdapter()).notifyDataSetChanged();
-                                                            Refresh();
-
-                                                        } else {
-                                                            showToast("分数未被修改");
+                                                        ClassData c = MainActivity.classes.get(fKey);
+                                                        try {
+                                                            int change = (int) (Double.parseDouble(text.getText().toString()) * 10) - c.scores[fSid];
+                                                            Date d = new Date();
+                                                            c.histories.add(new History(change, c.members[fSid],
+                                                                    "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("Username", "未登录用户")));
+                                                            c.unsyncedHistories.add(new History(change, c.members[fSid],
+                                                                    "修改分数", d, getSharedPreferences("data", Activity.MODE_PRIVATE).getString("username", "未登录用户")));
+                                                            c.scores[fSid] += change;
+                                                            showToast("设置分数成功");
+                                                        } catch (Exception e) {
+                                                            showToast("设置分数失败:必须输入数字");
+                                                            e.printStackTrace();
                                                         }
-                                                    }
-                                                })
-                                                .setNegativeButton("取消", null)
-                                                .show();
+                                                        for (final String key : MainActivity.classes.keySet()) {
+                                                            ClassData c2 = MainActivity.classes.get(key);
+                                                            groupArray.add(c2.name);
+                                                            List<String> tempArray = new ArrayList<String>();
+                                                            for (int j = 0; j < c2.members.length; j++) {
+                                                                tempArray.add(c2.members[j] + "|" + (c2.scores[j] / 10.0));
+                                                            }
+                                                        }
+                                                    }})
+
+                                                    .setNegativeButton("取消", null)
+                                                    .show();
+                                                }
                                     }
-                                })
-                        .addSheetItem("查看记录", ActionSheetDialog.SheetItemColor.Blue,
-                                new ActionSheetDialog.OnSheetItemClickListener() {
+
+                                    )
+                        .addSheetItem("查看记录", ActionSheetDialog.SheetItemColor.Blue, new ActionSheetDialog.OnSheetItemClickListener() {
                                     @Override
                                     public void onClick(int which) {
                                         finish();
                                         overridePendingTransition(R.anim.slide_in_froml, R.anim.slide_out_fromr);
                                         MainActivity.MainActivityPointer.jumpToStudent(fKey, MainActivity.classes.get(fKey).members[fSid]);
                                     }
-                                })
+                                }
+
+                        )
                         .show();
-                return true;
-            }
-        });
+
+                                    return true;
+                                }
+            });
 
         ((EditText) (findViewById(R.id.editText))).setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

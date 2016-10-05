@@ -15,42 +15,27 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class SlideSwitchView extends View{
-	/** Switch�ײ���ʽͼƬ */
+	
+
 	private Bitmap mSwitchBottom;
-	/** Switch ��ǰ��ʽ  */
 	private Bitmap mSwitchThumb;
-	/** Switch�޲�������µ���ʽ  */
 	private Bitmap mSwitchThumbNormal;
-	/** Switch��ǰ��ָ����ʽ����ʽ  */
 	private Bitmap mSwitchThumbPressed;
-	/** Switch ���  */
 	private Bitmap mSwitchFrame;
 	private Bitmap mSwitchMask;
 	private float mCurrentX = 0;
-	/** Switch ����״̬��Ĭ����  ����true  */
 	private boolean mSwitchOn = true;
-	/** Switch ����ƶ�����   */
 	private int mMoveLength;
-	/** ��һ�ΰ��µ���Ч���� */
 	private float mLastX = 0;
-	/** ���Ƶ�Ŀ�������С  */
 	private Rect mDest = null; 
-	/** ��ȡԴͼƬ�Ĵ�С  */
 	private Rect mSrc = null;
-	/** Switch �ƶ���ƫ����  */
 	private int mMoveDeltX = 0;
-	/** ���ʹ���  */
 	private Paint mPaint = null;
-	/** Switch ״̬�����ӿ�  */
 	private OnSwitchChangedListener switchListener = null;
 	private boolean mFlag = false;
-	/** enabled ���� Ϊ true */
 	private boolean mEnabled = true;
-	/** ���͸���ȣ����ǲ�͸�� */
 	private final int MAX_ALPHA = 255;
-	/** ��ǰ͸���ȣ�������Ҫ��������ؼ���enable����Ϊfalseʱ�����ð�͸�� ���������Ե�� */
 	private int mAlpha = MAX_ALPHA;
-	/** Switch �ж��Ƿ����϶� */
 	private boolean mIsScrolled =false;
 	
 	public SlideSwitchView(Context context) {
@@ -66,9 +51,6 @@ public class SlideSwitchView extends View{
 		init();
 	}
 
-	/**
-	 * ��ʼ�������Դ
-	 */
 	public void init() {
 		mSwitchThumbPressed = BitmapFactory.decodeResource(getResources(),R.drawable.checkswitch_btn_pressed);
 		mSwitchThumbNormal = BitmapFactory.decodeResource(getResources(),R.drawable.checkswitch_btn_unpressed);
@@ -77,7 +59,6 @@ public class SlideSwitchView extends View{
 		mSwitchMask = BitmapFactory.decodeResource(getResources(),R.drawable.checkswitch_mask);
 		mSwitchThumb = mSwitchThumbNormal;
 		mMoveLength = mSwitchBottom.getWidth() - mSwitchFrame.getWidth();
-		//���������С
 		mDest = new Rect(0, 0, mSwitchFrame.getWidth(),mSwitchFrame.getHeight());
 		mSrc = new Rect();
 		mPaint = new Paint();
@@ -122,7 +103,6 @@ public class SlideSwitchView extends View{
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
-		//���Enabled�����趨Ϊtrue,����Ч������Ч
 		if(!mEnabled){
 			return true;
 		}
@@ -153,7 +133,6 @@ public class SlideSwitchView extends View{
 			*/
 		case MotionEvent.ACTION_UP:
 			mSwitchThumb = mSwitchThumbNormal;
-			//���û�л��������Ϳ���һ�ε���¼�
 			if(!mIsScrolled){
 				mMoveDeltX = mSwitchOn ? mMoveLength : -mMoveLength;
 				mSwitchOn = !mSwitchOn;
@@ -178,7 +157,6 @@ public class SlideSwitchView extends View{
 				invalidate();
 				mMoveDeltX = 0;
 			} else if (mMoveDeltX == 0 && mFlag) {
-				// ��ʱ��õ����ǲ���Ҫ���д���ģ���Ϊ�Ѿ�move����
 				mMoveDeltX = 0;
 				mFlag = false;
 			}
@@ -188,15 +166,9 @@ public class SlideSwitchView extends View{
 		invalidate();
 		return true;
 	}
-	/** 
-	 * ���� switch ״̬���� 
-	 * */
 	public void setOnChangeListener(OnSwitchChangedListener listener) {
 		switchListener = listener;
 	}
-	/** 
-	 * switch ���ؼ����ӿ�
-	 *  */
 	public interface OnSwitchChangedListener{
 		public void onSwitchChange(SlideSwitchView switchView, boolean isChecked);
 	}
@@ -211,12 +183,14 @@ public class SlideSwitchView extends View{
 		invalidate();
 	}
 	
-	/** �Զ��ж��л����෴������ : true -->false ;false -->true */
+	
+
 	public void toggle() {
 		setChecked(!mSwitchOn);
 	}
 	
-    /** ����ѡ�е�״̬��ѡ��:true   ��ѡ��: false�� */
+    
+
     public void setChecked(boolean checked) {
     	mSwitchOn = checked;
         invalidate();

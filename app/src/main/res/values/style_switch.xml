@@ -10,19 +10,19 @@
         <!-- Drawable to use as the "thumb" that switches back and forth. -->
         <attr name="thumb" format="reference" />
         <!-- Drawable to use as the "track" that the switch thumb slides within. -->
-        <attr name="track" format="reference" />
+        <attr name="track2" format="reference" />
         <!-- Text to use when the switch is in the checked/"on" state. -->
         <attr name="textOn" format="string" />
         <!-- Text to use when the switch is in the unchecked/"off" state. -->
         <attr name="textOff" format="string" />
         <!-- Amount of padding on either side of text within the switch thumb. -->
-        <attr name="thumbTextPadding" format="dimension" />
+        <attr name="thumbTextPadding2" format="dimension" />
         <!-- TextAppearance style for text displayed on the switch thumb. -->
-        <attr name="switchTextAppearance" format="reference" />
+        <attr name="switchTextAppearance2" format="reference" />
         <!-- Minimum width for the switch component -->
-        <attr name="switchMinWidth" format="dimension" />
+        <attr name="switchMinWidth2" format="dimension" />
         <!-- Minimum space between the switch and caption text -->
-        <attr name="switchPadding" format="dimension" />
+        <attr name="switchPadding2" format="dimension" />
     </declare-styleable>
     
     <declare-styleable name="TextAppearance">
@@ -54,14 +54,14 @@
     </declare-styleable>
 
     <style name="Switch">
-        <item name="track">@drawable/switch_btn</item>
+        <item name="track2">@drawable/switch_btn</item>
         <item name="thumb">@drawable/switch_btn_slipper</item>
-        <item name="switchTextAppearance">@android:style/TextAppearance.Small</item>
+        <item name="switchTextAppearance2">@android:style/TextAppearance.Small</item>
         <item name="textOn">@string/switch_on</item>
         <item name="textOff">@string/switch_off</item>
-        <item name="thumbTextPadding">16dip</item>
-        <item name="switchMinWidth">80dip</item>
-        <item name="switchPadding">10dip</item>
+        <item name="thumbTextPadding2">16dip</item>
+        <item name="switchMinWidth2">80dip</item>
+        <item name="switchPadding2">10dip</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:background">#00FFFFFF</item>
     </style>

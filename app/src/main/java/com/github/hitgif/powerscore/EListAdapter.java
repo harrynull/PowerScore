@@ -134,7 +134,7 @@ public class EListAdapter extends BaseExpandableListAdapter implements Expandabl
 
         for (final String key : MainActivity.classes.keySet()) {
 
-            Classes c = MainActivity.classes.get(key);
+            ClassData c = MainActivity.classes.get(key);
             EListAdapter.Group group = new EListAdapter.Group(key, c.name);
 
             for (int j = 0; j < c.members.length; j++) {

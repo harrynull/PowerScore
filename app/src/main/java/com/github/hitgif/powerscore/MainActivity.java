@@ -1,9 +1,12 @@
 package com.github.hitgif.powerscore;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -18,31 +21,33 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 import com.iflytek.sunflower.FlowerCollector;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -63,7 +68,7 @@ import java.util.TreeMap;
 
 public class MainActivity extends Activity implements AbsListView.OnScrollListener {
     public static MainActivity MainActivityPointer;
-    public static TreeMap<String, Classes> classes = new TreeMap<String, Classes>();
+    public static TreeMap<String, ClassData> classes = new TreeMap<String, ClassData>();
     public static ArrayList<Group> groups = new ArrayList<Group>();
     SharedPreferences spReader;
     SharedPreferences.Editor spEditor;
@@ -96,6 +101,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
     private Animation in_per;
     private Animation round;
+
     private final String TAG = this.getClass().getName();
     private final int Update_NONEED = 0;
     private final int Update_CLIENT = 1;
@@ -104,6 +110,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private UpdateInfo info;
     private String localVersion;
     private boolean pdLoading = false;
+
     Button gen;
     Button per;
     private boolean lastTip = false;
@@ -121,53 +128,54 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         }
         isSync = true;
         sync.setAnimation(round);
-        getClassInfoOnly();
-        countMax = classes.size();
-        countNow = 0;
+
+        getClassInfo(false);
+        countMax=classes.size();
+        countNow=0;
+
         for (final String key : classes.keySet()) {
-            final Classes c = classes.get(key);
+            final ClassData c = classes.get(key);
             //分班级同步
-            //生成diff
-            String diff = "";
-            for (int i = 0; i != c.unsyncHistories.size(); i++) {
-                diff += c.unsyncHistories.get(i).score + "|";
-                diff += c.unsyncHistories.get(i).names + "|";
-                diff += c.unsyncHistories.get(i).reason + "|";
-                diff += c.unsyncHistories.get(i).getDate(true) + "|";
-                diff += c.unsyncHistories.get(i).oper + "|";
-            }
-            //将生成的diff上传到服务器上
             String username = spReader.getString("username", "");
             String password = spReader.getString("password", "");
 
-            new Thread(new AccessNetwork("POST",
-                    "http://powerscore.duapp.com/sync.php",
-                    "username=" + username + "&password=" + password + "&cid=" + key + "&diff=" + diff, new Handler() {
+            new Thread(new AccessNetwork(true,
+                    "http://powerscore.duapp.com/api/sync.php",
+                    "username=" + username + "&password=" + password + "&cid=" + key + "&diff=" + exportHistories(c.unsyncedHistories).toString(), new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    if (msg.what == 2) {
-                        readData(msg.obj.toString().substring(1), c);
-                    } else if (msg.what == 4) {
-                        //无权限或已被删除的班级
-                        //同时删除本地的班级数据
-                        classes.remove(key);
-                        deleteFile(key + ".dat");
-                        synchronized (synclock) {
-                            countMax--;
-                        }
+
+                    char data=msg.obj.toString().isEmpty()?'N':msg.obj.toString().substring(1).charAt(0);
+                    switch(data) {
+                        case 'P':
+                            //无权限或已被删除的班级
+                            //同时删除本地的班级数据
+                            classes.remove(key);
+                            deleteFile(key + ".dat");
+                            synchronized (synclock) {
+                                countMax--;
+                            }
+                            break;
+                        case 'F':
+                        case 'N': break;
+                        default:
+                            readData(String.valueOf(data),c);
+                            break;
+
                     }
                     synchronized (synclock) {
                         countNow++;
                     }
-                    if (countNow == countMax) {
-                        switch (msg.what) {
-                            case 0:
+
+                    if(countNow==countMax){
+                        switch (data) {
+                            case 'F':
                                 showToast("登陆失败，用户名或密码错误");
                                 break;
-                            case 1:
+                            case 'N':
                                 showToast("网络异常，请检查网络连接");
                                 break;
-                            case 2:
+                            default:
                                 showToast("同步成功");
                                 break;
                         }
@@ -176,46 +184,11 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                         updateList();
                     }
                 }
-            }, 0)).start();
+            })).start();
 
             //同步结束
-            c.unsyncHistories.clear();
-        }
-    }
 
-    class AccessNetwork implements Runnable {
-        private String op;
-        private String url;
-        private String params;
-        private Handler h;
-        private int tag;
-
-        public AccessNetwork(String op, String url, String params, Handler h, int tag) {
-            super();
-            this.op = op;
-            this.url = url;
-            this.params = params;
-            this.h = h;
-            this.tag = tag;
-        }
-
-        @Override
-        public void run() {
-            Message m = new Message();
-            m.what = tag;
-            if (op.compareTo("POST") == 0)
-                m.obj = GetPostUtil.sendPost(url, params);
-            else
-                m.obj = GetPostUtil.sendGet(url, params);
-
-            if (m.obj.toString().isEmpty()) {
-                m.what = 1;
-            } else if (m.obj.toString().substring(1).equals("F")) {
-                m.what = 0;
-            } else if (m.obj.toString().substring(1).equals("P")) {
-                m.what = 4;
-            } else m.what = 2;
-            h.sendMessage(m);
+            c.unsyncedHistories.clear();
         }
     }
 
@@ -263,14 +236,10 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         spReader = getSharedPreferences("data", Activity.MODE_PRIVATE);
         spEditor = spReader.edit();
         try {
-            localVersion = getVersionName();
-            CheckVersionTask cv = new CheckVersionTask();
-
-            new Thread(cv).start();
-        } catch (Exception e) {
+            new UpdateManager(this).check();
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
         //布局初始化
         setContentView(R.layout.activity_main);
         boolean splash = getSharedPreferences("data", 0).getBoolean("splash", true);
@@ -330,7 +299,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         leftLayout = (RelativeLayout) findViewById(R.id.left);
         rightLayout = (RelativeLayout) findViewById(R.id.right);
         ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerLockMode(
-                DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.END);
         ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -340,14 +309,14 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             @Override
             public void onDrawerOpened(View drawerView) {
                 ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerLockMode(
-                        DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.RIGHT);
+                        DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.END);
                 findViewById(R.id.button3).setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 ((DrawerLayout) findViewById(R.id.drawerlayout)).setDrawerLockMode(
-                        DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+                        DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.END);
                 findViewById(R.id.button3).setVisibility(View.GONE);
             }
 
@@ -502,69 +471,71 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         lv.setAdapter(mAdapter);
         lv.setOnScrollListener(this);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                      @Override
-                                      public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long id) {
-                                          final Classes c = classes.get(classNow);
-                                          final ArrayList<History> histories = c.histories;
-                                          final ArrayList<History> usHistories = c.unsyncHistories;
 
-                                          History h = histories.get(getPos(position));
-                                          final String reason = (h.reason);
-                                          new ActionSheetDialog(MainActivity.this).builder()
-                                                  .setTitle(reason)
-                                                  .setCancelable(false)
-                                                  .setCanceledOnTouchOutside(true)
-                                                  .addSheetItem("删除", ActionSheetDialog.SheetItemColor.Red,
-                                                          new ActionSheetDialog.OnSheetItemClickListener() {
-                                                              @Override
-                                                              public void onClick(int which) {
-                                                                  if (isSync) {
-                                                                      new AlertDialogios(MainActivity.this).builder()
-                                                                              .setTitle("提示")
-                                                                              .setMsg("抱歉，数据同步中，删除记录暂不可用，请等待同步完成 :(")
-                                                                              .setNegativeButton("好的", null).show();
-                                                                      return;
-                                                                  }
-                                                                  new AlertDialogios(MainActivity.this).builder()
-                                                                          .setTitle("删除记录")
-                                                                          .setMsg("确认删除记录“" + reason + "”吗?\n该条记录所修改的分数将被撤销")
-                                                                          .setPositiveButton("删除", new OnClickListener() {
-                                                                              @Override
-                                                                              public void onClick(View v) {
-                                                                                  History h = histories.get(getPos(position));
-                                                                                  final int change = h.score;
-                                                                                  final String names = h.names;
-                                                                                  for (int i = 0; i != c.members.length; i++) {
-                                                                                      if (names.contains(c.members[i])) {
-                                                                                          c.scores[i] -= change;
-                                                                                      }
-                                                                                  }
-                                                                                  histories.remove(h);
-                                                                                  usHistories.add(new History(h.date));
-                                                                                  updateList();
-                                                                              }
-                                                                          })
-                                                                          .setNegativeButton("取消", null).show();
-                                                              }
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,final int position, long id) {
+                final ClassData c = classes.get(classNow);
+                final ArrayList<History> histories = c.histories;
+                final ArrayList<History> usHistories = c.unsyncedHistories;
 
-                                                          })
-                                                  .addSheetItem("查看详细", ActionSheetDialog.SheetItemColor.Blue,
-                                                          new ActionSheetDialog.OnSheetItemClickListener() {
-                                                              @Override
-                                                              public void onClick(int which) {
-                                                                  History h = histories.get(getPos(position));
-                                                                  String info_of_record = h.reason + "|" + c.name + "|" + h.names + "|" + h.getScore() + "|" + h.getDate(true) + "|" + h.oper;
-                                                                  Intent i = new Intent();
-                                                                  i.putExtra("record", info_of_record);
-                                                                  i.setClass(MainActivity.this, moreinfo.class);
-                                                                  startActivity(i);
-                                                                  overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
-                                                              }
-                                                          })
-                                                          //可添加多个SheetItem
-                                                  .show();
-                                      }
-                                  }
+                History h = histories.get(getPos(position));
+                final String reason = (h.reason);
+                new ActionSheetDialog(MainActivity.this).builder()
+                    .setTitle(reason)
+                    .setCancelable(false)
+                    .setCanceledOnTouchOutside(true)
+                    .addSheetItem("删除", ActionSheetDialog.SheetItemColor.Red,
+                            new ActionSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    if(isSync){
+                                        new AlertDialogios(MainActivity.this).builder()
+                                                .setTitle("提示")
+                                                .setMsg("抱歉，数据同步中，删除记录暂不可用，请等待同步完成 :(")
+                                                .setNegativeButton("好的", null).show();
+                                        return;
+                                    }
+                                    new AlertDialogios(MainActivity.this).builder()
+                                            .setTitle("删除记录")
+                                            .setMsg("确认删除记录“" + reason + "”吗?\n该条记录所修改的分数将被撤销")
+                                            .setPositiveButton("删除", new OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    History h = histories.get(getPos(position));
+                                                    final int change = h.score;
+                                                    final String names = h.names;
+                                                    for (int i = 0; i != c.members.length; i++) {
+                                                        if (names.contains(c.members[i])) {
+                                                            c.scores[i] -= change;
+                                                        }
+                                                    }
+                                                    histories.remove(h);
+                                                    usHistories.add(new History(h.date));
+                                                    updateList();
+                                                }
+                                            })
+                                            .setNegativeButton("取消", null).show();
+                                }
+
+                            })
+                    .addSheetItem("查看详细", ActionSheetDialog.SheetItemColor.Blue,
+                            new ActionSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    History h = histories.get(getPos(position));
+                                    String info_of_record = h.reason + "|" + c.name + "|" + h.names + "|" + h.getScore() + "|" + h.getDate(true) + "|" + h.oper;
+                                    Intent i = new Intent();
+                                    i.putExtra("record", info_of_record);
+                                    i.setClass(MainActivity.this, moreinfo.class);
+                                    startActivity(i);
+                                    overridePendingTransition(R.anim.slide_in_fromr, R.anim.slide_out_froml);
+                                }
+                            })
+                            //可添加多个SheetItem
+                    .show();
+                }
+            }
+
         );
 
 
@@ -895,15 +866,16 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         //读取数据
         String rawClasses = spReader.getString("classes", "");
 
-        if (rawClasses.isEmpty())
-            getClassInfoAndData();
+
+        if(rawClasses.isEmpty()) getClassInfo(true);
+
         else {
-            String[] classesinfo = rawClasses.split(",");
-            for (int i = 0; i < classesinfo.length; i += 2) {
-                Classes readNow = new Classes(classesinfo[i + 1]);
+            String[] classesInfo = rawClasses.split(",");
+            for (int i = 0; i < classesInfo.length; i += 2) {
+                ClassData readNow = new ClassData(classesInfo[i + 1]);
                 //读取数据
                 try {
-                    FileInputStream inputStream = this.openFileInput(classesinfo[i] + ".dat");
+                    FileInputStream inputStream = this.openFileInput(classesInfo[i] + ".dat");
                     byte[] bytes = new byte[inputStream.available()];
                     ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
                     while (inputStream.read(bytes) != -1) {
@@ -915,13 +887,13 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
                 } catch (Exception ignored) {
                 }
-                classes.put(classesinfo[i], readNow);
+                classes.put(classesInfo[i], readNow);
             }
         }
 
         //默认选择一个班
         if (classes.size() != 0) {
-            Classes c = classes.get(classes.firstKey());
+            ClassData c = classes.get(classes.firstKey());
             ((TextView) findViewById(R.id.classnow)).setText(c.name);
             classNow = classes.firstKey();
             updateList();
@@ -930,33 +902,38 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
 
     }
 
-    public void readData(String data, Classes readNow) {
+    public JSONArray exportHistories(ArrayList<History> histories){
+        JSONArray ret = new JSONArray();
         try {
-            String[] strs = data.split("\n");
-            readNow.setMembers(strs[0]);
-
-            String[] strScores = strs[1].split(" ");
-            for (int j = 0; j < readNow.members.length; j++) {
-                readNow.scores[j] = Integer.valueOf(strScores[j]);
+            for (int i = 0; i != histories.size(); i++) {
+                JSONObject record= new JSONObject();
+                record.put("score",histories.get(i).score);
+                record.put("reason",histories.get(i).reason);
+                record.put("operator",histories.get(i).oper);
+                record.put("objects",histories.get(i).names);
+                record.put("time",histories.get(i).date.getTime()/1000);
+                ret.put(record);
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA);
+    public void readData(String data, ClassData readNow) {
+        try {
 
-            if (strs.length < 3) return;
-            String[] histories = strs[2].split("\\|");
-            readNow.histories.clear();
-            for (int j = 0; j < histories.length; j += 5) {
-                readNow.histories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
-                        histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
-            }
-            if (strs.length < 4) return;
-            String[] usHistories = strs[3].split("\\|");
-            readNow.unsyncHistories.clear();
-            for (int j = 0; j < usHistories.length; j += 5) {
-                readNow.unsyncHistories.add(new History(Integer.parseInt(histories[j]), histories[j + 1],
-                        histories[j + 2], sdf.parse(histories[j + 3]), histories[j + 4]));
-            }
-        } catch (ParseException e) {
+            String[] jsons = data.split("\n");
+
+            readNow.loadMembers(new JSONArray(jsons[0]));
+
+            if (jsons.length < 2) return;
+            readNow.loadHistories(new JSONArray(jsons[1]));
+
+            if (jsons.length < 3) return;
+            readNow.loadUnsyncedHistories(new JSONArray(jsons[2]));
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         updateList();
@@ -967,38 +944,20 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         //保存数据
         String classesData = "";
         for (final String key : classes.keySet()) {
-            Classes c = classes.get(key);
+            ClassData c = classes.get(key);
             classesData += key + "," + c.name + ",";
 
             FileOutputStream outputStream;
             try {
                 outputStream = openFileOutput(key + ".dat", Activity.MODE_PRIVATE);
-                for (int i = 0; i != c.members.length; i++) {
-                    outputStream.write((c.members[i] + (i == c.members.length - 1 ? "" : " ")).getBytes());
-                }
-                outputStream.write("\n".getBytes());
-                for (int i = 0; i != c.scores.length; i++) {
-                    outputStream.write((c.scores[i] + (i == c.scores.length - 1 ? "" : " ")).getBytes());
-                }
-                outputStream.write("\n".getBytes());
-                for (int i = 0; i != c.histories.size(); i++) {
-                    outputStream.write((c.histories.get(i).score + "|").getBytes());
-                    outputStream.write((c.histories.get(i).names + "|").getBytes());
-                    outputStream.write((c.histories.get(i).reason + "|").getBytes());
-                    outputStream.write((c.histories.get(i).getDate(true) + "|").getBytes());
-                    outputStream.write((c.histories.get(i).oper + "|").getBytes());
-                }
-                outputStream.write("\n".getBytes());
-                for (int i = 0; i != c.unsyncHistories.size(); i++) {
-                    outputStream.write((c.unsyncHistories.get(i).score + "|").getBytes());
-                    outputStream.write((c.unsyncHistories.get(i).names + "|").getBytes());
-                    outputStream.write((c.unsyncHistories.get(i).reason + "|").getBytes());
-                    outputStream.write((c.unsyncHistories.get(i).getDate(true) + "|").getBytes());
-                    outputStream.write((c.unsyncHistories.get(i).oper + "|").getBytes());
-                }
+                outputStream.write(c.exportMembers().toString().getBytes());
+                outputStream.write(("\n"+exportHistories(c.histories).toString()).getBytes());
+                outputStream.write(("\n"+exportHistories(c.unsyncedHistories).toString()).getBytes());
                 outputStream.flush();
                 outputStream.close();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -1011,93 +970,74 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         spEditor.apply();
     }
 
-    private void getClassInfoAndData() {
-        //从网上获得数据
-        isSync = true;
-        sync.setAnimation(round);
+    @TargetApi(19)
+    private void getClassInfo(final boolean getData) {
+
         final String username = spReader.getString("username", "");
         final String password = spReader.getString("password", "");
-        new Thread(new AccessNetwork("POST",
-                "http://powerscore.duapp.com/getclasses.php",
+        new Thread(new AccessNetwork(true,
+                "http://powerscore.duapp.com/api/get_classes.php",
                 "username=" + username + "&password=" + password, new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case 0:
+                char data = msg.obj.toString().isEmpty() ? 'P' : msg.obj.toString().substring(1).charAt(0);
+                switch (data) {
+                    case 'F':
                         showToast("无法获取班级数据：用户名或密码错误");
                         break;
-                    case 1:
+                    case 'P':
                         showToast("无法获取班级数据：无法连接到网络");
                         break;
-                    case 2:
-                        String[] ids = msg.obj.toString().substring(1).split(",");
-                        countMax = ids.length - 1;
-                        countNow = 0;
-                        for (int i = 0; i < ids.length - 1; i += 2) {
-                            if (classes.containsKey(ids[i])) continue;
-                            final Classes c = new Classes(ids[i + 1]);
-                            new Thread(new AccessNetwork("POST",
-                                    "http://powerscore.duapp.com/sync.php",
-                                    "username=" + username + "&password=" + password + "&cid=" + ids[i] + "&diff=", new Handler() {
-                                @Override
-                                public void handleMessage(Message msg) {
-                                    countNow++;
-                                    switch (msg.what) {
-                                        case 0:
-                                            if (countNow == countMax) showToast("无法获取班级数据：请稍候重试");
-                                            break;
-                                        case 1:
-                                            if (countNow == countMax) showToast("无法获取班级数据：网络连接不稳定");
-                                            break;
-                                        case 2:
-                                            readData(msg.obj.toString().substring(1), c);
-                                            break;
-                                    }
-                                    if (countNow == countMax) {
-                                        isSync = false;
-                                        sync.clearAnimation();
-                                        updateList();
-                                    }
-                                }
-                            }, 0)).start();
-                            classes.put(ids[i], c);
-                            if (classNow.equals("-1")) {
-                                ((TextView) findViewById(R.id.classnow)).setText(c.name);
-                                classNow = classes.firstKey();
-                                updateList();
-                            }
-                        }
-                        break;
-                }
-            }
-        }, 0)).start();
-    }
 
-    private void getClassInfoOnly() {
-        final String username = spReader.getString("username", "");
-        final String password = spReader.getString("password", "");
-        new Thread(new AccessNetwork("POST",
-                "http://powerscore.duapp.com/getclasses.php",
-                "username=" + username + "&password=" + password, new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case 2:
-                        String[] ids = msg.obj.toString().substring(1).split(",");
-                        for (int i = 0; i < ids.length - 1; i += 2) {
-                            if (classes.containsKey(ids[i])) continue;
-                            final Classes c = new Classes(ids[i + 1]);
-                            classes.put(ids[i], c);
-                            if (classNow.equals("-1")) {
-                                ((TextView) findViewById(R.id.classnow)).setText(c.name);
-                                classNow = classes.firstKey();
-                                updateList();
+                    default:
+                        try {
+
+                            JSONArray json= new JSONArray(data);
+                            for (int i = 0; i < json.length() ; ++i) {
+                                String name = json.getJSONObject(i).getString("name");
+                                String id = String.valueOf(json.getJSONObject(i).getInt("id"));
+                                if(classes.containsKey(id)) continue;
+                                final ClassData classReading=new ClassData(name);
+                                classes.put(id, classReading);
+                                if(getData){
+                                    new Thread(new AccessNetwork(true,
+                                            "http://powerscore.duapp.com/api/sync.php",
+                                            "username=" + username + "&password=" + password + "&cid=" + id + "&diff=", new Handler() {
+                                        @Override
+                                        public void handleMessage(Message msg) {
+                                            countNow++;
+                                            char data = msg.obj.toString().substring(1).charAt(0);
+                                            switch (data) {
+                                                case 'F':
+                                                    if(countNow==countMax) showToast("无法获取班级数据：请稍候重试");
+                                                    break;
+                                                case 'P':
+                                                    if(countNow==countMax) showToast("无法获取班级数据：网络连接不稳定");
+                                                    break;
+                                                default:
+                                                    readData(String.valueOf(data), classReading);
+                                                    break;
+                                            }
+                                            if(countNow==countMax) {
+                                                isSync = false;
+                                                sync.clearAnimation();
+                                            }
+                                        }
+                                    })).start();
+                                }
+                                if(classNow.equals("-1")) {
+                                    ((TextView) findViewById(R.id.classnow)).setText(name);
+                                    classNow = id;
+                                    updateList();
+                                }
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                         break;
                 }
             }
-        }, 0)).start();
+        })).start();
     }
 
     public void onResume() {
@@ -1316,6 +1256,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
         switch (resultCode) {
             case 1:
                 String result = data.getExtras().getString("result"); //得到新Activity关闭后返回的数据
+                assert result != null;
                 if (!result.matches("NULL")) {
                     String[] strArray = result.split("[|]");
                     filterClass = strArray[0];
@@ -1327,6 +1268,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
             case 2:
                 String[] results = data.getExtras().getStringArray("data");
                 //接收add
+                assert results != null;
                 if (!results[0].equals("NULL") && !results[2].isEmpty()) {
                     //更新记录
                     String[] namesByClasses = new String[classes.size()]; //分别储存每个班的人
@@ -1355,7 +1297,7 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                             String oper = spReader.getString("username", "未登录用户");
                             Date d = new Date();
                             classes.get(key).histories.add(new History(score, names, results[0], d, oper));
-                            classes.get(key).unsyncHistories.add(new History(score, names, results[0], d, oper));
+                            classes.get(key).unsyncedHistories.add(new History(score, names, results[0], d, oper));
                             for (String name : names.split(",")) {
                                 for (int i = 0; i < classes.get(key).members.length; i++) {
                                     if (classes.get(key).members[i].equals(name))

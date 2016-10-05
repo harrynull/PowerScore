@@ -2,8 +2,9 @@
     <string name="app_name">PowerScore</string>
     <string name="action_settings">Settings</string>
     <string name="finish">233</string>
-    <string name="url_server">http://powerscore.duapp.com/update.xml</string>
+    <string name="url_server">http://powerscore.duapp.com/api/update.xml</string>
     <string name="sf_progress_dialog_image_loading">加载中...</string>
+
     <string name="app_id">5778772d</string>
 
     <!-- 听写 -->
@@ -59,3 +60,4 @@
         <item>开启</item>
         <item>关闭</item>
     </string-array></resources>
+

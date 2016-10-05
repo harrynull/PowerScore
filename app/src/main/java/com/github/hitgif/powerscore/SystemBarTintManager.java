@@ -67,8 +67,9 @@ public class SystemBarTintManager extends Activity{
      *
      * @param activity The host activity.
      */
-    @SuppressWarnings("ResourceType")
+
     @TargetApi(19)
+    @SuppressWarnings("ResourceType")
     public SystemBarTintManager(Activity activity) {
 
         Window win = activity.getWindow();

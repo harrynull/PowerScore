@@ -1,5 +1,8 @@
 package com.github.hitgif.powerscore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -20,6 +23,9 @@ public class History {
         scoreWithSign=(score > 0 ? "+" : "") + (score / 10.0);
         dateStr= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS", Locale.CHINA).format(date);
         shortDateStr=new SimpleDateFormat("MM-dd", Locale.CHINA).format(date);
+    }
+    public History(JSONObject json) throws JSONException {
+        this(json.getInt("score"),json.getString("objects"),json.getString("reason"),new Date(json.getLong("time")*1000),json.getString("operator"));
     }
     public History(Date _date){
         score=0;
