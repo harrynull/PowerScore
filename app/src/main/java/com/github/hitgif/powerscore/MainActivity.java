@@ -102,12 +102,6 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
     private Animation in_per;
     private Animation round;
 
-    private final String TAG = this.getClass().getName();
-    private final int Update_NONEED = 0;
-    private final int Update_CLIENT = 1;
-    private final int GET_UPDATAINFO_ERROR = 2;
-    private final int DOWN_ERROR = 4;
-    private String localVersion;
     private boolean pdLoading = false;
 
     Button gen;
@@ -979,18 +973,17 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                 "username=" + username + "&password=" + password, new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                char data = msg.obj.toString().isEmpty() ? 'P' : msg.obj.toString().substring(1).charAt(0);
+                String data=msg.obj.toString().isEmpty()?"":msg.obj.toString().substring(1);
                 switch (data) {
-                    case 'F':
+                    case "F":
                         showToast("无法获取班级数据：用户名或密码错误");
                         break;
-                    case 'P':
+                    case "P":
                         showToast("无法获取班级数据：无法连接到网络");
                         break;
 
                     default:
                         try {
-
                             JSONArray json= new JSONArray(data);
                             for (int i = 0; i < json.length() ; ++i) {
                                 String name = json.getJSONObject(i).getString("name");
@@ -1005,12 +998,12 @@ public class MainActivity extends Activity implements AbsListView.OnScrollListen
                                         @Override
                                         public void handleMessage(Message msg) {
                                             countNow++;
-                                            char data = msg.obj.toString().substring(1).charAt(0);
+                                            String data=msg.obj.toString().isEmpty()?"":msg.obj.toString().substring(1);
                                             switch (data) {
-                                                case 'F':
+                                                case "F":
                                                     if(countNow==countMax) showToast("无法获取班级数据：请稍候重试");
                                                     break;
-                                                case 'P':
+                                                case "P":
                                                     if(countNow==countMax) showToast("无法获取班级数据：网络连接不稳定");
                                                     break;
                                                 default:
